@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling1 – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0d0; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="optimistic">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Optimistic</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 35mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "New Dawn" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vast, open construction site on the outskirts of an expanding city like Abuja or Kano during the "Golden Hour" at sunrise. The background is a soft, glowing blur of rising concrete pillars, a yellow crane reaching toward a sky painted in streaks of pink and orange, and the hazy silhouette of a growing neighborhood. The air is "fresh," "crisp," and smells of wet cement, turned earth, and the sweet, rising warmth of the morning sun. The atmosphere is one of boundless, soaring "Optimism."<br><br>
+
+The subject: A 27-year-old Hausa man, 'Musa,' an ambitious architect or site manager. He is standing on a small mound of earth, looking out over the blueprint spread across his truck's hood. He wears a sharp, "Sunshine-Yellow" Kaftan with white piping and a matching hula. He has a white hard hat tucked under one arm. His face is a masterpiece of "Radiant Optimism"—his eyes are bright, squinting slightly against the sun, and he has a wide, confident "dreamer’s smile." He looks like a man who doesn't just see a building site, but a future city. He is "Optimistic" because the foundation is finally set.<br><br>
+
+Symbolism: The "Sunshine-Yellow Kaftan" represents "Energy and Future Growth." The "Rising Crane" symbolizes "Ambition Reaching Higher." The "Blueprint" represents "The Plan for Success." The sunrise symbolizes "A New Beginning." It is the "Optimism" of the man who knows that what he builds today will last for generations.<br><br>
+
+Lighting: "The Golden Promise." The primary light is the brilliant, "honey-gold" sun hitting him directly from the side, creating a "shimmering" rim light on his Kaftan and making the dust in the air look like "floating gold." A secondary, soft "blue" fill light comes from the sky, keeping the shadows "open" and "hopeful."<br><br>
+
+Texture: The "rough, gritty" texture of the blueprints, the "stiff, vibrant" cotton of his yellow Kaftan, the "smooth, plastic" sheen of the hard hat, the "sparkling, clear" look in his eyes, and the "misty, golden" atmosphere of the morning.<br><br>
+
+Theme: Optimistic / The Visionary / Building the Future / Career Growth / The First Stone
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 50mm f/1.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Green Shoots" aesthetic, masterpiece quality.<br><br>
+
+The scene: A modern, sun-drenched "Agro-Tech Lab" or a high-end greenhouse in a rural development area like Zaria. The background is a soft, vibrant blur of vertical hydroponic towers and rows of lush, green leafy vegetables growing under clean glass. On a sleek white laboratory table sits a small, black biodegradable pot containing a single, "vividly green" sprout pushing through rich, dark soil. The air is "humid," "sweet," and smells of wet earth, fresh chlorophyll, and the "clean" scent of filtered water. The atmosphere is one of quiet, revolutionary "Optimism."<br><br>
+
+The subject: A 24-year-old Hausa lady, a "Modern Farmer" or agricultural scientist. She is leaning over the table, her face inches away from the tiny sprout. She wears a crisp, "Mint-Green" cotton hijab and a white lab coat over a simple patterned dress. Her face is a masterpiece of "Scientific Optimism"—her eyes are wide with wonder, a soft "knowing" smile plays on her lips, and her skin is glowing in the diffused sunlight. She looks like a woman who just solved a hunger crisis in a laboratory. She is "Optimistic" because the experiment finally worked.<br><br>
+
+Symbolism: The "Mint-Green Hijab" represents "Life and Growth." The "Single Sprout" symbolizes "The Beginning of a Harvest." The "White Lab Coat" symbolizes "Precision and Modernity." The "Greenhouse Glass" represents "Protection and Nurturing." It is the "Optimism" of the person who sees a forest inside a single seed.<br><br>
+
+Lighting: "Nurturing Daylight." The primary light is a soft, "diffused" white sun coming through the greenhouse roof, hitting her face and the sprout, making the green leaves look "translucent and glowing." A secondary, warm "golden" bounce comes from the wooden floor, filling the shadows with "hopeful" warmth. The shadows are soft, "gentle," and non-existent.<br><br>
+
+Texture: The "velvety, soft" texture of the young leaves, the "crumbly, damp" dark soil, the "smooth, starched" fabric of the lab coat, the "liquid, clear" droplets of water on the sprout, and the "beaming" clarity of her gaze.<br><br>
+
+Theme: Optimistic / Innovation / Food Security / The Future of Farming / The First Success
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 24mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Horizon" aesthetic, masterpiece quality.<br><br>
+
+The scene: A high, rocky overlook or a scenic plateau in a place like Jos or the hills of Bauchi. The background is a breathtaking, expansive "Wide-Angle" view of a winding river and a green valley below, stretching for miles. The sky is a vast, "unbroken" blue with a few wispy "white" clouds. A well-worn, modern "SUV" is parked safely in the soft-focus distance. The air is "thin," "crisp," and smells of dry grass, wild lavender, and the "electric" scent of high altitude. The atmosphere is one of limitless, soaring "Optimism."<br><br>
+
+The subject: A 28-year-old Hausa man, a "Young Entrepreneur" or adventurer. He is standing at the very edge of the plateau, his chest out, hands on his hips. He wears a contemporary, "Sky-Blue" Kaftan with sharp white embroidery and a matching hula. His face is a masterpiece of "Panoramic Optimism"—his chin is tilted up, his eyes are fixed on the farthest horizon, and he has a broad, "unstoppable" smile that shows white teeth. He looks like a man who has just conquered his first major peak and sees ten more he’s ready to climb. He is "Optimistic" because the world looks small from where he stands.<br><br>
+
+Symbolism: The "Sky-Blue Kaftan" represents "Infinity and Ambition." The "Plateau Edge" symbolizes "The Threshold of Success." The "Winding River" represents "The Journey Ahead." The wide-angle lens symbolizes "Big Thinking." It is the "Optimism" of the leader who sees the path forward clearly.<br><br>
+
+Lighting: "The Zenith Sun." The primary light is a brilliant, "crystal-clear" overhead sun that makes the blue of his Kaftan look "vibrant and electric." A secondary, warm "golden" bounce comes from the sun-baked rocks at his feet, illuminating his jawline and the "sparkle" in his eyes. The shadows are short, "crisp," and powerful.<br><br>
+
+Texture: The "rough, ancient" stone of the plateau, the "billowing, light" cotton of his Kaftan, the "wispy, soft" clouds in the distance, the "rugged, leather" texture of his sandals, and the "beaming" clarity of the entire landscape.<br><br>
+
+Theme: Optimistic / The Visionary / Success / New Territory / The High Point
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Clean Slate" aesthetic, masterpiece quality.<br><br>
+
+The scene: A bright, spacious, and "partially empty" modern office space in a new tech hub in Kano or Kaduna. The background is a soft, airy blur of large floor-to-ceiling windows, a few sleek white desks, and a single, vibrant "Green Potted Plant" in the corner. On a glass desk sits a brand-new, open "High-End Laptop" and a stack of "Fresh Business Cards" that have just been unpacked. The air is "cool," "quiet," and smells of new furniture, fresh paint, and the "electric" scent of new electronics. The atmosphere is one of buzzing, hopeful "Optimism."<br><br>
+
+The subject: A 26-year-old Hausa man, a "Founder" or a new business owner. He is sitting in a modern ergonomic chair, leaning back with his hands behind his head. He wears a crisp, "Eggshell-White" Kaftan with subtle geometric embroidery and a matching hula. His face is a masterpiece of "Quiet Optimism"—his eyes are closed, a small, satisfied "dreamer’s smile" on his lips, and he is tilting his head back toward the sunlight. He looks like a man who just signed his first big contract or officially opened his doors. He is "Optimistic" because the first day is finally here.<br><br>
+
+Symbolism: The "Eggshell-White Kaftan" represents "A New Chapter and Purity of Vision." The "Potted Plant" symbolizes "Growth in a New Environment." The "Open Laptop" represents "Tools for the Future." The empty office space symbolizes "Room to Expand." It is the "Optimism" of the first morning of a dream realized.<br><br>
+
+Lighting: "The Morning of Success." The primary light is a massive, soft "wash" of white morning sun pouring through the windows, making the white of his Kaftan look "luminescent" and casting soft, "peaceful" shadows across the floor. A secondary, warm "golden" light from a modern pendant lamp catches the edge of his hula and the "sheen" on the glass desk. The shadows are long, "gentle," and inviting.<br><br>
+
+Texture: The "cold, smooth" surface of the glass desk, the "stiff, starched" texture of the white Kaftan, the "soft, waxy" leaves of the plant, the "metallic, sleek" finish of the laptop, and the "beaming" warmth on his skin.<br><br>
+
+Theme: Optimistic / The Startup / New Beginnings / Career Independence / The Vision realized
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Fujifilm GFX100 II, 85mm f/1.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Arrival" aesthetic, masterpiece quality.<br><br>
+
+The scene: A modern, glass-walled "Airport Terminal" or a high-end train station platform in Abuja or Kaduna. In the background, a soft, shimmering blur of a white airplane tail or a sleek, high-speed train is visible through the massive windows. On a polished granite floor sits a set of "Rich-Tan" leather luggage and a single "New Passport" with a visible gold-embossed crest. The air is "cool," "filtered," and smells of jet fuel, expensive leather, and the "exciting" scent of a high-end duty-free lounge. The atmosphere is one of fluttering, expansive "Optimism."<br><br>
+
+The subject: A 23-year-old beautiful Hausa lady, a "Student Scholar" or a young professional moving abroad. She is standing by the window, clutching her "Boarding Pass" to her chest with both hands. She wears a vibrant, "Turquoise-Blue" silk abaya with silver beadwork and a matching draped hijab. Her face is a masterpiece of "Fearless Optimism"—her eyes are sparkling with "hidden dreams," she has a wide, breathless smile that shows her dimples, and her skin is glowing under the bright terminal lights. She looks like a woman who is about to step into a life much bigger than the one she’s leaving. She is "Optimistic" because her wings are finally spread.<br><br>
+
+Symbolism: The "Turquoise-Blue Abaya" represents "Freedom and Communication." The "New Passport" symbolizes "A Key to the World." The "Leather Luggage" represents "The Weight of the Past Packed for the Future." The airport window represents "A Portal to New Horizons." It is the "Optimism" of the woman who knows she belongs everywhere.<br><br>
+
+Lighting: "The Global Glow." The primary light is the massive, "bright-white" overhead lighting of the terminal, reflecting off the polished floor and her silver beadwork. A secondary, warm "golden" sun from the runway outside hits her from the side, creating a "shimmering" halo around her hijab and making her eyes look "translucent and amber." The shadows are minimal, "clean," and energetic.<br><br>
+
+Texture: The "pebbled, soft" texture of the leather luggage, the "shimmering, cool" silk of the turquoise abaya, the "glossy, thick" paper of the boarding pass, the "cold, hard" glass of the terminal window, and the "beaming, smooth" texture of her skin.<br><br>
+
+Theme: Optimistic / The Journey / Studying Abroad / Personal Growth / Breaking Boundaries
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6happy">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Hasselblad X2D 100C, 35mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The New Home" aesthetic, masterpiece quality.<br><br>
+
+The scene: A breathtakingly modern, sun-drenched "Luxury Parlor" (sitting room) in a newly built mansion in Abuja’s Maitama district. The background is a soft, airy blur of high ceilings, a massive crystal chandelier, and floor-to-ceiling windows looking out onto a private pool. On a sleek marble center table sits a "Golden Tray" with two crystal glasses and a set of "Ornate Brass Keys" with a leather tag. The air is "cool," "sweet," and smells of fresh white lilies, expensive "Oud" incense, and the "clean" scent of a brand-new home. The atmosphere is one of shared, triumphant "Optimism."<br><br>
+
+The subject: A beautiful 24-year-old Hausa lady and her 28-year-old husband, a "Power Couple." They are sitting close together on a plush, cream-colored velvet sofa. She wears a stunning "Emerald-Green" lace abaya with gold embroidery and a matching silk hijab. He wears a crisp, "Champagne-Gold" polished cotton Babban Riga and a matching hula. Her face is a masterpiece of "Radiant Optimism"—she is leaning her head on his shoulder, looking around the room with wide, sparkling eyes and a joyful, dimpled smile. He is looking at her with a proud, "satisfied" grin, one arm around her waist. They look like a couple who just reached their biggest milestone together. They are "Optimistic" because their life is just beginning.<br><br>
+
+Symbolism: The "Emerald-Green Abaya" represents "Prosperity and Harmony." The "Champagne-Gold Babban Riga" symbolizes "Success and Celebration." The "Brass Keys" symbolize "Ownership and Stability." The "White Lilies" represent "A Fresh Start." It is the "Optimism" of a shared dream finally becoming a physical reality.<br><br>
+
+Lighting: "The Golden Morning." The primary light is a massive, soft "flood" of white morning sun pouring through the parlor windows, making the gold embroidery on their clothes "shimmer and glow." A secondary, warm "amber" light from the chandelier above catches the "liquid sparkle" in their eyes and the texture of the velvet sofa. The shadows are soft, "airy," and filled with light.<br><br>
+
+Texture: The "plush, soft" texture of the cream velvet sofa, the "intricate, rough" feel of the gold lace embroidery, the "cold, polished" surface of the marble table, the "shimmering, smooth" silk of her hijab, and the "beaming, healthy" glow of their skin.<br><br>
+
+Theme: Optimistic / The New Home / Shared Success / Marital Bliss / The Bright Future
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 35mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Academic Dream" aesthetic, masterpiece quality.<br><br>
+
+The scene: A historic, grand "University Courtyard" or a prestigious faculty building at ABU Zaria or BUK Kano during a vibrant afternoon. The background is a soft, majestic blur of red-brick architecture, large shade trees (bishiyar lalle), and other students in the distance. On a stone bench sits a stack of "New Textbooks" and a modern, high-end tablet with a "First-Class" grading report visible on the screen. The air is "warm," "lively," and smells of old paper, sun-baked earth, and the "electric" energy of a campus. The atmosphere is one of unstoppable, intellectual "Optimism."<br><br>
+
+The subject: A 21-year-old Hausa lady, a "High-Achieving Student" or recent graduate. She is standing in the middle of the path, holding a "Black Graduation Cap" (mortarboard) or a "Roll of Parchment" tied with a red ribbon. She wears a crisp, "Lavender-Purple" Kaftan with white floral embroidery and a matching chiffon hijab. Her face is a masterpiece of "Soaring Optimism"—her chin is tilted high, her eyes are bright and focused on a future beyond the gates, and she has a wide, "fearless" smile. She looks like a woman who just realized that no door is closed to her. She is "Optimistic" because her hard work has finally paid off.<br><br>
+
+Symbolism: The "Lavender-Purple Kaftan" represents "Creativity and Ambition." The "Graduation Cap" symbolizes "Intellectual Victory." The "Stone Bench" represents "A Solid Foundation." The sun hitting her face symbolizes "The Enlightenment of Knowledge." It is the "Optimism" of a woman who is ready to change the world.<br><br>
+
+Lighting: "The Afternoon of Knowledge." The primary light is a brilliant, "creamy-white" afternoon sun filtering through the leaves of the trees, creating "dappled" light and shadow across her face and dress. A secondary, warm "golden" bounce comes from the red-brick walls, making the lavender of her clothes look "vibrant and glowing." The shadows are soft, "playful," and full of depth.<br><br>
+
+Texture: The "rough, ancient" texture of the red bricks, the "light, fluttering" chiffon of her hijab, the "stiff, smooth" paper of the certificate, the "cool, matte" plastic of the tablet, and the "beaming, smooth" texture of her skin.<br><br>
+
+Theme: Optimistic / Graduation / Academic Success / The Future Leader / Knowledge is Power
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8happy">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Generational Legacy" aesthetic, masterpiece quality.<br><br>
+
+The scene: A warm, sun-lit "Traditional Living Room" in a large family compound in Katsina or Sokoto. The background is a soft, comforting blur of framed calligraphic art, plush Persian rugs, and a wooden cradle in the corner. On a low carved table sits a bowl of "Golden Dates" and a steaming glass of "Spiced Tea" (shayi). The air is "warm," "hazy," and smells of sandalwood, brewing cloves, and the "gentle" scent of baby powder. The atmosphere is one of peaceful, long-term "Optimism."<br><br>
+
+The subject: A 32-year-old Hausa man, a "New Father" or a successful head of household. He is sitting on the floor rug, leaning against a large bolster cushion. He wears a majestic, "Sand-Colored" (Kalar Kasa) polished Babban Riga with cream embroidery and a crisp white hula. His face is a masterpiece of "Legacy Optimism"—he is looking down at a "Toddler" (his young son) who is taking his very first, wobbly steps toward him. He has a soft, "soul-deep" smile, his eyes are crinkled with joy, and his arms are wide open to catch the child. He looks like a man who sees his own immortality in the eyes of his son. He is "Optimistic" because the family name is moving forward.<br><br>
+
+Symbolism: The "Sand-Colored Babban Riga" represents "Stability and Earth." The "Toddler's First Steps" symbolize "The Start of a Long Journey." The "Golden Dates" represent "The Sweetness of Life." The "Open Arms" symbolize "Safety and Guidance." It is the "Optimism" of a man who knows he has built a foundation for those who come after him.<br><br>
+
+Lighting: "The Afternoon Glow." The primary light is a soft, "amber-gold" afternoon sun streaming through the high windows, making the polished fabric of his Babban Riga "shimmer" and casting long, "warm" shadows across the rug. A secondary, soft "white" light from a nearby doorway fills the room, making his smile look "luminous." The shadows are soft, "comforting," and deep.<br><br>
+
+Texture: The "intricate, rough" texture of the Persian rug, the "stiff, high-quality" cotton of the Babban Riga, the "smooth, warm" glass of the tea, the "soft, downy" hair of the toddler, and the "beaming, healthy" texture of his skin.<br><br>
+
+Theme: Optimistic / Family Legacy / Fatherhood / The Next Generation / Building a Dynasty
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Green Wall" aesthetic, masterpiece quality.<br><br>
+
+The scene: A thriving, lush "Urban Garden" or a high-tech vertical farm in a modern courtyard in Kano. The background is a soft, vibrant blur of climbing jasmine vines, dripping irrigation pipes, and a modern solar-panel array reflecting the sky. On a sleek teak-wood garden table sits a "Bright-Orange" digital tablet displaying a rising growth chart and a woven basket overflowing with "Perfectly Red" tomatoes. The air is "cool," "moist," and smells of wet jasmine, crushed basil, and the "clean" scent of rain-washed stone. The atmosphere is one of sustainable, green "Optimism."<br><br>
+
+The subject: A 25-year-old beautiful Hausa lady, an "Eco-Entrepreneur" or urban farmer. She is standing among the tall vegetable planters, holding a "Small Green Sapling" in a biodegradable pot. She wears a lightweight, "Lemon-Yellow" linen abaya with dark green floral patterns and a matching silk hijab. Her face is a masterpiece of "Sustainable Optimism"—her eyes are sparkling with life, she has a wide, "invigorated" smile, and her skin is glowing under the bright morning sun. She looks like a woman who is literally growing her own future. She is "Optimistic" because the earth is answering her back.<br><br>
+
+Symbolism: The "Lemon-Yellow Abaya" represents "Happiness and Fresh Ideas." The "Green Sapling" symbolizes "The Potential for Great Change." The "Solar Panels" represent "Clean Energy and Innovation." The "Bountiful Harvest" in the basket symbolizes "Proof of Success." It is the "Optimism" of the woman who knows that nature and technology can work together.<br><br>
+
+Lighting: "The Garden Morning." The primary light is a brilliant, "crisp-white" morning sun filtering through the leaves, creating "dancing" light patterns (komorebi) on her face and dress. A secondary, soft "green" bounce light comes from the surrounding foliage, making her eyes look "vibrant and earthy." The shadows are soft, "vivid," and full of life.<br><br>
+
+Texture: The "rough, fibrous" texture of the seedling pot, the "cool, breathable" linen of the yellow abaya, the "glossy, firm" skin of the tomatoes, the "slick, metallic" surface of the solar panels, and the "beaming, fresh" texture of her skin.<br><br>
+
+Theme: Optimistic / Green Energy / Urban Farming / Sustainability / The Modern Harvester
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10happy">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Fujifilm GFX100 II, 80mm f/1.7 lens, 4:5 vertical aspect ratio, 8K resolution, "The Healing Light" aesthetic, masterpiece quality.<br><br>
+
+The scene: A bright, modern "Private Hospital Room" in Abuja during a clear afternoon. In the background, a soft, comforting blur of a bouquet of "Multi-Colored Tulips," an empty hospital bed with crisp white linens, and a large window overlooking a peaceful city skyline. On a side table sits a "Discharge Paper" with a bold "Fit for Duty" stamp and a small, traditional prayer book. The air is "clean," "purified," and smells of lemon disinfectant, fresh flowers, and the "invigorating" scent of the outdoors. The atmosphere is one of profound, life-affirming "Optimism."<br><br>
+
+The subject: A 35-year-old Hausa man who has just finished a long recovery. He is standing by the window, already dressed to go home. He wears a high-quality "Royal-Blue" Kaftan with intricate silver threadwork and a perfectly shaped matching hula. His face is a masterpiece of "Renewed Optimism"—his eyes are closed as he tilts his face toward the sun, a deep, "soul-filled" breath expanding his chest, and a quiet, powerful smile on his lips. He looks like a man who was given a second chance at life and intends to use every second of it. He is "Optimistic" because he is walking out the door under his own strength.<br><br>
+
+Symbolism: The "Royal-Blue Kaftan" represents "Health, Depth, and Authority." The "Empty Hospital Bed" symbolizes "Victory over Sickness." The "Discharge Paper" represents "Freedom." The "Sun-Drenched Window" symbolizes "The Bright Future Ahead." It is the "Optimism" of the survivor who knows that health is the greatest wealth.<br><br>
+
+Lighting: "The Light of Recovery." The primary light is a massive, "brilliant-white" afternoon sun streaming through the window, catching the silver thread on his Kaftan and making it "sparkle." A secondary, warm "golden" bounce comes from the polished wooden floor, softening his features and making his skin look "radiant and healthy." The shadows are soft, "warm," and vanishing.<br><br>
+
+Texture: The "crisp, starched" cotton of the blue Kaftan, the "soft, waxy" petals of the tulips, the "cool, reflective" glass of the window, the "smooth, matte" paper of the medical report, and the "beaming, refreshed" texture of his skin.<br><br>
+
+Theme: Optimistic / Recovery / Second Chances / Health and Vitality / The Homecoming
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sleepy">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Sleepy</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1sad">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Hasselblad X2D 100C, 80mm f/1.9 lens, 4:5 vertical aspect ratio, 8K resolution, "The Late-Night Study" aesthetic, masterpiece quality.<br><br>
+
+The scene: A cozy, dimly lit home library or a quiet study corner in a luxury apartment in Abuja. The background is a soft, warm blur of floor-to-ceiling bookshelves, a globe, and a glowing "Warm-Amber" desk lamp. On the desk sits a heavy, open law book and a "Half-Empty" ceramic mug of ginger tea with a faint wisp of steam. the air is "still," "heavy," and smells of old paper, dried tea leaves, and the "dusty" sweetness of midnight. The atmosphere is one of heavy-lidded, drifting "Sleepiness."<br><br>
+
+The subject: A 24-year-old Hausa man, a "Dedicated Student" or young lawyer. He is slumped slightly in a leather armchair, his head propped up by one hand, while the other hand still rests on a highlighter. He wears a soft, "Deep-Navy" cotton Kaftan that is slightly rumpled, and his hula is pushed back on his forehead. His face is a masterpiece of "Resistant Sleepiness"—his eyelids are "heavy" and halfway closed, his focus is blurring, and there is a faint, relaxed "droop" to his jaw. He looks like a man who is fighting a losing battle with his own exhaustion. He is "Sleepy" because the spirit is willing but the eyes are failing.<br><br>
+
+Symbolism: The "Half-Empty Mug" represents "Spent Energy." The "Deep-Navy Kaftan" symbolizes "The Quiet of Midnight." The "Pushed-Back Hula" symbolizes "The Breakdown of Formality." The "Blurred Text" in the book represents "Information Overload." It is the "Sleepiness" of the hardworking mind finally shutting down.<br><br>
+
+Lighting: "The Midnight Oil." The primary light is the sharp, "golden-orange" glow from the desk lamp, which casts long, "dreamy" shadows across the room and creates a "shimmer" on the leather of the chair. A secondary, weak "cool-blue" moonlight filters through a small gap in the curtains, hitting the side of his neck. The shadows are deep, "velvety," and heavy.<br><br>
+
+Texture: The "crinkled, worn" pages of the book, the "matte, soft" cotton of the navy Kaftan, the "creased, pebbled" leather of the chair, the "smooth, glazed" ceramic of the mug, and the "heavy, soft" texture of his skin.<br><br>
+
+Theme: Sleepy / Late Night Study / Exhaustion / The Price of Ambition / Midnight Peace
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2sad">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Rain-Soaked Afternoon" aesthetic, masterpiece quality.<br><br>
+
+The scene: A serene, "dimly lit" bedroom in a quiet house in Kaduna during a heavy afternoon rainstorm. The background is a soft, cool blur of a window with "silver-streaked" rain droplets and a massive, dark-wood wardrobe. A ceiling fan spins at a "low, hypnotic" speed above. The air is "cool," "moist," and smells of wet jasmine from the garden, damp concrete, and the "clean" scent of freshly laundered cotton. The atmosphere is one of heavy, irresistible "Afternoon Sleepiness."<br><br>
+
+The subject: A 23-year-old beautiful Hausa lady, 'Hauwa,' who has just succumbed to the weather. She is curled up on a plush, "Cream-White" velvet chaise lounge by the window. She wears a soft, "Peach-Pink" lace Kaftan and a matching silk hijab that is draped loosely over her shoulder. Her face is a masterpiece of "Deep Sleepiness"—her eyes are closed tight, her long lashes are resting on her cheeks, and her mouth is slightly parted in a "silent, rhythmic" breath. She looks like a woman who was reading a book until the sound of the rain turned into a lullaby. She is "Sleepy" because the world outside is too loud, and the room inside is too quiet.<br><br>
+
+Symbolism: The "Peach-Pink Kaftan" represents "Softness and Comfort." The "Rain-Streaked Window" symbolizes "A Barrier from the Busy World." The "Slow-Spinning Fan" represents "The Rhythm of Rest." The "Closed Eyes" symbolize "Total Trust." It is the "Sleepiness" of a soul at peace with the rain.<br><br>
+
+Lighting: "The Rainy Gloom." The primary light is a soft, "cool-blue" natural light coming from the window, hitting her face and making the peach lace look "translucent and delicate." A secondary, very weak "warm-amber" glow from a small night-lamp in the corner catches the "shimmer" of her silk hijab. The shadows are soft, "hazy," and blue-toned.<br><br>
+
+Texture: The "plush, deep" velvet of the chaise lounge, the "delicate, intricate" lace of her peach Kaftan, the "cold, smooth" glass of the rain-streaked window, the "silky, light" chiffon of her hijab, and the "supple, relaxed" texture of her skin.<br><br>
+
+Theme: Sleepy / Afternoon Nap / Rain and Rest / Peaceful Slumber / Domestic Comfort
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3sad">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Fujifilm GFX100 II, 80mm f/1.7 lens, 4:5 vertical aspect ratio, 8K resolution, "The Early Morning Pause" aesthetic, masterpiece quality.<br><br>
+
+The scene: A cozy, dim family living room in a traditional Hausa home in Kano during the "Golden Hour" of early morning. The background is a soft, comforting blur of plush Persian rugs, traditional geometric patterned tapestries on the walls, and a large, wooden grandfather clock. On a low, carved wooden table sits a "Half-Empty" tray of 'Fura da Nono' and a set of "Ornate Brass Tea Glasses" with a 'Faint' trace of evaporated spiced tea. The air is "stagnant," "warm," and smells of incense (turaren wuta), brewing 'Shayi' (spiced tea), and the "heavy," comforting scent of a household deep in sleep. The atmosphere is one of profound, resisting "Sleepiness."<br><br>
+
+The subject: A 27-year-old beautiful Hausa woman, 'Aisha,' who has succumbed to the dawn. She is slumped on a large, "Crimson-Red" velvet floor cushion, her head propped against the high back of a carved wooden chair. She wears a rich, "Deep-Sapphire Blue" polished cotton Kaftan that is slightly wrinkled from her slump, and her black chiffon hijab is loose, and her hula has fallen onto the cushion beside her. Her face is a masterpiece of "Sunrise Sleepiness"—her eyes are heavy-lidded, glazed, and staring blankly into the distance, and her mouth is slightly parted in a silent, relaxed breath. She is "Sleepy" because the household is still, and her duties haven't yet called her.<br><br>
+
+Symbolism: The "Empty Brass Glass" represents "Depleted Energy" and "Pausable Duties." The "Crimson-Red Cushion" symbolizes "Traditional Comfort and Maternal Warmth." The "Fallen Hula" represents "Loss of Formal Structure." The grandfather clock represents "Time Suspended." It is the "Sleepiness" of the matriarch caught in the pause of her morning.<br><br>
+
+Lighting: "The Dawn Chiaroscuro." The primary light is a soft, "amber-gold" morning sun filtering through a small window to the left, which casts long, "dreamy" shadows across the floor and creates a "shimmer" on the texture of her velvet cushion and her polished Kaftan. A secondary, weak "cool-blue" morning twilight filters through the courtyard door to the right, creating a contrast on the side of her neck and cheek. The shadows are deep, "velvety," and heavy, enveloping the room in a state of rest.<br><br>
+
+Texture: The "soft, plush" velvet of the crimson cushion, the "smooth, cool" brass of the tea glass, the "matte, rich" texture of the sapphire blue Kaftan, the "rough, woven" Persian rug, the "fine, light" chiffon of her hijab, and the "supple, soft" texture of her skin.<br><br>
+
+Theme: Sleepy / Early Morning Pause / Exhaustion from Caregiving / Domestic Quiet / Matriarchal Rest
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Friday Afternoon" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sun-drenched, quiet "Majalisa" (traditional outdoor seating area) or a shaded veranda of a family house in Sokoto. The background is a soft, hazy blur of a white-washed wall and the shadow of a large Neem tree dancing on the ground. On a woven plastic mat (tabarma) sits a "discarded" newspaper and a small, silver radio that is whispering a slow Hausa program. The air is "heavy," "hot," and smells of dry earth, the "sweetness" of a recently finished meal of Tuwo, and the "faint" scent of laundry drying in the sun. The atmosphere is one of profound, post-lunch "Sleepiness."<br><br>
+
+The subject: A 45-year-old Hausa man, a "Family Elder" or businessman. He is reclining against a large, "Forest-Green" leather bolster cushion. He wears a voluminous, "Cream-White" Babban Riga with white-on-white embroidery. His hula is tilted significantly over his eyes to block the light. His face is a masterpiece of "Contented Sleepiness"—his chin is tucked into his chest, his hands are folded loosely over his stomach, and he is letting out a "deep, rhythmic" snore. He looks like a man who has fulfilled his Friday obligations and has surrendered to the heat. He is "Sleepy" because the afternoon sun is a heavy blanket.<br><br>
+
+Symbolism: The "Tilted Hula" represents "Privacy in Public." The "Forest-Green Bolster" symbolizes "Rest and Growth." The "Discarded Newspaper" represents "The World on Hold." The "White Babban Riga" symbolizes "The Purity of Rest." It is the "Sleepiness" of a man who has earned his peace.<br><br>
+
+Lighting: "The Siesta Sun." The primary light is a harsh, "brilliant-white" afternoon sun hitting the courtyard, but it is "filtered" by the veranda roof, creating a "cool, striped" shadow across his body. A secondary, warm "golden" bounce from the sandy floor illuminates the underside of his jaw and the embroidery of his clothes. The shadows are "sharp," "cool," and inviting.<br><br>
+
+Texture: The "stiff, starched" texture of the Babban Riga, the "rough, woven" plastic of the mat, the "smooth, cool" leather of the bolster, the "dry, papery" texture of the newspaper, and the "beaming, relaxed" texture of his weathered skin.<br><br>
+
+Theme: Sleepy / Post-Friday Prayer / The Afternoon Slump / Seniority and Rest / Tropical Heat
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Midnight Nursery" aesthetic, masterpiece quality.<br><br>
+
+The scene: A soft, dimly lit "Nursery" or a quiet corner of a master bedroom in a modern home in Abuja. The background is a soft, dreamy blur of a white wooden crib, a "Plush Teddy Bear," and a glowing star-shaped nightlight. On a small side table sits a "Half-Full" baby bottle and a discarded "Soft Muslin Cloth." The air is "warm," "still," and smells of lavender baby lotion, warm milk, and the "gentle" scent of a sleeping infant. The atmosphere is one of bone-deep, selfless "Sleepiness."<br><br>
+
+The subject: A 26-year-old beautiful Hausa lady, a "New Mother." She is sitting in a wide, "Dove-Grey" upholstered rocking chair, her head tilted back against the headrest. She wears a comfortable, "Soft-Lilac" jersey-knit Kaftan and a simple black jersey hijab that has slipped slightly to one side. Her face is a masterpiece of "Maternal Sleepiness"—there are faint "dark circles" under her eyes, her long lashes are shadowed against her cheek, and she has a "pale, exhausted" glow. One hand is resting protectively on the sleeping infant in her lap, while her other hand hangs limp over the armrest. She looks like a woman who hasn't slept in three days but is finally drifting off. She is "Sleepy" because love is exhausting.<br><br>
+
+Symbolism: The "Soft-Lilac Kaftan" represents "Tenderness and Patience." The "Half-Full Bottle" symbolizes "The Never-Ending Cycle of Care." The "Rocking Chair" represents "The Rhythm of Peace." The "Slipped Hijab" symbolizes "The Setting Aside of Public Self for Private Sacrifice." It is the "Sleepiness" of the mother who only rests when her world is safe.<br><br>
+
+Lighting: "The Nightlight Glow." The primary light is a soft, "warm-amber" glow from the star nightlight, hitting the side of her face and the infant's head. A secondary, very faint "silvery" moonlight filters through the sheer curtains, outlining her silhouette. The shadows are "velvety," "long," and extremely soft.<br><br>
+
+Texture: The "nubby, soft" fabric of the rocking chair, the "stretchy, smooth" jersey-knit of her lilac Kaftan, the "warm, plastic" sheen of the baby bottle, the "fluffy, matted" fur of the teddy bear, and the "delicate, translucent" texture of her tired skin.<br><br>
+
+Theme: Sleepy / New Motherhood / Midnight Feedings / Pure Exhaustion / The Quiet Bond
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6sad">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Fujifilm GFX100 II, 45mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Long Commute" aesthetic, masterpiece quality.<br><br>
+
+The scene: The plush, tan-leather interior of a "Luxury SUV" or a chauffeured sedan in Abuja's late-afternoon traffic. The background is a soft, high-speed blur of golden sunlight hitting the glass window, "glancing" off the urban landscape outside. On the center armrest sits a "Closed Laptop" with a glowing green charging light and a "Gold-Trimmed" leather planner. The air is "cool," "filtered," and smells of expensive car leather, a faint hint of "Citrus" air freshener, and the "electric" hum of the air conditioner. The atmosphere is one of heavy, rhythmic "Sleepiness."<br><br>
+
+The subject: A 33-year-old handsome Hausa man, a "Corporate Executive" or government official. He is leaning his head against the "cool, tinted" glass of the window, his body slightly slumped in the passenger seat. He wears a crisp, "Midnight-Blue" Babban Riga with silver embroidery and a matching hula that is tilted forward, almost touching his nose. His face is a masterpiece of "Commuter Sleepiness"—his jaw is relaxed, his eyes are "firmly shut" with a slight furrow in his brow, and his breathing is deep and steady. He looks like a man who has carried the weight of a boardroom all day and has finally surrendered to the car's vibration. He is "Sleepy" because the work is done, but the road is long.<br><br>
+
+Symbolism: The "Midnight-Blue Babban Riga" represents "Professionalism and the End of Day." The "Closed Laptop" symbolizes "The Mental Shutdown." The "Tinted Window" represents "A Private Sanctuary in Public." The "Traffic Blur" symbolizes "The World Passing By." It is the "Sleepiness" of the high-achiever who only rests when the engine is running.<br><br>
+
+Lighting: "The Golden Transit." The primary light is the "harsh, golden-orange" setting sun cutting through the tinted window, creating "warm, flickering" patterns across his chest and face. A secondary, soft "cool-blue" light from the dashboard display hits his jawline. The shadows are "deep," "moving," and rhythmic.<br><br>
+
+Texture: The "pebbled, cold" texture of the tan leather seat, the "stiff, textured" embroidery of the blue Babban Riga, the "smooth, brushed-metal" lid of the laptop, the "glossy, vibrating" glass of the window, and the "beaming, weary" texture of his skin.<br><br>
+
+Theme: Sleepy / The Executive / End of a Workday / Traffic Lullaby / Quiet Success
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7sad">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Sunday Morning" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sun-drenched, airy "Modern Living Room" in a duplex in Abuja or Kaduna during a slow Sunday morning. The background is a soft, bright blur of a large glass balcony door, a tall "Fiddle-Leaf Fig" plant, and a wide-screen TV that has "automatically" turned off, leaving a dark, reflective surface. On the plush grey carpet sits a "Half-Eaten" bowl of Masa and a glass of "Cold Zobo" (Hibiscus tea) with a few melting ice cubes. The air is "warm," "fresh," and smells of fried rice, laundry detergent, and the "crisp" scent of a morning breeze. The atmosphere is one of heavy, blissful "Post-Breakfast Sleepiness."<br><br>
+
+The subject: A 29-year-old handsome Hausa man, a "Relaxed Husband" or professional on his day off. He is sprawled on a large, "Navy-Blue" L-shaped sectional sofa. He wears a simple, "White-on-White" patterned Kaftan and a soft matching hula that has fallen onto the sofa next to him. His face is a masterpiece of "Lazy Sleepiness"—his head is tilted back on the headrest, his eyes are "heavy-lidded" and almost closed, and he has a soft, "food-coma" smile on his lips. One hand is lazily holding a "TV Remote" that is slipping from his fingers. He looks like a man who planned to watch the news but was defeated by the comfort of his own home. He is "Sleepy" because the weekend is finally here.<br><br>
+
+Symbolism: The "Slipping TV Remote" represents "Letting Go of Control." The "White-on-White Kaftan" symbolizes "Purity and Weekend Rest." The "Melting Ice Cubes" represent "Time Slowing Down." The "Fallen Hula" symbolizes "The End of Formality." It is the "Sleepiness" of a man who has nowhere else to be.<br><br>
+
+Lighting: "The High Morning." The primary light is a massive, "blindingly white" sun pouring through the balcony door, making the white of his Kaftan "glow" and creating "sharp, high-contrast" shadows on the floor. A secondary, soft "blue" fill light from the room's interior keeps the shadows "airy" and "light." The shadows are "clean," "geometric," and calm.<br><br>
+
+Texture: The "nubby, textured" fabric of the navy sofa, the "crisp, embroidered" cotton of the white Kaftan, the "cold, condensation-covered" glass of Zobo, the "waxy, green" leaves of the plant, and the "beaming, smooth" texture of his relaxed skin.<br><br>
+
+Theme: Sleepy / Sunday Morning / Food Coma / Domestic Bliss / The Slow Life
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Midnight Tailor" aesthetic, masterpiece quality.<br><br>
+
+The scene: A cluttered, vibrant "Fashion Atelier" or sewing room in a bustling market area like Wuse or Sabon Gari at 2:00 AM. The background is a soft, colorful blur of "Industrial Sewing Machines," hanging rolls of "Asho-Oke" and "Atampa" fabrics, and a mannequin wearing a half-finished gala gown. On a wooden cutting table sits a "Dull-Steel" pair of heavy tailoring shears and a "Cold Plate" of Masa with peanut cake (Kulikuli). The air is "stale," "warm," and smells of machine oil, burnt thread, and the "faint" scent of a mosquito coil. The atmosphere is one of heavy-eyed, creative "Sleepiness."<br><br>
+
+The subject: A 28-year-old beautiful Hausa lady, a "High-End Tailor" or fashion designer. She is sitting on a low stool, her elbows resting on her knees. She wears a simple, "Turmeric-Orange" cotton Kaftan and a dark brown chiffon hijab that is wrapped tightly for work but is now "skewed" to one side. Her face is a masterpiece of "Designer Sleepiness"—her eyes are "heavy-lidded," "glazing over" as she stares at a complex embroidery pattern, and her hand is supporting her chin, causing her cheek to "bunch up" slightly. She looks like a woman who is one stitch away from falling asleep on her machine. She is "Sleepy" because the wedding season has no mercy.<br><br>
+
+Symbolism: The "Turmeric-Orange Kaftan" represents "Dwindling Creative Fire." The "Heavy Shears" symbolize "The Weight of the Craft." The "Half-Finished Gown" represents "The Unfinished Dream." The "Skewed Hijab" symbolizes "The Exhaustion of Perfection." It is the "Sleepiness" of a woman whose hands are fast but whose eyes are slow.<br><br>
+
+Lighting: "The Fluorescent Night." The primary light is a harsh, "flickering-white" fluorescent tube directly above her, creating "sharp, clinical" shadows on the table and making the orange of her dress "pop" against the shadows. A secondary, warm "amber" glow comes from a small desk lamp near the machine, catching the "metallic sheen" of the needles. The shadows are "deep," "grainy," and heavy.<br><br>
+
+Texture: The "rough, metallic" texture of the sewing machine, the "stiff, woven" Atampa fabric, the "cool, smooth" steel of the shears, the "matte, crumpled" cotton of her orange Kaftan, and the "beaming, tired" texture of her skin.<br><br>
+
+Theme: Sleepy / The Midnight Tailor / Creative Burnout / The Hustle / Wedding Season
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 85mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Late-Night Flight" aesthetic, masterpiece quality.<br><br>
+
+The scene: The "First-Class Cabin" of an international flight departing from Abuja (NAIA) at 3:00 AM. The background is a soft, deep-blue blur of a darkened cabin, tiny "star-like" ceiling lights, and a window reflecting the faint "blinking" wing-light against the black sky. On the wood-grain side console sits a "Champagne Flute" filled with sparkling apple juice and a pair of "Noise-Canceling Headphones" with a glowing white power light. The air is "thin," "recycled," and smells of expensive upholstery, "Aromatic Lavender" wipes, and the "sterile" chill of altitude. The atmosphere is one of weightless, drifting "Sleepiness."<br><br>
+
+The subject: A 22-year-old beautiful Hausa lady, a "Daughter of Royalty" or a young traveler. She is reclined deeply in a "Cream-Leather" pod seat, a heavy "Midnight-Grey" wool blanket pulled up to her chin. She wears a soft, "Silver-Grey" silk abaya and a matching pashmina wrap around her neck. Her face is a masterpiece of "Jet-Lag Sleepiness"—her eyes are "fluttering" between open and shut, her head is tilted to the side against a small silk pillow, and her expression is one of "drunken" exhaustion. She looks like a woman who has crossed three time zones and can no longer remember what day it is. She is "Sleepy" because her body is in Abuja, but her mind is already in London.<br><br>
+
+Symbolism: The "Silver-Grey Abaya" represents "The Mist of Dreams." The "Noise-Canceling Headphones" symbolize "Silence in Chaos." The "Midnight-Grey Blanket" represents "The Weight of Sleep." The "Blinking Wing-Light" represents "The Passage of Time." It is the "Sleepiness" of the traveler suspended in the clouds.<br><br>
+
+Lighting: "The Cabin Glow." The primary light is a soft, "neon-blue" ambient mood light from the cabin floor, hitting the edge of her seat and making the silver silk "shimmer." A secondary, warm "amber" reading light from above focuses a narrow beam on her closed eyes, making her skin look "porcelain and translucent." The shadows are "deep-blue," "cool," and vast.<br><br>
+
+Texture: The "pebbled, cool" leather of the seat, the "scratchy, warm" wool of the blanket, the "smooth, liquid" silk of her abaya, the "cold, thin" glass of the flute, and the "beaming, pale" texture of her tired skin.<br><br>
+
+Theme: Sleepy / Jet Lag / Luxury Travel / The Long Haul / Suspended Time
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 100mm f/2.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Grandmother's Peace" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, shaded "Veranda" of a grand family house in Zaria or Katsina during the quiet hour before Maghrib prayer. The background is a soft, warm blur of a heavy carved-wooden door, a prayer mat rolled up in the corner, and a small charcoal stove (murfu) with dying embers. On a low brass tray sits a half-peeled "Sweet Orange" and a small "Antique Radio" whispering old Hausa folk songs. The air is "heavy," "cooling," and smells of woodsmoke, citrus peel, and the "dusty" sweetness of the evening breeze. The atmosphere is one of profound, earned "Senior Sleepiness."<br><br>
+
+The subject: A 70-year-old beautiful Hausa grandmother (Gogo), a matriarch of the family. She is sitting in a low "Woven-Rattan" reclining chair. She wears a soft, "Indigo-Dyed" (Kura) cotton wrapper and a matching headtie that is loose, showing a glimpse of her "Silvery-White" hair. Her face is a masterpiece of "Timeless Sleepiness"—it is a map of a thousand smiles, with her eyes closed in a "gentle" slumber, her chin resting on her chest, and a set of "Wooden Tasbih" (prayer beads) slipping slowly through her relaxed fingers. She looks like a woman who has seen it all and has finally decided to close her eyes to the world. She is "Sleepy" because her work for the generations is done.<br><br>
+
+Symbolism: The "Indigo-Dyed Wrapper" represents "Ancient Wisdom and Depth." The "Slipping Tasbih" symbolizes "Prayer that has become Breath." The "Dying Embers" represent "The Gentle End of a Day." The "Antique Radio" symbolizes "The Voices of the Past." It is the "Sleepiness" of a life well-lived.<br><br>
+
+Lighting: "The Dusk Glow." The primary light is a deep, "burning-orange" setting sun hitting her from the side, making her silver hair "glow like a halo" and highlighting every beautiful line of her face. A secondary, soft "purple" twilight light fills the shadows of the veranda. The shadows are "long," "tender," and peaceful.<br><br>
+
+Texture: The "coarse, hand-woven" rattan of the chair, the "stiff, traditional" Indigo cotton, the "smooth, worn" wood of the beads, the "pithy, rough" orange peel, and the "parchment-soft, beaming" texture of her aged skin.<br><br>
+
+Theme: Sleepy / Seniority / The Matriarch / Earned Rest / The Cycle of Life
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="energized">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Energized</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 24mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Morning Surge" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vibrant, mist-covered "Polo Field" or a high-end athletic track in Kaduna or Abuja at 6:00 AM. The background is a soft, "electric" blur of a rising white sun, dew-covered green grass, and the distant silhouette of a galloping horse. On a modern concrete bench sits a "Fluorescent-Green" smart water bottle with condensation "beading" on the side and a high-tech "Smartwatch" displaying a surging heart rate. The air is "sharp," "cold," and smells of wet grass, "Menthol" rub, and the "ozone" scent of a new day. The atmosphere is one of explosive, physical "Energized" power.<br><br>
+
+The subject: A 27-year-old handsome Hausa man, a "Modern Athlete" or polo player. He is in the middle of a "Powerful Stretch," reaching for the sky with his chest expanded. He wears a high-performance, "Electric-Orange" compression shirt under a lightweight "Jet-Black" tracksuit vest, with a matching black hula tucked into his gym bag nearby. His face is a masterpiece of "Raw Energy"—his eyes are "wide and piercing," his nostrils are flared as he drinks in the cold air, and his skin is "slick" with a thin layer of sweat that catches the morning light. He looks like a man who has just woken up the world. He is "Energized" because his blood is finally moving.<br><br>
+
+Symbolism: The "Electric-Orange Shirt" represents "Vitality and Fire." The "Rising Sun" symbolizes "A Rebirth of Strength." The "Condensation on the Bottle" represents "Cooling the Internal Heat." The "Wide-Angle Lens" (24mm) represents "An Expanded Horizon." It is the "Energy" of a body that refuses to stay still.<br><br>
+
+Lighting: "The Dawn Strike." The primary light is a "blinding, cool-white" sun breaking over the horizon, hitting him from behind to create a "sharp, glowing" rim-light around his muscles and silhouette. A secondary, "pale-blue" reflected light from the mist illuminates his face, making his eyes look "crystalline." The shadows are "short," "intense," and disappearing.<br><br>
+
+Texture: The "slick, synthetic" texture of the compression gear, the "rough, cold" concrete of the bench, the "beaded, wet" surface of the water bottle, the "crinkled, damp" blades of grass, and the "vibrant, pulsing" texture of his skin.<br><br>
+
+Theme: Energized / Morning Workout / Peak Performance / The Athlete / Awakening
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alone">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Creative Spark" aesthetic, masterpiece quality.<br><br>
+
+The scene: A high-tech, sun-lit "Design Studio" or a modern architect's office in Abuja’s Central Business District. The background is a soft, vibrant blur of a large "Ultrawide Monitor" showing complex 3D blueprints, a "Mood Board" pinned with fabric swatches, and a shelf of sleek architectural models. On a white marble desk sits a "Double-Shot Espresso" in a tiny ceramic cup and a "Glowing" digital stylus resting on a tablet. The air is "sharp," "ozonated," and smells of freshly ground coffee, "Ink," and the "warm" scent of high-end electronics. The atmosphere is one of buzzing, intellectual "Energized" focus.<br><br>
+
+The subject: A 26-year-old beautiful Hausa lady, a "Lead Architect" or tech visionary. She is leaning over her desk, pointing at a blueprint with a "sharp, decisive" gesture. She wears a crisp, "Electric-Yellow" tailored silk blazer over a white turtleneck and a matching yellow silk hijab. Her face is a masterpiece of "Mental Energy"—her eyes are wide and "dancing" with a sudden realization, her eyebrows are arched in excitement, and she has a "knowing," brilliant smile. She looks like a woman who just solved a problem no one else could. She is "Energized" because the idea is finally alive.<br><br>
+
+Symbolism: The "Electric-Yellow Blazer" represents "Intellectual Clarity and Joy." The "Double-Shot Espresso" symbolizes "Concentrated Fuel." The "Architectural Model" represents "The Future Built by Hand." The "Ultrawide Monitor" symbolizes "Peripheral Vision and Scope." It is the "Energy" of a mind that is operating at 100%.<br><br>
+
+Lighting: "The Studio Flood." The primary light is a massive, "crisp-white" midday sun pouring through the studio windows, making the marble desk "glare" and the yellow silk "vibrate." A secondary, "cool-blue" light from the monitors fills the shadows of her face, giving her an "ethereal, tech-forward" glow. The shadows are "minimal," "sharp," and energetic.<br><br>
+
+Texture: The "cold, polished" marble of the desk, the "smooth, liquid" silk of her yellow blazer, the "grainy, dark" crema of the espresso, the "matte, tech" surface of the tablet, and the "beaming, smooth" texture of her skin.<br><br>
+
+Theme: Energized / The Innovator / Breakthrough Moment / Tech-Savvy / Professional Fire
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Fujifilm GFX100 II, 35mm f/1.4 lens, 4:5 vertical aspect ratio, 8K resolution, "The Market Hustle" aesthetic, masterpiece quality.<br><br>
+
+The scene: A bustling, colorful "Modern Open-Air Market" or a trendy shopping plaza in Kano or Lagos during the mid-morning rush. The background is a soft, vibrant blur of colorful umbrellas, stacks of "Vivid Atampa" fabrics, and the "electric" movement of people and delivery bikes. On a sleek metal cafe table sits a "Neon-Blue" energy drink can with frost "clinging" to the sides and a smartphone with "Rapidly Scrolling" notifications. The air is "warm," "thick," and smells of roasted suya spice, diesel exhaust, and the "zesty" scent of peeled oranges. The atmosphere is one of high-speed, commercial "Energized" hustle.<br><br>
+
+The subject: A 29-year-old handsome Hausa man, a "Serial Entrepreneur" or a high-volume trader. He is in mid-stride, holding two large "Glossy Shopping Bags" in one hand while speaking into a Bluetooth earpiece. He wears a sharp, "Mint-Green" polished cotton Kaftan and a crisp white hula tilted "aggressively" forward. His face is a masterpiece of "Ambition Energy"—his eyes are "sharp and scanning," his smile is "fast and toothy," and he is leaning forward as if his body is moving faster than his feet. He looks like a man who is closing three deals at once. He is "Energized" because the market is moving and he is leading the race.<br><br>
+
+Symbolism: The "Mint-Green Kaftan" represents "Growth and Fresh Money." The "Bluetooth Earpiece" symbolizes "Constant Connectivity." The "Neon-Blue Can" represents "Artificially Accelerated Drive." The "Glossy Bags" symbolize "The Tangible Results of Labor." It is the "Energy" of a man who thrives in the chaos of commerce.<br><br>
+
+Lighting: "The High-Noon Surge." The primary light is a "blazing-white" tropical sun directly overhead, making the polished fabric of his Kaftan "shimmer" and casting "short, punchy" shadows that emphasize his movement. A secondary, warm "terracotta" bounce from the ground illuminates his jawline. The shadows are "dark," "defined," and full of momentum.<br><br>
+
+Texture: The "slick, glossy" plastic of the shopping bags, the "stiff, cool" cotton of the mint Kaftan, the "matte, cold" aluminum of the can, the "rough, sun-baked" pavement, and the "beaming, firm" texture of his skin.<br><br>
+
+Theme: Energized / The Hustle / Commercial Power / Market Dynamics / Success in Motion
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alone">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Hasselblad X2D 100C, 35mm f/1.4 lens, 4:5 vertical aspect ratio, 8K resolution, "The Live Performance" aesthetic, masterpiece quality.<br><br>
+
+The scene: A state-of-the-art "Music Recording Studio" or a vibrant soundstage in Lagos. The background is a soft, electric blur of "Sound-Dampening Foam" in geometric patterns, a glowing mixing console with "pulsing" green and red LED meters, and a silver microphone on a boom arm. On a high stool sits a "Half-Eaten" energy bar and a tablet displaying "Scrolling Lyrics" in a bold font. The air is "cool," "vibrating," and smells of ozone, "New Carpet," and the "electric" heat of studio monitors. The atmosphere is one of creative, rhythmic "Energized" fire.<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady, a "Rising Afro-Pop Star" or soulful singer. She is standing with one hand on a large set of "Studio Headphones" and the other hand gesturing "wildly" as she hits a high note. She wears a modern, "Electric-Indigo" silk Kaftan-dress with silver-beaded fringes that are "swinging" with her movement, and a matching silk hijab tied in a trendy, "tucked-back" style. Her face is a masterpiece of "Vocal Energy"—her eyes are "squeezed shut" in passion, her neck muscles are "taut," and her skin is "glowing" with the effort of the performance. She looks like a woman who is pouring her entire soul into the microphone. She is "Energized" because the rhythm is in her blood.<br><br>
+
+Symbolism: The "Electric-Indigo Kaftan" represents "Deep Creativity and Electric Presence." The "Silver-Beaded Fringes" symbolize "The Vibration of Sound." The "Glowing LED Meters" represent "The Pulse of Life." The "Studio Headphones" symbolize "Total Immersion." It is the "Energy" of a voice that refuses to be quiet.<br><br>
+
+Lighting: "The Studio Neon." The primary light is a sharp, "Electric-Pink" and "Cyan" backlight from the acoustic panels, creating a "vivid, dual-tone" rim-light around her silhouette and making the silver beads "sparkle" like stars. A secondary, warm "amber" spotlight hits her face, making her features look "sculpted" and intense. The shadows are "deep," "colorful," and rhythmic.<br><br>
+
+Texture: The "slick, flowing" silk of the indigo Kaftan, the "rough, porous" texture of the acoustic foam, the "cool, brushed-metal" of the microphone, the "smooth, liquid" sheen of her hijab, and the "beaming, damp" texture of her skin.<br><br>
+
+Theme: Energized / The Performer / Creative Flow / Musical Passion / Modern Hausa Culture
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alone">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Boardroom Victory" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sleek, glass-walled "Executive Boardroom" in a skyscraper in Abuja’s Central Business District. The background is a soft, high-octane blur of a "Digital Stock Ticker" running across a wall-mounted screen, a long mahogany table, and a wide window showing a "fast-moving" cityscape below. On the table sits a "Wide-Open" black leather portfolio with a silver pen and a glass of "Vibrant Orange" freshly squeezed juice with ice cubes "clinking." The air is "chilled," "filtered," and smells of expensive cologne, "Fresh Paper," and the "metallic" tang of success. The atmosphere is one of sharp, triumphant "Energized" focus.<br><br>
+
+The subject: A 31-year-old handsome Hausa man, a "Venture Capitalist" or high-stakes negotiator. He is leaning forward over the table, his hands "planted firmly" on the wood. He wears a sharp, "Electric-Cyan" polished cotton Babban Riga with white geometric embroidery and a matching white-on-white hula. His face is a masterpiece of "Winning Energy"—his eyes are "wide and intense," his smile is "sharp and predatory," and he is mid-sentence, radiating "pure, unfiltered" confidence. He looks like a man who just closed the deal of a lifetime and is already looking for the next one. He is "Energized" because he just won the game.<br><br>
+
+Symbolism: The "Electric-Cyan Babban Riga" represents "Clarity and High-Frequency Ambition." The "Silver Pen" symbolizes "The Power of the Signature." The "Orange Juice" represents "Pure Natural Fuel." The "Glass Walls" symbolize "Transparency and Vision." It is the "Energy" of a man who owns the room.<br><br>
+
+Lighting: "The Power Glow." The primary light is a "crisp, blue-white" midday sun pouring through the glass walls, making the Cyan fabric "glow" and creating "sharp, high-contrast" shadows on the table. A secondary, warm "amber" downlight from the ceiling focuses on his hands and the portfolio. The shadows are "clean," "aggressive," and short.<br><br>
+
+Texture: The "cool, polished" mahogany of the table, the "stiff, textured" cotton of the Cyan Babban Riga, the "smooth, cold" glass of juice, the "supple, pebbled" leather of the portfolio, and the "beaming, firm" texture of his skin.<br><br>
+
+Theme: Energized / The Dealmaker / Corporate Triumph / High Stakes / Success
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alone">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Fujifilm GFX100 II, 32-64mm f/4 lens, 4:5 vertical aspect ratio, 8K resolution, "The Culinary Fire" aesthetic, masterpiece quality.<br><br>
+
+The scene: A high-end, "Industrial-Chic" restaurant kitchen in Abuja during the frantic dinner rush. The background is a soft, "sizzling" blur of stainless steel counters, copper pots hanging from the ceiling, and a large "Wood-Fired Oven" with orange flames licking the roof. On a marble prep station sits a "Bright-Green" bundle of fresh shobo peppers and a "Smeared" wooden cutting board with a heavy cleaver. The air is "thick," "swirling," and smells of toasted spices, "charred" meat, and the "electric" heat of a professional stove. The atmosphere is one of high-pressure, creative "Energized" heat.<br><br>
+
+The subject: A 28-year-old beautiful Hausa lady, a "Celebrity Chef" or culinary artist. She is in mid-action, "tossing" a pan of spicy Jollof rice so that a few grains are captured "suspended" in mid-air. She wears a tailored, "Electric-Red" chef’s jacket made of stiff cotton with black piping, and a black silk hijab tucked tightly into the collar. Her face is a masterpiece of "Kitchen Energy"—her eyes are "fixed and fierce" on the pan, her forehead has a "shimmer" of heat-sweat, and her expression is one of "pure, joyous" intensity. She looks like a woman who is conducting an orchestra of flavor. She is "Energized" because the restaurant is full and the fire is hot.<br><br>
+
+Symbolism: The "Electric-Red Jacket" represents "Passion, Heat, and Command." The "Suspended Rice" symbolizes "Perfect Timing." The "Copper Pots" represent "Heritage and Quality." The "Flame" symbolizes "The Spark of Creation." It is the "Energy" of a woman who thrives in the heat of the moment.<br><br>
+
+Lighting: "The Inferno Glow." The primary light is the "hot-orange" radiance from the wood-fired oven to her left, which paints her face in "dramatic, warm" tones and makes the red of her jacket "vibrate." A secondary, "cool-white" LED task light from above catches the "steam" rising from the pan. The shadows are "deep," "flickering," and intense.<br><br>
+
+Texture: The "brushed, cold" stainless steel, the "rough, charred" wood in the oven, the "stiff, starched" cotton of her red jacket, the "wet, glossy" surface of the peppers, and the "beaming, flushed" texture of her skin.<br><br>
+
+Theme: Energized / The Chef / High-Pressure Creativity / Culinary Excellence / Modern Ambition
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alone">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Nikon Z9, 35mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Tech Launch" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sleek, modern "Co-working Space" or a tech startup hub in Lagos or Abuja at dusk. The background is a soft, neon-lit blur of "Glass-Partitioned" meeting rooms, a glowing "Digital Clock" showing a countdown, and a whiteboard covered in "Rapidly Scribbled" code and flowcharts. On a shared wooden table sits a "Neon-Green" laptop with a glowing "Pulse" sticker and a glass of "Vibrant Beetroot" juice with a spiral straw. The air is "electric," "humming," and smells of soldering iron, "Fresh Coffee," and the "synthetic" heat of computer servers. The atmosphere is one of high-speed, collaborative "Energized" brainpower.<br><br>
+
+Subject: A 25-year-old handsome Hausa man, a "Software Engineer" or a "Startup Founder." He is standing with a "high-five" frozen in mid-air toward a teammate (out of frame), his body "coiled" with excitement. He wears a high-quality, "Electric-Cobalt Blue" slim-fit Kaftan with black leather piping and a matching white-on-white hula. His face is a masterpiece of "Digital Energy"—his eyes are "sparkling" with a breakthrough, his mouth is open in a "triumphant" shout, and his skin is "radiant" under the screen glow. He looks like a man who just pushed the "Enter" key on a world-changing app. He is "Energized" because the code finally compiled.<br><br>
+
+Symbolism: The "Electric-Cobalt Kaftan" represents "High-Frequency Intelligence and Trust." The "Countdown Clock" symbolizes "The Pressure of Innovation." The "Neon-Green Laptop" represents "The Modern Tool of Power." The "High-Five" symbolizes "The Energy of Community." It is the "Energy" of a man who lives in the future.<br><br>
+
+Lighting: "The Coding Neon." The primary light is a "sharp, magenta-pink" and "cool-blue" glow from the surrounding monitors and neon wall signs, creating "vivid, dual-tone" reflections on his face and the cobalt fabric. A secondary, warm "golden-amber" overhead light provides a "grounding" contrast on his shoulders. The shadows are "deep," "colorful," and vibrating.<br><br>
+
+Texture: The "slick, brushed-metal" of the laptop, the "matte, textured" cotton of the cobalt Kaftan, the "cool, liquid" sheen of the beetroot juice, the "rough, marked-up" surface of the whiteboard, and the "beaming, smooth" texture of his skin.<br><br>
+
+Theme: Energized / The Tech Bro / Breakthrough Logic / Innovation / Youthful Power
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alone">Style: Cinematic, ultra-hyper-realistic interior photography, shot on Hasselblad X2D 100C, 35mm f/1.4 lens, 4:5 vertical aspect ratio, 8K resolution, "The Urban Rhythm" aesthetic, masterpiece quality.<br><br>
+
+The scene: A high-end, "Sound-Proofed" dance studio or a luxury gym in Abuja at sunset. The background is a soft, "electric" blur of floor-to-ceiling mirrors, a professional DJ controller with glowing "Red and Blue" pads, and a panoramic window showing a "fast-moving" highway with streaking car lights. On a sleek metal bench sits a "Fluorescent-Pink" gym bag and a "Vibrant Yellow" Bluetooth speaker that looks like it is "thumping" with bass. The air is "warm," "moving," and smells of citrus body spray, "Clean Rubber," and the "ozone" of high-end audio equipment. The atmosphere is one of infectious, physical "Energized" rhythm.<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady, a "Professional Choreographer" or fitness influencer. She is captured in "Mid-Leap," her feet barely touching the ground as she executes a sharp, modern move. She wears a custom-tailored, "Electric-Violet" silk-jersey Kaftan-jumpsuit that clings and flows with her movement, and a matching silk hijab pinned "aerodynamically" tight. Her face is a masterpiece of "Kinetic Energy"—her eyes are "blazing" with focus, her mouth is set in a "fierce" grin, and her skin is "radiant" with a light sheen of sweat. She looks like a woman who has become the music itself. She is "Energized" because the beat is at 128 BPM.<br><br>
+
+Symbolism: The "Electric-Violet Jumpsuit" represents "Spirit and High-Voltage Creativity." The "Mid-Leap" symbolizes "Freedom from Gravity." The "DJ Controller" represents "Control of the Pulse." The "Car Lights" in the background symbolize "The Speed of the Modern City." It is the "Energy" of a woman who moves the world.<br><br>
+
+Lighting: "The Sunset Pulse." The primary light is a "fiery-orange" sunset exploding through the window, hitting her from the side to create "dramatic, long" shadows and a "golden-rim" on her silhouette. A secondary, "cool-blue" neon light from the studio's ceiling provides a "digital" contrast. The shadows are "sharp," "dynamic," and elongated.<br><br>
+
+Texture: The "slick, stretchy" jersey-silk of her violet jumpsuit, the "smooth, reflective" glass of the mirrors, the "matte, cold" aluminum of the speaker, the "rough, black" rubber of the studio floor, and the "beaming, firm" texture of her skin.<br><br>
+
+Theme: Energized / The Dancer / Kinetic Power / Modern Expression / Urban Vitality
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 35mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Political Rally" aesthetic, masterpiece quality.<br><br>
+
+The scene: A massive, sun-drenched "Public Square" or an open-air amphitheater in Kano or Sokoto during a high-stakes campaign event. The background is a soft, "electric" blur of thousands of "Waving Green-and-White Flags," a "Rising Pillar of Dust" in the distance, and the distant silhouette of a modern podium. On a wooden side table sits a "Matte-Black" megaphone with a glowing red "On" light and a "Golden-Trimmed" official sash. The air is "hot," "vibrating," and smells of dry earth, "Roasted Groundnuts," and the "electric" tension of a crowd of thousands. The atmosphere is one of overwhelming, collective "Energized" charisma.<br><br>
+
+The subject: A 42-year-old handsome Hausa man, a "Political Leader" or a "Social Reformer." He is standing with one foot on a raised step, his arms "flung wide" to embrace the crowd. He wears a majestic, "Electric-Royal Blue" polished cotton Babban Riga with gold-thread embroidery and a matching white hula with a "sharp, confident" crease. His face is a masterpiece of "Leadership Energy"—his eyes are "fiery and wide," his veins are "slightly bulging" in his neck as he speaks, and his skin is "radiant" under the high sun. He looks like a man who is carrying the hopes of a nation on his shoulders. He is "Energized" because the people are shouting his name.<br><br>
+
+Symbolism: The "Royal-Blue Babban Riga" represents "Deep Responsibility and Sky-High Ambition." The "Wide-Open Arms" symbolize "Total Transparency and Acceptance." The "Megaphone" represents "The Amplified Voice of the People." The "Rising Dust" symbolizes "A Groundswell of Change." It is the "Energy" of a man who has become a symbol.<br><br>
+
+Lighting: "The Zenith Sun." The primary light is a "blinding, golden-white" tropical sun directly overhead, making the gold embroidery "flare" and the blue fabric "shimmer" with an almost metallic light. A secondary, warm "dust-filtered" light fills the shadows of his face, giving him a "larger-than-life" glow. The shadows are "short," "hard," and powerful.<br><br>
+
+Texture: The "stiff, expensive" cotton of the Royal-Blue Babban Riga, the "rough, gritty" texture of the dust in the air, the "matte, cold" plastic of the megaphone, the "silky, heavy" fabric of the flags, and the "beaming, firm" texture of his skin.<br><br>
+
+Theme: Energized / The Leader / Public Speaking / Political Fire / Charisma
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 28mm f/4 lens, 4:5 vertical aspect ratio, 8K resolution, "The Scientific Breakthrough" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sterile, glowing "Modern Laboratory" or a high-tech "Renewable Energy Research Center" in Kaduna or Zaria at midnight. The background is a soft, "electric" blur of a humming "Hydrogen Fuel Cell" prototype, glowing blue "Plasma Tubes," and a large glass-walled whiteboard covered in "Hyper-Complex" chemical equations and green-marker diagrams. On a stainless steel counter sits a "Matte-Black" smart mug with a digital display showing "75°C" and a "Flickering" handheld laser-scanning device. The air is "chilled," "filtered," and smells of ozone, "Isopropyl Alcohol," and the "electric" hum of cooling fans. The atmosphere is one of buzzing, revolutionary "Energized" discovery.<br><br>
+
+The subject: A 30-year-old beautiful Hausa lady, a "Nuclear Physicist" or a "Renewable Energy Scientist." She is leaning forward toward the camera, her hands "gripping" the edge of a glass table. She wears a crisp, "Electric-Teal" lab-coat-inspired silk tunic over black slim-fit trousers and a matching teal jersey hijab tucked neatly into a silver magnetic collar. Her face is a masterpiece of "Eureka Energy"—her eyes are "wide and dilated" behind clear-frame anti-glare glasses, her mouth is "slightly parted" in a breathless smile, and she looks like she hasn't blinked in an hour. She looks like a woman who just discovered a way to power the entire continent. She is "Energized" because she just unlocked the secret of the stars.<br><br>
+
+Symbolism: The "Electric-Teal Tunic" represents "Sophisticated Innovation and Life-Giving Energy." The "Plasma Tubes" symbolize "The Raw Power of Nature Tamed." The "Hydrogen Prototype" represents "A Clean Future." The "75°C Coffee" symbolizes "The Midnight Oil." It is the "Energy" of a woman who is literally holding the light.<br><br>
+
+Lighting: "The Laboratory Glow." The primary light is a "sharp, neon-blue" radiance from the plasma tubes, hitting her from the side to create "crystalline" highlights on her glasses and teal fabric. A secondary, "cool-white" surgical light from above makes her skin look "porcelain and radiant." The shadows are "minimal," "clean," and surgical.<br><br>
+
+Texture: The "slick, cold" glass of the table, the "matte, high-tech" plastic of the scanner, the "smooth, synthetic" silk of her teal tunic, the "brushed, industrial" stainless steel, and the "beaming, hyper-focused" texture of her skin.<br><br>
+
+Theme: Energized / The Scientist / The Breakthrough / Future-Forward / Female Brilliance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pained">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Pained</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 85mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Broken Engagement" aesthetic, masterpiece quality.<br><br>
+
+The scene: A lavish but "hollow-feeling" living room in a high-end Kano residence at twilight. The background is a soft, "aching" blur of a tall, dark mahogany door that has just been closed, and a bouquet of "Wilting" white lilies on a glass console. On a plush velvet rug sits a "Cracked" smartphone screen displaying a final, short text message, and a "Single" gold engagement ring that has rolled away from its velvet box. The air is "heavy," "still," and smells of expensive oud, "Cold Rain" from an open window, and the "bitter" scent of extinguished candles. The atmosphere is one of sharp, suffocating "Pained Love."<br><br>
+
+The subject: A 28-year-old handsome Hausa man, a "Rejected Suitor" or heartbroken fiancé. He is slumped on the edge of a deep-navy sofa, his elbows on his knees and his face buried in his large, trembling hands. He wears a rumpled, "Dove-Grey" polished cotton Babban Riga with intricate silver embroidery that looks "heavy" on his shoulders, and his hula has fallen to the floor. His posture is a masterpiece of "Emotional Pain"—his shoulders are "hunched," his fingers are "digging" into his forehead, and his skin is "clammily" pale under the dim light. He looks like a man whose entire future was just erased. He is "Pained" because his "I do" was met with "I can't."<br><br>
+
+Symbolism: The "Dove-Grey Babban Riga" represents "Grief disguised as Elegance." The "Cracked Smartphone" symbolizes "Communication Shattered." The "Rolled-Away Ring" represents "A Circle Broken." The "Wilting Lilies" symbolize "The Death of a Promise." It is the "Pain" of a man who offered his heart and watched it be declined.<br><br>
+
+Lighting: "The Blue Hour." The primary light is a "cold, desaturated blue" twilight filtering through the window, casting "long, lonely" shadows across his back. A secondary, weak "amber" glow from a hallway lamp catches the silver thread of his embroidery, making it look like "cold tears" on his clothes. The shadows are "deep," "hollow," and heavy.<br><br>
+
+Texture: The "coarse, starched" cotton of the Babban Riga, the "smooth, cold" gold of the ring, the "soft, suffocating" velvet of the sofa, the "jagged, sharp" glass of the phone, and the "beaming, cold-sweat" texture of his skin.<br><br>
+
+Theme: Pained / Rejection / The Heartbroken Man / Lost Love / Silent Agony
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Fall from Grace" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dim, claustrophobic "Antechamber" or a side hallway of a government office in Kaduna or Abuja at 8:00 PM. The background is a soft, "suffocating" blur of an "Empty Executive Chair" visible through a glass partition and a stack of "Revocation Letters" on a cold metal tray. On a linoleum floor sits a "Toppled" nameplate that once read "Director." The air is "stale," "hot," and smells of burnt coffee, "Old Paper," and the "metallic" tang of a thunderstorm outside. The atmosphere is one of crushing, public "Pained Disgrace."<br><br>
+
+The subject: A 45-year-old handsome Hausa man, a "Former Official" or disgraced businessman. He is leaning against a cold, white-washed wall, his head tilted back and his eyes "staring at nothing." He wears a once-crisp, "Deep-Charcoal" Babban Riga with black-on-black embroidery that is now "wrinkled and damp" with sweat. His hula is "crushed" in his fist, his knuckles white with the grip. His face is a masterpiece of "Shameful Pain"—his jaw is "clenched so tight" the muscles are bulging, his eyes are "bloodshot and glassy," and he has a "bitter, trembling" set to his mouth. He looks like a man who just watched his reputation burn to ashes. He is "Pained" because his name is no longer respected.<br><br>
+
+Symbolism: The "Deep-Charcoal Babban Riga" represents "A Reputation in Mourning." The "Crushed Hula" symbolizes "The Loss of Dignity and Crown." The "Toppled Nameplate" represents "The Erasure of Identity." The "Empty Executive Chair" symbolizes "The Power That Vanished." It is the "Pain" of a man who fell from the mountain and hit the bottom alone.<br><br>
+
+Lighting: "The Fluorescent Grave." The primary light is a single, "flickering-yellow" overhead fluorescent tube, creating "harsh, vertical" shadows that age his face by ten years. A secondary, "cool-purple" lightning flash from the window momentarily illuminates his silhouette. The shadows are "sharp," "unforgiving," and deep.<br><br>
+
+Texture: The "rough, cold" plaster of the wall, the "crinkled, stiff" cotton of the Babban Riga, the "smooth, cold" metal of the tray, the "grainy, bloodshot" texture of his eyes, and the "beaming, cold-sweat" texture of his skin.<br><br>
+
+Theme: Pained / Disgrace / The Fall of a Leader / Public Shame / The Weight of a Name
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Forbidden Love" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dim, "Shadowy Corner" of a grand parlor in a traditional family house in Katsina or Zaria during a wedding celebration (Walima) happening in the next room. The background is a soft, "aching" blur of colorful "Atampa" dresses, the distant, muffled sound of "Joyful Laughter," and a tray of untouched "Sweet Dates." On a dark wooden side table sits a "Crumbled" handwritten letter on cream-colored paper and a "Single" tear-stained silk handkerchief. The air is "stale," "perfumed," and smells of heavy incense (Turaren Wuta), "Cold Rosewater," and the "burning" scent of a nearby kerosene lamp. The atmosphere is one of suffocating, secret "Pained Love."<br><br>
+
+The subject: A 22-year-old beautiful Hausa lady, a "Hidden Lover" or a woman forced into an arranged marriage. She is huddled against a heavy velvet curtain, her face "turned away" from the light. She wears a magnificent, "Blood-Red" lace Kaftan with gold-beaded embroidery that looks like "chains" across her chest, and a matching silk hijab that is pinned "too tight" under her chin. Her face is a masterpiece of "Internal Pain"—her eyes are "swollen and red-rimmed," a single tear is "suspended" on her cheek, and her mouth is "trembling" as she bites her lower lip to stay silent. She looks like a woman whose heart is being buried while the world celebrates. She is "Pained" because her love is a secret she must kill.<br><br>
+
+Symbolism: The "Blood-Red Lace" represents "The Sacrifice of the Heart." The "Gold-Beaded Chains" symbolize "The Prison of Tradition." The "Crumbled Letter" represents "Words That Changed Nothing." The "Muffled Laughter" symbolizes "The World’s Indifference to Private Agony." It is the "Pain" of the girl who must smile while she breaks.<br><br>
+
+Lighting: "The Dying Lamp." The primary light is a "flickering, warm-orange" glow from a low lamp, casting "jagged, dancing" shadows across her face. A secondary, "cool-grey" light from a high vent highlights the "glisten" of the tear on her cheek. The shadows are "deep," "smoky," and suffocating.<br><br>
+
+Texture: The "scratchy, intricate" lace of her red Kaftan, the "smooth, liquid" silk of her hijab, the "rough, absorbent" texture of the handkerchief, the "grainy, old" wood of the table, and the "beaming, salt-streaked" texture of her skin.<br><br>
+
+Theme: Pained / Forbidden Love / Silent Heartbreak / Social Obligation / The Secret Ache
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Fujifilm GFX100 II, 45mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Gritty Struggle" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dusty, "wind-swept" construction site or a roadside brick-yard in the outskirts of Kano or Zaria at high noon. The background is a soft, "scorching" blur of stacked "Grey-Cement Bricks," a rusted wheelbarrow, and a shimmering "Heat-Haze" rising from the dry earth. On a jagged rock sits a "Dented" plastic water can and a small, "Torn" leather wallet that is clearly empty. The air is "choking," "dry," and smells of pulverized stone, "Hot Dust," and the "metallic" scent of hard labor. The atmosphere is one of exhausting, bone-deep "Pained Struggle."<br><br>
+
+The subject: A 23-year-old handsome Hausa man, a "University Graduate" turned manual laborer or a struggling provider. He is sitting on a low stack of bricks, his head bowed so low his forehead almost touches his "Calloused" knees. He wears a faded, "Dust-Caked" indigo kaftan that is "frayed" at the cuffs and a white hula turned "grey" by the grit of the site. His body is a masterpiece of "Physical and Mental Pain"—his shoulders are "sun-burnt and peeling," his hands are "shaking" from fatigue, and his skin is "streaked" with mud and sweat. He looks like a man who has worked twelve hours for a wage that won't buy a single meal. He is "Pained" because his strength is failing but his hunger is not.<br><br>
+
+Symbolism: The "Dust-Caked Indigo" represents "Dignity buried under Hardship." The "Empty Wallet" symbolizes "The Void of Opportunity." The "Grey-Cement Bricks" represent "The Weight of a Life built by Hand." The "Heat-Haze" symbolizes "The Distortion of Dreams." It is the "Pain" of the man whose education is a ghost in his pocket.<br><br>
+
+Lighting: "The Harsh Zenith." The primary light is a "punishing, white-hot" vertical sun, creating "deep-black" pits of shadow in his eye sockets and under his chin. A secondary, warm "terracotta" bounce from the red earth illuminates his trembling hands. The shadows are "sharp," "short," and brutal.<br><br>
+
+Texture: The "gritty, abrasive" cement of the bricks, the "rough, cracked" skin of his knuckles, the "dry, powdery" dust on his clothes, the "rusted, flaky" metal of the wheelbarrow, and the "beaming, salt-crusted" texture of his skin.<br><br>
+
+Theme: Pained / Struggle / Economic Hardship / The Laborer / Shattered Hopes
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 35mm f/1.8 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Prodigal Daughter" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "stern" parlor in a high-ranking family home in Sokoto or Kaduna during the quiet hours of a Friday afternoon. The background is a soft, "heavy" blur of an antique mahogany grandfather clock, a shelf of "Dusty" leather-bound religious books, and a heavy embroidered rug. On a low brass table sits a "Shattered" tea glass and a "Discarded" newspaper with a scandalous headline circled in red ink. The air is "stale," "chilled," and smells of burnt incense (Luwann), "Old Paper," and the "sharp" scent of antiseptic. The atmosphere is one of crushing, familial "Pained Disappointment."<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady, a "Disgraced Daughter" or a social outcast. She is kneeling on the cold floor, her forehead pressed against the "hard" edge of a wooden chair. She wears a simple, "Deep-Olive" cotton Abaya that is "stained" with road-dust at the hem, and a black chiffon hijab that is "sliding" off her head to reveal her braided hair. Her face is a masterpiece of "Shameful Pain"—her eyes are "swollen shut" from crying, her nose is "flushed," and her mouth is "gaping" in a silent, jagged sob. She looks like a woman who has been told she is no longer a daughter. She is "Pained" because the door to her home is open, but the hearts inside are closed.<br><br>
+
+Symbolism: The "Deep-Olive Abaya" represents "Withered Hope." The "Shattered Tea Glass" symbolizes "A Family's Peace Broken." The "Grandfather Clock" represents "The Unforgiving Passage of Time." The "Sliding Hijab" symbolizes "A Loss of Protection and Grace." It is the "Pain" of a woman who is a stranger in her own living room.<br><br>
+
+Lighting: "The Judgment Light." The primary light is a "harsh, cold-white" beam from a high-placed window, cutting through the dust motes to hit her bowed head like a "guillotine." A secondary, "muddy-green" reflected light from the rug fills her tear-streaked face. The shadows are "long," "rigid," and suffocating.<br><br>
+
+Texture: The "cold, polished" wood of the chair, the "rough, unwashed" cotton of her Abaya, the "sharp, jagged" glass on the floor, the "scratchy, old" wool of the rug, and the "beaming, salt-burned" texture of her skin.<br><br>
+
+Theme: Pained / Disappointment / Family Dishonor / Social Outcast / The Broken Bond
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 85mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Brother's Keeper" aesthetic, masterpiece quality.<br><br>
+
+The scene: A quiet, "dust-blown" corner of a cemetery or a desolate roadside in the outskirts of a northern city at sunset. The background is a soft, "aching" blur of low-lying acacia trees, a "Hollow" rusted car frame, and a distant, "fading" orange horizon. On a pile of red earth sits a "Single" leather sandal and a "Tattered" black prayer cap (hula) that has been stepped on. The air is "thin," "dry," and smells of wet clay, "Exhaust Fumes," and the "metallic" tang of a cooling engine. The atmosphere is one of hollow, survivor's "Pained Grief."<br><br>
+
+The subject: A 25-year-old handsome Hausa man, a "Grieving Brother" or a survivor of a tragic accident. He is kneeling in the dirt, his body "doubled over" as if he’s been punched in the stomach. He wears a "Dust-Smeared" White Kaftan that is "torn" at the shoulder and a pair of trousers "stained" with dark earth at the knees. His face is a masterpiece of "Brotherly Pain"—his eyes are "squeezed shut" in a silent scream, his neck veins are "strained and pulsing," and his hands are "clutched" into the dirt, his nails digging into the soil. He looks like a man who was supposed to protect someone and failed. He is "Pained" because he is the only one who came home.<br><br>
+
+Symbolism: The "Torn White Kaftan" represents "Purity Ripped Apart." The "Tattered Hula" symbolizes "A Family's Honor Broken by Death." The "Rusted Car Frame" represents "The Fragility of Life." The "Single Sandal" symbolizes "The Half of a Pair that is Missing." It is the "Pain" of the one left behind to tell the story.<br><br>
+
+Lighting: "The Blood Sunset." The primary light is a "deep-crimson" and "burnt-orange" sun sinking behind him, creating a "sharp, glowing" rim-light that makes his silhouette look "vibrant and tragic." A secondary, "cool-grey" light from the rising moon hits his face, making his skin look "ashy and pale." The shadows are "long," "stretching," and bottomless.<br><br>
+
+Texture: The "gritty, damp" red earth, the "rough, frayed" cotton of the white Kaftan, the "cold, rusted" metal of the car, the "soft, worn" leather of the sandal, and the "beaming, mud-streaked" texture of his skin.<br><br>
+
+Theme: Pained / Loss / Brotherly Bond / Survivor’s Guilt / The Empty Chair
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 105mm f/2.8 Macro lens, 4:5 vertical aspect ratio, 8K resolution, "The Betrayal of Trust" aesthetic, masterpiece quality.<br><br>
+
+The scene: A cold, modern "Kitchen Island" in a luxury Abuja penthouse at 2:00 AM. The background is a soft, "stinging" blur of a high-end refrigerator with "torn-off" wedding photos and a half-empty bottle of "Expensive Perfume" with a broken cap. On the marble counter sits a "Bright-Pink" smartphone displaying a "Muted" chat thread filled with "Infidelity Evidence" and a single, "Crushed" pink rose. The air is "sterile," "chilled," and smells of bleach, "Stale Coffee," and the "heavy" scent of a storm-cloud. The atmosphere is one of sharp, nauseating "Pained Betrayal."<br><br>
+
+The subject: A 26-year-old beautiful Hausa lady, a "Deceived Wife" or a heartbroken bride-to-be. She is slumped on a high bar-stool, her spine "curved" like a question mark. She wears an elegant, "Midnight-Teal" silk lounge-abaya with silver-tassel drawstrings that are "wet" from her tears, and her chiffon hijab is "draped" loosely over her shoulders, revealing a neck "tense" with grief. Her face is a masterpiece of "Shattered Pain"—her eyes are "wide and vacant," staring at the phone as if it’s a weapon, her skin is "waxen," and her mouth is "slightly open" in a look of total shock. She looks like a woman who just realized her entire life was a well-crafted lie. She is "Pained" because the man she trusted most was the one who stole her peace.<br><br>
+
+Symbolism: The "Midnight-Teal Silk" represents "A Ocean of Hidden Tears." The "Crushed Pink Rose" symbolizes "The Death of Romance." The "Torn Wedding Photos" represent "The Shredding of a Covenant." The "Muted Chat Thread" symbolizes "Silence as a Weapon." It is the "Pain" of a woman who found the truth she wasn't looking for.<br><br>
+
+Lighting: "The Fridge Glow." The primary light is the "harsh, clinical-blue" light from the open refrigerator, hitting her from the side to make her skin look "porcelain-white" and her teal silk "shimmer" like cold water. A secondary, weak "warm-amber" light from the oven clock highlights the "glistening" tear-tracks on her cheeks. The shadows are "deep," "sharp," and cold.<br><br>
+
+Texture: The "cold, polished" marble of the counter, the "slick, liquid" silk of the teal Abaya, the "matte, jagged" petals of the crushed rose, the "glassy, hard" surface of the phone, and the "beaming, salt-crusted" texture of her skin.<br><br>
+
+Theme: Pained / Betrayal / Infidelity / Shattered Trust / The Cold Truth
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Economic Exile" aesthetic, masterpiece quality.<br><br>
+
+The scene: A desolate, "dust-blown" bus terminal or a roadside park in a border town like Illela or Mubi at 4:00 AM. The background is a soft, "bleak" blur of a rusted "Luxurious" bus with peeling paint, a stack of "Tied-Up" cardboard boxes, and a flickering fluorescent streetlamp. On the cracked pavement sits a "Scuffed" leather suitcase held together by a fraying "Green-and-White" rope and a "Half-Eaten" cold maize cob. The air is "thin," "biting," and smells of diesel fumes, "Dry Harmattan Dust," and the "sour" scent of anxiety. The atmosphere is one of heavy, hopeless "Pained Ambition."<br><br>
+
+The subject: A 32-year-old handsome Hausa man, a "Former Small Business Owner" or a breadwinner forced into migration. He is sitting on his suitcase, his hands "interlocked" behind his head and his elbows resting on his knees. He wears a faded, "Deep-Brown" cotton Kaftan that is "threadbare" at the elbows and a white hula that is "limp" and yellowish. His face is a masterpiece of "Defeated Pain"—his eyes are "sunken and dark-circled," his lips are "cracked and dry," and his expression is one of "paralyzing" uncertainty. He looks like a man who has lost his shop, his savings, and his pride in a single year. He is "Pained" because leaving is the only way to survive, but leaving feels like dying.<br><br>
+
+Symbolism: The "Deep-Brown Kaftan" represents "Earthly Struggle and Decay." The "Fraying Green-and-White Rope" symbolizes "A Failing National Promise." The "Scuffed Suitcase" represents "The Weight of a Life packed in a Box." The "Flickering Lamp" symbolizes "A Dying Hope." It is the "Pain" of the man who must abandon his home to save it.<br><br>
+
+Lighting: "The Pre-Dawn Chill." The primary light is the "sickly-green" and "cold-white" flicker of the overhead streetlamp, casting "harsh, jittery" shadows that make his skin look "grey and tired." A secondary, "pale-orange" glow from a distant tea-seller's fire catches the side of his face. The shadows are "long," "trembling," and vast.<br><br>
+
+Texture: The "rough, scratched" leather of the suitcase, the "coarse, dusty" cotton of the brown Kaftan, the "pitted, cold" asphalt of the road, the "dry, fibrous" husk of the maize, and the "beaming, ashen" texture of his skin.<br><br>
+
+Theme: Pained / Economic Exile / Forced Migration / Failed Ambition / The Weight of Duty
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 63mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Social Pariah" aesthetic, masterpiece quality.<br><br>
+
+The scene: A shadowed "Side-Room" or a hallway during a large family gathering (Suna) in a Kano neighborhood. The background is a soft, "venomous" blur of women in bright "Atampa" fabrics whispering behind their hands, a doorway looking out into a courtyard filled with "Turning Backs," and a festive tray of "Untouched" pink-and-white sweets. On a small glass table sits a "Cracked" handheld mirror and a smartphone with a "Viral" voice-note notification blinking "Play." The air is "stagnant," "hot," and smells of heavy musk, "Burnt Onion," and the "cloying" scent of artificial rosewater. The atmosphere is one of suffocating, poisonous "Pained Ostracization."<br><br>
+
+The subject: A 27-year-old beautiful Hausa lady, a "Target of Rumors" or a woman whose reputation has been falsely tarnished. She is standing against a closed door, her hands "clutching" her own elbows as if to hold herself together. She wears a delicate, "Ashen-Lilac" lace Kaftan with frayed silk threads at the collar and a matching grey chiffon hijab that is "damp" where it meets her neck. Her face is a masterpiece of "Slandered Pain"—her eyes are "darting" with social anxiety, her cheeks are "flushed with shame," and her mouth is "drawn into a thin, jagged line" of suppressed weeping. She looks like a woman who is being executed by a thousand whispers. She is "Pained" because the truth doesn't matter once the lie is told.<br><br>
+
+Symbolism: The "Ashen-Lilac Lace" represents "Dying Grace and Fading Dignity." The "Whispering Women" symbolize "The Jury of the Streets." The "Cracked Mirror" represents "A Self-Image Shattered by Others." The "Untouched Sweets" symbolize "The Bitterness of Social Rejection." It is the "Pain" of a woman who is invisible and targeted all at once.<br><br>
+
+Lighting: "The Gossip's Shadow." The primary light is a "narrow, harsh" sliver of afternoon sun cutting through a high vent, hitting only her eyes and making them look "hunted." A secondary, "muddy-yellow" bounce light from the hallway floor highlights the "trembling" of her hands. The shadows are "sharp," "invasive," and jagged.<br><br>
+
+Texture: The "scratchy, torn" lace of the lilac Kaftan, the "cold, smooth" wood of the door, the "grainy, hot" dust in the air, the "glassy, hard" surface of the phone, and the "beaming, feverish" texture of her skin.<br><br>
+
+Theme: Pained / Social Ostracization / Slander / Isolation / The Weight of Rumors
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 35mm f/1.4 lens, 4:5 vertical aspect ratio, 8K resolution, "The Empty Hand" aesthetic, masterpiece quality.<br><br>
+
+The scene: A cramped, "dimly-lit" bedroom in a small family house in a crowded neighborhood in Zaria or Kaduna at midnight. The background is a soft, "aching" blur of three small children sleeping "huddled" on a thin foam mattress, an "Empty" kerosene stove, and a wall calendar with "Red Circles" around rent due dates. On a low wooden stool sits a "Dry" plastic plate with a single, "Crusty" piece of tuwo and a "Stacked" pile of unpaid utility bills. The air is "stifling," "thick," and smells of mosquito coils, "Damp Concrete," and the "metallic" tang of despair. The atmosphere is one of crushing, silent "Pained Failure."<br><br>
+
+The subject: A 38-year-old handsome Hausa man, a "Father" or a "Displaced Worker." He is sitting on the floor with his back against the wall, his head "thrown back" and his throat "tight" with a suppressed sob. He wears a thin, "Threadbare" White Kaftan that is "yellowed" at the collar and a hula that is "limp and frayed." His face is a masterpiece of "Provider’s Pain"—his eyes are "sunk deep" into his skull, his hands are "gripping" his shins so hard the knuckles are white, and his skin is "radiant" with a feverish, cold sweat. He looks like a man who has done everything right and still lost everything. He is "Pained" because his children are sleeping to forget their hunger.<br><br>
+
+Symbolism: The "Threadbare White Kaftan" represents "Poverty trying to remain Clean." The "Sleeping Children" symbolize "The Innocent Weight of Responsibility." The "Empty Kerosene Stove" represents "The Coldness of a Broken Hearth." The "Red-Cycled Calendar" symbolizes "The Countdown to Homelessness." It is the "Pain" of the man who feels he has become a ghost in his own home.<br><br>
+
+Lighting: "The Midnight Despair." The primary light is a "weak, flickering-blue" glow from a cheap battery-powered lantern on the floor, casting "monstrous, distorted" shadows of him against the wall. A secondary, "pale-grey" moonlight from a small vent hits the sleeping children. The shadows are "heavy," "stretching," and suffocating.<br><br>
+
+Texture: The "rough, cold" concrete of the floor, the "thin, scratchy" cotton of the white Kaftan, the "pitted, dry" surface of the tuwo, the "smooth, cold" plastic of the lantern, and the "beaming, salt-burned" texture of his skin.<br><br>
+
+Theme: Pained / Failure / The Provider’s Grief / Economic Despair / Family Sacrifice
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="disappointed">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Disappointed</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Empty Promise" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sterile, "over-lit" Departure Lounge at Nnamdi Azikiwe International Airport, Abuja, at 3:00 AM. The background is a soft, "bleak" blur of a "Delayed" flight status board glowing red, an "Abandoned" janitor’s trolley, and rows of empty, cold metal seats. On a plastic airport table sits a "Cold, Untouched" meat pie in a greasy paper bag and a "Crinkled" printed invitation to a prestigious Global Summit. The air is "chilled," "recycled," and smells of jet fuel, "Industrial Lemon Cleaner," and the "stagnant" scent of a long wait. The atmosphere is one of flat, hollow "Disappointed" stagnation.<br><br>
+
+The subject: A 29-year-old handsome Hausa man, a "Brilliant Scholar" or a "Young Diplomat." He is sitting slumped in a metal chair, his head resting against the "cold glass" of the terminal window. He wears a sharp, "Olive-Green" polished cotton Babban Riga with cream geometric embroidery that now looks "wilting" and rumpled, and his white hula is "tilted" forward over his eyes. His face is a masterpiece of "Bureaucratic Disappointment"—his eyes are "heavy and bloodshot," his jaw is "slack" with fatigue, and his mouth is set in a "bitter, downward" curve. He looks like a man who did everything right, only to be stopped by a rubber stamp. He is "Disappointed" because the system failed his ambition.<br><br>
+
+Symbolism: The "Olive-Green Babban Riga" represents "Stunted Growth and Wasted Potential." The "Delayed Status Board" symbolizes "A Life on Hold." The "Cold Meat Pie" represents "The Dryness of Neglect." The "Cold Glass" symbolizes "The Barrier between Dream and Reality." It is the "Disappointment" of a man who realized that hard work isn't always enough.<br><br>
+
+Lighting: "The Terminal Fluorescent." The primary light is a "sickly, high-key" white fluorescent glow from the ceiling, reflecting off the floor to make his skin look "ashen and sallow." A secondary, "faint-blue" light from the tarmac outside hits his profile. The shadows are "short," "weak," and clinical.<br><br>
+
+Texture: The "cold, brushed" aluminum of the chairs, the "stiff, wrinkled" cotton of the olive Babban Riga, the "greasy, thin" paper of the bag, the "smooth, chilled" glass of the window, and the "beaming, tired" texture of his skin.<br><br>
+
+Theme: Disappointed / Bureaucracy / Wasted Talent / The Long Wait / Systemic Failure
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Betrayed Allegiance" aesthetic, masterpiece quality.<br><br>
+
+The scene: A trendy, "half-lit" rooftop lounge in Kano or Abuja at 10:00 PM. The background is a soft, "biting" blur of "Laughter" from a group of friends across the terrace, an "Ice-Bucket" with a half-melted bottle of sparkling water, and the city lights "mocking" the quiet corner. On the table sits a "Cracked" smartphone screen showing a "Leaked" private message from a best friend and a "Cold, Half-Eaten" plate of suya with a single, "wilted" onion ring. The air is "stifling," "sweet," and smells of shisha smoke, "Grilled Meat," and the "heavy" scent of a cooling night. The atmosphere is one of stinging, social "Disappointed" betrayal.<br><br>
+
+The subject: A 26-year-old beautiful Hausa lady, a "Socialite" or a "Loyal Friend." She is leaning back in her chair, her arms "crossed tightly" over her chest. She wears a stunning, "Burnt-Sienna" silk Kaftan with intricate gold-fringe sleeves that are "hanging limp" and a matching silk hijab that is "pinned perfectly" despite her inner turmoil. Her face is a masterpiece of "Social Disappointment"—her eyes are "narrowed and glistening," her jaw is "tightly set," and her mouth is pulled into a "thin, cynical" line. She looks like a woman who just realized her "inner circle" is actually a snake pit. She is "Disappointed" because she traded her secrets for a knife in her back.<br><br>
+
+Symbolism: The "Burnt-Sienna Kaftan" represents "Earthly Trust Turned to Ash." The "Gold-Fringe" symbolizes "The Cost of Appearance." The "Half-Melted Ice" represents "The Chilling of a Long Friendship." The "Leaked Message" symbolizes "The End of Privacy." It is the "Disappointment" of a woman who valued loyalty above all else.<br><br>
+
+Lighting: "The Neon Sting." The primary light is a "sharp, magenta" neon sign from the bar, hitting her from the side to create "dramatic, colorful" highlights on her cheekbones and the silk fabric. A secondary, warm "amber" candle-flicker on the table provides a "ghostly" glow to her hands. The shadows are "deep," "colorful," and unforgiving.<br><br>
+
+Texture: The "slick, flowing" silk of the Sienna Kaftan, the "rough, charred" edges of the suya, the "cold, damp" glass of the bucket, the "glassy, hard" surface of the phone, and the "beaming, flushed" texture of her skin.<br><br>
+
+Theme: Disappointed / Social Betrayal / The Fake Friend / Broken Allegiance / Urban Loneliness
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Failed Venture" aesthetic, masterpiece quality.<br><br>
+
+The scene: A half-finished "Modern Boutique" or a luxury retail space in Abuja at sunset. The background is a soft, "hollow" blur of unpainted drywall, "Exposed Wires" hanging from the ceiling, and a stack of "Dusty" designer clothing boxes that were never unpacked. On a temporary wooden trestle table sits a "Legal Notice" of partnership dissolution and a "Cold, Half-Drunk" bottle of Maltina with a dead fly on the rim. The air is "stagnant," "chalky," and smells of wet plaster, "Sawdust," and the "metallic" scent of a stalled air conditioner. The atmosphere is one of flat, echoing "Disappointed" ambition.<br><br>
+
+The subject: A 32-year-old handsome Hausa man, an "Entrepreneur" or an "Investor." He is leaning against a bare concrete pillar, his hands "stuffed deep" into his pockets. He wears a high-quality, "Electric-Silver" polished cotton Kaftan with charcoal embroidery that is "smudged" with white plaster dust, and his hula is "crumpled" on a nearby crate. His face is a masterpiece of "Professional Disappointment"—his eyes are "squinting" at a budget spreadsheet on his lap, his jaw is "slack with disbelief," and his forehead is "deeply furrowed." He looks like a man who put his life savings into a dream that his partner walked away from. He is "Disappointed" because he trusted a handshake over a contract.<br><br>
+
+Symbolism: The "Electric-Silver Kaftan" represents "The High-Value Dream now Tarnish." The "Exposed Wires" symbolize "A Connection Broken and Dangerous." The "Unpacked Boxes" represent "The Future that stayed in the Dark." The "Plaster Dust" symbolizes "The Decay of a Foundation." It is the "Disappointment" of a man who built a palace on sand.<br><br>
+
+Lighting: "The Dying Construction Light." The primary light is a "long, golden-orange" shaft of sunset cutting through the unfinished window, hitting the dust motes and making the silver fabric "sparkle" cruelly. A secondary, "cool-grey" shadow fills his face, making him look "hollowed out." The shadows are "long," "rigid," and silent.<br><br>
+
+Texture: The "rough, abrasive" concrete of the pillar, the "slick, dusty" silk of the silver Kaftan, the "dry, chalky" plaster on the floor, the "smooth, cold" glass of the bottle, and the "beaming, weary" texture of his skin.<br><br>
+
+Theme: Disappointed / Business Failure / The Betrayed Partner / Lost Investment / Economic Reality
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Golden Fight" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sleek, ultra-luxury rooftop lounge in Abuja or Lagos at 11:30 PM. The background is a soft, "aching" blur of glowing city lights far below, an array of shimmering "Champagne Glasses" on a marble bar counter, and a half-empty, "Condensation-Covered" bucket of imported sparkling cider. On a low glass table sits a "Single, Abandoned" diamond bracelet and a smartphone displaying a "Muted" private call from "Mother" that was rejected. The air is "stagnant," "chilled," and smells of expensive oud, "Burnt Charcoal" from a distant shisha pipe, and the "metallic" scent of an argument. The atmosphere is one of stinging, elite "Disappointed" relationship turmoil.<br><br>
+
+The subject: A 28-year-old beautiful Hausa wife, a "Newlywed" or a "Devoted Partner." She is standing with her back to her husband, her arms "crossed tightly" over her chest. She wears a magnificent, "Deep-Sapphire Blue" silk Kaftan with silver filigree embroidery that is "heavy" with detail and a matching silk hijab that is "pinned with precision" but now frames a face "tense" with emotion. Her face is a masterpiece of "Wife’s Disappointment"—her eyes are "swollen and staring" at the city view, a single tear is "suspended" on her cheek, and her mouth is drawn into a "tight, silent" line of suppressed frustration. She looks like a woman whose heart just took a sharp turn. She is "Disappointed" because she expected a quiet celebration and got a loud confrontation.<br><br>
+
+Symbolism: The "Deep-Sapphire Blue Silk" represents "Loyalty that feels like a Prison." The "Silver Filigree" symbolizes "The Cost of Appearance." The "Abandoned Diamond Bracelet" represents "The Luxury that cannot buy Peace." The "Rejected Call" symbolizes "The Voice of Reason Ignored." It is the "Disappointment" of a woman who thought their love was above a public scene.<br><br>
+
+Lighting: "The City Lights of Deceit." The primary light is a "sharp, electric-blue" neon glow from the lounge sign, hitting her from the side to create "crystalline" highlights on her silk hijab and the single tear. A secondary, warm "amber" candle-flicker on the table provides a "ghostly" glow to her hands. The shadows are "deep," "colorful," and unforgiving.<br><br>
+
+Texture: The "slick, flowing" silk of the Sapphire Kaftan, the "rough, heavy" silver embroidery, the "smooth, cold" marble of the bar, the "glassy, hard" surface of the phone, and the "beaming, flushed" texture of her skin.<br><br>
+
+Theme: Disappointed / Relationship Fight / The Shattered Date / Elite Arguments / Silent Ache
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 85mm f/1.2 S lens, 4:5 vertical aspect ratio, 8292 x 10365 resolution, "The Academic Betrayal" aesthetic, masterpiece quality.<br><br>
+
+The scene: A cluttered, "dimly-lit" faculty office or a private study in Zaria or Kano at dusk. The background is a soft, "suffocating" blur of tall bookshelves filled with "Leather-Bound" law texts, a glowing computer monitor showing a "Generic" rejection email, and a stack of "Dusty" research papers. On a heavy mahogany desk sits a "Tarnished" brass desk lamp and a "Cold, Half-Drunk" glass of fura with a "Separated" thick layer of milk at the bottom. The air is "stagnant," "dry," and smells of old paper, "Printer Ink," and the "stale" scent of a long night. The atmosphere is one of heavy, intellectual "Disappointed" stagnation.<br><br>
+
+The subject: A 31-year-old handsome Hausa man, a "Brilliant PhD Candidate" or a "Young Lecturer." He is sitting hunched over his desk, his hands "buried deep" in his hair, pulling at the roots. He wears a high-quality, "Mustard-Gold" polished cotton Kaftan with dark brown geometric embroidery that is "wrinkled" at the elbows, and his hula is "tilted" back, exposing a forehead "slick" with stress sweat. His face is a masterpiece of "Intellectual Disappointment"—his eyes are "staring blankly" at a red-inked manuscript, his jaw is "clenched" until the muscle pops, and his mouth is a "flat, bitter" line. He looks like a man who spent years building a theory only to have it dismissed by a three-line email. He is "Disappointed" because his genius was met with indifference.<br><br>
+
+Symbolism: The "Mustard-Gold Kaftan" represents "Ambition Turned Sour." The "Red-Inked Manuscript" symbolizes "The Death of an Idea." The "Separated Fura" represents "A Dream that has Sat too Long." The "Tall Bookshelves" symbolize "The Weight of Others’ Success." It is the "Disappointment" of a man who realized that the ivory tower has no room for him.<br><br>
+
+Lighting: "The Desk-Lamp Gloom." The primary light is a "harsh, yellow-orange" pool from the desk lamp, hitting his hands and the red ink to make them look "vivid and tragic." A secondary, "faint-blue" twilight from the window fills the room's corners with a "lonely" haze. The shadows are "deep," "sharp," and intrusive.<br><br>
+
+Texture: The "grainy, old" wood of the desk, the "stiff, wrinkled" cotton of the gold Kaftan, the "rough, dry" texture of the paper, the "cold, smooth" glass of the fura, and the "beaming, salt-streaked" texture of his skin.<br><br>
+
+Theme: Disappointed / Academic Failure / Wasted Research / The Dismissed Genius / Intellectual Grief
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Broken Campaign" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dusty, "wind-swept" village square or a local community center in rural Kano or Jigawa at dusk. The background is a soft, "hollow" blur of a "Fallen" campaign billboard with a politician's smiling face, a "Dry" water pump that was supposed to be commissioned, and a group of "Departing" villagers in the distance. On a rusted metal chair sits a "Tattered" green-and-white political cap and a "Crinkled" flyer promising "Light and Water for All." The air is "stale," "hot," and smells of dry earth, "Diesel Fumes," and the "bitter" scent of a cooling engine. The atmosphere is one of flat, collective "Disappointed" betrayal.<br><br>
+
+The subject: A 40-year-old handsome Hausa man, a "Community Leader" or a "Grassroots Mobilizer." He is standing with his hands "clasped" behind his back, staring at the dry water pump. He wears a high-quality but "dust-coated" Sky-Blue polished cotton Babban Riga with white chain-stitch embroidery and a matching white hula that is "straight but dusty." His face is a masterpiece of "Civic Disappointment"—his eyes are "squinting and weary," his jaw is "clenched in a hard knot," and his brow is "heavy with the weight" of his people's questions. He looks like a man who gave his word for a promise that wasn't kept. He is "Disappointed" because his trust was used as a ladder.<br><br>
+
+Symbolism: The "Sky-Blue Babban Riga" represents "A High Hope now Clouded by Dust." The "Dry Water Pump" symbolizes "The Infrastructure of Lies." The "Fallen Billboard" represents "The Collapse of a False Image." The "Tattered Cap" symbolizes "A Loyalty Worn Out." It is the "Disappointment" of a man who sold a dream he didn't own.<br><br>
+
+Lighting: "The False Twilight." The primary light is a "bruised-purple" and "dusty-orange" sunset hitting him from behind, creating a "sharp, tragic" rim-light on his Babban Riga. A secondary, "cool-grey" shadow fills his face, making his expression look "etched in stone." The shadows are "long," "stretching," and silent.<br><br>
+
+Texture: The "rough, gritty" texture of the dust on his clothes, the "cold, rusted" iron of the pump, the "stiff, starched" cotton of the blue Babban Riga, the "thin, cheap" paper of the flyer, and the "beaming, weathered" texture of his skin.<br><br>
+
+Theme: Disappointed / Political Betrayal / The Failed Promise / Community Grief / Lost Trust
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Report Card" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "highly-disciplined" study room in a prestigious family home in Kaduna or Sokoto at 5:00 PM. The background is a soft, "heavy" blur of an expensive "Lacquer-Finished" desk, a wall of "Academic Trophies" belonging to older siblings, and a half-open door. On a prayer mat sits a "Crumpled" school report card with several "D" grades circled in red ink and a "Broken" mechanical pencil. The air is "stagnant," "filtered," and smells of sandalwood incense, "Old Leather," and the "metallic" tang of a cooling laptop. The atmosphere is one of crushing, parental "Disappointed" silence.<br><br>
+
+The subject: A 42-year-old handsome Hausa man, a "High-Achieving Father" or a "Respected Patriarch." He is sitting in a tall leather chair, his head "tilted back" and his eyes closed as if in physical pain. He wears a majestic, "Deep-Maroon" polished cotton Babban Riga with black silk embroidery that is "heavy and stiff," and his hula is "perfectly positioned" but his shoulders are "slumped." His face is a masterpiece of "Paternal Disappointment"—his jaw is "clenched until the bone shows," his forehead is a "map of deep wrinkles," and his mouth is a "flat, exhausted" line. He looks like a man who gave his child every tool for success only to see them throw them away. He is "Disappointed" because his legacy is being treated like a burden.<br><br>
+
+Symbolism: The "Deep-Maroon Babban Riga" represents "A Bloodline of High Expectations." The "Academic Trophies" symbolize "The Shadow the Child Cannot Escape." The "Crumpled Report Card" represents "A Future Squandered." The "Broken Pencil" symbolizes "The Failure of Instruction." It is the "Disappointment" of a man who realizes his pride is not his child’s priority.<br><br>
+
+Lighting: "The Golden Hour of Shame." The primary light is a "sharp, horizontal" beam of afternoon sun cutting through the window blinds, creating "slatted, cage-like" shadows across his chest and the report card. A secondary, "cool-blue" fill from the laptop screen hits the underside of his chin. The shadows are "long," "sharp," and rigid.<br><br>
+
+Texture: The "smooth, cold" leather of the chair, the "stiff, starched" cotton of the maroon Babban Riga, the "rough, crinkled" paper of the report, the "grainy, polished" wood of the desk, and the "beaming, weary" texture of his skin.<br><br>
+
+Theme: Disappointed / Parental Legacy / Academic Failure / Family Pressure / The Silent Father
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Ghost Wedding" aesthetic, masterpiece quality.<br><br>
+
+The scene: A massive, "hollow" event marquee or a decorated hall in Kano or Abuja at 9:00 PM. The background is a soft, "aching" blur of thousands of "Empty Gold Chairs," a "Silent" stage with a floral backdrop that has begun to sag, and a long buffet table with "Untouched" silver chafing dishes. On a white linen tablecloth sits a "Five-Tier" wedding cake that has started to lean and a "Discarded" silk favor box with the couple's names and the date. The air is "stagnant," "perfumed," and smells of wilting jasmine, "Cold Jollof Rice," and the "metallic" scent of an industrial cooling unit. The atmosphere is one of echoing, social "Disappointed" emptiness.<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady, a "Bride-to-be" or a "Canceled Celebrant." She is sitting alone on the edge of the decorated stage, her feet "dangling" over the side. She wears a breathtaking, "Cream-and-Gold" lace wedding gown with a three-meter "Heavy" silk train that is gathering dust on the floor, and a matching silk hijab pinned with a "Single, Mocking" diamond brooch. Her face is a masterpiece of "Ceremonial Disappointment"—her eyes are "wide and dry," staring at the empty hall, her jaw is "slack with shock," and her mouth is "slightly parted" as if she’s forgotten how to speak. She looks like a woman who was ready to start a life, only for the world to vanish. She is "Disappointed" because the party happened, but the groom never arrived.<br><br>
+
+Symbolism: The "Cream-and-Gold Gown" represents "A Purity that was Never Claimed." The "Empty Gold Chairs" symbolize "The Witnesses of a Non-Event." The "Leaning Cake" represents "The Collapse of a Sweet Promise." The "Dusty Train" symbolizes "A Path that Leads Nowhere." It is the "Disappointment" of a woman who is dressed for a queen's life but left in a desert.<br><br>
+
+Lighting: "The Dimming Chandelier." The primary light is a "faint, warm-amber" glow from a single remaining chandelier overhead, casting "ghostly, elongated" shadows across the empty floor. A secondary, "cool-blue" security light from the exit sign hits her shoulder. The shadows are "vast," "hollow," and silent.<br><br>
+
+Texture: The "rough, dry" lace of the cream gown, the "slick, heavy" silk of the train, the "grainy, dusty" floor of the hall, the "smooth, cold" silver of the chafing dishes, and the "beaming, waxen" texture of her skin.<br><br>
+
+Theme: Disappointed / Canceled Wedding / Social Humiliation / The No-Show / Deserted Celebration
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Fujifilm GFX100 II, 45mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Dust-Choked Harvest" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vast, "stunted" grain farm or a warehouse yard in the outskirts of Katsina or Gombe at midday. The background is a soft, "scorching" blur of a "Broken" grain thresher, a stack of "Flat" empty jute bags, and a shimmering "Heat-Haze" over a field of withered, brown stalks. On a cracked wooden crate sits a "Handful" of shriveled, "Blackened" corn kernels and a "Sun-Bleached" ledger with zero entries for the month. The air is "choking," "dry," and smells of burnt stalks, "Hot Iron," and the "metallic" scent of a failed rain. The atmosphere is one of heavy, seasonal "Disappointed" ruin.<br><br>
+
+The subject: A 35-year-old handsome Hausa man, a "Large-Scale Farmer" or an "Agri-Entrepreneur." He is standing in the middle of his field, his hands "on his hips" as he stares at the sky. He wears a high-quality, "Terracotta-Red" polished cotton Kaftan that is "clinging" to his sweat-soaked back and a white hula that is "stained" with red dust. His face is a masterpiece of "Agricultural Disappointment"—his eyes are "squinting" into the sun with a look of pure betrayal, his jaw is "set like iron," and his skin is "cracked" at the corners of his mouth. He looks like a man who fed the earth his sweat, but the earth gave him nothing back. He is "Disappointed" because the sky promised rain and delivered dust.<br><br>
+
+Symbolism: The "Terracotta-Red Kaftan" represents "The Earth that Swallowed the Investment." The "Withered Stalks" symbolize "A Growth Stunted by Fate." The "Empty Jute Bags" represent "The Void of a Year's Labor." The "Blackened Kernels" symbolize "The Death of a Livelihood." It is the "Disappointment" of a man who did the work but lost the gamble with nature.<br><br>
+
+Lighting: "The Punishing Zenith." The primary light is a "white-hot, vertical" sun that makes the dust in the air look like "shimmering glass" and casts "ink-black" shadows in the deep lines of his face. A secondary, "fiery-orange" bounce from the red soil illuminates his lower jaw. The shadows are "short," "sharp," and brutal.<br><br>
+
+Texture: The "rough, brittle" texture of the dead corn stalks, the "stiff, dust-coated" cotton of the red Kaftan, the "pitted, dry" wood of the crate, the "coarse, sandy" soil of the farm, and the "beaming, salt-crusted" texture of his skin.<br><br>
+
+Theme: Disappointed / Agricultural Ruin / Failed Harvest / Economic Gamble / The Unreliable Sky
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 80mm f/1.9 lens, 4:5 vertical aspect ratio, 8K resolution, "The Inheritance of Dust" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dimly-lit, "locked" attic or a storage room in a sprawling family estate in Sokoto or Zaria at 2:00 AM. The background is a soft, "suffocating" blur of "Moth-Eaten" trunks, a "Broken" vintage chandelier wrapped in plastic, and stacks of "Yellowed" newspapers. On a dust-covered prayer mat sits an "Open" safe and a "Single, Frayed" document proving a long-held family secret or a lost fortune. The air is "stagnant," "heavy," and smells of cedar wood, "Damp Concrete," and the "cloying" scent of mothballs. The atmosphere is one of profound, final "Disappointed" truth.<br><br>
+
+The subject: A 33-year-old beautiful Hausa lady, a "Daughter of a Dynasty" or a "Final Heir." She is kneeling on the floor, her fingers "barely touching" the frayed document. She wears an exquisite, "Deep-Emerald" velvet Abaya with gold-thread embroidery that is "dulled" by a layer of fine dust, and a black chiffon hijab that is "sliding" down her back. Her face is a masterpiece of "Legacy Disappointment"—her eyes are "hollow and dry," staring at the paper as if it’s a death warrant, her jaw is "slack," and her skin is "pale" in the dim light. She looks like a woman who just realized her family’s prestige was built on a foundation of air. She is "Disappointed" because the legacy she spent her life protecting is a lie.<br><br>
+
+Symbolism: The "Deep-Emerald Velvet" represents "A Wealth that is Cold and Heavy." The "Open Safe" symbolizes "The End of a Mystery." The "Frayed Document" represents "The Fragility of Reputation." The "Moth-Eaten Trunks" symbolize "The Decay of History." It is the "Disappointment" of a woman who inherited a crown made of lead.<br><br>
+
+Lighting: "The Single Torch." The primary light is a "sharp, cold-white" beam from a flashlight on the floor, hitting her from below to create "ghostly, elongated" shadows that dance on the ceiling. A secondary, "faint-amber" glow from a distant hallway light catches the gold embroidery. The shadows are "deep," "sharp," and cavernous.<br><br>
+
+Texture: The "thick, dusty" velvet of the emerald Abaya, the "brittle, yellowed" paper of the document, the "rough, cold" concrete of the floor, the "grainy, dry" wood of the trunks, and the "beaming, waxen" texture of her skin.<br><br>
+
+Theme: Disappointed / Family Secrets / The False Legacy / Shattered Identity / The End of a Name
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

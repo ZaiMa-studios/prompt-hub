@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling1 – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0d0; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="chill">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Chill</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace in the late afternoon, overlooking a calm city skyline. Soft cushions, potted plants, and subtle ambient lights create a relaxed and serene environment.<br><br>
+
+The subject: A young Nigerian woman sitting cross-legged on a cushion, wearing a flowing black abaya. She sips from a glass of cold hibiscus drink, looking peacefully at the skyline. A Nigerian man sits nearby in a Babbar riga with Zanna Bukar style cap, leaning back and smiling gently, enjoying the calm moment.<br><br>
+
+Symbolism: Relaxed postures and peaceful expressions symbolize tranquility, contentment, and the joy of slowing down to appreciate the moment. The rooftop setting represents freedom and escape from daily hustle.<br><br>
+
+Lighting: Soft golden-hour sunlight combined with subtle terrace lighting highlights faces and fabrics, creating cinematic shadows, gentle glows, and a calm, chill ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and Babbar riga fabrics, plush cushions, reflective glass of the drink, natural skin tones, subtle movement of fabrics and plants captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Urban Life / Peaceful Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A quiet Northern Nigerian garden at late afternoon. Green lawns, flowering plants, and a small water fountain create a serene, peaceful environment. Soft ambient light filters through the trees.<br><br>
+
+The subject: A young Nigerian woman wearing a silver Atamfa with a loosely draped gyale, lounging on a garden chair, holding a glass of chilled juice and smiling softly. Nearby, a young Nigerian man in a Doguwar riga with cap reclines on a low bench, reading a book and enjoying the calm surroundings. Their body language is relaxed and unhurried.<br><br>
+
+Symbolism: The relaxed postures, soft smiles, and leisurely actions symbolize tranquility, contentment, and appreciation of simple pleasures. The garden setting emphasizes harmony with nature and peaceful reflection.<br><br>
+
+Lighting: Soft late-afternoon sunlight illuminates their faces and fabrics, creating cinematic shadows, gentle glows, and a chill, calming ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Atamfa and Doguwar riga fabrics, textured garden surfaces, natural skin tones, subtle movement of clothing, leaves, and water captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Garden Life / Peaceful Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace in the early evening, with plush cushions, potted plants, and soft ambient lantern lights. The city skyline glows gently in the distance, creating a serene, peaceful atmosphere.<br><br>
+
+The subject: A young Nigerian woman wearing a black abaya lounges comfortably on a cushion, sipping from a glass of cold hibiscus drink. Nearby, a young Nigerian man wears a jallabiya, sitting cross-legged on another cushion, quietly enjoying the evening breeze. Both display calm, relaxed expressions, fully immersed in the chill moment.<br><br>
+
+Symbolism: Leisurely postures and peaceful expressions symbolize contentment, reflection, and enjoyment of slow, serene moments. The rooftop setting represents freedom, escape, and a private sanctuary above city life.<br><br>
+
+Lighting: Soft twilight combined with subtle lantern illumination highlights faces and fabrics, creating cinematic shadows, gentle glows, and a tranquil, chill ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and jallabiya fabrics, plush cushions, reflective glasses, textured terrace surfaces, natural skin tones, and subtle movement of fabrics captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Urban Life / Peaceful Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A cozy Northern Nigerian living room in the late afternoon. Plush sofas, soft rugs, and warm ambient lighting create a calm, inviting environment. Books, small plants, and a tea tray on the table add life to the scene.<br><br>
+
+The subject: A young Nigerian woman wearing comfortable house clothes lounges on the sofa, reading a book with a relaxed smile. Nearby, a young Nigerian man in a Babbar riga with a Zanna Bukar style cap sits cross-legged on the floor, sipping a glass of juice and enjoying the calm atmosphere. Their body language is serene and unhurried.<br><br>
+
+Symbolism: Calm postures, quiet activities, and soft expressions symbolize relaxation, contentment, and taking time to enjoy simple pleasures. The home setting emphasizes comfort, peace, and everyday tranquility.<br><br>
+
+Lighting: Soft late-afternoon sunlight through windows, combined with warm indoor lighting, highlights faces and fabrics, creating cinematic shadows, gentle glows, and a chill, cozy ambiance.<br><br>
+
+Texture: Ultra-detailed realism — soft house clothes and flowing Babbar riga fabrics, textured rugs and sofa surfaces, natural skin tones, subtle movement of clothing and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Home Life / Peaceful Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A quiet Northern Nigerian street café in the late afternoon. Wooden tables, small potted plants, and soft lighting create a calm, inviting atmosphere. The street is emptying as the sun lowers, giving a peaceful, relaxed feel.<br><br>
+
+The subject: A single Nigerian man sitting alone at a table, wearing a flowing Doguwar riga with a Zanna Bukar style cap. He sips a cold drink, resting his arm casually on the table, gazing thoughtfully at the street. His posture is relaxed, conveying calm and leisure.<br><br>
+
+Symbolism: The solitary moment represents peaceful reflection, contentment in one’s own company, and the enjoyment of slow, relaxed moments. The café setting emphasizes calmness, comfort, and urban serenity.<br><br>
+
+Lighting: Soft late-afternoon sunlight mixed with subtle café ambient lighting highlights his figure and fabrics, creating cinematic shadows, gentle glows, and a chill, tranquil ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Doguwar riga fabric, textured table surfaces, reflective glass of the drink, natural skin tones, and subtle movement of fabric and light captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Urban Life / Peaceful Moments / Single Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace in the early evening, with plush cushions, small plants, and a gentle breeze. The city skyline glows softly under a calm, twilight sky, creating a peaceful and serene environment.<br><br>
+
+The subject: A single Nigerian woman lounging on a cushion, wearing a flowing silver abaya. She leans back with a soft smile, holding a glass of chilled drink, fully relaxed and enjoying the quiet rooftop atmosphere.<br><br>
+
+Symbolism: Her relaxed posture and gentle smile symbolize calm, self-contentment, and appreciation of simple pleasures. The rooftop setting represents freedom, privacy, and tranquility above city life.<br><br>
+
+Lighting: Soft twilight combined with subtle ambient rooftop lighting highlights her figure and fabrics, creating cinematic shadows, gentle glows, and a chill, serene ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, plush cushions, reflective glass, textured terrace surfaces, natural skin tones, and subtle movement of fabric and light captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Urban Life / Peaceful Moments / Solo Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A quiet Northern Nigerian residential street in the early morning. Warm sunlight filters through trees, casting gentle shadows on the clean pavement. Small gardens and low fences line the street, creating a peaceful, calm neighborhood atmosphere.<br><br>
+
+The subject: A single Nigerian man walking leisurely along the street, wearing a flowing shadda with a Zanna Bukar style cap. His hands are in his pockets, posture relaxed, and he occasionally glances around, taking in the calm surroundings. His expression is serene and content.<br><br>
+
+Symbolism: Walking alone in a peaceful environment symbolizes reflection, freedom, and the enjoyment of simple, calm moments. The residential street emphasizes safety, comfort, and tranquility in everyday life.<br><br>
+
+Lighting: Soft morning sunlight highlights his figure and clothing, creating cinematic shadows, gentle glows, and a chill, relaxed ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing shadda fabric, textured pavement, natural skin tones, subtle movement of fabric and light captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Urban Life / Peaceful Moments / Solo Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: The interior of a Northern Nigerian luxury car, parked in a quiet, scenic street at twilight. Soft leather seats, polished dashboard, and subtle ambient lighting create a calm and refined environment.<br><br>
+
+The subject: A single Nigerian woman sitting comfortably in the passenger seat, wearing a flowing black abaya. She leans back, holding a glass of chilled drink, gazing out the window with a relaxed, serene expression. Alternatively, a man in a Babbar riga with Zanna Bukar style cap could be in the driver’s seat, hands resting casually on the steering wheel, enjoying the calm moment.<br><br>
+
+Symbolism: Sitting calmly inside a luxurious car represents personal peace, quiet reflection, and appreciation of life’s comforts. The setting emphasizes privacy, tranquility, and a pause from everyday hustle.<br><br>
+
+Lighting: Soft twilight filtering through the windows combined with subtle interior ambient lights highlights faces and fabrics, creating cinematic shadows, gentle glows, and a chill, relaxing ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and Babbar riga fabrics, leather seat textures, polished surfaces, natural skin tones, and subtle reflections of light captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Luxury Life / Peaceful Moments / Solo Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A luxurious Northern Nigerian lounge with plush sofas, low tables, ambient floor lamps, and large windows overlooking the city skyline at twilight. Soft rugs and decorative items add warmth and elegance.<br><br>
+
+The subject: A single Nigerian man in a flowing Babbar riga with Zanna Bukar style cap lounges on a sofa, sipping a cold drink and looking thoughtfully toward the city view. Across from him, a woman in a silver abaya relaxes on another sofa, casually reading a book. Both are calm and fully immersed in the chill, serene environment.<br><br>
+
+Symbolism: The relaxed postures and quiet activities symbolize contentment, reflection, and enjoyment of luxurious yet peaceful moments. The lounge setting represents comfort, tranquility, and appreciation of calm, refined spaces.<br><br>
+
+Lighting: Soft twilight light combined with subtle interior ambient lighting highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a chill, calming ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Babbar riga and abaya fabrics, textured sofas, polished floors, natural skin tones, subtle reflections, and delicate movement of fabrics captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Luxury Life / Peaceful Moments / Solo and Shared Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop balcony at sunset, overlooking the city skyline. Plush cushions, small potted plants, and soft ambient lanterns create a peaceful, serene environment. The sky glows with warm golden and pink hues.<br><br>
+
+The subject: A single Nigerian woman sitting comfortably on a cushion, wearing a flowing black abaya. She sips a chilled drink, leaning back slightly, her expression calm and content. Alternatively, a man in a flowing jallabiya or Babbar riga with Zanna Bukar style cap could be sitting cross-legged nearby, quietly enjoying the sunset.<br><br>
+
+Symbolism: Relaxed posture and serene expression symbolize contentment, self-reflection, and enjoyment of calm, beautiful moments. The rooftop balcony represents freedom, escape, and peaceful contemplation above city life.<br><br>
+
+Lighting: Soft sunset light highlights faces and fabrics, creating cinematic shadows, gentle glows, and a tranquil, chill ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya or jallabiya fabrics, textured cushions, reflective drink surfaces, natural skin tones, and subtle movement of fabric and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Chill / Relaxation / Calm / Leisure / Nigerian Urban Life / Peaceful Moments / Solo Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cool">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Cool</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian city street in the late afternoon. Sleek modern buildings, clean pavements, and subtle street lights create a stylish urban environment. A slight breeze moves light fabrics and leaves, adding movement.<br><br>
+
+The subject: A young Nigerian man leaning casually against a polished car, wearing a crisp shadda with a Zanna Bukar style cap. Sunglasses reflect the city skyline, and his posture radiates confidence. Alternatively, a woman in a silver abaya with stylish folds stands nearby, hands in relaxed pose, exuding effortless elegance.<br><br>
+
+Symbolism: Confident posture, stylish clothing, and urban surroundings symbolize self-assurance, sophistication, and embracing life with flair. The polished car and city street emphasize modernity and urban coolness.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with reflective city surfaces creates cinematic highlights, subtle shadows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp shadda and flowing abaya fabrics, reflective surfaces of car and buildings, natural skin tones, subtle movement of fabrics and leaves captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian City / Modern Elegance<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunset, overlooking a glowing city skyline. Plush cushions, modern glass railings, and ambient lanterns create a stylish, relaxed, yet sophisticated environment.<br><br>
+
+The subject: A young Nigerian man standing confidently near the railing, wearing a flowing Babbar riga with a Zanna Bukar style cap, sunglasses perched casually. Alternatively, a young Nigerian woman in a sleek black or silver abaya lounges on a cushion nearby, holding a drink, with a subtle smile. Both exude effortless style and cool confidence.<br><br>
+
+Symbolism: The relaxed yet confident posture, stylish attire, and panoramic city view symbolize self-assurance, modern elegance, and enjoying life with flair. The rooftop setting emphasizes freedom, perspective, and luxury.<br><br>
+
+Lighting: Soft golden sunset light combined with subtle terrace ambient lights highlights faces and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Babbar riga and abaya fabrics, textured cushions, reflective glass surfaces, natural skin tones, subtle movement of fabric and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Luxury / Nigerian Urban Life / Relaxed Elegance<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A stylish Northern Nigerian street café in the late afternoon. Modern tables, potted plants, and subtle ambient lights create a relaxed, urban-chic environment. The street glows softly as the sun begins to set.<br><br>
+
+The subject: A young Nigerian man sitting at a café table, wearing a crisp shadda with a Zanna Bukar style cap and casual sunglasses. Across from him, a young Nigerian woman in a silver abaya lounges gracefully, sipping a drink. Both exude effortless style, relaxed posture, and urban confidence.<br><br>
+
+Symbolism: The confident posture, stylish attire, and calm yet engaged expressions symbolize self-assurance, modern sophistication, and enjoying urban life with flair. The café setting represents social elegance and leisurely cool moments.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with ambient café lighting highlights faces and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, polished table surfaces, reflective drink glasses, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Street Culture / Relaxed Elegance<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at dusk, overlooking the city skyline with soft glowing lights. Plush cushions, potted plants, and elegant lanterns create a sophisticated, relaxed atmosphere.<br><br>
+
+The subject: A single Nigerian woman sitting confidently on a cushion, wearing a sleek silver abaya with modern folds. She holds a chilled drink, sunglasses perched stylishly, her posture relaxed but radiating confidence and effortless style. A gentle breeze moves the flowing fabric, enhancing the cinematic feel.<br><br>
+
+Symbolism: Confident posture, stylish attire, and calm expression symbolize self-assurance, modern elegance, and urban sophistication. The rooftop view emphasizes freedom, perspective, and enjoying life with poise.<br><br>
+
+Lighting: Soft sunset light combined with subtle terrace ambient lighting highlights her figure and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, textured cushions, reflective drink glass, natural skin tones, subtle movement of fabric and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Luxury Life / Relaxed Elegance / Solo Female<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: Inside a Northern Nigerian luxury car parked on a quiet street at twilight. Soft leather seats, polished dashboard, and ambient interior lights create a stylish and intimate environment.<br><br>
+
+The subject: A single Nigerian woman seated in the passenger seat, wearing a flowing black abaya with subtle silver embroidery. She leans back comfortably, holding a chilled drink, sunglasses perched elegantly, exuding calm confidence and style. Alternatively, a woman in a house gown or Atamfa with gyale could be depicted, her posture relaxed and chic.<br><br>
+
+Symbolism: Sitting calmly inside a luxury car represents poise, personal confidence, and enjoying life’s comforts with style. The setting emphasizes privacy, sophistication, and quiet reflection.<br><br>
+
+Lighting: Soft twilight filtering through the car windows combined with subtle interior ambient lighting highlights her figure and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya or Atamfa fabric, polished leather surfaces, reflective glass, natural skin tones, subtle movement of fabric and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Luxury / Nigerian Urban Life / Relaxed Elegance / Solo Female<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at twilight, overlooking a glowing city skyline. Plush cushions, sleek glass railings, and subtle lanterns create a stylish, relaxed, and modern environment.<br><br>
+
+The subject: A single Nigerian man standing confidently near the railing, wearing a flowing Babbar riga with a Zanna Bukar style cap. Sunglasses rest on his face, one hand in his pocket, the other casually leaning on the railing. His posture exudes effortless confidence and urban cool.<br><br>
+
+Symbolism: Confident stance, stylish attire, and serene expression symbolize self-assurance, sophistication, and modern elegance. The rooftop setting emphasizes freedom, perspective, and appreciation of urban luxury.<br><br>
+
+Lighting: Soft twilight combined with ambient terrace lighting highlights his figure and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Babbar riga fabric, textured cushions and railings, natural skin tones, subtle movement of fabric and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Luxury Life / Solo Male / Relaxed Elegance<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian modern street at late afternoon, with sleek buildings, clean pavements, and soft ambient lighting from street lamps. Light breeze moves leaves and fabrics gently, adding subtle motion.<br><br>
+
+The subject: A teenage Nigerian boy wearing a crisp shadda and Zanna Bukar style cap, leaning casually against a polished car, looking confident. Beside him, a teenage Nigerian girl in a black or silver abaya with stylish folds stands with relaxed posture, hands in pockets, sunglasses perched on her head. Both radiate effortless cool and youthful style.<br><br>
+
+Symbolism: Confident posture, relaxed expressions, and stylish attire symbolize self-assurance, youthfulness, and urban sophistication. Their stance together represents camaraderie, friendship, and youthful confidence in city life.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with reflective surfaces of buildings and the car highlights their figures and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, polished car surfaces, natural skin tones, subtle movement of fabric and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Youth / Friendship / Relaxed Elegance<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunset, overlooking the city skyline with glowing lights. Plush cushions, small potted plants, and subtle lanterns create a calm yet stylish environment.<br><br>
+
+The subject: A teenage Nigerian boy wearing a flowing jallabiya leans casually on the rooftop railing, hands in pockets, relaxed and confident. Beside him, a teenage Nigerian girl in a silver abaya sits on a cushion, sipping a drink, posture relaxed, sunglasses perched stylishly. Both exude youthful urban cool and effortless style.<br><br>
+
+Symbolism: Relaxed posture, stylish attire, and serene expressions symbolize confidence, friendship, and youthful sophistication. The rooftop setting emphasizes perspective, freedom, and appreciation of city life.<br><br>
+
+Lighting: Soft sunset light combined with subtle ambient rooftop lighting highlights their figures and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and jallabiya fabrics, textured cushions, reflective drink glass, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Youth / Friendship / Relaxed Elegance / Rooftop Vibes<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: Inside a Northern Nigerian luxury car parked on a quiet street at twilight. Soft leather seats, polished dashboard, and subtle ambient interior lights create a stylish, calm, and intimate atmosphere.<br><br>
+
+The subject: A teenage Nigerian boy wearing a crisp shadda with a Zanna Bukar style cap sits in the driver’s seat, relaxed, one hand resting on the steering wheel. Beside him, a teenage Nigerian girl in a black abaya or Atamfa with gyale lounges comfortably in the passenger seat, sipping a chilled drink. Both display effortless youthful style and cool confidence.<br><br>
+
+Symbolism: Sitting confidently in a luxury car symbolizes self-assurance, comfort, and enjoying life’s pleasures with style. Their relaxed posture emphasizes friendship, calm, and modern urban youth culture.<br><br>
+
+Lighting: Soft twilight light filtering through the windows combined with subtle interior ambient lighting highlights their figures and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, polished leather surfaces, reflective drink glasses, natural skin tones, subtle movement of fabrics and light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Youth / Friendship / Relaxed Elegance / Luxury Car Vibes<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian city street at dusk. Sleek modern buildings, clean pavements, and subtle ambient street lighting create a stylish, urban environment. Slight breeze moves light fabrics and scattered leaves.<br><br>
+
+The subject: A Nigerian man around 28 years old, wearing a crisp shadda with a Zanna Bukar style cap, leaning casually against a polished luxury car. His sunglasses reflect the city skyline, and his posture exudes effortless confidence and modern sophistication.<br><br>
+
+Symbolism: Confident stance, stylish attire, and calm expression symbolize self-assurance, maturity, and urban elegance. The city street and luxury car emphasize modernity, independence, and refined taste.<br><br>
+
+Lighting: Soft twilight combined with reflective city surfaces highlights his figure and fabrics, creating cinematic shadows, gentle glows, and a vibrant, cool ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp shadda fabric, polished car surfaces, natural skin tones, subtle movement of fabric and light captured with DSLR clarity.<br><br>
+
+Theme: Cool / Confidence / Style / Urban Life / Nigerian Young Adults / Solo Male / Modern Elegance<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="amused">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Amused</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian school courtyard during late afternoon. Sunlight casts soft, warm glows across the grounds. Students’ bags, benches, and small trees add life and realism.<br><br>
+
+The subject: A teenage Nigerian girl wearing a colorful Atamfa with gyale laughing, holding her stomach lightly as if someone just told a funny story. Nearby, a teenage Nigerian boy in a crisp shadda and Zanna Bukar style cap grins mischievously, holding a small notebook. Both display natural, playful expressions of amusement.<br><br>
+
+Symbolism: Genuine laughter and playful expressions symbolize joy, friendship, and youthful lightheartedness. The school courtyard emphasizes casual, everyday moments where amusement is spontaneous.<br><br>
+
+Lighting: Soft late-afternoon sunlight highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a warm, cheerful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Atamfa and crisp shadda fabrics, natural skin tones, textured courtyard surfaces, subtle movement of fabrics and hair captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Youth / Everyday Happiness / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A lively Northern Nigerian street during late afternoon. Small shops, polished pavements, and potted plants line the street. A gentle breeze moves fabrics and leaves, adding subtle motion.<br><br>
+
+The subject: A teenage Nigerian boy wearing a crisp jallabiya with Zanna Bukar style cap laughs while pretending to juggle small fruits. Across from him, a teenage Nigerian girl in a colorful Atamfa with gyale giggles, covering her mouth, leaning slightly forward in amusement. Both radiate natural, playful energy.<br><br>
+
+Symbolism: Spontaneous laughter and lighthearted interaction symbolize youthful joy, friendship, and carefree moments. The street setting emphasizes casual, everyday fun.<br><br>
+
+Lighting: Soft late-afternoon sunlight highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Atamfa and crisp jallabiya fabrics, textured street surfaces, natural skin tones, subtle movement of fabrics and light captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Youth / Everyday Happiness / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian school rooftop at late afternoon, with soft sunlight casting warm glows on the terrace. Small potted plants and benches add realism and life.<br><br>
+
+The subject: A teenage Nigerian girl in a flowing silver abaya leans back laughing, one hand covering her mouth, while a teenage Nigerian boy in a crisp shadda with Zanna Bukar style cap playfully gestures as if teasing her. Both radiate joyful, carefree energy and natural amusement.<br><br>
+
+Symbolism: Genuine laughter and playful interaction symbolize youthful joy, friendship, and lighthearted camaraderie. The rooftop setting emphasizes freedom, privacy, and spontaneous fun.<br><br>
+
+Lighting: Soft late-afternoon sunlight highlights faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, textured terrace surfaces, natural skin tones, subtle movement of fabrics and hair captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Youth / Everyday Happiness / Lighthearted Moments / Rooftop Fun<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian luxury lounge during late afternoon. Plush sofas, ambient floor lamps, and decorative plants create a relaxed, stylish environment. Large windows reveal the glowing city skyline outside.<br><br>
+
+The subject: A teenage Nigerian boy in a crisp jallabiya with Zanna Bukar style cap laughs while playfully nudging a teenage Nigerian girl seated on a sofa. She wears a flowing silver abaya, covering her mouth in amusement, leaning back slightly. Both radiate carefree joy and youthful, playful energy.<br><br>
+
+Symbolism: Playful gestures, laughter, and relaxed postures symbolize friendship, lightheartedness, and spontaneous fun. The luxury lounge setting emphasizes comfort, elegance, and enjoying carefree moments.<br><br>
+
+Lighting: Soft ambient lighting from floor lamps combined with subtle daylight through windows highlights faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp jallabiya fabrics, plush sofa textures, reflective surfaces, natural skin tones, subtle movement of fabrics and light captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Youth / Luxury Leisure / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian street café in late afternoon. Wooden tables, potted plants, and subtle ambient lights create a cozy, lively environment. A light breeze moves fabrics and leaves.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with a Zanna Bukar style cap laughs while showing something on his phone to a young Nigerian woman beside him. She wears a flowing silver abaya and giggles, covering her mouth in amusement. Both radiate natural, playful energy and casual confidence.<br><br>
+
+Symbolism: Shared laughter and spontaneous interaction symbolize friendship, joy, and lighthearted moments. The street café emphasizes casual social life and carefree enjoyment.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with ambient café lighting highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, textured tables, polished glass surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Young Adults / Everyday Happiness / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunset, overlooking a glowing city skyline. Plush cushions, potted plants, and soft lanterns create a relaxed yet stylish environment.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a flowing jallabiya with Zanna Bukar style cap leans casually against the railing, laughing. Beside him, a young Nigerian woman in a sleek black or silver abaya laughs playfully, covering her mouth, as if sharing a private joke. Both radiate carefree joy and relaxed confidence.<br><br>
+
+Symbolism: Shared laughter and playful interaction symbolize friendship, lightheartedness, and the enjoyment of spontaneous, carefree moments. The rooftop terrace emphasizes privacy, freedom, and perspective.<br><br>
+
+Lighting: Soft sunset light combined with subtle terrace ambient lighting highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and jallabiya fabrics, textured cushions, reflective surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Young Adults / Rooftop Fun / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian school courtyard during mid-morning. Benches, small trees, and polished pavements create a lively yet realistic environment. Sunlight filters through the leaves, casting soft shadows.<br><br>
+
+The subject: A group of Nigerian students laughing and playfully interacting. A teenage girl in a colorful Atamfa with gyale covers her mouth in amusement, while a teenage boy in a crisp jallabiya with Zanna Bukar style cap pretends to trip slightly, making the others laugh. Their expressions are natural, joyful, and carefree.<br><br>
+
+Symbolism: Playful gestures and laughter symbolize youthful joy, camaraderie, and carefree moments. The school courtyard emphasizes everyday life and spontaneous fun among friends.<br><br>
+
+Lighting: Soft mid-morning sunlight highlights faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Atamfa and crisp jallabiya fabrics, textured pavements and benches, natural skin tones, subtle movement of fabrics and hair captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Students / Everyday Happiness / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian street café in the late afternoon. Modern tables, potted plants, and ambient street lighting create a lively, casual environment. Soft breeze moves fabrics and leaves.<br><br>
+
+The subject: A young Nigerian man in a flowing jallabiya with Zanna Bukar style cap laughs heartily while spilling a small drink accidentally, playfully reacting to his own clumsiness. Across from him, a young Nigerian woman in a flowing silver abaya leans forward, laughing and covering her mouth, enjoying the moment. Both exude carefree, playful energy.<br><br>
+
+Symbolism: Laughter, playful reactions, and relaxed posture symbolize joy, lightheartedness, and spontaneous fun. The café setting emphasizes casual, social life and enjoying everyday pleasures.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with ambient café lighting highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and jallabiya fabrics, textured tables, polished drink glasses, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Young Adults / Everyday Happiness / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunset, overlooking a glowing city skyline. Plush cushions, ambient lanterns, and small potted plants create a stylish, relaxed environment.<br><br>
+
+The subject: A young Nigerian man in a flowing Babbar riga with Zanna Bukar style cap is playfully tossing a small paper airplane toward a young Nigerian woman in a sleek silver abaya. She laughs heartily, leaning back on a cushion, her hand raised to block the playful toss. Both exude carefree joy, youthful energy, and spontaneous amusement.<br><br>
+
+Symbolism: Playful interaction, laughter, and relaxed posture symbolize friendship, lightheartedness, and enjoyment of fun moments. The rooftop terrace represents freedom, casual luxury, and perspective.<br><br>
+
+Lighting: Soft sunset light combined with ambient rooftop lanterns highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Babbar riga and abaya fabrics, textured cushions, reflective surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Young Adults / Rooftop Fun / Lighthearted Moments / Luxury Leisure<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian luxury living room in late afternoon. Plush sofas, polished wooden floors, soft ambient lamps, and decorative plants create a warm, stylish environment.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with Zanna Bukar style cap playfully tosses a small pillow toward a young Nigerian woman seated across from him. She wears a flowing black abaya and bursts into laughter, leaning back and covering her mouth. Both radiate lighthearted joy, spontaneous energy, and carefree amusement.<br><br>
+
+Symbolism: Playful interaction, laughter, and relaxed posture symbolize friendship, joy, and enjoying everyday moments. The luxury home setting emphasizes comfort, casual elegance, and personal leisure.<br><br>
+
+Lighting: Soft late-afternoon light combined with ambient lamps highlights their faces and fabrics, creating cinematic shadows, gentle glows, and a cheerful, playful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, plush sofa textures, reflective surfaces, natural skin tones, subtle movement of fabrics captured with DSLR clarity.<br><br>
+
+Theme: Amused / Playful / Joy / Friendship / Nigerian Young Adults / Luxury Home Fun / Lighthearted Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="relaxed">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Relaxed</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunset, overlooking the city skyline. Plush cushions, small potted plants, and subtle ambient lanterns create a calm, serene atmosphere.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a flowing Babbar riga with Zanna Bukar style cap reclines comfortably on a cushion, eyes closed, hands behind his head. Alternatively, a young Nigerian woman in a sleek black or silver abaya lounges nearby, sipping a drink, her posture calm and composed. Both radiate effortless relaxation.<br><br>
+
+Symbolism: Reclining posture and serene expressions symbolize peace, contentment, and taking time to enjoy calm moments. The rooftop setting emphasizes perspective, freedom, and quiet reflection.<br><br>
+
+Lighting: Soft golden sunset light highlights faces and fabrics, creating gentle glows, cinematic shadows, and a tranquil ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing Babbar riga and abaya fabrics, textured cushions, reflective drink surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Urban Life / Quiet Moments / Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian luxury home terrace in late afternoon. Plush cushions, small potted plants, and soft lanterns create a calm, serene environment. Gentle breeze moves fabrics and leaves.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with Zanna Bukar style cap lounges on a plush sofa, sipping a drink and gazing at the city skyline. Nearby, a young Nigerian woman in a flowing silver abaya reclines on another cushion, her posture relaxed and contemplative. Alternatively, it could be a single person only, enjoying the moment.<br><br>
+
+Symbolism: Relaxed posture, serene expressions, and soft surroundings symbolize peace, leisure, and personal reflection. The terrace setting emphasizes freedom, calm, and quiet enjoyment of life.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with ambient terrace lights highlights faces and fabrics, creating cinematic shadows, gentle glows, and a tranquil ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, textured cushions, polished surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Urban Life / Quiet Moments / Reflection<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: Inside a Northern Nigerian luxury Rolls-Royce parked in a quiet, upscale neighborhood during late afternoon. Soft leather seats, polished interior surfaces, and ambient lighting create a calm, refined environment.<br><br>
+
+The subject: A Nigerian man in his late 20s wearing a crisp Babbar riga with Zanna Bukar style cap reclines comfortably in the back seat. One hand rests casually on the armrest while the other holds a chilled drink. His posture is completely relaxed, enjoying the cool air from the AC, eyes partially closed in contentment.<br><br>
+
+Symbolism: Reclining posture and serene expression symbolize luxury, peace, and personal enjoyment. The Rolls-Royce interior emphasizes comfort, elegance, and refined leisure.<br><br>
+
+Lighting: Soft late-afternoon light filters through the car windows, combined with subtle interior lighting, creating cinematic shadows, gentle glows, and a tranquil, luxurious ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp Babbar riga fabric, smooth leather seats, polished car surfaces, reflective glass, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Young Adult / Luxury Life / Personal Comfort / Rolls-Royce<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian luxury terrace in late morning. Plush floor pillows, small potted plants, and soft ambient lighting create a cozy, serene environment. Gentle breeze moves fabrics and leaves.<br><br>
+
+The subject: A Nigerian woman in her mid-20s wearing a flowing black or silver abaya lounges on a large plush pillow, holding a cup of steaming coffee. Her posture is relaxed, eyes half-closed, enjoying the warmth of the drink and the calm surroundings.<br><br>
+
+Symbolism: Relaxed posture and serene expression symbolize peace, personal comfort, and mindful enjoyment of small pleasures. The luxury pillow setup emphasizes coziness, elegance, and quiet leisure.<br><br>
+
+Lighting: Soft natural morning light highlights her face and fabric textures, creating gentle glows, cinematic shadows, and a tranquil ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, plush pillow textures, polished cup surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Young Adult / Luxury Life / Personal Comfort / Coffee Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian luxury living room or terrace in late afternoon. Plush floor pillows, soft rugs, polished furniture, and ambient lighting create a cozy, elegant environment.<br><br>
+
+The subject: A small 5-year-old Nigerian girl, introverted and shy, just returning from school. She wears a neat school uniform and has thrown her school bag onto a plush pillow. Mid-jump toward a luxury chair, her back arches slightly, hair bouncing, face lit with delight and relief after a long day at school.<br><br>
+
+Symbolism: Tossed school bag and joyful jump symbolize release, carefree innocence, and comfort in a safe, luxurious environment. The scene captures the pure joy of coming home and relaxing.<br><br>
+
+Lighting: Soft late-afternoon light filters through large windows, highlighting her movement and fabrics, creating cinematic shadows, gentle glows, and a warm, comforting ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp school uniform, soft fabrics of pillows and rugs, polished chair surfaces, natural skin tones, subtle movement of hair and clothing captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Joy / Comfort / Nigerian Child / Luxury Life / Playful Innocence / Home Leisure / School Relief<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A quiet Northern Nigerian street or small roadside area during late afternoon. Dusty pavements, scattered leaves, and a large shady tree create a peaceful, natural environment.<br><br>
+
+The subject: A young Nigerian man, a sugarcane seller in his mid-20s, wearing casual house clothes or a crisp shadda, carrying a small sugarcane bundle. He finds shade under a large, leafy tree and sits or leans against it, resting his head back, taking a deep breath, and enjoying a brief moment of peace after a long day of work.<br><br>
+
+Symbolism: Resting under the tree symbolizes relief, self-care, and finding calm amid daily struggles. The natural tree shade emphasizes simplicity, grounding, and connection with nature.<br><br>
+
+Lighting: Soft late-afternoon sunlight filters through the tree leaves, creating dappled shadows and gentle glows, cinematic ambiance, and a serene, peaceful mood.<br><br>
+
+Texture: Ultra-detailed realism — rough textures of the sugarcane, woven basket or bundle, soft fabric folds of clothing, textured tree bark and leaves, natural skin tones, subtle movement of leaves captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Street Life / Hard Work Relief / Nature Comfort / Everyday Serenity<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian kitchen or utility area during late afternoon. Polished countertops, a small basket for clean bowls, and a bucket of kumfa (soapy water) in the foreground create a realistic, homey environment.<br><br>
+
+The subject: A Nigerian houseworker, a young woman in her mid-20s wearing simple house clothes or a practical gown, has just finished washing bowls. She holds the last bowl, about to place it in the basket, while leaning slightly back, relaxed, taking a brief pause. The bucket of kumfa in front emphasizes her recent effort.<br><br>
+
+Symbolism: Relaxed posture and serene expression symbolize rest, relief, and small moments of peace after work. The kitchen and bucket highlight everyday labor, effort, and domestic life.<br><br>
+
+Lighting: Soft late-afternoon light combined with subtle indoor lighting highlights her face, clothing, and wet surfaces, creating cinematic shadows, gentle glows, and a calm, peaceful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — wet and dry bowl surfaces, subtle soap bubbles in the kumfa, flowing fabric folds, natural skin tones, textured countertops, and subtle reflections captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Everyday Life / Nigerian Domestic Scene / Labor Relief / Home Comfort / Personal Rest<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian luxury rooftop at sunset. Plush cushions, potted plants, and soft ambient lanterns create a cozy, serene environment. A gentle breeze moves fabrics and leaves.<br><br>
+
+The subject: A young Nigerian woman in her mid-20s wearing a flowing silver abaya lounges on a plush cushion, holding a cup of warm tea. She leans back slightly, eyes half-closed, enjoying the quiet and the gentle breeze. Alternatively, it could be a young man in a crisp shadda, casually reclining and soaking in the calm atmosphere.<br><br>
+
+Symbolism: Relaxed posture, serene expression, and soft surroundings symbolize peace, personal comfort, and mindful enjoyment of the present moment. The rooftop emphasizes freedom, perspective, and quiet luxury.<br><br>
+
+Lighting: Soft sunset light highlights her face and fabrics, creating cinematic shadows, gentle glows, and a tranquil, warm ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya or shadda fabrics, textured cushions, polished cup surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Young Adults / Luxury Life / Rooftop Serenity / Quiet Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian street café in late afternoon. Wooden tables, potted plants, and ambient café lights create a cozy, casual environment. A gentle breeze moves fabrics and leaves.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with Zanna Bukar style cap sits alone at a table, leaning back comfortably in his chair. He sips a cold drink, looking around peacefully, completely relaxed and enjoying the calm moment.<br><br>
+
+Symbolism: Relaxed posture and serene expression symbolize peace, personal comfort, and the enjoyment of quiet moments amid daily life. The street café setting emphasizes casual leisure, freedom, and simple pleasures.<br><br>
+
+Lighting: Soft late-afternoon sunlight combined with ambient café lighting highlights his face, fabrics, and textures, creating cinematic shadows, gentle glows, and a tranquil, warm ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp shadda fabric, wooden table textures, reflective glass surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Young Adult / Street Café Serenity / Everyday Comfort / Quiet Moments<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: Inside a Northern Nigerian luxury car parked in a quiet, upscale neighborhood during late afternoon. Soft leather seats, polished interior surfaces, and ambient lighting create a calm, elegant environment.<br><br>
+
+The subject: A young Nigerian woman in her mid-20s wearing a sleek silver abaya reclines comfortably in the back seat. One hand rests casually on the armrest while the other holds a warm cup of tea or coffee. Her posture is fully relaxed, eyes half-closed, enjoying the quiet and the cool air from the AC.<br><br>
+
+Symbolism: Reclining posture and serene expression symbolize peace, personal comfort, and mindful leisure. The luxury car interior emphasizes elegance, refinement, and enjoying private moments.<br><br>
+
+Lighting: Soft late-afternoon sunlight filters through tinted windows, combined with subtle interior lighting, creating cinematic shadows, gentle glows, and a tranquil, luxurious ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, smooth leather seats, polished car surfaces, reflective cup surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Relaxed / Calm / Peace / Leisure / Nigerian Young Adult / Luxury Life / Car Comfort / Personal Serenity<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="positive">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Positive</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunrise. Soft sunlight illuminates the city skyline, potted plants, and plush cushions, creating a hopeful, uplifting atmosphere.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with Zanna Bukar style cap stands on the terrace, arms slightly raised, looking toward the horizon with a smile of quiet confidence. Alternatively, a young Nigerian woman in a flowing silver abaya can be standing or sitting, gazing at the sunrise with a peaceful, inspired expression.<br><br>
+
+Symbolism: Raised arms, bright sunlight, and open posture symbolize hope, growth, optimism, and embracing opportunities. The rooftop setting emphasizes perspective, freedom, and looking forward.<br><br>
+
+Lighting: Soft golden sunrise light highlights faces and fabrics, creating cinematic shadows, gentle glows, and an uplifting, inspirational ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp shadda and flowing abaya fabrics, textured cushions and terrace surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Uplifting / Optimism / Growth / Nigerian Young Adults / Hope / Inspirational Moments / Sunrise<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A bustling Northern Nigerian street in late morning. Sunlight illuminates colorful shop fronts, dust swirling slightly in the air, and small trees lining the pavements, creating a vibrant, energetic environment.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with Zanna Bukar style cap walks confidently along the street with a small smile, hands loosely at his sides. He carries a small bag of goods or books, symbolizing productivity and determination. Alternatively, a young Nigerian woman in a flowing silver or black abaya can be shown walking past, smiling softly, radiating confidence.<br><br>
+
+Symbolism: Confident stride, open posture, and bright surroundings symbolize positivity, self-assurance, and embracing life’s opportunities. The street setting emphasizes energy, daily progress, and community life.<br><br>
+
+Lighting: Bright late-morning sunlight highlights faces, fabrics, and textures, creating cinematic shadows, gentle glows, and a cheerful, uplifting ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya and crisp shadda fabrics, textured pavements, shop surfaces, natural skin tones, subtle movement of fabrics, dust, and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Uplifting / Optimism / Growth / Nigerian Young Adults / Confidence / Everyday Motivation / Street Energy<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace at sunrise. Plush cushions, potted plants, and soft ambient lanterns create a serene yet uplifting environment. The city skyline glows gently in the distance.<br><br>
+
+The subject: A young Nigerian woman in her mid-20s wearing a flowing silver abaya stands confidently on the terrace, one hand resting lightly on the railing, the other relaxed by her side. She gazes toward the sunrise with a soft, inspired smile, radiating hope and positivity.<br><br>
+
+Symbolism: Open posture, raised head, and the warm sunrise symbolize optimism, growth, self-confidence, and embracing new opportunities. The rooftop setting emphasizes perspective, freedom, and personal achievement.<br><br>
+
+Lighting: Soft golden sunrise light illuminates her face and the flowing abaya, creating cinematic shadows, gentle glows, and a warm, uplifting ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, textured terrace surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Uplifting / Optimism / Growth / Nigerian Young Adult Woman / Hope / Inspirational Moments / Sunrise<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A quiet Northern Nigerian street during late afternoon. Dusty pavements, small trees, and scattered sunlight create a realistic yet warm environment. The background shows simple houses or shops, emphasizing everyday life.<br><br>
+
+The subject: A young Nigerian woman in her mid-20s wearing a neat black or silver abaya walks along the street carrying a small basket of goods. Her posture shows effort, but her expression carries a gentle, hopeful smile, reflecting determination and resilience. Alternatively, she could be holding a small bag or bundle of items she has been selling or transporting, symbolizing work and responsibility.<br><br>
+
+Symbolism: Walking with effort yet smiling symbolizes perseverance, hope, and positivity despite daily struggles. The street setting emphasizes real-life challenges and the courage to move forward.<br><br>
+
+Lighting: Soft late-afternoon sunlight highlights her face and fabric, creating cinematic shadows, gentle glows, and a warm, uplifting ambiance that conveys hope.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, textured basket, dusted pavements, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Hopeful / Perseverance / Growth / Nigerian Young Adult Woman / Everyday Struggle / Optimism / Clean & Inspirational<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian street at early evening. The sun is low, casting long shadows over dusty pavements, scattered leaves, and simple shopfronts. Small street lights start to glow, adding a gentle warmth to the scene.<br><br>
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp shadda with Zanna Bukar style cap walks steadily carrying a small bundle of goods. His posture shows effort and determination, but his expression reflects quiet confidence and hope, smiling gently as he moves forward.<br><br>
+
+Symbolism: Carrying a bundle while walking forward symbolizes perseverance, resilience, and the courage to keep going despite challenges. His gentle smile emphasizes positivity and belief in better outcomes.<br><br>
+
+Lighting: Soft early-evening sunlight combined with warm ambient street lighting highlights his face, fabrics, and textures, creating cinematic shadows, gentle glows, and an uplifting, hopeful ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp shadda fabric, textured bundle of goods, dusty pavements, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Hopeful / Perseverance / Nigerian Young Adult Man / Everyday Struggle / Optimism / Clean & Inspirational<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian rooftop terrace during late afternoon. Plush cushions, potted plants, and ambient lanterns create a calm and uplifting environment. The city skyline glows softly in the distance.<br><br>
+
+The subject: A young Nigerian woman in her mid-20s wearing a flowing silver abaya sits comfortably on a plush cushion, holding a small notebook or cup of tea. She leans back slightly with a gentle, satisfied smile, reflecting on the day’s small victories. Her posture is relaxed but confident, radiating calm positivity after effort.<br><br>
+
+Symbolism: Sitting peacefully while smiling represents reflection, gratitude, and appreciation for progress despite struggles. The rooftop terrace emphasizes perspective, achievement, and serene confidence.<br><br>
+
+Lighting: Soft late-afternoon sunlight highlights her face and fabric, creating cinematic shadows, gentle glows, and a warm, uplifting, and inspiring ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, textured cushions, polished cup or notebook surfaces, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Hopeful / Gratitude / Reflection / Nigerian Young Adult Woman / Small Victories / Everyday Achievement / Inspirational / Clean<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, warm and vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian bedroom or study corner in late afternoon. A neat desk with a laptop, scattered notebooks, and a soft chair create a focused yet cozy environment. Ambient sunlight filters through a window, highlighting the workspace.<br><br>
+
+The subject: A teenage Nigerian boy, around 15–17 years old, introverted and thoughtful, wearing casual house clothes or a neat shirt, sits at the desk with his laptop open. He smiles softly, eyes focused on his code, reflecting pride and quiet excitement for his progress. One hand rests on the keyboard, the other lightly holding a notebook or pen.<br><br>
+
+Symbolism: Focused posture, gentle smile, and attentive gaze symbolize growth, confidence, and positivity through learning and skill-building. The tidy workspace emphasizes discipline, dedication, and personal achievement.<br><br>
+
+Lighting: Soft late-afternoon sunlight illuminates his face, laptop screen, and notebooks, creating cinematic shadows, gentle glows, and a warm, uplifting ambiance that conveys inspiration and quiet satisfaction.<br><br>
+
+Texture: Ultra-detailed realism — laptop surfaces, notebook pages, casual clothing textures, natural skin tones, subtle movement of fabrics and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Hopeful / Growth / Nigerian Teenage Boy / Introverted / Learning / Coding Achievement / Quiet Confidence / Inspirational / Clean<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, warm and vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian bedroom or study corner in late afternoon. A tidy desk with a notebook, small decorative items, and a soft chair create a cozy and motivating environment. Sunlight filters softly through the window.<br><br>
+
+The subject: A teenage Nigerian girl, around 15–17 years old, introverted and thoughtful, wearing a neat school uniform or casual house clothes, sits at her desk with a small notebook open. She smiles gently, looking at a completed task, project, or homework with pride and quiet satisfaction. Her posture is relaxed but confident, reflecting positivity from her own effort.<br><br>
+
+Symbolism: Smiling at completed work represents self-appreciation, personal growth, and quiet achievement. The desk and small items emphasize focus, discipline, and motivation.<br><br>
+
+Lighting: Soft late-afternoon sunlight illuminates her face, notebook, and desk surface, creating cinematic shadows, gentle glows, and a warm, uplifting ambiance that conveys accomplishment and hope.<br><br>
+
+Texture: Ultra-detailed realism — notebook pages, fabric folds, hair strands, natural skin tones, subtle movement of ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Hopeful / Growth / Nigerian Teenage Girl / Introverted / Learning / Achievement / Quiet Confidence / Inspirational / Clean<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, warm and vibrant color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A Northern Nigerian school courtyard or classroom during late morning. Sunlight filters through windows or open space, casting soft, warm glows on desks, school walls, and small trees or plants in the courtyard.<br><br>
+
+The subject: A teenage Nigerian student, around 15–17 years old, wearing a neat school uniform (shirt, trousers or skirt, tie if applicable) walks confidently with a small smile. He or she carries a backpack or a notebook, looking ahead with a quiet sense of pride and positivity about learning, achievements, or future goals.<br><br>
+
+Symbolism: Confident stride, open posture, and gentle smile symbolize growth, self-assurance, and embracing learning opportunities. The school setting emphasizes effort, discipline, and motivation.<br><br>
+
+Lighting: Soft late-morning sunlight highlights the student’s face and uniform, creating cinematic shadows, gentle glows, and an uplifting, positive ambiance.<br><br>
+
+Texture: Ultra-detailed realism — crisp uniform fabric, textured notebook or backpack, natural skin tones, subtle movement of clothing and ambient light captured with DSLR clarity.<br><br>
+
+Theme: Positive / Hopeful / Growth / Nigerian Teenage Student / School Uniform / Learning / Motivation / Quiet Confidence / Inspirational / Clean<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, vibrant warm color grading, masterpiece quality, 4:5 vertical aspect ratio.<br><br>
+
+The scene: A quiet Northern Nigerian upscale street or driveway during late afternoon. Soft sunlight highlights the polished pavement and luxury surroundings, with the city skyline softly visible in the background.<br><br>
+
+The subject: A young Nigerian woman in her mid-20s wearing a flowing black or silver abaya steps confidently out of a luxury Rolls-Royce. One hand holds a company briefcase, and her back is slightly turned as she clicks the car remote, closing or locking the car behind her. Her posture radiates confidence, ambition, and accomplishment.<br><br>
+
+Symbolism: Exiting a luxury car with a briefcase symbolizes success, self-assurance, and positive professional growth. The abaya emphasizes elegance, sophistication, and cultural identity.<br><br>
+
+Lighting: Soft late-afternoon sunlight illuminates her figure and the car’s polished surfaces, creating cinematic shadows, gentle glows, and a motivational, uplifting ambiance.<br><br>
+
+Texture: Ultra-detailed realism — flowing abaya fabric, polished Rolls-Royce surfaces, reflective briefcase, natural skin tones, subtle movement of fabric captured with DSLR clarity.<br><br>
+
+Theme: Positive / Success / Ambition / Nigerian Young Adult Woman / Luxury Life / Professional Growth / Confidence / Inspirational / Clean<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

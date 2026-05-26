@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling1 – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0d0; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="angry">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Angry</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1happy">Style: Cinematic, ultra-hyper-realistic photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A crowded Northern Nigerian marketplace during late afternoon. Stalls are colorful, but there is tension in the air. Dust rises from the ground and sunlight casts sharp, dramatic shadows.<br><br>
+
+The subject: A young Nigerian man around 20 years old, fists clenched and face flushed with anger, glaring at another person. His shirt sleeves are slightly rolled up, and his posture is rigid, showing confrontation. Around him, bystanders react with surprise or concern.<br><br>
+
+Symbolism: The clenched fists, intense gaze, and tense posture represent conflict, frustration, and the raw emotion of anger. The marketplace setting amplifies the feeling of social pressure and confrontation.<br><br>
+
+Lighting: Harsh late-afternoon sunlight creating strong shadows, emphasizing the tension in the scene and the sharp expressions of the subject.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of clothing, skin flushed from anger, dust particles in the air, subtle reflections in nearby shop windows, detailed facial expressions.<br><br>
+
+Theme: Angry / Confrontation / Tension / Frustration / Social Pressure</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2happy">Style: Cinematic, ultra-hyper-realistic photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A rainy Nigerian city street during early evening. Wet asphalt reflects neon lights from nearby shops and vehicles, creating a dramatic urban atmosphere. Pedestrians hurry past, umbrellas raised.<br><br>
+
+The subject: A young Nigerian woman around 22 years old standing in the middle of the street, her face contorted in anger. She wears a dark-colored abaya and hijab, one hand clenched into a fist, the other raised slightly as if arguing or confronting someone. Her posture is rigid, and her eyes flash with frustration. Rainwater drips from her clothing and umbrella.<br><br>
+
+Symbolism: The clenched fist, intense gaze, and upright posture represent confrontation, inner turmoil, and the raw emotion of anger. The rainy cityscape amplifies the dramatic tension.<br><br>
+
+Lighting: Cool, muted reflections from streetlights and neon signs bouncing off wet surfaces, highlighting her expression and wet fabric. Subtle glints from raindrops add dynamic texture.<br><br>
+
+Texture: Ultra-detailed realism — wet fabric folds, raindrops on clothing and skin, reflective asphalt, realistic skin tones, tension visible in facial muscles and hands.<br><br>
+
+Theme: Angry / Confrontation / Urban Tension / Frustration / Emotional Intensity</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3happy">Style: Cinematic, ultra-hyper-realistic photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian classroom during late afternoon. Desks are scattered, papers slightly messy, sunlight streams sharply through the windows, casting strong shadows across the room.<br><br>
+
+The subject: A young Nigerian male student, around 17 years old, standing by his desk with a furious expression. His fists are clenched on the table, brows furrowed, and mouth open as if yelling. Other students around him look startled, some recoiling slightly, emphasizing the tension.<br><br>
+
+Symbolism: The clenched fists, yelling posture, and intense gaze symbolize anger, frustration, and the eruption of strong emotions in response to conflict or injustice. The classroom setting highlights pressure, peer dynamics, and authority confrontation.<br><br>
+
+Lighting: Harsh late-afternoon sunlight illuminating the student’s face and casting sharp shadows across desks, emphasizing the intensity of his anger.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of uniform, skin flushed with emotion, scattered papers, reflections on polished desk surfaces, detailed facial expressions showing tension.<br><br>
+
+Theme: Angry / Frustration / Confrontation / Emotional Outburst / Social Pressure</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4happy">Style: Cinematic, ultra-hyper-realistic photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian street market at dusk, with colorful stalls, hanging fabrics, and scattered goods. The setting is busy but tense, with shadows stretching long across the dusty ground.<br><br>
+
+The subject: A young Nigerian woman, around 20 years old, standing in front of a vendor with a furious expression. She wears a dark abaya and hijab, her arms crossed tightly across her chest, eyes narrowed, and lips pressed firmly together. A few bystanders glance nervously at her, sensing the tension.<br><br>
+
+Symbolism: The crossed arms, narrowed eyes, and rigid posture symbolize anger, confrontation, and assertiveness. The bustling market highlights the public nature of the confrontation and adds social pressure.<br><br>
+
+Lighting: Soft but dramatic evening light casting long shadows, highlighting the woman’s tense posture and facial expression.<br><br>
+
+Texture: Ultra-detailed realism — folds of abaya, textures of fabrics in the market, dusty ground, skin tones flushed with anger, subtle reflections on nearby metal objects.<br><br>
+
+Theme: Angry / Confrontation / Frustration / Public Tension / Emotional Assertiveness</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, dramatic and intense storytelling, masterpiece quality.<br><br>
+
+The scene: A luxurious Northern Nigerian mansion kitchen. High-end countertops, polished cabinets, and elegant cookware are visible. Smoke fills the air from a burnt chicken on the stove, creating a tense atmosphere.<br><br>
+
+The subject: A young Nigerian housewife or matriarch in her late 20s standing near the stove, face flushed with anger, eyebrows furrowed, mouth open as if scolding. She wears a stylish house abaya or casual home outfit, gesturing toward the burnt chicken. A young house worker, around 18 years old, stands nearby with a nervous, apologetic expression, holding a kitchen cloth, shoulders slumped.<br><br>
+
+Symbolism: The burnt chicken, smoke, and confrontational gestures symbolize frustration, mistakes, and the intensity of accountability in domestic settings. The mansion kitchen emphasizes the contrast between wealth/comfort and emotional tension.<br><br>
+
+Lighting: Warm indoor lighting combined with the grayish haze of smoke, highlighting the expressions and tension in the scene. Shadows on countertops and cabinets add depth.<br><br>
+
+Texture: Ultra-detailed realism — burnt food texture, smoke particles in the air, folds of clothing, polished kitchen surfaces, realistic skin tones, visible stress in facial expressions.<br><br>
+
+Theme: Angry / Frustration / Domestic Conflict / Accountability / Emotional Intensity</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian mansion living room during late afternoon. Plush sofas, decorative rugs, and elegant curtains are visible, but the atmosphere is tense. Sunlight filters sharply through the windows, casting dramatic shadows.<br><br>
+
+The subject: A young Nigerian husband, around 28 years old, standing with clenched fists and a furious expression, glaring at a young woman who looks apologetic. He wears a crisp white shirt and tailored trousers. The woman, dressed in a light-colored abaya, shrinks slightly into the corner of the room, holding her hands together nervously.<br><br>
+
+Symbolism: The rigid posture, clenched fists, and intense gaze symbolize anger, confrontation, and the tension between authority and remorse. The mansion setting emphasizes the high stakes and personal intensity of domestic disputes.<br><br>
+
+Lighting: Warm indoor sunlight creating sharp shadows, emphasizing facial expressions, body posture, and the tension in the room.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of clothing, polished surfaces of furniture, realistic skin tones, subtle reflections on decorative objects, tension visible in facial muscles.<br><br>
+
+Theme: Angry / Domestic Confrontation / Emotional Tension / Authority / Frustration</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, dramatic and intense storytelling, masterpiece quality.<br><br>
+
+The scene: A busy Northern Nigerian city street at night, illuminated by neon signs and street lamps. Rain lightly falls, creating reflective puddles on the asphalt. The atmosphere feels tense and urgent.<br><br>
+
+The subject: A young Nigerian man around 22 years old standing in the middle of the street, face red with anger, mouth open as if shouting. He wears a dark shirt and trousers, fists clenched, body slightly leaning forward in confrontation. A small group of bystanders look on with concern and surprise.<br><br>
+
+Symbolism: The clenched fists, shouting posture, and intense gaze represent raw anger, conflict, and social tension. The rainy city street amplifies drama and emotional intensity.<br><br>
+
+Lighting: Cool reflections from wet asphalt and neon lights highlighting his face and clothing, creating sharp contrasts and a cinematic feel.<br><br>
+
+Texture: Ultra-detailed realism — wet fabric folds, raindrops on skin and clothing, reflective puddles, detailed facial expressions showing tension and anger.<br><br>
+
+Theme: Angry / Confrontation / Urban Tension / Emotional Outburst / Public Conflict</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, dramatic and intense storytelling, masterpiece quality.<br><br>
+
+The scene: A busy Northern Nigerian teashop (rumfar shayi) during late morning. Large clay or metal pots of steaming tea are on stoves, low wooden tables scattered around, and warm sunlight filters through the open windows.<br><br>
+
+The subject: A young Nigerian woman in her early 20s storms into the teashop, her face flushed with anger. She kicks a large pot of steaming tea, causing it to pour across the floor. The tea vendor (Mai Shayi) and a male customer nearby freeze, surprised and alarmed, eyes wide, hands slightly raised. The woman wears a casual abaya, hijab slightly loose, showing movement and intensity.<br><br>
+
+Symbolism: The kicked tea pot, shocked bystanders, and intense facial expression symbolize explosive anger, confrontation, and emotional outburst in a public setting. The teashop setting amplifies the social tension and disruption.<br><br>
+
+Lighting: Warm morning sunlight combined with steam haze from the tea, highlighting expressions, the pouring tea, and dynamic motion.<br><br>
+
+Texture: Ultra-detailed realism — flowing tea liquid, steam rising from pots, fabric folds in motion, realistic skin tones, reflections on wet surfaces, subtle motion blur showing action.<br><br>
+
+Theme: Angry / Public Outburst / Confrontation / Shock / Emotional Intensity</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A luxurious Northern Nigerian mansion hallway during late afternoon. Polished marble floors, elegant furniture, and decorative lighting create a sophisticated setting, but the atmosphere is tense.<br><br>
+
+The subject: A young Nigerian woman, around 25 years old, standing in the hallway with a furious expression. She wears a dark, flowing abaya, arms crossed tightly, brows furrowed, and mouth pressed firmly. A young man nearby, around 28 years old, looks shocked and slightly backing away. Their body language emphasizes confrontation and emotional tension.<br><br>
+
+Symbolism: Crossed arms, narrowed eyes, and rigid posture represent anger, authority, and the intensity of domestic or personal conflict. The mansion setting contrasts wealth and comfort with raw emotional outburst.<br><br>
+
+Lighting: Warm indoor lighting with strong directional shadows, emphasizing the expressions and tension between the two subjects.<br><br>
+
+Texture: Ultra-detailed realism — flowing folds of the abaya, polished floor reflections, skin tones flushed with emotion, subtle facial wrinkles showing tension.<br><br>
+
+Theme: Angry / Confrontation / Domestic Tension / Emotional Outburst / Authority</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian family living room during late afternoon. Plush sofas, decorative rugs, and a coffee table are present. Sunlight filters sharply through the windows, casting long, dramatic shadows.<br><br>
+
+The subject: A young Nigerian mother, around 30 years old, standing with a furious expression. She wears a dark-colored abaya, one hand pointing angrily toward her teenage child, while the other hand rests on her hip. The child, around 14 years old, sits nervously on the sofa, shoulders slumped and eyes downcast. Tension fills the room, emphasizing the emotional intensity.<br><br>
+
+Symbolism: Pointing gestures, flushed facial expressions, and rigid posture symbolize anger, frustration, and the authority of parental correction. The living room setting emphasizes intimacy and personal stakes in the confrontation.<br><br>
+
+Lighting: Warm indoor sunlight creating sharp highlights and shadows across the room, highlighting facial expressions and body language.<br><br>
+
+Texture: Ultra-detailed realism — folds of abaya fabric, realistic skin tones, plush texture of sofas, reflections on polished surfaces, subtle tension in facial muscles.<br><br>
+
+Theme: Angry / Domestic Confrontation / Parental Authority / Emotional Intensity / Frustration</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="anxious">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Anxious</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A narrow Northern Nigerian street during late afternoon. The sunlight filters through tall buildings, creating long shadows. Small crowds move hurriedly, adding a sense of urgency.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, standing near a street corner with a worried expression. She wears a dark abaya and hijab, hands clasped nervously in front of her, shoulders slightly hunched. Her eyes dart anxiously as if awaiting someone or something. Nearby pedestrians glance at her curiously, enhancing her isolation.<br><br>
+
+Symbolism: The tense posture, clasped hands, and darting eyes represent anxiety, anticipation, and uncertainty. The crowded street setting emphasizes social pressure and the overwhelming feeling of being watched.<br><br>
+
+Lighting: Soft late-afternoon sunlight with dynamic shadows on buildings and pavement, highlighting her face and tense posture.<br><br>
+
+Texture: Ultra-detailed realism — folds of abaya, smooth skin textures showing slight tension, textured pavement, subtle reflections from nearby windows, realistic expressions of unease.<br><br>
+
+Theme: Anxious / Worry / Anticipation / Social Pressure / Emotional Tension</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and suspenseful storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian classroom during early evening, with sunlight fading through large windows. Desks are neatly arranged but the atmosphere feels heavy and tense.<br><br>
+
+The subject: A teenage Nigerian boy, around 16 years old, sitting at his desk with a worried expression. He wears a neat school uniform — white shirt and dark trousers. His hands fidget with a pen, eyes darting nervously toward the teacher at the front, as if anxious about being called on or answering a difficult question. Other students in the background appear focused or unaware of his anxiety.<br><br>
+
+Symbolism: Fidgeting hands, tense posture, and darting eyes represent anticipation, worry, and self-consciousness. The classroom setting emphasizes performance pressure and social evaluation.<br><br>
+
+Lighting: Soft, fading sunlight casting long shadows across desks, highlighting the boy’s facial expressions and tension.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of uniform, realistic skin tones, smooth desk surfaces, subtle reflections in windows, expressions of nervousness captured in detail.<br><br>
+
+Theme: Anxious / Anticipation / Academic Pressure / Self-Consciousness / Emotional Tension</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and suspenseful storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian classroom during early evening, with sunlight fading through large windows. Desks are neatly arranged but the atmosphere feels heavy and tense.<br><br>
+
+The subject: A teenage Nigerian boy, around 16 years old, sitting at his desk with a worried expression. He wears a neat school uniform — white shirt and dark trousers. His hands fidget with a pen, eyes darting nervously toward the teacher at the front, as if anxious about being called on or answering a difficult question. Other students in the background appear focused or unaware of his anxiety.<br><br>
+
+Symbolism: Fidgeting hands, tense posture, and darting eyes represent anticipation, worry, and self-consciousness. The classroom setting emphasizes performance pressure and social evaluation.<br><br>
+
+Lighting: Soft, fading sunlight casting long shadows across desks, highlighting the boy’s facial expressions and tension.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of uniform, realistic skin tones, smooth desk surfaces, subtle reflections in windows, expressions of nervousness captured in detail.<br><br>
+
+Theme: Anxious / Anticipation / Academic Pressure / Self-Consciousness / Emotional Tension</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and suspenseful storytelling, masterpiece quality.<br><br>
+
+The scene: A narrow, dimly lit Northern Nigerian alley at dusk. Wet pavement reflects fading sunlight and scattered street lamps. Shadows loom across the walls, creating a sense of unease.<br><br>
+
+The subject: A young Nigerian woman, around 20 years old, walking cautiously through the alley. She wears a dark abaya and matching hijab, clutching her bag tightly against her chest. Her eyes are wide, scanning the surroundings nervously, shoulders hunched, and lips pressed together in apprehension. A distant figure looms slightly in the background, adding subtle tension.<br><br>
+
+Symbolism: The tense posture, clutching gesture, and alert eyes represent fear, uncertainty, and anxiety in an unfamiliar or potentially dangerous environment. The dim alley amplifies feelings of vulnerability.<br><br>
+
+Lighting: Soft, low light from street lamps combined with fading natural light, creating long, dramatic shadows that enhance suspense and tension.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of abaya, reflections on wet pavement, subtle motion in hijab from walking, realistic skin textures, and detailed facial expression of worry.<br><br>
+
+Theme: Anxious / Fear / Vulnerability / Tension / Emotional Unease</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and suspenseful storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian hospital corridor at dusk. Fluorescent lights flicker slightly, casting cold reflections on polished floors and creating an uneasy atmosphere. Empty gurneys and medical equipment line the walls.<br><br>
+
+The subject: A young Nigerian man, around 23 years old, pacing nervously in the corridor. He wears a crisp shirt and trousers, hands running through his hair and eyes darting toward the doors of the ICU. His expression shows deep worry and anxiety. A nurse passes by, glancing at him with subtle concern.<br><br>
+
+Symbolism: The pacing, hand gestures, and tense facial expressions represent anxiety, anticipation, and the fear of an uncertain outcome. The hospital corridor underscores vulnerability and emotional stress.<br><br>
+
+Lighting: Cold fluorescent lighting mixed with faint evening sunlight through distant windows, creating sharp contrasts and emphasizing the subject’s tense posture.<br><br>
+
+Texture: Ultra-detailed realism — folds in clothing, polished reflections on floor and equipment, subtle skin tension, detailed expressions of worry and anticipation.<br><br>
+
+Theme: Anxious / Anticipation / Fear / Emotional Stress / Vulnerability</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and intimate storytelling, masterpiece quality.<br><br>
+
+The scene: A luxurious Northern Nigerian mansion living room during late afternoon. Plush sofas, elegant rugs, and decorative art fill the space. Large windows let in warm sunlight, but the mood feels tense.<br><br>
+
+The subject: A young Nigerian woman, around 25 years old, standing near a grand sofa with a worried expression. She wears a stylish abaya and matching hijab, hands clasped tightly in front of her, shoulders slightly hunched. Her eyes dart toward a man sitting across the room — possibly her husband — who appears calm and collected, intensifying her anxious feeling. A decorative chandelier above casts soft shadows, adding subtle drama.<br><br>
+
+Symbolism: The clasped hands, tense posture, and darting eyes represent anxiety, anticipation, and emotional unease in a private, intimate setting. The mansion reflects both comfort and the weight of social or relational expectations.<br><br>
+
+Lighting: Warm sunlight filtering through windows, combined with soft indoor lighting, highlighting facial expressions and body tension while creating subtle shadows.<br><br>
+
+Texture: Ultra-detailed realism — folds in the abaya, plush sofa texture, polished floor reflections, realistic skin tones, subtle expressions of worry and unease.<br><br>
+
+Theme: Anxious / Private Tension / Emotional Unease / Anticipation / Domestic Pressure</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and suspenseful storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian mansion balcony at dusk. The city skyline glows faintly in the background, with scattered lights reflecting off nearby windows. Soft wind moves the curtains slightly, creating a subtle sense of unease.<br><br>
+
+The subject: A young Nigerian man, around 24 years old, standing near the balcony railing, eyes wide and brows furrowed. He wears a crisp white shirt and dark trousers, one hand gripping the railing tightly while the other runs through his hair nervously. His posture is slightly hunched, reflecting internal tension. A small, distant movement in the city below hints at something uncertain, adding to his anxious feeling.<br><br>
+
+Symbolism: The tight grip, tense posture, and focused gaze represent anxiety, anticipation, and the weight of responsibility or uncertainty. The balcony setting emphasizes vulnerability and perspective over a wide, potentially overwhelming environment.<br><br>
+
+Lighting: Fading sunset casting warm hues on one side and cool shadows on the other, creating dramatic contrast that emphasizes tension.<br><br>
+
+Texture: Ultra-detailed realism — crisp folds in clothing, reflections on polished balcony surfaces, subtle movement in curtains, realistic skin textures, and detailed facial expression of worry.<br><br>
+
+Theme: Anxious / Anticipation / Emotional Tension / Vulnerability / Private Worry</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and intimate storytelling, masterpiece quality.<br><br>
+
+The scene: Inside a modern luxury car driving through a rainy Nigerian city at night. Streetlights and neon signs reflect off the wet windows and sleek interior surfaces. Rain streaks slide down the windows, blurring the outside world.<br><br>
+
+The subject: A young Nigerian woman, around 23 years old, sitting in the passenger seat with a worried expression. She wears a stylish dark-colored abaya and hijab. One hand grips the edge of the seat tightly while the other rests near her face, fingers slightly trembling. Her eyes are wide, scanning the road ahead and the driver — possibly a friend or family member — who remains calm, emphasizing her anxious state.<br><br>
+
+Symbolism: The tense posture, gripping gesture, and darting eyes represent anxiety, anticipation, and vulnerability. The luxury car interior adds contrast between comfort and internal unease.<br><br>
+
+Lighting: Soft reflections from neon lights and streetlamps create subtle highlights on her face and hands, while shadows cast by rain-streaked windows enhance mood and tension.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of the abaya, polished leather seats, rain droplets on windows, realistic skin tones, and subtle facial expressions of worry.<br><br>
+
+Theme: Anxious / Vulnerability / Anticipation / Emotional Tension / Confined Space</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9sad">Style: Cinematic, ultra-hyper-realistic aviation photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense and dynamic storytelling, masterpiece quality.<br><br>
+
+The scene: Inside the cockpit of a modern airplane approaching a bustling Nigerian city skyline during late afternoon. Skyscrapers and high-rises are visible through the windshield, partially illuminated by golden sunlight reflecting off glass facades. Instrument panels glow softly, displaying altitude, speed, and navigation indicators.<br><br>
+
+The subject: A Nigerian pilot in his early 30s, wearing a crisp pilot uniform with epaulets, tie, and neatly pressed shirt. He leans slightly forward, hands adjusting the cockpit buttons and controls, eyes focused yet showing visible anxiety. Sweat glimmers slightly on his forehead, and his posture is tense, reflecting the critical moment of landing.<br><br>
+
+Symbolism: The tense posture, focused gaze, and precise hand movements represent responsibility, high stakes, and controlled anxiety. The approaching skyscrapers emphasize the precision required and the underlying danger, heightening emotional tension.<br><br>
+
+Lighting: Warm sunlight from the side illuminates the pilot’s face and uniform, contrasting with the cooler glow of the cockpit instruments. Subtle reflections on the windshield highlight depth and realism.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of uniform, polished metal and buttons of cockpit instruments, glass reflections, subtle skin textures with sweat, realistic tension in facial muscles and hands.<br><br>
+
+Theme: Anxious / Responsibility / High Stakes / Focused Tension / Critical Moment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10sad">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, tense yet intimate storytelling, masterpiece quality.<br><br>
+
+The scene: A rainy Northern Nigerian street during early evening. Wet asphalt glistens under the dim streetlights, puddles reflect scattered neon signs and passing vehicles. The atmosphere is tense yet quiet, with soft rain dripping from rooftops.<br><br>
+
+The subject: A young Nigerian boy, around 12 years old, sitting on a bicycle parked at a small roadside drinking corner. His bicycle basket is overflowing with fresh red apples, slightly wet from the rain. He wears a soaked t-shirt and dark trousers, one hand holding a cup of drink, the other gripping the bicycle handle. His face shows visible anxiety, brows furrowed, and lips pressed tightly, as if worried about balancing the basket or navigating safely in the rain.<br><br>
+
+Symbolism: The full apple basket, wet clothes, and tense posture represent responsibility, fragility, and the anxious balance between care and survival. The rainy street amplifies vulnerability and uncertainty.<br><br>
+
+Lighting: Soft reflections from puddles and diffused streetlights illuminate his face and the wet bicycle basket, emphasizing tension and moisture. Subtle highlights on the apples make them stand out.<br><br>
+
+Texture: Ultra-detailed realism — wet fabric folds, shiny rain-soaked apples, droplets sliding down the bicycle frame, realistic skin textures, reflections in puddles, subtle motion in dripping rain.<br><br>
+
+Theme: Anxious / Responsibility / Vulnerability / Rainy Tension / Youthful Concern</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="brave">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Brave</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alone">Style: Cinematic, ultra-hyper-realistic wildlife photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, powerful and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A dense Northern Nigerian savannah at sunrise. Golden light filters through tall grasses, casting long shadows and highlighting the natural textures of the landscape. Dust rises softly in the distance, giving a warm, atmospheric glow.<br><br>
+
+The subject: A young Nigerian boy, around 12 years old, standing fearlessly in front of a tiger (🐯). He wears simple, rugged clothing — a short-sleeved shirt and shorts — slightly dusty from the savannah. The boy stands upright, chest out, eyes locked on the tiger, showing courage and calm despite the looming danger. The tiger, majestic and alert, stares at him but makes no aggressive move, emphasizing a moment of mutual awareness.<br><br>
+
+Symbolism: The upright posture, steady gaze, and composed body language represent bravery, fearlessness, and mastery over fear. The tiger symbolizes danger, power, and the ultimate test of courage.<br><br>
+
+Lighting: Warm sunrise light illuminates both the boy and the tiger, creating dramatic highlights on fur, skin, and grasses, emphasizing tension and heroism.<br><br>
+
+Texture: Ultra-detailed realism — tiger fur texture, dusty skin and clothing on the boy, blades of grass, subtle dust particles in the air, expressions capturing fearlessness and alertness.<br><br>
+
+Theme: Brave / Fearlessness / Courage / Confronting Danger / Heroic Moment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, empowering and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian cliffside at sunrise, overlooking a vast savannah. Golden light stretches across the horizon, illuminating the landscape and casting long dramatic shadows.<br><br>
+
+The subject: A young Nigerian woman, around 20 years old, standing confidently at the edge of the cliff with her arms slightly spread, embracing the wind. She wears a flowing abaya in bold colors (deep red or royal blue), hijab moving with the breeze. Her face shows calm determination and focus, eyes looking ahead toward the horizon, symbolizing readiness to face challenges.<br><br>
+
+Symbolism: The elevated position, open stance, and steady gaze represent bravery, self-confidence, and courage to face the unknown. The expansive savannah below emphasizes the scale of challenges and the magnitude of her bravery.<br><br>
+
+Lighting: Warm sunrise light highlights her face, flowing abaya, and the textures of the cliff and grasses, creating dramatic, cinematic depth.<br><br>
+
+Texture: Ultra-detailed realism — flowing fabric of abaya, detailed skin textures, wind-blown hair, rocky cliff textures, distant trees and grasses rendered with subtle dust and light effects.<br><br>
+
+Theme: Brave / Courage / Confidence / Empowerment / Confronting Challenges</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and empowering storytelling, masterpiece quality.<br><br>
+
+The scene: A rainy Northern Nigerian city street at night. Neon lights and streetlamps reflect off the wet asphalt, creating dramatic reflections. Puddles ripple as rain falls steadily, adding motion and tension.<br><br>
+
+The subject: A young Nigerian man, around 24 years old, standing in the middle of the street holding an umbrella against the rain. He wears a crisp dark jacket and trousers, soaked slightly, with a determined and fearless expression. Despite the chaos and slippery street, he faces forward confidently, unafraid of the harsh weather. Cars and people pass by, but his posture and gaze exude courage.<br><br>
+
+Symbolism: The upright stance, steady gaze, and forward-facing posture represent bravery, resilience, and the ability to confront challenges despite uncertainty or danger. The rain and night amplify adversity.<br><br>
+
+Lighting: Cold reflections from wet asphalt and neon signs highlight his face and silhouette, creating dramatic shadows and emphasizing tension and determination.<br><br>
+
+Texture: Ultra-detailed realism — wet fabric folds, raindrops sliding off his jacket, reflections in puddles, realistic skin textures, subtle motion in rain, and visible tension in facial muscles.<br><br>
+
+Theme: Brave / Resilience / Facing Challenges / Determination / Fearlessness</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and heroic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian rooftop during sunset, overlooking a bustling cityscape with skyscrapers and distant traffic. The sky is painted with shades of orange and purple, casting dramatic light across the scene.<br><br>
+
+The subject: A young Nigerian boy, around 14 years old, standing on the edge of the rooftop with a determined expression. He wears a simple t-shirt and shorts, arms slightly outstretched for balance. Below him, the busy street emphasizes height and danger. Despite the risk, his posture and gaze are calm, showing fearless bravery.<br><br>
+
+Symbolism: The high rooftop, poised stance, and unwavering gaze represent courage, confidence, and the willingness to face challenges head-on. The height and urban backdrop amplify the sense of risk and heroism.<br><br>
+
+Lighting: Warm sunset light highlights the boy’s face, arms, and clothing, casting long, dramatic shadows on the rooftop surface.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds in clothing, realistic skin textures, rough rooftop surface, reflections from windows in the city below, subtle wind movement in hair and clothing.<br><br>
+
+Theme: Brave / Fearlessness / Confronting Danger / Heroic Moment / Confidence</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, empowering and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian riverside during dawn. Mist rises from the water, soft golden sunlight filters through nearby trees, and the river’s gentle current creates a serene yet powerful backdrop.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, standing at the edge of a small wooden boat, holding a long paddle. She wears a deep green or navy abaya, hijab slightly loose, flowing with the breeze. Her stance is firm and balanced, eyes focused forward, conveying determination and courage to navigate the river.<br><br>
+
+Symbolism: The controlled stance on the boat, firm grip on the paddle, and unwavering gaze represent bravery, resilience, and confidence in facing challenges. The river symbolizes uncertainty, danger, and the journey of life.<br><br>
+
+Lighting: Soft dawn sunlight illuminates her face, clothing, and the misty river, creating a warm, cinematic glow with subtle shadows.<br><br>
+
+Texture: Ultra-detailed realism — folds of abaya and hijab, wood texture of the boat, gentle ripples on the water, mist in the air, realistic skin textures, subtle wind movement.<br><br>
+
+Theme: Brave / Courage / Resilience / Facing Uncertainty / Fearlessness</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, dramatic and empowering storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian desert at sunset. Golden sands stretch to the horizon, with scattered acacia trees and a glowing orange sky. The wind sweeps loose sand, creating motion and energy in the scene.<br><br>
+
+The subject: A young Nigerian boy, around 16 years old, standing atop a small dune, holding a long wooden staff upright in one hand. He wears a light-colored shirt and rugged trousers, slightly dusty from the desert. His stance is upright and steady, eyes focused on the horizon, exuding fearlessness and determination in the face of vastness and potential danger.<br><br>
+
+Symbolism: The elevated position, steady stance, and confident gaze represent bravery, resilience, and the courage to face challenges head-on. The vast desert landscape emphasizes the scale of obstacles and the heroism of the individual.<br><br>
+
+Lighting: Warm, golden sunset light highlights the boy’s face, clothing, and staff, casting long dramatic shadows across the dunes.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of clothing, textured sand grains, subtle wind movement in hair and clothing, realistic skin tones, detailed facial expression showing courage.<br><br>
+
+Theme: Brave / Courage / Fearlessness / Facing Challenges / Heroic Moment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and empowering storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian mountain ridge at sunrise. Jagged rocks and sparse shrubs create a rugged environment. Mist swirls around the peaks, adding depth and drama to the landscape.<br><br>
+
+The subject: A young Nigerian woman, around 21 years old, standing confidently at the edge of a rocky cliff. She wears a deep maroon or navy abaya with hijab flowing in the wind. Her posture is upright, arms slightly outstretched, eyes fixed on the distant horizon, exuding courage and determination to face the challenges ahead.<br><br>
+
+Symbolism: The high cliff, commanding stance, and focused gaze symbolize bravery, resilience, and readiness to confront danger or uncertainty. The mountainous landscape emphasizes the magnitude of her courage.<br><br>
+
+Lighting: Warm sunrise light bathes the scene, highlighting the folds of her abaya, her face, and the jagged textures of the rocks, creating dramatic shadows and cinematic depth.<br><br>
+
+Texture: Ultra-detailed realism — flowing fabric of abaya, rocky cliff textures, mist swirls, realistic skin textures, wind-blown hair and clothing, subtle reflections from sunlight.<br><br>
+
+Theme: Brave / Courage / Fearlessness / Facing Challenges / Empowerment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, empowering and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian riverside at sunset, with calm waters reflecting golden-orange skies. Sparse trees and distant hills frame the horizon, creating a serene yet expansive environment.<br><br>
+
+The subject: A young Nigerian boy, around 15 years old, standing on a small wooden boat in the middle of the river. He holds a long paddle firmly with both hands, eyes fixed forward with a determined gaze. He wears a simple shirt and trousers, slightly damp from splashes, but his posture is upright and fearless despite the wide, uncertain river.<br><br>
+
+Symbolism: The upright stance, firm grip on the paddle, and unwavering gaze represent bravery, courage, and resilience in facing challenges. The river symbolizes uncertainty and risk, emphasizing the boy’s fearlessness.<br><br>
+
+Lighting: Warm sunset light illuminates his face, clothing, and the rippling water, creating cinematic depth and highlighting tension and determination.<br><br>
+
+Texture: Ultra-detailed realism — folds of clothing, wood texture of the boat, water ripples, subtle reflections on the river surface, realistic skin textures, and visible focus and resolve in facial expression.<br><br>
+
+Theme: Brave / Courage / Fearlessness / Facing Challenges / Heroic Moment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and heroic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian rooftop at dusk, overlooking a busy city with skyscrapers and streets glistening from recent rain. The sky is painted with deep purples and oranges, casting dramatic light across the scene.<br><br>
+
+The subject: A young Nigerian woman, around 20 years old, standing confidently at the edge of the rooftop. She wears a flowing dark blue abaya with a hijab that flutters slightly in the wind. Her arms are crossed firmly, eyes scanning the city below with determination. Her posture is steady and fearless despite the height and potential danger.<br><br>
+
+Symbolism: The elevated rooftop, steady stance, and focused gaze represent bravery, confidence, and resilience in confronting challenges. The height and urban environment emphasize risk and courage.<br><br>
+
+Lighting: Dramatic sunset light highlighting her face, abaya, and the rooftop surface, with long shadows and subtle reflections from wet surfaces below.<br><br>
+
+Texture: Ultra-detailed realism — flowing folds of the abaya, realistic skin tones, rooftop textures, distant city reflections, subtle wind movement in clothing and hair.<br><br>
+
+Theme: Brave / Courage / Fearlessness / Facing Danger / Heroic Moment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alone">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, empowering and dramatic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian desert plain during sunset. Rolling golden sand dunes stretch into the horizon with sparse acacia trees casting long shadows. The sky glows orange and purple, creating a dramatic, cinematic atmosphere.<br><br>
+
+The subject: A young Nigerian boy, around 16 years old, standing atop a dune with a spear in hand. He wears a simple light-colored tunic and trousers, slightly dusty from the desert. His posture is upright, chest forward, eyes fixed on the horizon, exuding fearlessness and determination despite the harsh environment.<br><br>
+
+Symbolism: The elevated stance, firm grip on the spear, and unwavering gaze symbolize bravery, resilience, and the courage to face challenges. The vast desert emphasizes both isolation and the magnitude of the obstacles.<br><br>
+
+Lighting: Warm sunset light illuminates his face, clothing, and the sand dunes, casting long, dramatic shadows and creating cinematic depth.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds in clothing, textured sand, realistic skin tones, subtle wind movement in hair and clothing, detailed expression showing courage and resolve.<br><br>
+
+Theme: Brave / Courage / Fearlessness / Facing Challenges / Heroic Moment</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="creative">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Creative</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, imaginative and vibrant storytelling, masterpiece quality.<br><br>
+
+The scene: A bright Northern Nigerian art studio filled with canvases, paints, and brushes scattered around. Sunlight pours in through large windows, illuminating vibrant splashes of color on the walls and floor.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, standing in front of a large canvas with a paintbrush in hand. She wears a colorful, paint-splattered abaya and hijab, her face lit with focus and inspiration. Around her, unfinished paintings and scattered paint tubes create a lively, creative chaos.<br><br>
+
+Symbolism: The dynamic brush strokes, scattered art supplies, and expressive posture symbolize creativity, innovation, and the freedom of artistic expression. Her bright attire and engaged gaze convey passion and imaginative energy.<br><br>
+
+Lighting: Warm natural sunlight streaming through the windows highlights the textures of paint on canvas, reflective surfaces, and the artist’s expressive features.<br><br>
+
+Texture: Ultra-detailed realism — paint splatters on fabric, canvas textures, detailed brush strokes, realistic skin tones, reflections on paint tubes, subtle motion in her hand.<br><br>
+
+Theme: Creative / Artistic Expression / Imagination / Passion / Inspiration</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, futuristic and innovative storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian tech lab or workspace at night. Multiple holographic screens float in the air, casting blue and purple glows across the room. Sleek laptops, robotics parts, and digital gadgets are scattered on polished tables.<br><br>
+
+The subject: A young Nigerian man, around 23 years old, standing at a central workstation, wearing a smart casual shirt and trousers. His eyes are focused on a floating holographic interface, fingers gesturing in mid-air to manipulate 3D models. His expression shows intense concentration and creative innovation.<br><br>
+
+Symbolism: The holographic interface, futuristic devices, and focused posture represent creativity, technological innovation, and problem-solving in a modern, high-tech environment. The neon glow emphasizes imagination and forward-thinking.<br><br>
+
+Lighting: Cool blue and purple glows from the holographic screens illuminate the subject’s face and hands, with subtle reflections on metallic surfaces and glass panels, enhancing depth and focus.<br><br>
+
+Texture: Ultra-detailed realism — smooth holographic projections, reflections on polished surfaces, realistic skin tones, subtle fabric folds, detailed digital interface elements.<br><br>
+
+Theme: Creative / Technological Innovation / Futuristic Thinking / Problem-Solving / Inspiration</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intimate and detailed storytelling, masterpiece quality.<br><br>
+
+The scene: A cozy Northern Nigerian study room with wooden desks, scattered pencils, erasers, and sketchbooks. Sunlight streams through a nearby window, casting warm highlights across the workspace.<br><br>
+
+The subject: A young Nigerian boy, around 12 years old, sitting at a desk, intently finishing a detailed drawing of a “ɗan gote” on A4 paper. He wears a casual t-shirt and shorts, slightly messy from pencil dust. His face shows deep concentration, tongue peeking slightly between lips, and his hand is poised with a pencil adding the final strokes. The partially finished drawing is clearly visible, filled with intricate details.<br><br>
+
+Symbolism: The focused posture, precise hand movements, and nearly completed artwork represent creativity, patience, and the joy of artistic expression. The traditional Northern Nigerian study environment emphasizes personal growth and dedication.<br><br>
+
+Lighting: Warm natural sunlight highlights the paper, pencil, and boy’s concentrated expression, casting soft shadows across the desk and art materials.<br><br>
+
+Texture: Ultra-detailed realism — pencil lines on paper, subtle eraser smudges, fabric folds, skin textures, scattered desk items, detailed hair strands, realistic shadows and light reflections.<br><br>
+
+Theme: Creative / Artistic Focus / Patience / Expression / Dedication</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, warm and intimate storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian kitchen with well-organized drawers, polished countertops, and neatly arranged kitchenware. Soft sunlight enters through a window, highlighting the vibrant colors of the kitchen and creating a cozy, inviting atmosphere.<br><br>
+
+The subject: A young Nigerian woman, around 24 years old, creatively frying eggs in a pan. She wears a stylish, muted-colored abaya, hijab tucked neatly, sleeves rolled up slightly to cook. Her expression shows focused joy and creativity in the process. Nearby, her husband, around 27 years old, tastes a small piece of the food with his eyes closed, smiling in satisfaction and appreciation for her skill. He wears a crisp casual shirt and trousers.<br><br>
+
+Symbolism: The dynamic cooking action, expressive facial expressions, and attentive posture of both highlight creativity, domestic joy, and shared love through cooking. The organized kitchen emphasizes precision, care, and artistry in everyday life.<br><br>
+
+Lighting: Warm sunlight highlights the kitchen surfaces, the woman’s movements, and the husband’s satisfied expression, creating a soft, cinematic glow.<br><br>
+
+Texture: Ultra-detailed realism — flowing folds of the abaya, sheen on the frying pan, realistic steam and egg texture, polished countertop reflections, subtle motion in clothing and hair, detailed facial expressions.<br><br>
+
+Theme: Creative / Domestic Artistry / Cooking / Love / Joy</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, vibrant and dynamic storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian bedroom or living space, with colorful decorations, soft lighting, and a sleek laptop or smartphone setup on a polished desk. Social media notifications and icons subtly glow on the screen, creating an engaging digital atmosphere.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, sitting at the desk, creatively composing a social media post. She wears a stylish casual abaya, hijab slightly loose, with a focused and joyful expression. Her hands gesture as she types and arranges images, while a small notebook with notes lies nearby. Behind her, a soft background of cushions and wall art adds warmth to the scene.<br><br>
+
+Symbolism: The engaged posture, expressive hand gestures, and glowing screen symbolize creativity, modern digital expression, and the energy of sharing ideas or art with an audience. The organized, cozy space emphasizes comfort, focus, and personal style.<br><br>
+
+Lighting: Soft, warm indoor lighting combined with subtle glow from the device screens, highlighting her face, hands, and digital workspace, creating a cinematic and inviting mood.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds in the abaya, reflections on the screen, realistic skin tones, subtle notebook textures, ambient light casting gentle shadows, intricate detail in hair and facial expressions.<br><br>
+
+Theme: Creative / Social Media / Digital Expression / Focus / Joyful Productivity</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intense and collaborative storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian tech workspace at night. The room is illuminated by multiple monitors casting a soft blue glow, with scattered gadgets, notebooks, and coffee cups. Large windows show a faint city skyline in the background.<br><br>
+
+The subject: Six young Nigerian friends, both male and female, gathered around a single computer. Each person is actively engaged — one typing rapidly, another pointing at the screen, a third holding a notebook with sketches, while others discuss and observe carefully. Their expressions show focus, curiosity, and creative problem-solving as they debug and design a new digital platform.<br><br>
+
+Symbolism: The collaborative posture, gestures, and attentive expressions represent teamwork, creativity, innovation, and persistence. The single computer emphasizes unity and joint effort in overcoming technical challenges.<br><br>
+
+Lighting: Cool blue light from the monitors highlights faces, hands, and the keyboard, creating dramatic shadows and a cinematic, tech-focused atmosphere. Subtle reflections on glasses and polished surfaces add depth.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of clothing, keyboard and mouse textures, notebook pages, polished desk reflections, skin tones, and realistic expressions of focus and creative tension.<br><br>
+
+Theme: Creative / Teamwork / Coding / Innovation / Problem-Solving / Focus</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, vibrant and imaginative storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian rooftop terrace converted into a creative studio. Canvases, sketchpads, and small digital devices are spread across a table, with colorful paints and markers adding vibrant detail. The city skyline glows softly in the background during sunset.<br><br>
+
+The subject: A young Nigerian woman, around 23 years old, sitting cross-legged at the table, actively sketching and designing a new art concept on both paper and a tablet. She wears a stylish, colorful abaya with her hijab loosely draped, sleeves slightly rolled for comfort. Her face shows deep focus and joy as she blends traditional drawing with digital creativity.<br><br>
+
+Symbolism: The mix of digital tools and traditional sketches represents creative versatility, innovation, and imaginative thinking. Her engaged posture and lively expression highlight passion and inspiration in the act of creation.<br><br>
+
+Lighting: Warm sunset light illuminates the scene, highlighting her face, hands, and art supplies, with soft shadows creating depth and a cinematic feel.<br><br>
+
+Texture: Ultra-detailed realism — folds and patterns in her abaya, pencil and brush textures, tablet screen reflections, scattered art supplies, realistic skin tones, and subtle motion in hair and hands.<br><br>
+
+Theme: Creative / Artistic Innovation / Imagination / Inspiration / Passion</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, immersive and imaginative storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian cafe transformed into a creative hub, with wooden tables, vibrant wall art, and laptops, notebooks, and sketchpads scattered around. Large windows let in warm daylight, highlighting the lively atmosphere.<br><br>
+
+The subject: A young Nigerian man, around 24 years old, sitting at a table surrounded by art supplies and a laptop. He is intensely sketching on a digital tablet while referencing notes on paper. His expression shows focus, inspiration, and excitement as he develops a creative project, combining traditional and digital design. He wears a casual smart outfit — shirt and trousers — sleeves rolled up, with a pen tucked behind his ear.<br><br>
+
+Symbolism: The multi-tasking posture, expressive hand movements, and engaged gaze symbolize creativity, innovation, and dedication to crafting unique ideas. The creative cafe environment emphasizes collaboration, inspiration, and cultural vibrancy.<br><br>
+
+Lighting: Warm daylight streaming through the windows illuminates his workspace, highlighting textures on paper, tablet screens, and his focused face. Subtle shadows add depth and cinematic realism.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds, detailed tablet interface, pencil sketches, reflections on laptop screen, scattered notebook textures, realistic skin and hair textures, and subtle motion in hand movements.<br><br>
+
+Theme: Creative / Innovation / Artistic Focus / Inspiration / Imaginative Problem-Solving</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, immersive and imaginative storytelling, masterpiece quality.<br><br>
+
+The scene: A spacious Northern Nigerian art and tech studio with high ceilings, large windows, and a mix of traditional painting materials and modern digital devices. Canvases lean against walls, tablets and laptops display colorful designs, and scattered sketches fill the workspace.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, standing at a large workstation, blending digital and traditional art. She holds a brush in one hand and a stylus in the other, adding details simultaneously to a canvas and a tablet. She wears a vibrant, patterned abaya with hijab tucked neatly, sleeves rolled up slightly, and her face shows intense focus and creative excitement.<br><br>
+
+Symbolism: The combination of traditional and digital tools represents innovation, versatility, and modern creativity. Her engaged posture and expressive movements highlight passion, skill, and imaginative problem-solving.<br><br>
+
+Lighting: Soft natural sunlight from large windows mixes with the glow of digital screens, illuminating her face, hands, and art surfaces while creating a cinematic depth with subtle shadows.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of the abaya, brush strokes on canvas, tablet screen reflections, scattered sketches and supplies, realistic skin textures, hair strands, and subtle motion in hands and clothing.<br><br>
+
+Theme: Creative / Artistic Innovation / Imagination / Inspiration / Modern Problem-Solving</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10lost">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, vibrant and dynamic storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian rooftop at sunset, converted into a collaborative creative space. Large canvases, colorful paints, sketchbooks, and digital tablets are scattered across wooden tables. The city skyline glows softly in the background, blending traditional and modern aesthetics.<br><br>
+
+The subject: A group of three young Nigerian friends, two women and one man, actively brainstorming and creating together. One woman is sketching on a large canvas, the other adjusting a digital tablet, and the man is mixing paint while giving instructions. They wear casual, colorful abayas or smart casual clothes, hijabs neatly styled for the women. Their expressions show joy, focus, and excitement as they collaborate creatively.<br><br>
+
+Symbolism: The teamwork, multitasking, and engaged expressions represent creativity, collaboration, and the fusion of traditional and modern artistic practices. The rooftop setting symbolizes openness, inspiration, and limitless imagination.<br><br>
+
+Lighting: Warm golden sunlight highlights their faces, clothing, and art materials, creating a cinematic glow and dramatic shadows that enhance the scene.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds, paint textures, brush strokes, reflections on digital screens, realistic skin tones, subtle motion in hair and clothing, scattered art supplies with fine details.<br><br>
+
+Theme: Creative / Collaboration / Artistic Innovation / Inspiration / Imaginative Problem-Solving</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tired">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Tired</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intimate and emotive storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian bedroom in the late evening. Soft, warm lamplight illuminates a cozy bed with plush pillows and blankets. A small window shows the fading daylight outside, casting subtle shadows across the room.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, collapsed on her bed, exhausted from a long day. She wears a comfortable casual outfit — loose t-shirt and soft trousers. Her hair is slightly messy, eyes half-closed, with a subtle expression of fatigue and relief. One hand rests limply on the blanket, the other loosely holding a small notebook or phone, symbolizing the day’s activities.<br><br>
+
+Symbolism: The relaxed posture, messy hair, and half-closed eyes represent tiredness, the need for rest, and emotional release after exertion. The cozy bedroom environment emphasizes comfort and recovery.<br><br>
+
+Lighting: Warm lamplight highlights her face, hair, and clothing folds, casting soft shadows across the bed and room for an intimate, cinematic feel.<br><br>
+
+Texture: Ultra-detailed realism — soft fabric of clothes and blankets, hair strands, subtle skin textures, warm shadows, faint reflections on objects like the notebook or phone.<br><br>
+
+Theme: Tired / Exhaustion / Relief / Recovery / Intimacy</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intimate and emotive storytelling, masterpiece quality.<br><br>
+
+The scene: A bustling Northern Nigerian classroom late in the afternoon. Sunlight filters through tall windows, casting warm, slightly harsh rays across the desks and floor. The room is quiet, with scattered papers and open books showing signs of a long day.<br><br>
+
+The subject: A young Nigerian boy, around 14 years old, slumped over his desk, resting his head on his folded arms. He wears a standard school uniform — light-colored shirt and dark trousers — slightly wrinkled and untidy from a day full of lessons. His eyes are half-closed, shoulders sagging, and expression clearly shows fatigue and mental exhaustion.<br><br>
+
+Symbolism: The hunched posture, drooping head, and tired expression symbolize the weariness from continuous effort, mental strain, and the need for rest. The classroom setting emphasizes the context of diligence and responsibility.<br><br>
+
+Lighting: Warm afternoon sunlight highlights his face and uniform, casting long shadows across the desk and floor, creating a soft, cinematic glow that emphasizes his exhaustion.<br><br>
+
+Texture: Ultra-detailed realism — fabric wrinkles on shirt, hair slightly messy, paper textures, realistic skin tones, subtle shadows on desk and floor, faint reflections of sunlight on surfaces.<br><br>
+
+Theme: Tired / Mental Fatigue / Exhaustion / Relief Needed / Academic Strain</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, raw and emotive storytelling, masterpiece quality.<br><br>
+
+The scene: A bustling Northern Nigerian street during late afternoon. Dust rises from the road, and the sun casts long shadows across the uneven pavement. A few street stalls and scattered market items are visible in the background.<br><br>
+
+The subject: A young Nigerian man, around 18 years old, pushing a heavy wheelbarrow overflowing with “jarkar ruwa” (water containers). He wears a simple, worn-out t-shirt and trousers, slightly dusty and damp from sweat. His posture is hunched forward, gripping the wheelbarrow handles tightly, muscles tense, face showing clear exhaustion and strain from the effort.<br><br>
+
+Symbolism: The bent posture, tight grip, and strained expression represent physical tiredness, perseverance, and the demands of daily labor. The overflowing wheelbarrow emphasizes the weight of responsibility and struggle.<br><br>
+
+Lighting: Warm late-afternoon sunlight highlights his sweat-slicked skin, the textured surfaces of the wheelbarrow and water containers, and casts dramatic shadows across the road, emphasizing effort and fatigue.<br><br>
+
+Texture: Ultra-detailed realism — fabric wrinkles, dust on clothing, reflections on plastic water jugs, realistic skin textures with beads of sweat, subtle motion in muscles, and textures of the uneven road.<br><br>
+
+Theme: Tired / Physical Exhaustion / Labor / Perseverance / Daily Struggle</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, emotive and intimate storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian luxury kitchen with polished marble countertops, well-organized drawers, and gleaming appliances. The kitchen is busy with multiple cooking tasks — pans on the stove, chopped vegetables, and a kettle boiling.<br><br>
+
+The subject: A young Nigerian woman, around 24 years old, wearing a stylish, muted-colored abaya with sleeves slightly rolled up. She stands in the center of the kitchen, hands raised slightly in exasperation, mouth open in a soft “ohhssh,” eyes wide with fatigue. Ingredients and utensils surround her, emphasizing the overwhelming amount of work. Her posture slumps slightly, showing mental and physical tiredness.<br><br>
+
+Symbolism: The raised hands, exhausted facial expression, and chaotic kitchen represent overwhelm, stress, and the demands of multitasking. The luxurious setting contrasts her tiredness, highlighting the effort behind maintaining perfection.<br><br>
+
+Lighting: Warm, soft lighting from overhead lamps and natural daylight through a window illuminates her face, the kitchen surfaces, and reflections on utensils, creating a cinematic, cozy atmosphere.<br><br>
+
+Texture: Ultra-detailed realism — folds in her abaya, shiny surfaces of appliances, scattered vegetables, steam rising from pans, realistic skin textures, subtle motion in hands and hair.<br><br>
+
+Theme: Tired / Overwhelmed / Fatigue / Multitasking / Domestic Stress</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intimate and emotive storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian classroom in the late afternoon. Sunlight filters through tall windows, casting warm, soft shadows across wooden desks and scattered papers. A blackboard in the background has complex math problems partially erased.<br><br>
+
+The subject: A young Nigerian boy, around 15 years old, sitting at his desk, hunched over a notebook filled with math calculations. He wears a slightly wrinkled school uniform — light shirt and dark trousers. His head rests on one hand, eyes squinting at the paper, lips pressed together in concentration and exhaustion. Pencils and erasers are scattered across the desk.<br><br>
+
+Symbolism: The hunched posture, focused gaze, and slightly slumped shoulders represent mental fatigue, determination, and the effort required to solve difficult problems. The classroom environment emphasizes academic pressure and diligence.<br><br>
+
+Lighting: Warm late-afternoon sunlight illuminates his face, papers, and hands, creating soft shadows and a cinematic glow that emphasizes tension and tiredness.<br><br>
+
+Texture: Ultra-detailed realism — wrinkles in uniform fabric, pencil marks on paper, subtle skin textures, scattered desk items, realistic hair strands, and facial expression showing strain and focus.<br><br>
+
+Theme: Tired / Mental Exhaustion / Academic Strain / Determination / Concentration</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, raw and immersive storytelling, masterpiece quality.<br><br>
+
+The scene: A Northern Nigerian dusty street during late afternoon, scattered with small market stalls and uneven pavement. The sun casts long, warm shadows over the road.<br><br>
+
+The subject: A young Nigerian man, around 20 years old, sitting on a stationary motorcycle, looking exhausted and frustrated. His motorbike is visibly out of fuel, and a large black nylon bag (“cefane”) rests beside him on the ground, slightly slumped. He wears a simple t-shirt and trousers, slightly dusty and wrinkled from the journey. His head is tilted down, one hand on the handlebar, the other rubbing his forehead, showing physical tiredness and mental stress.<br><br>
+
+Symbolism: The stalled motorcycle, heavy bag, and weary posture represent fatigue, setbacks, and the strain of labor or travel. The dusty street and late-afternoon sun amplify the sense of struggle and endurance.<br><br>
+
+Lighting: Warm sunlight highlights his face, clothing, and the motorcycle, casting dramatic shadows across the street and emphasizing the exhaustion and tension.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds, dust on clothing and motorcycle, wrinkles in nylon bag, realistic skin textures with subtle sweat, dusty road textures, and subtle motion in hair and posture.<br><br>
+
+Theme: Tired / Physical and Mental Fatigue / Setback / Perseverance / Exhaustion</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, intimate and spiritual storytelling, masterpiece quality.<br><br>
+
+The scene: A serene Northern Nigerian mosque interior during the pre-dawn hours (Tahajjud). Soft, dim light filters through patterned windows, casting gentle shadows on the prayer mats and ornate floor tiles. The atmosphere is quiet, reflective, and sacred.<br><br>
+
+The subject: A young Nigerian woman, around 22 years old, sitting on her prayer mat with a slightly slumped posture, visibly tired from prolonged prayer. She wears a modest, muted-colored abaya and hijab. Her eyes are gently closed, hands resting lightly on her knees, showing fatigue but devotion. Around her, other young women stand in perfect prayer alignment, their faces serene and focused, creating a contrast between her tiredness and their steady posture.<br><br>
+
+Symbolism: Her seated, weary posture represents human limitation, devotion, and perseverance in worship. The standing women symbolize discipline, spiritual consistency, and support. The contrast emphasizes the beauty of devotion despite exhaustion.<br><br>
+
+Lighting: Soft pre-dawn light gently illuminates her face, clothing folds, and prayer mat, with subtle highlights on the standing women in the background. Shadows create depth and a quiet, contemplative mood.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of abaya and hijab, texture of the prayer mat, subtle skin tones, fine hair details under hijab, ornate mosque floor textures, soft light reflections on walls and windows.<br><br>
+
+Theme: Tired / Spiritual Fatigue / Perseverance / Devotion / Reflection</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, emotive and intimate storytelling, masterpiece quality.<br><br>
+
+The scene: A wet Northern Nigerian road after a heavy rainfall. Puddles glisten on the asphalt, mud splashes slightly from their footsteps, and the sky is clearing with soft post-rain light. Surrounding are scattered trees and distant houses, giving a rural yet intimate setting.<br><br>
+
+The subject: A young Nigerian couple, both in their mid-20s, walking on foot. The woman appears visibly tired, slightly hunched, one hand resting on her waist (“catching her gwiwa”) as if to support herself while taking a small pause. She wears a casual, modest outfit with a muted-colored abaya and scarf. The man, walking beside her, leans slightly toward her with an apologetic, communicative gesture, speaking softly as if saying “sorry, let’s keep walking.” He wears casual shirt and trousers, slightly damp from the rain.<br><br>
+
+Symbolism: The woman’s tired posture and resting hand symbolize physical fatigue and endurance, while the man’s communicative gestures symbolize care, empathy, and support. Together, they convey love, patience, and perseverance through shared struggle.<br><br>
+
+Lighting: Soft post-rain light illuminates their faces and clothing, with reflections in puddles enhancing cinematic depth and the gentle freshness of the scene.<br><br>
+
+Texture: Ultra-detailed realism — wet fabric folds, subtle mud and water splashes on shoes and trousers, realistic skin tones, glistening puddles, slight reflections on damp surfaces, and natural motion in hair and clothing.<br><br>
+
+Theme: Tired / Shared Fatigue / Love / Perseverance / Care / Intimacy</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, humorous yet relatable storytelling, masterpiece quality.<br><br>
+
+The scene: A modern Northern Nigerian tech workspace at night, with multiple monitors casting a soft blue glow across the room. Scattered notebooks, coffee mugs, and cables cover the desk.<br><br>
+
+The subject: A young Nigerian man, around 23 years old, lying back in a swivel chair with his legs stretched out, clearly tired from coding. His posture is slouched and relaxed, one hand lazily hovering over the keyboard while the other rests on his chest. His eyes are half-closed, and a small smile or smirk hints at exhaustion mixed with amusement. He wears a casual t-shirt and trousers, slightly rumpled from hours of work.<br><br>
+
+Symbolism: The slouched posture, half-closed eyes, and lazy typing symbolize coding fatigue, mental exhaustion, and the humorous side of overworking oneself. The dimly lit workspace emphasizes long hours of effort and dedication.<br><br>
+
+Lighting: Cool blue light from monitors illuminates his face and workspace, with soft shadows creating cinematic depth and highlighting the relaxed, tired mood.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds, rumpled clothing, keyboard and monitor textures, scattered notes, subtle reflections on coffee mugs, realistic skin tones, faint eye bags and subtle motion in hair.<br><br>
+
+Theme: Tired / Coding Fatigue / Laziness / Humor / Dedication</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 4:5 vertical aspect ratio, 8K resolution, warm and playful storytelling, masterpiece quality.<br><br>
+
+The scene: A cozy Northern Nigerian living room with soft cushions, a small rug, and sunlight streaming through a window. Toys and scattered clothes hint at a playful, family-filled environment.<br><br>
+
+The subject: A young Nigerian mother, around 25 years old, slightly overwhelmed but playful. She is holding two small children, around 3 and 5 years old, who are tugging at her clothes and reaching for her attention. She wears a comfortable, modest abaya in a muted color, hijab slightly loose. Her expression shows mild fatigue, slightly raised eyebrows, and a soft smile, playfully giving her husband a little “harara” gesture. The father, around 27 years old, stands nearby, laughing warmly at the scene, wearing a casual shirt and trousers.<br><br>
+
+Symbolism: The playful tug-of-war and her tired-but-smiling expression represent the joyful exhaustion of parenthood, balancing care, fun, and love. The father’s laughter adds warmth and shared happiness, showing family connection and lightheartedness.<br><br>
+
+Lighting: Warm sunlight highlights the mother’s face, flowing abaya, and the children’s playful movements, creating a soft, cinematic glow. Subtle shadows add depth to the room.<br><br>
+
+Texture: Ultra-detailed realism — fabric folds of the abaya and hijab, soft skin textures of mother and children, realistic hair strands, toys and scattered clothes with fine detail, subtle motion in hands and playful gestures.<br><br>
+
+Theme: Tired / Playful Fatigue / Parenthood / Family Love / Joyful Chaos</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subreading – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1A1A1A; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: none; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; color: #f97316; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="books-fiction-non-fiction">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='reading.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Books</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony A1 with 85mm portrait lens), 4:5 aspect ratio, 16K resolution, shallow depth of field with soft "Luxury-Morning-Reading-Light" and calm cinematic atmosphere.<br><br>
+
+The scene: A "Quiet-Luxury-Indoor-Reading-Space" with "Large-Floor-to-Ceiling-Windows," "Minimalist-Bookshelves," "Soft-Neutral-Toned-Furniture," and "Morning-Sunlight-Gently-Entering-the-Room." The environment feels peaceful, intellectually rich, and emotionally calming, with the background softly blurred to maintain strong focus on the subject.<br><br>
+
+The subject: An introverted Hausa teenage boy occupying approximately "85%-of-the-frame-space" with "Quiet-Focus-and-Comfortable-Solitude." He wears a relaxed but stylish "soft-earth-tone-hoodie layered over simple casual clothing," seated comfortably in a luxury armchair beside a small wooden table. His expression is deeply focused yet emotionally calm.<br><br>
+
+The activity: The teenager sits quietly reading a hardcover book while holding a warm cup of coffee beside him on the table. One hand supports the open book while the other lightly rests near the coffee mug. He occasionally pauses reading to reflect silently, looking briefly through the large window before returning to the page. A notebook with handwritten notes and a pen lie nearby, suggesting thoughtful engagement with the book rather than casual browsing. The movements are subtle, intentional, and emotionally introspective.<br><br>
+
+Symbolism: The "Open Book" represents "Knowledge, Escape, and Inner Exploration." The coffee symbolizes "Comfort and Personal Ritual." The quiet luxury environment reflects "Peaceful Solitude and Intellectual Depth."<br><br>
+
+Lighting: "Soft-Golden-Morning-Light." Natural morning sunlight softly illuminates the subject, book pages, and coffee steam, creating warm cinematic highlights and gentle shadows.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Paper-Texture-of-the-Book-Pages," the "Steam-Rising-from-the-Coffee," the "Soft-Fabric-of-the-Hoodie-and-Armchair," and the "Wood-and-Glass-Surface-Reflections."<br><br>
+
+Theme: 📚 Reading-Books / Introverted-Peace / Luxury-Quiet-Space / Intellectual-Comfort-and-Solitude.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z8 with 85mm portrait lens), 4:5 aspect ratio, 16K resolution, shallow depth of field with soft “Luxury-Peaceful-Atmosphere-Light” and emotionally immersive cinematic tone.<br><br>
+
+The scene: A “Quiet-Luxury-Interior-or-Outdoor-Sanctuary-Environment” designed for deep reading and solitude, featuring “Minimalist-High-End-Architecture,” “Soft-Natural-or-Warm-Interior-Lighting,” and “Calm-Atmospheric-Depth (misty morning / golden sunset / night ambient glow).” The background is softly blurred to maintain strong subject isolation and emotional focus.<br><br>
+
+The subject: A thoughtful introverted teenage boy or girl (Northern Hausa aesthetic, modest and elegant styling) occupying approximately “85%-of-the-frame-space,” seated or comfortably positioned in a peaceful luxury setting. Subjects wears refined, modest, high-quality clothing (e.g., soft earth-tone kaftan, minimalist abaya, or cozy luxury casual wear depending on gender). Their expression is calm, introspective, and deeply focused on reading, with subtle emotional depth suggesting imagination, learning, and inner peace.<br><br>
+
+The activity: Subjects is gently reading a book (hardcover or leather-bound journal) in a quiet, undisturbed moment. One hand supports the book while the other rests naturally on a cushion, table, or armrest. Occasional subtle actions include turning a page slowly, adjusting posture slightly, or pausing to reflect with eyes softened in thought. The environment remains still, reinforcing concentration and emotional solitude without distraction.<br><br>
+
+Symbolism: The “Book-and-Luxury-Solitude” represents “Knowledge, Inner Growth, and Self-Reflection.” The quiet environment symbolizes “Mental Clarity, Emotional Stability, and Escape from Noise.” Soft light transitions represent “Time, Thought, and Imagination Flow.”<br><br>
+
+Lighting: “Soft cinematic natural or ambient luxury lighting.” Options include warm sunset glow, cool night desk lamp ambiance, or gentle morning window light. Light interacts realistically with skin, fabric, and book pages, creating emotional depth and realism.<br><br>
+
+Texture: Ultra-high-fidelity detail—the “Paper-Page-Texture-of-the-Book,” “Soft-Fabric-of-Clothing,” “Wood/Marble/Glass-Luxury-Surfaces,” “Gentle-Shadow-Falloff,” and “Subtle-Dust-or-Light-Fog-in-Air.” Emphasis on tactile realism and environmental calmness.<br><br>
+
+Theme: 🌿 Luxury Reading / Introverted Reflection / Quiet Intellectual Growth / Emotional Calm / Solitude in Beautiful Spaces.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z8 with 85mm portrait lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, authentic exposure, and true-to-life candid photography. The image must feel like an unposed real-life moment captured in Northern Nigeria with cultural accuracy and environmental authenticity.<br><br>
+
+The scene: A “Quiet-Luxury-African-Reading-Environment” located in Northern Nigeria, featuring culturally realistic settings such as: modern Islamic-inspired study lounges, contemporary Northern Nigerian university reading halls, shaded courtyard reading spaces with traditional architectural influence, and calm indoor-outdoor hybrid study areas. Materials include warm concrete, patterned fabrics, wooden furniture, and soft textiles common in Northern Nigerian modern architecture. The environment is grounded in real African design—not Western interiors.<br><br>
+
+The subjects: 2–5 Northern Hausa teenagers and young adults (100% Hausa/Northern Nigerian facial features, skin tones, and cultural identity), occupying approximately “85%-of-the-frame-space.” They are dressed in modest, culturally authentic Northern Nigerian attire—boys in refined kaftan or traditional modern Islamic wear, girls in elegant abaya/hijab combinations adapted for study environments. Their presence is natural, grounded, and culturally consistent. Expressions show deep concentration, calm intelligence, and quiet reflection while reading and studying. No posing.<br><br>
+
+The activity: The group is engaged in real study and reading behaviors. One student reads a Hausa or English academic textbook, another writes notes in a notebook, another quietly shares a page with a peer, and one is thinking while holding a pen near their lips. Subtle micro-actions include page turning, leaning over desks, adjusting sitting posture, and quiet collaboration. The scene is emotionally still but physically alive with natural study motion.<br><br>
+
+Symbolism: The “Northern Nigerian Reading Group” represents “Education, Discipline, and Intellectual Growth within Cultural Identity.” The quiet collaboration symbolizes “Community Learning and Shared Progress.” Individual focus represents “Self-Development and Inner Thought.”<br><br>
+
+Lighting: Ultra-realistic natural lighting adapted to Northern Nigeria—soft daylight filtering through shaded windows, warm ambient indoor lighting, or late-afternoon golden sunlight entering study spaces. Lighting must feel geographically accurate with strong contrast control and realistic shadow behavior.<br><br>
+
+Texture: Extreme photographic realism—“skin texture true to Hausa features,” “natural fabric folds in kaftan and abaya,” “paper texture of worn textbooks,” “wooden desks with real scratches,” “slight dust in sunlight beams,” and “natural hand contact on paper.” No plastic, no glossy artificial skin.<br><br>
+
+Theme: 🌿 Northern Nigerian Academic Culture / Hausa Youth Intellectual Life / Quiet Study Documentary / Authentic African Educational Spaces / Real Human Learning Moments.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z8 with 85mm portrait lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, soft contrast roll-off, shallow depth of field, and physically accurate lighting behavior. The image must feel like a real candid moment captured in Northern Nigeria, with strong cultural grounding and environmental authenticity—no stylization, no artificial composition.<br><br>
+
+The scene: A “Rainy-Day-Nature-Reading-Retreat” located in Northern Nigeria, blending natural landscapes with a quiet academic atmosphere. The environment includes a glass-walled modern reading pavilion or shaded outdoor study terrace surrounded by indigenous trees, light rain falling steadily, wet earth reflecting soft light, and mist gently rising from the ground. The architecture is modest-modern with African design influence—wood, stone, fabric shades, and breathable open structure. Everything feels real, lived-in, and naturally imperfect.<br><br>
+
+The subjects: 2–5 Northern Hausa teenagers/young adults (authentic Hausa facial features, skin tones, and cultural identity), occupying approximately “85%-of-the-frame-space.” They wear modest, culturally accurate Northern Nigerian attire: kaftan, jalabiya, abaya, and hijab styled for comfort in cool rainy weather. Their posture is relaxed yet focused, fully immersed in reading and study. Expressions are introspective, calm, and slightly emotionally distant in a peaceful way—no posing, no modeling energy.<br><br>
+
+The activity: A group reading and studying during rainfall. One person reads a textbook while leaning against a wooden table, another writes notes in a notebook with slight hand hesitation from cold air, one quietly shares a page with another under a covered section, and another stares briefly at the rain before returning to reading. Subtle movements include page turning, adjusting clothing against the cool breeze, and quiet repositioning. The rain becomes part of the atmosphere, not a background prop.<br><br>
+
+Symbolism: The “Rain + Study Retreat” represents “Resilience, Knowledge under Calm Pressure, and Emotional Clarity.” The rain symbolizes “Reflection and Mental Reset,” while the shared reading space represents “Community Learning and Silent Support.” The natural environment reinforces “Grounded Growth and Inner Discipline.”<br><br>
+
+Lighting: Realistic overcast rainy lighting with soft diffused daylight, natural shadow softening, and gentle bounce light from wet surfaces. Occasional warm interior glow from the pavilion contrasts with the cool blue-gray tones of rainfall. Lighting must behave physically correct with moisture diffusion and subtle reflections on wet wood and stone.<br><br>
+
+Texture: Extreme micro-realism—“raindrops on glass panels and leaves,” “wet fabric texture on kaftan and abaya,” “paper slightly curling from humidity,” “wooden surfaces darkened by rain,” “soft skin realism with natural pores,” and “mist diffusion in air depth.” Everything must feel photographically real, not CGI.<br><br>
+
+Theme: 🌿 Rainy Nature Study / Northern Nigerian Intellectual Serenity / Collective Learning in Weathered Calm / Emotional Quietness in Real Environment / Documentary-Level Authenticity.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z8 with 85mm portrait lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, deep tonal range, physically accurate low-light rendering, and shallow depth of field. The image must feel like a real candid documentary capture inside Northern Nigeria, with strict cultural authenticity, natural imperfections, and no staged composition.<br><br>
+
+The scene: A “Night-Time Modern Islamic Reading Library” in Northern Nigeria, featuring a quiet, high-function academic study space designed with African modern architecture. The environment includes warm wooden bookshelves, soft patterned textiles, subtle Islamic geometric design elements, low ambient ceiling lights, desk lamps with warm tungsten glow, and softly shadowed corners. Outside large windows, faint night atmosphere or distant city quietness is visible. The space feels intimate, disciplined, and intellectually alive.<br><br>
+
+The subjects: 3–6 Northern Hausa teenagers/young adults (fully authentic Hausa facial features, skin tones, and cultural identity), occupying approximately “85%-of-the-frame-space.” They wear modest, culturally accurate Northern Nigerian academic attire—kaftan, jalabiya, abaya, and hijab adapted for indoor study comfort. Each subject shows natural individuality: some deeply focused on reading, others writing notes, one quietly explaining a point to a peer, another resting briefly in thought. No posing, no symmetry, no model-like behavior—pure candid realism.<br><br>
+
+The activity: A realistic night study session in progress. One student highlights a passage in a textbook under a desk lamp, another flips through a worn academic book with slow, natural movement, one writes notes in a slightly messy notebook, and another leans forward listening to a quiet explanation. Subtle actions include pen tapping, page turning, adjusting lamps, and shifting posture due to long study hours. The atmosphere reflects real academic fatigue and focus.<br><br>
+
+Symbolism: The “Night Library Study Group” represents “Discipline, Academic Dedication, and Quiet Intellectual Pressure.” The warm artificial light symbolizes “Knowledge as Guidance in Darkness.” The group interaction reflects “Shared Responsibility and Silent Academic Support.”<br><br>
+
+Lighting: Ultra-realistic low-light cinematic lighting with warm tungsten desk lamps, soft falloff shadows, controlled contrast, and natural eye-adapted exposure. Skin tones must remain accurate under warm lighting without overexposure or artificial smoothing. Background fades gently into darkness while subjects remain softly illuminated with realistic highlight roll-off.<br><br>
+
+Texture: Extreme micro-photographic detail—“paper grain of textbooks under lamp light,” “fabric weave of kaftan and abaya in low light,” “slight oil sheen on wooden desks,” “natural skin texture with visible pores under warm lighting,” and “soft shadow diffusion across faces and hands.” Every element must feel physically captured, not rendered.<br><br>
+
+Theme: 🌿 Northern Nigerian Night Study Culture / Academic Discipline in Silence / Intellectual Endurance / Warm Light in Darkness / Documentary Realism of Youth Learning.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z8 with 85mm portrait lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, high dynamic range, subtle motion realism, and physically accurate light behavior. The image must feel like an unstaged real-world capture in Northern Nigeria, with strong cultural fidelity, emotional authenticity, and environmental truthfulness—no artificial symmetry or studio aesthetics.<br><br>
+
+The scene: A “Sunset Urban-Luxury Reading Courtyard” in Northern Nigeria, blending modern African architecture with calm academic lifestyle design. The environment features open-air study courtyards, shaded pergola structures, sandstone or concrete textures, woven fabric canopies, potted indigenous plants, and warm reflective surfaces catching sunset light. The sky transitions from golden-orange to soft violet, casting long natural shadows across the space. Everything feels grounded, lived-in, and realistic rather than polished or staged.<br><br>
+
+The subjects: 4–7 Northern Hausa teenagers/young adults (fully authentic Hausa facial features, skin tones, and cultural identity), occupying approximately “85%-of-the-frame-space.” They wear modest, culturally accurate Northern Nigerian clothing—flowing kaftan, jalabiya, abaya, and hijab in soft earth tones suited for evening study. Each subject has distinct natural behavior: some reading quietly, others revising notes, one leaning against a table thinking, another sharing a book discussion in low voice. The group feels organically formed, not arranged.<br><br>
+
+The activity: A calm sunset study session in progress. One person slowly closes a book after finishing a section, another underlines notes with focused attention, one gently passes a notebook across the table, and another looks briefly toward the sunset before returning to reading. Subtle environmental interactions include shifting chairs, adjusting posture as light changes, and soft hand movements over paper. The atmosphere blends study with natural end-of-day reflection.<br><br>
+
+Symbolism: The “Sunset Courtyard Study Group” represents “Transition, Reflection, and Intellectual Maturity.” The sunset symbolizes “Time Passing and Knowledge Accumulation.” The shared reading space reflects “Community Growth and Collective Learning in Peace.”<br><br>
+
+Lighting: Ultra-realistic golden-hour cinematic lighting with long natural shadows, warm directional sunlight, soft atmospheric haze, and subtle lens flare. Skin tones must remain true-to-life under warm sunset conditions. Fabric and architectural surfaces reflect light realistically, with controlled highlight bloom and natural exposure falloff into shadowed areas.<br><br>
+
+Texture: Extreme photographic realism—“sun-warmed fabric texture of kaftan and abaya,” “slightly worn book covers and paper edges,” “grainy sandstone or concrete surfaces,” “natural skin texture with pores and fine detail,” and “soft dust particles visible in sunset beams.” Every element must behave like real captured light interacting with physical matter.<br><br>
+
+Theme: 🌿 Northern Nigerian Sunset Academic Life / Reflective Study Culture / Youth Intellectual Development in Open Air Spaces / Warm End-of-Day Learning Atmosphere / Documentary-Grade Realism of Education and Community.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7booksfictionnonfiction">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z8 with 85mm portrait lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, deep tonal separation, and physically accurate atmospheric rendering. The image must feel like an authentic candid moment from Northern Nigeria, emphasizing real human behavior, cultural accuracy, and environmental truth—no artificial posing, no symmetry, no studio influence.<br><br>
+
+The scene: A “Quiet Morning Academic-Community Reading Space” in Northern Nigeria, set in a calm semi-outdoor environment such as a shaded courtyard library, modern Islamic study center, or campus reading garden. The environment is filled with soft morning light, light breeze movement, distant ambient nature sounds implied visually through rustling leaves, and slightly cool atmospheric tones. Architectural elements include simple modern African design: clay-toned walls, wooden benches, woven mats, and open shaded structures allowing soft daylight diffusion.<br><br>
+
+The subjects: 5–8 Northern Hausa teenagers/young adults (fully authentic Hausa facial features, skin tones, and cultural identity), occupying approximately “85%-of-the-frame-space.” They wear modest, culturally accurate Northern Nigerian attire—light kaftan, jalabiya, abaya, and hijab in soft neutral tones suitable for morning study. Each individual behaves naturally and independently: some reading silently, some revising notes, one quietly discussing a passage with a peer, another organizing books, and another briefly resting while thinking. No staged arrangement—organic spatial distribution.<br><br>
+
+The activity: A realistic early-morning study routine. One person slowly opens a book and begins reading, another underlines key points in a notebook, one gently passes a textbook across a wooden table, and another pauses to think with a pen resting on paper. Subtle movement includes page turning, posture adjustment after sitting long, soft whisper-level academic discussion, and natural morning reorientation of attention. The group feels alive but quiet, like a real academic environment before a day begins.<br><br>
+
+Symbolism: The “Morning Study Community” represents “Fresh Intellectual Start, Discipline, and Collective Academic Purpose.” Morning light symbolizes “New Knowledge, Mental Clarity, and Beginning of Growth Cycles.” The shared space reflects “Community Learning, Cultural Unity, and Quiet Progress.”<br><br>
+
+Lighting: Ultra-realistic soft morning daylight with cool-to-neutral tones, gentle directional sun filtered through shaded structures, soft shadow gradients, and balanced exposure across faces and clothing. Natural light scattering creates realistic atmospheric depth without overexposure. Skin tones remain accurate under early daylight conditions with no artificial warmth or beauty smoothing.<br><br>
+
+Texture: Extreme micro-photographic realism—“soft cotton and linen texture of morning clothing,” “slightly rough wooden benches with natural wear,” “paper texture of textbooks with subtle curling edges,” “natural skin detail with pores and fine facial features,” and “gentle morning haze with visible light diffusion in air.” Every material behaves physically correct under morning lighting conditions.<br><br>
+
+Theme: 🌿 Northern Nigerian Morning Academic Culture / Collective Youth Learning / Quiet Intellectual Discipline / Fresh Start Educational Atmosphere / Documentary-Level Realism of Everyday Study Life.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8booksfictionnonfiction">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid real-life capture in Northern Nigeria.<br><br>
+
+The scene: A quiet morning academic reading courtyard in Northern Nigeria with modern Islamic-African architecture, shaded open-air study space, wooden benches, clay-toned walls, soft morning light, and natural greenery. Atmosphere is calm, real, and unposed.<br><br>
+
+The subjects: 5–8 Northern Hausa teenagers/young adults with authentic Hausa facial features and cultural identity. Wearing modest kaftan, jalabiya, abaya, and hijab in neutral tones. Occupying ~85% of frame, naturally positioned, no posing.<br><br>
+
+The activity: Silent group study—reading textbooks, writing notes, sharing books quietly, turning pages, brief low conversations, natural posture shifts. Fully candid academic behavior.<br><br>
+
+Lighting: Soft cool morning daylight with shaded diffusion, balanced exposure, realistic shadows, and natural skin tone accuracy.<br><br>
+
+Texture: Real paper, fabric weave, worn wood, natural skin detail, slight morning haze, and true environmental imperfections.<br><br>
+
+Theme: 🌿 Northern Nigerian morning study culture / quiet intellectual growth / collective learning / documentary realism.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9booksfictionnonfiction">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate light behavior, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A rainy afternoon reading courtyard in Northern Nigeria with modern African-Islamic architecture—semi-open study space, shaded roof, wooden tables, clay and stone textures, wet ground reflections, and soft rainfall in the background.<br><br>
+
+The subjects: 5–8 Northern Hausa teenagers/young adults with authentic Hausa facial features and cultural identity. Wearing modest kaftan, jalabiya, abaya, and hijab in muted earth tones suited for rain. Occupying ~85% of frame, naturally arranged, no posing.<br><br>
+
+The activity: Group study during rain—reading textbooks, writing notes, quietly sharing pages, adjusting posture due to cool weather, brief glances toward rainfall, slow page turns. Fully natural academic behavior.<br><br>
+
+Lighting: Diffused overcast daylight with soft gray-blue rainy atmosphere, subtle warm interior bounce light from sheltered areas, realistic wet-surface reflections, and accurate skin tone rendering.<br><br>
+
+Texture: Wet wood, damp fabric on clothing, rain droplets on surfaces, slightly curling paper edges, natural skin detail, misty air depth, and realistic environmental imperfections.<br><br>
+
+Theme: 🌿 Northern Nigerian rainy study culture / quiet resilience in learning / collective academic focus / documentary realism of youth education.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10booksfictionnonfiction">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: Quiet rainy-day study courtyard in Northern Nigeria with modern African-Islamic architecture, shaded open-air reading space, wooden tables, clay/stone textures, and visible rainfall with wet reflective ground surfaces.<br><br>
+
+The subject: 5–8 Northern Hausa teenagers/young adults with authentic Hausa facial features and cultural identity. Wearing modest kaftan, jalabiya, abaya, and hijab in muted earth tones suitable for rain. Occupying ~85% of frame, naturally positioned, no posing or symmetry.<br><br>
+
+The activity: Group studying during rainfall—reading books, writing notes, quiet page sharing, brief glances at rain, and natural micro-movements like page turns and posture adjustments.<br><br>
+
+Lighting: Diffused overcast daylight with cool rainy atmosphere, soft shadows, and subtle warm bounce light from sheltered areas, realistic wet-surface reflections.<br><br>
+
+Texture: Wet wood, damp fabric, raindrops on surfaces, slightly curling paper edges, natural skin detail, misty air depth, and environmental imperfections.<br><br>
+
+Theme: 🌿 Northern Nigerian rainy academic culture / resilience in learning / collective study focus / documentary realism of youth education.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10booksfictionnonfiction')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10booksfictionnonfiction')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="newspapers-magazines">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='reading.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Press</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A calm morning newspaper corner in Northern Nigeria with modern African-Islamic architecture, wooden chairs, glass windows, soft morning sunlight, tea cups on tables, and a peaceful intellectual atmosphere.<br><br>
+
+The subject: 4–7 Northern Hausa teenagers/young adults with authentic Hausa facial features and cultural identity. Wearing modest kaftan, jalabiya, abaya, and hijab in soft neutral tones. Occupying ~85% of frame, naturally arranged, no posing or symmetry.<br><br>
+
+The activity: Quiet newspaper reading session—holding folded newspapers, sharing headlines, discussing current events softly, turning pages naturally, sipping tea, and reflecting silently.<br><br>
+
+Lighting: Soft golden morning daylight with realistic indoor shadow falloff, balanced exposure, warm highlights, and accurate skin tone rendering.<br><br>
+
+Texture: Newspaper paper grain, folded page edges, wooden surface imperfections, fabric weave, tea steam, natural skin detail, and subtle morning dust in light beams.<br><br>
+
+Theme: 🌿 Northern Nigerian newspaper culture / calm intellectual mornings / social awareness / documentary realism of everyday life.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture during travel in Northern Nigeria.<br><br>
+
+The scene: A quiet rail jirgi interior with modern soft seating, large window views of passing Northern Nigerian landscapes, subtle travel atmosphere, overhead luggage space, and calm ambient motion blur outside the window.<br><br>
+
+The subject: A single Northern Hausa young adult with authentic Hausa facial features and cultural identity. Wearing a modest refined kaftan with relaxed travel styling in neutral earth tones. Occupying ~85% of frame, naturally seated beside the window, no posing.<br><br>
+
+The activity: Peacefully reading a newspaper during travel—holding open pages near the window light, occasionally glancing outside at the moving scenery, adjusting posture naturally, and quietly reflecting during the journey.<br><br>
+
+Lighting: Soft natural daylight entering through the train window with realistic shadow falloff, balanced exposure, subtle reflections on glass, and accurate skin tone rendering.<br><br>
+
+Texture: Newspaper paper grain, soft fabric folds, window reflections, seat material texture, natural skin detail, and realistic motion blur outside the train window.<br><br>
+
+Theme: 🌿 Northern Nigerian travel culture / peaceful solo journey / reflective newspaper reading / documentary realism of everyday movement.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet airport departure lounge in Northern Nigeria with modern glass architecture, soft ambient lighting, boarding displays, leather waiting seats, large runway-view windows, and calm early-morning travel atmosphere.<br><br>
+
+The subject: A single Northern Hausa young adult with authentic Hausa facial features and cultural identity. Wearing a refined modest kaftan with elegant travel styling in soft neutral tones. Occupying ~85% of frame, naturally seated near the window, no posing.<br><br>
+
+The activity: Calmly reading a newspaper while waiting for departure—holding folded pages, briefly observing aircraft movement outside the glass, adjusting sitting posture naturally, and quietly reflecting during travel downtime.<br><br>
+
+Lighting: Soft early-morning daylight blending with warm airport ambient lighting, realistic reflections on glass surfaces, balanced exposure, and accurate skin tone rendering.<br><br>
+
+Texture: Newspaper paper grain, leather seat texture, glass reflections, soft fabric folds, polished floor reflections, natural skin detail, and subtle airport atmosphere haze.<br><br>
+
+Theme: 🌿 Northern Nigerian travel lifestyle / peaceful airport solitude / reflective newspaper reading / documentary realism of modern movement.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet roadside café in Northern Nigeria during sunset, featuring open-air seating, warm lantern lighting, passing vehicles in soft background blur, wooden tables, tea glasses, and a calm travel-stop atmosphere.<br><br>
+
+The subject: A single Northern Hausa young adult with authentic Hausa facial features and cultural identity. Wearing a modest stylish kaftan in warm earth tones with relaxed travel appearance. Occupying ~85% of frame, naturally seated near the roadside view, no posing.<br><br>
+
+The activity: Relaxed newspaper reading during a travel break—holding open pages beside a cup of tea, occasionally glancing at the road movement, slowly turning pages, and reflecting quietly in the evening atmosphere.<br><br>
+
+Lighting: Warm sunset light mixed with soft lantern glow, realistic shadow depth, balanced exposure, gentle highlights on skin and fabric, and natural roadside ambient reflections.<br><br>
+
+Texture: Newspaper folds, wooden table grain, tea steam, fabric weave, dusty roadside atmosphere, natural skin detail, and soft motion blur from passing vehicles.<br><br>
+
+Theme: 🌿 Northern Nigerian travel pauses / sunset roadside calmness / reflective newspaper reading / documentary realism of everyday journeys.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A peaceful women-only airport waiting lounge in Northern Nigeria with modern African-Islamic interior design, large glass windows, soft seating, warm ambient lighting, and calm travel atmosphere.<br><br>
+
+The subject: A single Northern Hausa young woman with authentic Hausa facial features and cultural identity. Wearing an elegant modest abaya and perfectly matched hijab in soft neutral tones. Occupying ~85% of frame, naturally seated beside the window, no posing or fashion-model energy.<br><br>
+
+The activity: Quietly reading a newspaper while waiting for travel departure—holding folded pages calmly, briefly observing the runway through the glass, adjusting posture naturally, and reflecting peacefully during the journey.<br><br>
+
+Lighting: Soft daylight entering through large windows blended with warm indoor ambient lighting, realistic reflections on glass surfaces, balanced exposure, and accurate natural skin tone rendering.<br><br>
+
+Texture: Newspaper paper grain, soft fabric flow of abaya and hijab, leather seat texture, polished floor reflections, natural skin detail, and subtle airport atmosphere haze.<br><br>
+
+Theme: 🌿 Northern Nigerian women travel culture / peaceful solo journey / reflective newspaper reading / documentary realism of modern movement.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A luxury overnight train cabin in Northern Nigeria with soft warm interior lighting, rain droplets on the window, cozy sleeper seating, wooden table surfaces, and blurred night landscapes passing outside.<br><br>
+
+The subject: A single Northern Hausa young woman with authentic Hausa facial features and cultural identity. Wearing a modest elegant abaya with perfectly matched hijab in dark neutral tones suitable for night travel. Occupying ~85% of frame, naturally seated beside the rain-covered window, no posing.<br><br>
+
+The activity: Peacefully reading a newspaper during the night journey—holding open pages under warm cabin light, occasionally glancing at the rainy window reflections, slowly turning pages, and quietly relaxing during travel.<br><br>
+
+Lighting: Warm cinematic cabin lighting mixed with cool blue-gray reflections from the rainy night outside, realistic shadow depth, balanced exposure, and accurate skin tone rendering.<br><br>
+
+Texture: Rain droplets on glass, newspaper folds, soft fabric flow of abaya and hijab, wooden cabin textures, seat material detail, natural skin texture, and subtle atmospheric haze.<br><br>
+
+Theme: 🌿 Northern Nigerian night travel culture / peaceful rainy journey / reflective newspaper reading / documentary realism of quiet movement.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet rooftop lounge in Northern Nigeria during early sunrise, featuring modern African-Islamic architecture, soft city skyline views, comfortable outdoor seating, warm tea setup, and calm morning atmosphere with gentle breeze movement.<br><br>
+
+The subject: A single Northern Hausa young man with authentic Hausa facial features and cultural identity. Wearing a refined modest kaftan with relaxed luxury styling in soft earth tones. Occupying ~85% of frame, naturally seated near the rooftop edge, no posing.<br><br>
+
+The activity: Calmly reading a newspaper during sunrise—holding folded pages beside a warm cup of tea, occasionally observing the waking city skyline, turning pages slowly, and reflecting peacefully in solitude.<br><br>
+
+Lighting: Soft golden sunrise light with realistic shadow gradients, warm highlights on fabric and skin, balanced exposure, and subtle atmospheric haze across the skyline.<br><br>
+
+Texture: Newspaper paper grain, flowing kaftan fabric folds, rooftop stone textures, tea steam diffusion, natural skin detail, and realistic morning air depth.<br><br>
+
+Theme: 🌿 Northern Nigerian sunrise solitude / peaceful newspaper reading / reflective rooftop atmosphere / documentary realism of calm urban mornings.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet luxury hotel balcony in Northern Nigeria during light rainfall, featuring modern African-inspired architecture, glass railings, soft outdoor lounge seating, distant city lights, and rain-covered surroundings with calm evening atmosphere.<br><br>
+
+The subject: A single Northern Hausa young woman with authentic Hausa facial features and cultural identity. Wearing a modest elegant abaya with perfectly matched hijab in soft dark earth tones. Occupying ~85% of frame, naturally seated near the balcony edge, no posing.<br><br>
+
+The activity: Peacefully reading a newspaper beside the rain—holding slightly folded pages, occasionally glancing toward the rainy skyline, slowly turning pages, and quietly enjoying the calm evening environment.<br><br>
+
+Lighting: Soft rainy evening lighting mixed with warm balcony ambient lights, realistic reflections on wet surfaces, balanced exposure, gentle shadow depth, and accurate skin tone rendering.<br><br>
+
+Texture: Rain droplets on glass surfaces, newspaper folds, flowing abaya fabric texture, soft seat materials, natural skin detail, wet reflective surfaces, and subtle misty atmosphere.<br><br>
+
+Theme: 🌿 Northern Nigerian rainy evening lifestyle / peaceful newspaper reading / quiet luxury travel atmosphere / documentary realism of reflective solitude.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A peaceful desert roadside rest stop in Northern Nigeria during late afternoon, featuring sandy landscapes, traditional-modern shelter design, parked travel vehicles, woven shade structures, wooden benches, and warm dry wind atmosphere.<br><br>
+
+The subject: A single Northern Hausa young man with authentic Hausa facial features and cultural identity. Wearing a refined modest kaftan with light travel styling in warm sand-earth tones. Occupying ~85% of frame, naturally seated beneath the shaded structure, no posing.<br><br>
+
+The activity: Quietly reading a newspaper during a travel break—holding open pages against the gentle wind, occasionally observing distant road movement, adjusting posture naturally, and reflecting peacefully in the still environment.<br><br>
+
+Lighting: Warm late-afternoon desert sunlight with soft shadow gradients, realistic atmospheric haze, balanced exposure, and accurate skin tone rendering under natural heat tones.<br><br>
+
+Texture: Newspaper paper movement, sandy ground texture, woven shade details, soft kaftan fabric folds, dusty air atmosphere, natural skin detail, and weathered wooden surfaces.<br><br>
+
+Theme: 🌿 Northern Nigerian desert travel culture / peaceful roadside solitude / reflective newspaper reading / documentary realism of long-distance journeys.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10newspapersmagazines">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A calm riverside ferry waiting area in Northern Nigeria during blue-hour evening, featuring quiet water reflections, modern wooden seating, soft harbor lights, gentle fog above the river, and a peaceful travel atmosphere.<br><br>
+
+The subject: A single Northern Hausa young woman with authentic Hausa facial features and cultural identity. Wearing a modest elegant abaya with perfectly matched hijab in cool dark neutral tones. Occupying ~85% of frame, naturally seated beside the riverside railing, no posing.<br><br>
+
+The activity: Peacefully reading a newspaper while waiting for ferry departure—holding folded pages calmly, occasionally glancing toward the water and distant boat lights, slowly turning pages, and reflecting quietly in solitude.<br><br>
+
+Lighting: Soft blue-hour ambient lighting mixed with warm harbor lamps, realistic reflections on water surfaces, balanced exposure, subtle fog diffusion, and accurate natural skin tone rendering.<br><br>
+
+Texture: Newspaper paper grain, flowing abaya fabric texture, wooden dock surface details, water reflections, soft mist atmosphere, natural skin detail, and realistic evening air depth.<br><br>
+
+Theme: 🌿 Northern Nigerian riverside travel culture / peaceful evening solitude / reflective newspaper reading / documentary realism of quiet journeys.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10newspapersmagazines')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10newspapersmagazines')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="academic-papers">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='reading.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Journals</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet secondary school classroom in Northern Nigeria with simple wooden desks, chalkboard with handwritten notes, soft morning daylight through windows, and an orderly academic environment.<br><br>
+
+The subject: 6–10 Northern Nigerian secondary school students wearing neat school uniforms (white shirts, dark trousers/skirts, ties), with authentic Hausa facial features and cultural identity. Occupying ~85% of frame, naturally seated in classroom arrangement, no posing.<br><br>
+
+The activity: Students working on academic papers—writing exam answers, reading question sheets, reviewing notes, and quietly concentrating. Subtle actions include page turning, pen writing, thinking pauses, and minimal peer consultation.<br><br>
+
+Lighting: Soft natural morning daylight from classroom windows with realistic shadow falloff, balanced exposure, and accurate skin tone rendering.<br><br>
+
+Texture: Paper exam sheets, pencil marks, chalk dust on board, wooden desk wear, fabric uniform weave, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian academic discipline / secondary school examination culture / focused student learning / documentary realism of classroom education.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet higher institution lecture hall in Northern Nigeria with tiered wooden desks, chalkboard filled with academic notes, scattered papers, and a focused examination atmosphere.<br><br>
+
+The subject: 6–10 Northern Nigerian university students wearing modest academic attire (shirts, trousers, skirts, hijabs, and simple campus wear), with authentic Hausa facial features and cultural identity. Occupying ~85% of frame, naturally seated across lecture rows, no posing.<br><br>
+
+The activity: Students working on academic papers during a test or assignment—writing answers, reading question sheets, calculating, reviewing notes, and concentrating deeply. Subtle natural movements include page flipping, pen writing, head down focus, and brief thinking pauses.<br><br>
+
+Lighting: Soft warm late-afternoon sunlight entering through high classroom windows, blended with gentle indoor ambient light, creating natural contrast, soft shadows across desks, and realistic skin tone balance.<br><br>
+
+Texture: Paper exam sheets, ink and pencil marks, worn wooden lecture desks, chalk dust on board, fabric texture of clothing and hijabs, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian higher education / university academic assessment / disciplined student focus / documentary realism of examination environment.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A calm higher institution lecture hall in Northern Nigeria with tiered wooden desks, academic chalkboard notes, scattered exam papers, and a focused examination environment.<br><br>
+
+The subject: 6–10 elegant Northern Hausa female university students with authentic Hausa facial features and cultural identity. Wearing modest academic attire including hijabs, abayas, and simple campus wear in clean neutral tones. Occupying ~85% of frame, naturally seated across lecture rows, no posing.<br><br>
+
+The activity: Academic paper session during lecture or exam—writing answers, reading question sheets, reviewing notes, highlighting text, and concentrating deeply. Natural movements include page turning, pen writing, quiet thinking pauses, and subtle peer checking of answers.<br><br>
+
+Lighting: Soft warm late-afternoon sunlight entering through high classroom windows, blended with gentle indoor ambient light, creating realistic contrast, soft shadows across desks, and natural skin tone balance.<br><br>
+
+Texture: Paper exam sheets, ink handwriting detail, worn wooden desks, chalk dust atmosphere, fabric weave of hijab and abaya, and natural skin realism.<br><br>
+
+Theme: 🌿 Northern Nigerian higher education / female academic excellence / disciplined student environment / documentary realism of classroom learning.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet secondary school examination hall in Northern Nigeria with long wooden desks, chalkboard instructions, scattered question papers, and a strictly supervised academic environment.<br><br>
+
+The subject: 6–10 Northern Nigerian female secondary school students with authentic Hausa facial features and cultural identity. Wearing neat school uniforms with modest hijabs where applicable, occupying ~85% of frame, naturally seated in exam rows, no posing.<br><br>
+
+The activity: Students writing academic papers during an exam—carefully answering questions, reading exam sheets, reviewing answers, and maintaining focused silence. Natural movements include page turning, pen writing, brief thinking pauses, and correcting written work.<br><br>
+
+Lighting: Soft warm morning sunlight entering through classroom windows, blended with gentle indoor ambient light, creating realistic soft shadows, balanced exposure, and accurate skin tone rendering.<br><br>
+
+Texture: Exam paper grain, pencil and pen ink detail, worn wooden desks, chalk dust atmosphere, fabric texture of uniforms and hijabs, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian secondary education / female student discipline / examination culture / documentary realism of academic focus.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A calm university library reading hall in Northern Nigeria with tall bookshelves, long study tables, scattered academic papers, and a quiet intellectual atmosphere.<br><br>
+
+The subject: 6–10 Northern Nigerian male university students with authentic Hausa facial features and cultural identity. Wearing modest academic outfits (shirts, trousers, simple kaftan styles, and campus wear), occupying ~85% of frame, naturally seated across study tables, no posing.<br><br>
+
+The activity: Academic paper work—reading research materials, writing notes, solving assignments, highlighting textbooks, and quietly discussing points in low voices. Natural movements include page turning, pen writing, leaning over notes, and brief concentration pauses.<br><br>
+
+Lighting: Soft warm afternoon sunlight coming through large library windows, blended with gentle indoor ambient lighting, creating realistic contrast, soft shadows, and natural skin tone balance.<br><br>
+
+Texture: Paper documents, pencil and ink detail, wooden study tables, fabric weave of clothing, book pages with slight wear, and natural skin realism.<br><br>
+
+Theme: 🌿 Northern Nigerian university academic culture / male student intellectual focus / library study discipline / documentary realism of education.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet university outdoor study veranda in Northern Nigeria during a soft rainy afternoon, featuring shaded concrete architecture, wet floor reflections, distant greenery blurred by rainfall, and calm atmospheric mist.<br><br>
+
+The subject: A single Northern Hausa female university student with authentic Hausa facial features and cultural identity. Wearing a modest abaya and hijab in neutral tones suitable for rainy weather. Occupying ~85% of frame, naturally seated at a wooden desk, no posing.<br><br>
+
+The activity: She is working on academic papers during the rain—reading printed lecture notes, writing answers in a notebook, pausing occasionally to think while listening to rainfall, and adjusting pages slightly as wind and moisture move through the space.<br><br>
+
+Weather / Situation: Light steady rain with cool overcast atmosphere, soft wind movement, and wet surroundings creating natural reflections on concrete and wood surfaces. The rain subtly shapes the mood of concentration and calm isolation.<br><br>
+
+Lighting: Diffused rainy daylight with soft gray-blue tones, gentle natural shadow softening, and subtle warm bounce light from covered indoor areas nearby. Skin tones remain natural and accurate under overcast lighting.<br><br>
+
+Texture: Wet wood grain on desk, damp fabric texture on abaya and hijab, slightly curling paper edges from humidity, raindrops on nearby surfaces, and natural skin detail with realistic lighting falloff.<br><br>
+
+Theme: 🌿 Northern Nigerian academic resilience / rainy-day study focus / quiet intellectual solitude / documentary realism of real student life.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet isolated outdoor study spot in Northern Nigeria, such as a shaded garden bench near a campus lake or under tall trees, with soft natural surroundings, calm air, and minimal human disturbance.<br><br>
+
+The subject: Two Northern Hausa university students (one male, one female) with authentic Hausa facial features and cultural identity. Both dressed in modest, elegant academic attire—kaftan for the man and abaya with hijab for the woman in soft neutral tones. They sit at a respectful distance on the same bench or adjacent seating, occupying ~85% of frame, no posing.<br><br>
+
+The activity: Both are quietly reading academic papers. The man reviews printed notes while occasionally glancing at his pages, and the woman reads a separate document, subtly turning pages and pausing in thought. There is a natural, calm presence between them—quiet awareness, shared silence, and a soft emotional shift that suggests early connection without interaction overtly dominating the scene.<br><br>
+
+Weather / Situation: Calm late afternoon with warm breeze, soft rustling leaves, and a peaceful isolated atmosphere that enhances focus and quiet emotional tension. The environment feels private, still, and slightly reflective.<br><br>
+
+Lighting: Golden-hour sunlight filtering through trees with soft dappled shadows, warm highlights on skin and fabric, natural exposure falloff, and cinematic depth across the scene.<br><br>
+
+Texture: Paper document grain, fabric weave of kaftan and abaya, natural skin detail, soft leaf motion blur, and realistic environmental depth with subtle atmospheric haze.<br><br>
+
+Theme: 🌿 Northern Nigerian academic solitude / quiet companionship / subtle emotional connection / documentary realism of student life and emerging connection.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet isolated campus garden in Northern Nigeria during late afternoon, with tall trees, soft grass, a wooden bench, distant campus buildings blurred in background, and calm natural silence.<br><br>
+
+The subject: Two Northern Hausa university students (one male, one female) with authentic Hausa facial features and cultural identity. The man wears a modest clean kaftan in neutral earth tones, and the woman wears a modest abaya and hijab in soft complementary colors. Both occupy ~85% of frame, seated naturally with respectful spacing, no posing.<br><br>
+
+The activity: Both are reading academic papers in silence. The man holds printed notes and reads with focused attention, occasionally adjusting pages. The woman reads her own document, slowly turning pages and pausing to think. Their presence feels calm and natural, with subtle shared awareness but no exaggerated interaction—just quiet companionship in study.<br><br>
+
+Weather / Situation: Soft golden-hour afternoon with gentle breeze, rustling leaves, and a peaceful isolated environment that emphasizes focus and emotional calm. The atmosphere is still, private, and reflective.<br><br>
+
+Lighting: Warm golden sunlight filtered through trees, creating soft dappled shadows across skin, clothing, and the ground. Realistic cinematic contrast, natural exposure falloff, and balanced skin tone accuracy.<br><br>
+
+Texture: Fine paper grain of academic sheets, natural fabric weave of kaftan and abaya, realistic skin texture, soft grass detail, and subtle atmospheric haze in background light beams.<br><br>
+
+Theme: 🌿 Northern Nigerian academic solitude / quiet companionship / subtle emotional warmth in study space / documentary realism of youth connection and learning.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet university rooftop study corner in Northern Nigeria during early evening, featuring concrete seating, light wind movement, distant city skyline, and a calm open-air academic atmosphere.<br><br>
+
+The subject: A single Northern Hausa female university student with authentic Hausa facial features and cultural identity. Wearing a modest abaya and hijab in soft neutral tones, styled neatly for campus life. Occupying ~85% of frame, seated naturally on a bench with study materials beside her, no posing.<br><br>
+
+The activity: She is reviewing academic papers alone—reading printed notes, highlighting key points, occasionally pausing to think while looking toward the distant skyline, then returning to her work with quiet focus. Subtle natural movements include page turning, pen marking, and posture adjustment.<br><br>
+
+Weather / Situation: Calm early evening with gentle breeze, fading daylight, and a peaceful rooftop atmosphere that feels reflective and slightly introspective after a long study day.<br><br>
+
+Lighting: Soft golden-blue hour transition light, realistic long shadows, gentle wind-driven highlights on fabric, and balanced exposure with natural cinematic contrast.<br><br>
+
+Texture: Paper grain of notes, soft fabric weave of abaya and hijab, concrete rooftop texture, natural skin detail, and faint atmospheric haze over the city background.<br><br>
+
+Theme: 🌿 Northern Nigerian academic solitude / evening reflection / quiet intellectual discipline / documentary realism of student life at dusk.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10academicpapers">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet university library corner in Northern Nigeria during early night, featuring wooden study desks, tall bookshelves, soft desk lamps, scattered academic papers, and a calm focused study atmosphere.<br><br>
+
+The subject: A single Northern Hausa male university student with authentic Hausa facial features and cultural identity. Wearing a modest kaftan or simple campus attire in neutral earth tones. Occupying ~85% of frame, seated naturally at a desk with study materials, no posing.<br><br>
+
+The activity: He is working on academic papers at night—reading printed notes, writing answers on paper, highlighting key points, and briefly pausing in thought before continuing. Subtle natural movements include page turning, pen writing, leaning forward in concentration, and resting momentarily before resuming work.<br><br>
+
+Weather / Situation: Quiet nighttime academic setting with still air outside, complete focus environment, and a sense of deep study discipline after a long day.<br><br>
+
+Lighting: Warm desk lamp lighting contrasting with dark surrounding shadows, realistic falloff across face and hands, soft highlights on paper surfaces, and cinematic low-light exposure with natural grain.<br><br>
+
+Texture: Paper grain of academic sheets, ink and pencil marks, wooden desk surface detail, fabric weave of kaftan, natural skin texture, and subtle dust particles visible in lamp light beams.<br><br>
+
+Theme: 🌿 Northern Nigerian night study culture / focused academic discipline / solitary intellectual work / documentary realism of university life at night.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10academicpapers')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10academicpapers')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blogs-articles">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='reading.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Articles</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet modern newsroom or digital blog workspace in Northern Nigeria, featuring wooden desks, laptops, pinned notes on walls, soft indoor plants, scattered documents, and a calm creative writing atmosphere.<br><br>
+
+The subject: A single Northern Hausa young adult writer or blogger with authentic Hausa facial features and cultural identity. Wearing modest, smart casual or academic-inspired attire in neutral tones. Occupying ~85% of frame, naturally seated at a desk with writing tools or laptop, no posing.<br><br>
+
+The activity: Subjects is writing or editing a blog/article—typing on a laptop, reviewing notes, organizing ideas on paper, occasionally pausing to think before continuing. Subtle natural movements include scrolling, rewriting sentences, and reading references.<br><br>
+
+Weather / Situation: Calm focused indoor environment with soft ambient quietness, representing deep work and creative concentration.<br><br>
+
+Lighting: Soft warm indoor studio-like lighting mixed with natural window daylight, balanced exposure, gentle shadows, and realistic skin tone rendering.<br><br>
+
+Texture: Laptop surface reflections, paper drafts, pen marks, fabric weave of clothing, desk wood grain, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian digital creativity / blogging culture / intellectual writing focus / documentary realism of modern content creation.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet university campus café in Northern Nigeria with wooden tables, soft background chatter, laptops open, scattered notebooks, and a calm creative writing atmosphere for bloggers and students.<br><br>
+
+The subject: 3–6 Northern Hausa young adults (male and female) with authentic Hausa facial features and cultural identity. Wearing modest, smart casual academic attire and clean campus wear in neutral tones. Occupying ~85% of frame, naturally seated in small groups, no posing or staged symmetry.<br><br>
+
+The activity: Collaborative blog and article writing—typing on laptops, discussing ideas softly, reviewing drafts on paper, sharing feedback, and refining content. Natural movements include scrolling, note-taking, pointing at screens, and brief thinking pauses.<br><br>
+
+Weather / Situation: Calm daytime campus environment with gentle outdoor breeze entering through open café structure, soft ambient activity, and focused intellectual energy.<br><br>
+
+Lighting: Soft natural daylight mixed with warm café interior lighting, realistic reflections on tables, balanced exposure, and accurate skin tone rendering with cinematic softness.<br><br>
+
+Texture: Laptop surfaces, paper drafts, coffee cups, pen marks, fabric weave of clothing, wooden table grain, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian student media culture / collaborative blogging environment / digital creativity / documentary realism of modern academic writing.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet home office workspace in Northern Nigeria with minimal modern furniture, wooden desk, laptop setup, scattered drafts of articles, pinned notes on a wall, and a calm focused writing environment.<br><br>
+
+The subject: A single Northern Hausa young woman blogger/writer with authentic Hausa facial features and cultural identity. Wearing modest, neat indoor attire with hijab in soft neutral tones. Occupying ~85% of frame, naturally seated at a desk, no posing.<br><br>
+
+The activity: She is writing and editing a blog article—typing on a laptop, reading notes, pausing to think, then revising paragraphs. Subtle natural movements include scrolling, rewriting lines, sipping water/tea, and reviewing drafts carefully.<br><br>
+
+Weather / Situation: Quiet daytime indoor setting with soft calm atmosphere, representing deep focus and uninterrupted creative work.<br><br>
+
+Lighting: Soft natural window light blended with warm indoor ambient glow, realistic shadow falloff, balanced exposure, and accurate skin tone rendering.<br><br>
+
+Texture: Laptop reflections, paper drafts, pen marks, fabric weave of hijab and clothing, wooden desk grain, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian digital writing culture / female blogging creativity / focused intellectual production / documentary realism of modern content creation.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet modern co-working blog studio in Northern Nigeria with clean minimalist desks, laptops, pinned article drafts on soft boards, indoor plants, and a calm professional content creation environment.<br><br>
+
+The subject: A single Northern Hausa young woman (age 22–29) with authentic Hausa facial features and cultural identity. Wearing a modest elegant abaya or atamfa with a flowing hijab/gyale in soft neutral tones. Occupying ~85% of frame, naturally seated at a desk with writing tools and laptop, no posing.<br><br>
+
+The activity: She is working on a blog/article—typing on a laptop, reading drafts, organizing ideas on paper, and refining written content. Natural micro-movements include scrolling, rewriting sentences, pausing in thought, and lightly marking notes with a pen.<br><br>
+
+Weather / Situation: Calm focused daytime indoor environment with quiet productivity atmosphere, representing deep creative work and uninterrupted concentration.<br><br>
+
+Lighting: Soft natural window daylight blended with warm indoor ambient lighting, realistic shadow gradients, balanced exposure, and accurate skin tone rendering.<br><br>
+
+Texture: Laptop surface reflections, printed article drafts, pen ink detail, fabric weave of abaya/atamfa and flowing hijab/gyale, wooden desk grain, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian digital writing culture / female blogging professionalism / creative intellectual production / documentary realism of modern media work.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet university library corner in Northern Nigeria with tall bookshelves, study desks, scattered printed articles, laptops, and a calm research-and-writing atmosphere.<br><br>
+
+The subject: A single Northern Hausa young man (age 20–29) with authentic Hausa facial features and cultural identity. Wearing modest clean academic or smart casual attire in neutral tones. Occupying ~85% of frame, naturally seated at a study desk with laptop and printed materials, no posing.<br><br>
+
+The activity: He is writing a blog/article or academic-style post—typing on a laptop, reviewing printed references, highlighting key points, and organizing ideas. Natural movements include scrolling, note-taking, brief thinking pauses, and editing paragraphs.<br><br>
+
+Weather / Situation: Calm focused daytime indoor library environment with quiet intellectual atmosphere and soft background activity from other distant students.<br><br>
+
+Lighting: Soft natural daylight from large library windows mixed with gentle warm indoor lighting, realistic contrast, soft shadows, and accurate skin tone rendering.<br><br>
+
+Texture: Paper drafts, laptop reflections, pen marks, wooden desk grain, fabric weave of clothing, book page texture, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian academic writing culture / male blogging and research focus / intellectual content creation / documentary realism of knowledge work.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A calm outdoor café workspace in Northern Nigeria during late afternoon, with shaded seating, wooden tables, soft breeze, laptops open, notebooks, and a relaxed creative writing environment.<br><br>
+
+The subject: 4–7 Northern Hausa young adults (male and female, age 20–29) with authentic Hausa facial features and cultural identity. Females wear modest abaya or atamfa with flowing hijab/gyale, males wear clean kaftan or smart casual academic wear. Occupying ~85% of frame, naturally seated in small groups, no posing or symmetry.<br><br>
+
+The activity: Collaborative blog/article writing—discussing ideas quietly, typing on laptops, reviewing drafts, sharing feedback, and refining content together. Natural movements include scrolling, pointing at screens, writing notes, and brief thinking pauses.<br><br>
+
+Weather / Situation: Warm late-afternoon breeze with calm outdoor café ambiance, soft background movement, and peaceful intellectual productivity atmosphere.<br><br>
+
+Lighting: Golden-hour sunlight filtered through shade structures, warm highlights on skin and fabric, soft natural shadows, balanced exposure, and cinematic depth.<br><br>
+
+Texture: Laptop surfaces, paper drafts, coffee cups, pen marks, fabric weave of abaya/atamfa and kaftan, wooden table grain, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian digital media collaboration / blogging and content creation culture / youth intellectual teamwork / documentary realism of modern creative work.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet modern newsroom-style blog office in Northern Nigeria during early evening, featuring warm indoor lighting, glass windows with fading daylight, wooden desks, pinned article drafts, laptops, and a calm professional media atmosphere.<br><br>
+
+The subject: 3–6 Northern Hausa young women (age 20–29) with authentic Hausa facial features and cultural identity. Wearing modest elegant abaya or atamfa with flowing hijab/gyale in soft neutral tones. Occupying ~85% of frame, naturally seated at workstations, no posing or symmetry.<br><br>
+
+The activity: Professional blog/article creation—typing on laptops, editing written drafts, reviewing notes, discussing content quietly, and refining articles. Natural movements include scrolling, writing corrections, exchanging ideas, and brief focused pauses.<br><br>
+
+Weather / Situation: Calm early evening indoor workspace with fading daylight outside, quiet productivity atmosphere, and focused creative energy typical of deadline writing sessions.<br><br>
+
+Lighting: Warm indoor lamp lighting blended with soft remaining daylight from windows, realistic contrast, gentle shadows across desks and faces, and accurate skin tone rendering under mixed light.<br><br>
+
+Texture: Laptop reflections, printed article drafts, pen ink detail, wooden desk grain, fabric weave of abaya/atamfa and flowing hijab/gyale, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian digital journalism culture / female blogging and editorial work / creative intellectual production / documentary realism of modern media environments.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet early morning university courtyard in Northern Nigeria, featuring stone walkways, shaded trees, benches, and a calm academic atmosphere before lectures begin.<br><br>
+
+The subject: A single Northern Hausa young woman (age 20–29) with authentic Hausa facial features and cultural identity. Wearing a modest elegant abaya or atamfa with flowing hijab/gyale in soft neutral tones. Occupying ~85% of frame, naturally seated on a bench with laptop and printed draft papers beside her, no posing.<br><br>
+
+The activity: She is writing and editing a blog/article—reading notes, typing on a laptop, reviewing paragraphs, and refining content. Subtle natural movements include scrolling, pausing in thought, adjusting papers, and lightly marking edits.<br><br>
+
+Weather / Situation: Cool peaceful morning atmosphere with soft breeze, quiet campus surroundings, and a calm reflective mood before academic activities begin.<br><br>
+
+Lighting: Soft golden morning sunlight filtered through trees, dappled light patterns across skin and fabric, balanced exposure, and natural cinematic warmth.<br><br>
+
+Texture: Paper drafts, laptop reflections, wooden bench grain, fabric weave of abaya/atamfa and hijab/gyale, natural skin detail, and soft morning atmospheric haze.<br><br>
+
+Theme: 🌿 Northern Nigerian academic writing culture / female digital creativity / peaceful morning productivity / documentary realism of youth intellectual work.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet modern co-working blog studio in Northern Nigeria during night hours, featuring warm desk lamps, laptop screens glowing softly, pinned article drafts on walls, bookshelves, and a calm focused “deep work” atmosphere.<br><br>
+
+The subject: 5–8 Northern Hausa young adults (age 20–29, male and female) with authentic Hausa facial features and cultural identity. Females wear modest abaya or atamfa with flowing hijab/gyale, males wear clean kaftan or smart casual academic wear. Occupying ~85% of frame, naturally arranged at desks, no posing or symmetry.<br><br>
+
+The activity: Intensive blog/article production at night—typing on laptops, editing drafts, proofreading, discussing ideas in low voices, and refining content under deadlines. Natural movements include scrolling, writing corrections, leaning toward screens, and brief thinking pauses.<br><br>
+
+Weather / Situation: Quiet nighttime productivity environment with complete focus, minimal external noise, and a strong sense of creative urgency and discipline.<br><br>
+
+Lighting: Warm desk lamp lighting combined with laptop screen glow, soft falloff shadows, realistic low-light exposure, and cinematic contrast with accurate skin tone preservation in artificial light.<br><br>
+
+Texture: Laptop reflections, glowing screens, paper drafts, ink pen marks, wooden desk surfaces, fabric weave of abaya/atamfa, hijab/gyale flow, and natural skin detail with subtle low-light grain.<br><br>
+
+Theme: 🌿 Northern Nigerian digital media industry / night blogging and journalism culture / collaborative intellectual production / documentary realism of modern creative work under deadline.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10blogsarticles">Style: Cinematic ultra-realistic documentary photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism, natural film grain, shallow depth of field, physically accurate lighting, candid unstaged capture in Northern Nigeria.<br><br>
+
+The scene: A quiet riverside promenade in Northern Nigeria during late evening, featuring soft water reflections, wooden benches, gentle breeze movement, distant city lights, and a calm reflective environment.<br><br>
+
+The subject: 2–4 Northern Hausa young adults (age 20–29, male and female) with authentic Hausa facial features and cultural identity. Females wear modest abaya or atamfa with flowing hijab/gyale, males wear clean kaftan or smart casual academic wear. Occupying ~85% of frame, naturally seated or standing near the water, no posing or symmetry.<br><br>
+
+The activity: Blog/article reflection session in a calm outdoor setting—one is reading notes on a phone or printed draft, another is silently reviewing ideas, and others are quietly discussing content in low voices. Natural movements include scrolling, pointing at notes, and brief thoughtful pauses while looking at the water.<br><br>
+
+Weather / Situation: Cool evening atmosphere with soft breeze, calm water movement, and peaceful post-work reflection mood after a day of writing and research.<br><br>
+
+Lighting: Soft blue-hour ambient light blended with warm distant city glow reflections on water, realistic shadow depth, balanced exposure, and cinematic low-light clarity.<br><br>
+
+Texture: Water ripple reflections, paper drafts, phone screen glow, fabric weave of abaya/atamfa and kaftan, wooden bench texture, and natural skin detail.<br><br>
+
+Theme: 🌿 Northern Nigerian digital creativity reflection / journalism lifestyle / quiet intellectual wind-down / documentary realism of modern content creators.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10blogsarticles')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10blogsarticles')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="comics-graphic-novels">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='reading.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Comics</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle illustrated comic grading, natural film grain, shallow depth of field, physically accurate lighting, hybrid realism with storytelling composition in Northern Nigeria.<br><br>
+
+The scene: A cozy weekend home environment in Northern Nigeria, featuring simple family living rooms, soft mats or sofas, warm daylight entering through windows, scattered toys, school bags, and a calm domestic atmosphere with imaginative play energy.<br><br>
+
+The subject: 5–9 Northern Nigerian children (boys and girls) with authentic Hausa facial features and cultural identity. Wearing a mix of normal home clothing and playful superhero costumes (e.g., Superman-inspired cape, Ben10-style outfit, Wonder Woman-inspired costume adapted modestly). Occupying ~85% of frame, naturally engaged in play, no posing.<br><br>
+
+The activity: Weekend imaginative role-play—children acting as heroes, pretending to save the day, striking action poses mid-play, running between furniture, reading comic books, and discussing “missions.” Natural childlike movement includes jumping, pointing, dramatic storytelling gestures, and group imagination play.<br><br>
+
+Weather / Situation: Calm weekend daytime indoors with relaxed family environment, soft background household sounds implied, and a safe playful atmosphere.<br><br>
+
+Lighting: Soft warm natural daylight from windows blended with gentle indoor ambient light, creating cinematic warmth, soft shadows, and vibrant but realistic color tones suitable for comic-style storytelling.<br><br>
+
+Texture: Fabric weave of costumes, soft sofa texture, paper comic pages, toy surfaces, natural skin detail, and subtle illustrated comic shading overlay while maintaining photographic realism.<br><br>
+
+Theme: 🌿 Northern Nigerian childhood imagination / weekend home play culture / superhero fantasy storytelling / documentary realism blended with comic-graphic novel aesthetic.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle illustrated comic color grading, natural film grain, shallow depth of field, physically accurate lighting, hybrid realism with dynamic storytelling composition in Northern Nigeria.<br><br>
+
+The scene: A quiet weekend afternoon inside a modest Northern Nigerian home courtyard, featuring tiled floors, simple seating mats, shaded veranda, soft sunlight, and household items like buckets, sandals, and small toys scattered naturally.<br><br>
+
+The subject: 5–9 Northern Nigerian children (boys and girls) with authentic Hausa facial features and cultural identity. Wearing a mix of home clothes and playful superhero-inspired costumes (e.g., Superman cape, Ben10-style outfit, Wonder Woman-inspired modest costume adapted for children). Occupying ~85% of frame, actively engaged in play, no posing.<br><br>
+
+The activity: Superhero role-play in full imagination mode—one child “flies” with arms stretched, another pretends to use powers, others act as teammates and “villains” in a friendly storyline. Some children hold handmade comic drawings or school notebooks turned into “mission books.” Natural movement includes running, dramatic pointing, laughing, and storytelling gestures.<br><br>
+
+Weather / Situation: Warm calm weekend afternoon with soft breeze moving through the courtyard, peaceful household atmosphere, and safe energetic play environment.<br><br>
+
+Lighting: Golden afternoon sunlight with soft directional shadows, warm highlights on skin and fabric, and slightly enhanced cinematic contrast for comic storytelling mood while remaining realistic.<br><br>
+
+Texture: Worn fabric of costumes, paper drawings, tiled floor detail, natural skin texture, household objects, and subtle comic-style tonal enhancement layered over realistic photography.<br><br>
+
+Theme: 🌿 Northern Nigerian childhood imagination / superhero fantasy play / weekend home storytelling culture / cinematic comic-realism of youth creativity and joy.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic color grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition and dynamic framing in Northern Nigeria.<br><br>
+
+The scene: A modest Northern Nigerian home courtyard during a bright weekend afternoon, featuring a shaded veranda, warm sunlit walls, clean tiled floor, and soft household background elements. The environment is simple but visually structured for action focus.<br><br>
+
+The subject: 2–3 Northern Nigerian children (boys and/or girls, age 5–9) with authentic Hausa facial features and cultural identity. Wearing carefully styled superhero-inspired outfits (e.g., Superman cape, Ben10-inspired suit, Wonder Woman-inspired modest costume adapted for children). Subjects occupy  ~90% of the frame, tightly framed for cinematic impact, no loose crowding.<br><br>
+
+The activity: A focused superhero moment in action—one child in a strong “hero landing” pose, another reaching forward as if using imagined powers, and one reacting dramatically as part of the story. The scene captures a single powerful narrative moment rather than scattered play. Movement is frozen mid-action with clear storytelling intent and visual tension.<br><br>
+
+Weather / Situation: Warm bright weekend daylight with soft breeze and calm household background, creating a safe yet energetic imaginative atmosphere.<br><br>
+
+Lighting: Strong golden sunlight with defined cinematic shadows, high clarity highlights on costumes and skin, controlled contrast for comic-hero depth, and realistic light direction enhancing form and motion.<br><br>
+
+Texture: Fabric detail of capes and costumes, tiled ground realism, dust particles in sunlight, natural skin texture, and subtle comic-graphic tonal enhancement without losing photographic realism.<br><br>
+
+Theme: 🌿 Northern Nigerian childhood imagination / superhero identity play / cinematic hero storytelling / graphic novel realism of focused action moments and creative expression.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic color grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition and dynamic framing in Northern Nigeria.<br><br>
+
+The scene: A modest Northern Nigerian home courtyard during a bright weekend afternoon, featuring a shaded veranda, warm sunlit walls, clean tiled floor, and soft household background elements. The environment is simple but visually structured for action focus.<br><br>
+
+The subject: 2–3 Northern Nigerian children (boys and/or girls, age 5–9) with authentic Hausa facial features and cultural identity. Wearing carefully styled superhero-inspired outfits (e.g., Superman cape, Ben10-inspired suit, Wonder Woman-inspired modest costume adapted for children). Subjects occupy  ~90% of the frame, tightly framed for cinematic impact, no loose crowding.<br><br>
+
+The activity: A focused superhero moment in action—one child in a strong “hero landing” pose, another reaching forward as if using imagined powers, and one reacting dramatically as part of the story. The scene captures a single powerful narrative moment rather than scattered play. Movement is frozen mid-action with clear storytelling intent and visual tension.<br><br>
+
+Weather / Situation: Warm bright weekend daylight with soft breeze and calm household background, creating a safe yet energetic imaginative atmosphere.<br><br>
+
+Lighting: Strong golden sunlight with defined cinematic shadows, high clarity highlights on costumes and skin, controlled contrast for comic-hero depth, and realistic light direction enhancing form and motion.<br><br>
+
+Texture: Fabric detail of capes and costumes, tiled ground realism, dust particles in sunlight, natural skin texture, and subtle comic-graphic tonal enhancement without losing photographic realism.<br><br>
+
+Theme: 🌿 Northern Nigerian childhood imagination / superhero identity play / cinematic hero storytelling / graphic novel realism of focused action moments and creative expression.<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in a luxury interior setting in Northern Nigeria.<br><br>
+
+The scene: A luxurious, minimalist modern bedroom in a wealthy Abuja penthouse, featuring sleek dark wood paneling, a plush velvet accent chair, and a minimalist side table holding a porcelain cup.<br><br>
+
+The subject: A handsome 24-year-old Northern Nigerian youth with sharp features, impeccable grooming, and high-energy steez. He is wearing a pristine, heavily starched white Shadda (yadi) with intricate white neck embroidery and a sharply folded black and white Zanna Bukar cap. Occupying ~80% of the frame, tightly composed.<br><br>
+
+The activity: Sitting deeply in the accent chair, lean body language, holding a glossy vintage comic book wide open. His expression is one of intense, captivated focus, a slight knowing smirk on his face as he flips a page, completely absorbed in the graphic narrative.<br><br>
+
+Lighting: Moody, cinematic indoor lighting with a strong key light from the side, casting sharp contrast across his face and the folds of his Shadda, creating dramatic highlights on his Zanna Bukar cap.<br><br>
+
+Texture: Deep fabric textures of the velvet chair, crisp and stiff paper edges of the comic book, glossy reflection on the polished wood, and incredibly detailed fabric lines of the premium Shadda.<br><br>
+
+Theme: 🌿 Northern Nigerian youth luxury leisure / sophisticated comic reading / high-steez traditional fashion / cinematic graphic novel realism inside affluent modern interior.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: An elegant, sun-drenched private home library with floor-to-ceiling mahogany bookshelves filled with leather-bound volumes, a soft Persian rug on the floor, and a large window in the background.<br><br>
+
+The subject: A stunningly beautiful 21-year-old Northern Nigerian young lady with radiant skin and graceful features. She is dressed in a premium, richly patterned silk Abaya with a perfectly styled, flowing chiffon hijab draped elegantly over her shoulders, embodying modern decency and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Leaning gracefully against a bookshelf, holding a thick graphic novel close to her chest. She is looking down at the pages with soft, intrigued eyes and a gentle smile, completely lost in the fantasy world of the comic book.<br><br>
+
+Lighting: Warm, golden afternoon sunlight streaming through the window, backlighting her flowing hijab with a soft halo effect while illuminating the comic pages with a gentle glow.<br><br>
+
+Texture: Fine silk textures of the premium Abaya, soft transparency of the chiffon hijab, aged paper texture of the books, and smooth, flawless skin tones under the warm sun rays.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female leisure / luxury library sanctuary / beautiful young lady reading comics / cinematic graphic novel realism with high cultural decency.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, affluent residential rooftop garden at twilight, overlooking a calm estate skyline, featuring high-end outdoor lounge furniture and subtle embedded warm LED deck lighting.<br><br>
+
+The subject: Two Northern Nigerian teenagers, a brother (16) and sister (14). The boy is wearing a well-tailored sky-blue Shadda with a matching "Tashi Ka Fiya Naci" cap. The girl is in a vibrant, high-end Atampa dress with a neat, modest headtie. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting closely on an outdoor daybed, sharing a large, colorful superhero comic book spread across both their laps. The brother is pointing excitedly at a specific action panel, while his sister gasps with wide-eyed, genuine amusement.<br><br>
+
+Lighting: Cool cinematic twilight blue hour ambience mixed beautifully with the warm, golden glow of the rooftop LED lights, creating a rich color contrast on their faces and traditional attire.<br><br>
+
+Texture: Intricate, vibrant patterns of the Atampa fabric, crisp weave of the Shadda, matte finish of the comic book cover, and soft ambient reflections on the polished rooftop surfaces.<br><br>
+
+Theme: 🌿 Rich Northern Nigerian siblings bonding / luxury rooftop leisure / teenage comic book imagination / cinematic graphic novel realism in affluent setting.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, state-of-the-art home theater room with dark acoustic walls, plush leather recliners, and a soft, warm ambient glow coming from decorative accent wall lights.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man with a sharp jawline and an aura of high steez. He is wearing a premium, midnight-blue metallic Shadda (yadi) and a flawless, intricately embroidered Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Reclined comfortably in a leather seat, holding a rare, collectible graphic novel. He is looking directly at the camera with an effortless, confident, and highly stylized gaze, holding the comic half-open as if paused mid-read.<br><br>
+
+Lighting: Low-key cinematic lighting, with a dramatic rim light accentuating the sharp silhouette of his face, his Zanna Bukar cap, and the crisp edge of his premium Shadda attire.<br><br>
+
+Texture: Premium grain of the leather recliner, glossy sheen of the metallic Shadda fabric, sharp geometric embroidery on the cap, and high-definition paper details of the graphic novel.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian alpha steez / luxury collector leisure / sophisticated young man with graphic novel / cinematic ultra-realistic comic-style portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A wealthy, beautifully landscaped private villa garden with lush green lawns, manicured white rose bushes, and a marble paved patio pathway.<br><br>
+
+The subject: Two adorable Northern Nigerian children, a boy (7) and a girl (6) from an affluent family. The boy wears a mini pastel-green Shadda with a small, neat Zanna Bukar cap. The girl wears a beautiful, custom-tailored lace Abaya with a small, flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting cross-legged on a luxury outdoor picnic blanket on the grass, a pile of action comics around them. They are both engrossed in their own individual comic books, completely immersed in the stories with expressions of pure childhood wonder.<br><br>
+
+Lighting: Bright, crisp mid-afternoon daylight filtered through garden trees, casting beautiful dapples of light and soft shadow patterns over the children and the vibrant comic pages.<br><br>
+
+Texture: Detailed lace patterns of the little Abaya, crisp cotton texture of the boy's Shadda, fresh green blades of grass, and the bright, matte-printed covers of the children's comic books.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian childhood innocence / luxury estate garden play / children reading comics / cinematic graphic novel realism in rich surroundings.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10comicsgraphicnovels">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: An upscale, high-end modern café inside a luxury mall in Kano, featuring marble tables, brass accents, and large glass windows showing a clean, modern environment.<br><br>
+
+The subject: A highly fashionable, beautiful 23-year-old Northern Nigerian lady. She is wearing an exquisitely designed, tailored Atampa dress with sophisticated sleeve details and a large, elegantly draped matching hijab that flows gracefully. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a polished marble table, a gourmet coffee cup to her side. She is elegantly holding a sleek indie graphic novel, turning a page with manicured hands, her expression one of intelligent fascination and quiet confidence.<br><br>
+
+Lighting: Bright, clean indoor ambient lighting combined with soft natural light from the glass window, highlighting her facial features and the rich colors of her Atampa outfit.<br><br>
+
+Texture: Crisp, high-end cotton texture of the patterned Atampa, smooth polished marble tabletop reflections, ceramic glaze of the cup, and clean ink-printed details on the graphic novel pages.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury café lifestyle / elegant young lady reading graphic novels / cinematic contemporary realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10comicsgraphicnovels')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10comicsgraphicnovels')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="social-media-posts">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='reading.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Social media</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in a luxury interior setting in Northern Nigeria.<br><br>
+
+The scene: A sleek, ultra-modern private office in a high-rise building, featuring a minimalist executive desk, a premium leather chair, and large glass windows overlooking a clean city skyline.<br><br>
+
+The subject: A handsome 26-year-old Northern Nigerian young man with a sharp beard, immaculate grooming, and unmistakable steez. He is wearing a flawless, heavily starched navy blue Shadda (yadi) with crisp neck embroidery and a sharply folded, intricate Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting back confidently in his executive chair, holding a sleek, bezel-less titanium smartphone in one hand. His expression is one of calm amusement and high confidence as he scrolls through a viral social media thread, a subtle smirk playing on his lips.<br><br>
+
+Lighting: Cinematic office lighting with a strong, cool-toned rim light from the window balancing the warm, focused key light on his face and the metallic sheen of his phone screen.<br><br>
+
+Texture: Stiff, premium folds of the starched Shadda, fine grain of the leather chair, smooth reflective glass surfaces, and high-definition details on the smartphone casing.<br><br>
+
+Theme: 🌿 Modern Northern Nigerian youth steez / luxury corporate leisure / corporate young man scrolling social media / cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite Kaduna residence, featuring a plush velvet headboard, elegant ambient bedside lamps, and a clean, organized aesthetic.<br><br>
+
+The subject: A breathtakingly beautiful 20-year-old Northern Nigerian lady with flawless skin and elegant features. She is dressed in a premium, finely detailed Abaya with a perfectly draped, flowing chiffon hijab that radiates decency and class. Occupying ~80% of the frame, tightly composed.<br><br>
+
+The activity: Propped up gracefully against silk pillows on her bed, holding her premium smartphone with both hands. Her eyes are bright and focused on the screen, a genuine, joyful smile lighting up her face as she reads a heartwarming social media post.<br><br>
+
+Lighting: Warm, soft ambient light from the bedside lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Soft silk texture of the bedding, premium smooth fabric of the Abaya, delicate chiffon transparency, and a gentle glow reflecting off her clear skin from the smartphone screen.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female leisure / private luxury sanctuary / beautiful young lady checking social media / cinematic graphic novel realism with high cultural decency.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, affluent residential rooftop terrace during a clear evening, featuring high-end outdoor lounge chairs, minimalist glass railings, and a view of a peaceful, wealthy estate.<br><br>
+
+The subject: A stylish 22-year-old Northern Nigerian man with immense steez, wearing a rich cream-colored Shadda and a perfectly matching "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone up. He is deeply focused on reading a trending analysis post on a social media platform, his expression serious, analytical, and highly composed.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the phone screen illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Crisp, heavy weave of the premium Shadda fabric, precise structural lines of the "Tashi Ka Fiya Naci" cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man reading digital trends / moody cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A premium, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, holding her tablet device gracefully. She is scrolling through an elegant lifestyle or fashion blog post on social media, looking completely relaxed, poised, and high-class.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the tablet, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / elegant young lady browsing social media / cinematic contemporary realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A premium, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, holding her tablet device gracefully. She is scrolling through an elegant lifestyle or fashion blog post on social media, looking completely relaxed, poised, and high-class.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the tablet, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / elegant young lady browsing social media / cinematic contemporary realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive, VIP airport lounge with plush leather armchairs, elegant gold-trimmed decor, and a calm, high-status atmosphere.<br><br>
+
+The subject: Two handsome Northern Nigerian brothers in their early 20s, both projecting elite steez. One wears a crisp white Shadda with a Zanna Bukar cap, the other a pastel blue Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting side-by-side in the luxury armchairs, leaning in close toward a single smartphone. The brother holding the phone is pointing at a hilarious viral social media post, while the other breaks into a hearty, genuine laugh, creating a dynamic moment.<br><br>
+
+Lighting: Premium indoor architectural lighting with soft, warm spotlights highlighting their traditional attire and creating clean, cinematic shadow lines.<br><br>
+
+Texture: Heavily starched fabric lines of both Shaddas, geometric embroidery details on the caps, rich grain of the leather armchairs, and the bright glass gloss of the smartphone screen.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian brotherhood / luxury travel lifestyle / young men laughing at social media / cinematic ultra-realistic comic-style portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A beautifully manicured private courtyard garden of a luxury villa during golden hour, with stone paths and elegant outdoor seating.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian teenage girl from a wealthy family. She is wearing a gorgeous, modest pastel-pink Abaya with delicate lacework on the sleeves and a flowing, matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a modern garden bench, holding a sleek phone. She is looking at the screen with wide, surprised eyes and a slight gasp, reacting with innocent wonder to a trending social media post updates.<br><br>
+
+Lighting: Breathtaking golden hour sunlight backlighting her flowing hijab with a warm halo, while a gentle, warm light illuminates her expressive face and the detailed lacework of her outfit.<br><br>
+
+Texture: Fine, lightweight Abaya fabric, soft chiffon hijab folds, intricate lace detailing, smooth matte texture of the garden bench, and crisp digital clarity on her phone screen.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian youth / luxury villa garden relaxation / teenage girl reacting to social media / cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A beautifully manicured private courtyard garden of a luxury villa during golden hour, with stone paths and elegant outdoor seating.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian teenage girl from a wealthy family. She is wearing a gorgeous, modest pastel-pink Abaya with delicate lacework on the sleeves and a flowing, matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a modern garden bench, holding a sleek phone. She is looking at the screen with wide, surprised eyes and a slight gasp, reacting with innocent wonder to a trending social media post updates.<br><br>
+
+Lighting: Breathtaking golden hour sunlight backlighting her flowing hijab with a warm halo, while a gentle, warm light illuminates her expressive face and the detailed lacework of her outfit.<br><br>
+
+Texture: Fine, lightweight Abaya fabric, soft chiffon hijab folds, intricate lace detailing, smooth matte texture of the garden bench, and crisp digital clarity on her phone screen.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian youth / luxury villa garden relaxation / teenage girl reacting to social media / cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated high-end café in Abuja, featuring dark marble tabletops, warm industrial hanging lights, and an elite, quiet ambiance.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian man embodying modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a corner table with a luxury watch visible on his wrist, holding his smartphone steadily. He is deeply engaged in reading an intellectual, educational thread on a social media platform, his brow slightly furrowed in concentration.<br><br>
+
+Lighting: Low-key cinematic café lighting, with a dramatic hanging light bulb casting sharp highlights across his shoulders, his Zanna Bukar cap, and the clean lines of his jaw.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, polished dark marble table surface, and the premium metallic edges of his phone.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite café lifestyle / young man reading educational social media / moody cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10socialmediaposts">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university student lounge featuring modern architecture, glass study pods, and a highly sophisticated educational environment.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent and decent. She is wearing a stylishly tailored Atampa dress with an elegant, modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a study lounge desk with notebooks open beside her, but momentarily distracted as she holds her phone up, reading an inspiring success story or announcement on social media with a proud, motivated smile.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting from large glass panels, beautifully illuminating her face, her vibrant Atampa dress, and her study space.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, clean paper texture of the open notebooks, and the flawless glossy screen of her smartphone.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady inspired by social media / decent and stylish contemporary representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10socialmediaposts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10socialmediaposts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:|The opponent[^:]*:|Weather \/ Situation:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:|The opponent[^:]*:|Weather \/ Situation:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

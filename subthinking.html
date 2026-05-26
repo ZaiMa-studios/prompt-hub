@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subthinking – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1A1A1A; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; color: #f97316; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="career-work">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='thinking-about.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Career</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A sleek, modern study space inside an elite residential estate, featuring minimalist dark wood bookshelves stocked with advanced textbooks, a clean glass desk, and an organized, high-tech aesthetic.<br><br>
+
+The subject: A highly intelligent 19-year-old Northern Nigerian young man with sharp features and an intense, focused presence. He is dressed in a crisp, flawlessly starched white Shadda (yadi) and a sharply folded "Tashi Ka Fiya Naci" cap, embodying exceptional youthful steez and ambition. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting at the desk, leaning forward slightly with his chin resting on his hand. A high-end laptop displays a clean code editor with colorful syntax on the screen, alongside a notebook filled with structural diagrams. He is staring out the window with an analytical, deeply reflective expression, completely absorbed in planning his upcoming transition into a high-level technology career.<br><br>
+
+Lighting: Crisp, modern interior lighting mixed with soft afternoon daylight streaming through a large window, perfectly illuminating his sharp jawline, the intricate lines of his traditional cap, and the clean work surfaces.<br><br>
+
+Texture: Stiff, immaculate folds of the starched Shadda fabric, fine geometric embroidery patterns on the cap, smooth reflective glass desk surface, and ultra-realistic skin details with natural micro-pores.<br><br>
+
+Theme: 🌿 Ambitious Northern Nigerian youth steez / teenage career planning and ambition / future technology leader / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university library study alcove featuring contemporary glass architecture, minimalist furniture, and a quiet, highly sophisticated academic atmosphere.<br><br>
+
+The subject: A beautiful 18-year-old Northern Nigerian young lady looking exceptionally intelligent, focused, and decent. She is wearing a stylishly tailored Atampa dress with high-end cultural patterns and a perfectly styled, modest flowing hijab draped elegantly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a sleek wooden study table with a tablet open to a professional university degree prospectus. She has a pen paused in her hand, looking slightly off-camera with a visionary, determined smile as she mentally maps out her professional milestones and academic path.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting from massive glass panels, beautifully illuminating her face, her vibrant Atampa dress, and her organized study materials.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the chiffon hijab, matte screen reflection on the tablet, and ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / teenage career aspirations / beautiful young lady designing her future / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, sunlit private home office inside an elite estate, boasting high ceilings, polished marble floors, and large glass windows overlooking a manicured garden.<br><br>
+
+The subject: A handsome, sharp-featured 17-year-old Northern Nigerian teenager projecting immense steez and potential. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting confidently in a high-back leather executive chair, looking at a large desktop monitor displaying financial market charts and technical analysis frameworks. His brow is slightly furrowed in deep concentration as he analyzes the data, seriously pondering a future career in global market analytics.<br><br>
+
+Lighting: Low-key cinematic indoor lighting mixed with vibrant afternoon daylight from the large windows, creating rich color depth and striking highlights across his traditional cap and jawline.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, plush texture of the leather chair, and crisp, lifelike skin pores under direct light.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / teenage career focus / analytical mind exploring global markets / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A majestic, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 19-year-old Northern Nigerian lady with captivating, intelligent eyes. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab draped perfectly. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, holding a modern tablet displaying professional development articles. She has a serene, deeply thoughtful expression, looking out toward the glowing horizon as she contemplates her long-term goals and professional aspirations.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour reflection / luxury penthouse balcony / teenage lady contemplating her career path / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, premium university lounge featuring modern architecture, glass study pods, and a vibrant educational environment.<br><br>
+
+The subject: Two handsome Northern Nigerian teenage classmates (ages 18 and 19) embodying modern decency and high steez. One wears a crisp pastel blue Shadda with a Zanna Bukar cap; the other wears a neat cream Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together at a sleek lounge table, looking over an architectural blueprint and a high-end laptop. They are engaged in an intense, highly motivated conversation about their career ambitions, one pointing at the screen with an inspired smile while the other nods in analytical agreement.<br><br>
+
+Lighting: Bright, natural daylight streaming through the lounge's glass panels, beautifully illuminating their faces, their traditional attire, and their collaborative workspace.<br><br>
+
+Texture: Crisp, heavy weave of both Shadda fabrics, detailed structural lines on the traditional caps, smooth metallic laptop casing, and sharp, ultra-realistic pore textures on their jawlines.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian youth collaboration / teenage career brainstorming / high-steez academic ambitions / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite residence, featuring an elegant, organized desk area with corporate internship folders and academic awards in the background.<br><br>
+
+The subject: A breathtakingly beautiful 18-year-old Northern Nigerian young lady with flawless skin and graceful features. She is dressed in a premium, finely detailed pastel-pink Abaya with a perfectly styled chiffon hijab that radiates decency, maturity, and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully at her desk, holding a professional journal. She is looking up toward the ceiling with a visionary, focused expression, entirely lost in thought as she visualizes her future role as a corporate leader and industry professional.<br><br>
+
+Lighting: Warm, soft ambient light from a modern desk lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Premium smooth fabric of the Abaya, delicate chiffon transparency of the hijab, clean texture of the journal pages, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / brilliant teenage lady planning her profession / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a high-end Northern Nigerian setting.<br><br>
+
+The scene: An exclusive rooftop terrace overlooking a peaceful, affluent estate skyline during a crisp, clear evening, featuring minimalist glass railings and subtle embedded floor lighting.<br><br>
+
+The subject: A sharp, ambitious 19-year-old Northern Nigerian man with immense steez, wearing a rich maroon Shadda and a perfectly matching, sharply folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone displaying a professional networking application. He is looking out into the evening horizon with a serious, deep, and intellectual expression, processing his next steps toward career independence.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the phone screen illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Premium heavy folds of the maroon Shadda fabric, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical teenage steez / young Northern man visualizing his career empire / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring high-end modern green architecture, glass walkways, and an elite educational environment.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian female student, looking highly intelligent, focused, and decent. She is wearing a stylishly tailored Atampa dress with a modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at an outdoor courtyard study desk with high-end tech tools and a notebook titled 'Career Goals'. She is looking forward with an incredibly determined, confident, and motivated expression, her posture radiating clarity and ambition.<br><br>
+
+Lighting: Bright, clean, and optimistic afternoon daylight filtering through architectural canopies, beautifully illuminating her face, her vibrant Atampa dress, and her study space.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, clean paper texture of the open notebook, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / brilliant teenage lady focused on career metrics / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite family estate, boasting high ceilings, premium marble tiling, and massive glass windows looking out onto a wealthy neighborhood avenue.<br><br>
+
+The subject: A distinguished, handsome 19-year-old Northern Nigerian youth with immense presence and steez. He is wearing a rich white Shadda (yadi) and a premium, flawlessly folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back thoughtfully on a massive luxury sofa, holding a sleek tablet showing a tech innovation article. He is looking slightly off-camera with an analytical, visionary gaze, deeply considering the path toward building his own technological or corporate venture.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from grand chandeliers mixed with soft evening daylight from the large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed geometric patterns on the Zanna Bukar cap, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his jawline.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury parlor reflection / teenage visionary mapping a corporate career / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10careerwork">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows opening to a private park.<br><br>
+
+The subject: A beautiful 18-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab that radiates class. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, holding a smartphone connected to wireless earbuds. She has a focused, highly intelligent expression on her face, listening intently to a professional mentorship podcast or career development lecture, a notepad resting beside her.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the smartphone, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / teenage lady building professional knowledge / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10careerwork')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10careerwork')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education-school">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='thinking-about.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Education</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A sleek, ultra-modern private study library in an elite estate, featuring floor-to-ceiling dark wood bookshelves, an organized glass-top desk, and complex science laboratory manuals stacked neatly in the background.<br><br>
+
+The subject: A highly focused 20-year-old Northern Nigerian young man with sharp, intelligent features and a perfectly lined beard, embodying incredible youthful steez. He is wearing a pristine, heavily starched white Shadda (yadi) with a sharply folded black and white Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting at the desk, leaning forward with an intense, analytical expression. One hand rests on an open chemistry textbook, while his other hand writes down dense notes on a tablet. His face projects deep calculation, motivation, and absolute clarity as he masters a difficult academic syllabus.<br><br>
+
+Lighting: Crisp, premium interior lighting mixed with soft afternoon daylight streaming through a large window, perfectly illuminating his sharp jawline, his traditional cap, and his organized workspace.<br><br>
+
+Texture: Stiff, flawless folds of the starched Shadda fabric, fine geometric embroidery patterns on the cap, smooth reflective glass desk surface, and ultra-realistic skin details with natural micro-pores.<br><br>
+
+Theme: 🌿 Ambitious Northern Nigerian youth steez / deep academic focus and determination / mastering advanced science notes / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university library study enclave featuring contemporary glass walkways, minimalist desks, and a quiet, highly sophisticated academic atmosphere.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian young lady looking exceptionally intelligent, focused, and decent. She is wearing a stylishly tailored Atampa dress with high-end cultural patterns and a perfectly styled, modest flowing hijab draped elegantly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a sleek wooden study table, a pen paused over her notebook as she looks slightly off-camera. She has a visionary, determined smile on her face, entirely lost in thought as she maps out her upcoming higher education transition and degree milestones.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting from massive glass panels, beautifully illuminating her face, her vibrant Atampa dress, and her organized study materials.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the chiffon hijab, matte paper texture of the open notebooks, and ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / visualization of higher academic success / beautiful young lady designing her education path / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, sunlit private home office inside an elite estate, boasting high ceilings, polished marble floors, and large glass windows looking out onto a serene landscape.<br><br>
+
+The subject: A handsome, sharp-featured 22-year-old Northern Nigerian student projecting immense steez and intellectual potential. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting confidently in a high-back leather chair, looking intently at a large desktop monitor displaying a university entrance exam portal and complex computer science curriculum structures. His brow is slightly furrowed in deep concentration, a look of unshakeable motivation on his face as he reviews his academic plan.<br><br>
+
+Lighting: Low-key cinematic indoor lighting mixed with vibrant afternoon daylight from the large windows, creating rich color depth and striking highlights across his traditional cap and jawline.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, plush texture of the leather chair, and crisp, lifelike skin pores under direct light.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / strategic education planning / analytical mind preparing for academic transitions / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A majestic, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 21-year-old Northern Nigerian lady with captivating, intelligent eyes. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab draped perfectly. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, holding an open textbook to her chest. She has a serene, deeply thoughtful expression, looking out toward the glowing horizon as she contemplates the deep value of her education and the vast possibilities it opens up.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour reflection / luxury penthouse balcony / young lady valuing her educational journey / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, premium polytechnic campus lounge featuring modern architecture, glass study pods, and a vibrant educational environment.<br><br>
+
+The subject: Two handsome Northern Nigerian students (ages 19 and 21) embodying modern decency and high steez. One wears a crisp pastel blue Shadda with a Zanna Bukar cap; the other wears a neat cream Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together at a sleek lounge table, looking over an intensive laboratory study guide and a high-end laptop. They are engaged in a serious, highly motivated discussion about solving tough examination past questions, one pointing at the screen with an inspired smile while the other nods in analytical agreement.<br><br>
+
+Lighting: Bright, natural daylight streaming through the lounge's glass panels, beautifully illuminating their faces, their traditional attire, and their collaborative workspace.<br><br>
+
+Texture: Crisp, heavy weave of both Shadda fabrics, detailed structural lines on the traditional caps, smooth metallic laptop casing, and sharp, ultra-realistic pore textures on their jawlines.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian youth collaboration / academic teamwork and exam prep / high-steez educational ambitions / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite residence, featuring an elegant, organized desk area with academic certificates and high-level science textbooks in the background.<br><br>
+
+The subject: A breathtakingly beautiful 20-year-old Northern Nigerian young lady with flawless skin and graceful features. She is dressed in a premium, finely detailed pastel-pink Abaya with a perfectly styled chiffon hijab that radiates decency, maturity, and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully at her desk, holding a professional scientific journal. She is looking up toward the ceiling with a visionary, focused expression, entirely lost in thought as she visualizes her future academic path and honors.<br><br>
+
+Lighting: Warm, soft ambient light from a modern desk lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Premium smooth fabric of the Abaya, delicate chiffon transparency of the hijab, clean texture of the journal pages, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / brilliant young lady dreaming of academic excellence / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a high-end Northern Nigerian setting.<br><br>
+
+The scene: An exclusive rooftop terrace overlooking a peaceful, affluent estate skyline during a crisp, clear evening, featuring minimalist glass railings and subtle embedded floor lighting.<br><br>
+
+The subject: A sharp, ambitious 22-year-old Northern Nigerian man with immense steez, wearing a rich maroon Shadda and a perfectly matching, sharply folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone displaying a university admission portal. He is looking out into the evening horizon with a serious, deep, and intellectual expression, processing his upcoming educational shift into higher computer sciences.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the phone screen illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Premium heavy folds of the maroon Shadda fabric, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man contemplating his higher education horizon / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring high-end modern green architecture, glass walkways, and an elite educational environment.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent, focused, and decent. She is wearing a stylishly tailored Atampa dress with a modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at an outdoor courtyard study desk with high-end tech tools and a notebook titled 'Educational Milestone Plan'. She is looking forward with an incredibly determined, confident, and motivated expression, her posture radiating clarity and academic drive.<br><br>
+
+Lighting: Bright, clean, and optimistic afternoon daylight filtering through architectural canopies, beautifully illuminating her face, her vibrant Atampa dress, and her study space.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, clean paper texture of the open notebook, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / brilliant young lady completely focused on education goals / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite family estate, boasting high ceilings, premium marble tiling, and massive glass windows looking out onto a wealthy neighborhood avenue.<br><br>
+
+The subject: A distinguished, handsome 23-year-old Northern Nigerian youth with immense presence and steez. He is wearing a rich white Shadda (yadi) and a premium, flawlessly folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back thoughtfully on a massive luxury sofa, holding a sleek tablet showing an academic research article. He is looking slightly off-camera with an analytical, visionary gaze, deeply considering the massive, life-changing impact of continuous higher education and skill development.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from grand chandeliers mixed with soft evening daylight from the large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed geometric patterns on the Zanna Bukar cap, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his jawline.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury parlor reflection / young visionary mapping his education path / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10educationschool">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows opening to a private park.<br><br>
+
+The subject: A beautiful 22-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab that radiates class. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, holding a smartphone connected to wireless headphones. She has a focused, highly intelligent expression on her face, listening intently to an educational lecture series, a notepad filled with neat scientific terms resting beside her.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the smartphone, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / young lady expanding her educational bounds / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10educationschool')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10educationschool')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="family-friends">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='thinking-about.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Social</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, sunlit grand parlor inside an elite residential estate, featuring opulent plush carpets, silk curtains, and a pristine, elegant interior layout designed for large family gatherings.<br><br>
+
+The subject: A distinguished, handsome 24-year-old Northern Nigerian man with immense steez, wearing a rich, heavily starched white Shadda (yadi) and a premium, flawlessly folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back on a massive luxury sofa during a lively family gathering, looking slightly off-camera with a warm, reflective, and deeply appreciative smile as he observes the laughter and chatter of his relatives and close childhood friends around the room, contemplating the profound value of his social circle and support system.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from grand chandeliers mixed with soft afternoon daylight pouring through large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium heavy fabric folds of the white Shadda, detailed geometric embroidery patterns on the Zanna Bukar cap, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his jawline.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury family parlor gathering / young man reflecting on social and familial bonds / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An elegant private courtyard garden of a wealthy estate during the peaceful evening, featuring beautifully manicured white rose bushes, stone paths, and high-end outdoor lounge furniture.<br><br>
+
+The subject: Two beautiful Northern Nigerian young ladies (ages 20 and 22), looking highly sophisticated and decent. They are wearing stunning, richly embroidered Abayas with long, flowing chiffon hijabs blowing gently. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting closely on a premium garden bench, holding a photo album or looking at a phone screen. They are pausing to look toward the sunset with serene, happy expressions, deeply reflecting on their years of unwavering friendship and sisterhood.<br><br>
+
+Lighting: Exquisite twilight blue hour ambiance mixed perfectly with warm, soft landscape lighting that highlights their expressive faces and the intricate embroidery on their outfits.<br><br>
+
+Texture: Fine, lightweight silk texture of the premium Abayas, delicate transparency of the flowing hijabs, smooth stone of the bench, and ultra-realistic skin textures under ambient light.<br><br>
+
+Theme: 🌿 Northern Nigerian female bonding / luxury estate garden relaxation / beautiful friends reflecting on social connections / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, high-end café veranda in an affluent metropolitan area, featuring dark marble tabletops, warm industrial hanging lights, and an elite, quiet ambiance.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian man embodying modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a corner table with a luxury watch visible on his wrist, a cup of coffee in front of him. He is looking outward toward the entrance with a highly composed, thoughtful look, waiting to host his close friends for a long-awaited reunion, contemplating the importance of loyalty and community.<br><br>
+
+Lighting: Low-key cinematic café lighting, with a dramatic hanging light bulb casting sharp highlights across his shoulders, his Zanna Bukar cap, and the clean lines of his jaw.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, polished dark marble table surface, and realistic matte finish of his skin.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite café lifestyle / young man contemplating friendship dynamics / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A majestic, wide open-air penthouse balcony at sunset, overlooking an affluent neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 24-year-old Northern Nigerian lady with captivating, intelligent eyes. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab draped perfectly. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, holding a handwritten invitation card to a close family event. She has a serene, deeply thoughtful expression, looking out toward the horizon as she appreciates the warmth and protection of her family network.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour social reflection / luxury penthouse balcony / beautiful young lady valuing family ties / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive, beautifully manicured private courtyard lawn inside a grand family estate during golden hour, with stone paths and a vast backdrop of old trees catching the sunset breeze.<br><br>
+
+The subject: Two handsome Northern Nigerian brothers in their early 20s, both projecting elite steez. One wears a crisp white Shadda with a Zanna Bukar cap, the other a pastel blue Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Standing side-by-side on the green grass, sharing a lighthearted moment of laughter and conversation. The older brother places a hand on the younger brother's shoulder, both smiling warmly as they discuss their roles within the extended family structure.<br><br>
+
+Lighting: Breathtaking golden hour lifestyle lighting, with the warm orange light of the setting sun casting long, clean cinematic shadow lines across their traditional attire.<br><br>
+
+Texture: Heavily starched fabric lines of both Shaddas, geometric embroidery details on the caps, crisp blades of green grass underfoot, and clear, realistic skin pores under direct warm light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian brotherhood / luxury lifestyle / young men reflecting on family values and social responsibility / photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit living room sanctuary in an elite residence, featuring elegant framed family portraits and an organized, high-end aesthetic in the background.<br><br>
+
+The subject: A breathtakingly beautiful 19-year-old Northern Nigerian young lady with flawless skin and graceful features. She is dressed in a premium, finely detailed Abaya with a perfectly styled chiffon hijab that radiates decency, maturity, and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a velvet accent chair, gently holding her phone with a text from her childhood friend on screen. She is looking slightly off-camera with a peaceful, affectionate expression, reflecting deeply on the importance of maintaining lifelong friendships.<br><br>
+
+Lighting: Warm, soft ambient light from a modern floor lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Premium smooth fabric of the Abaya, delicate chiffon transparency of the hijab, plush velvet chair texture, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / young lady prioritizing social and friend circles / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, open-air veranda of an elite family estate during a peaceful afternoon, with large security pillars and a clear view of a highly secure private park area.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man in a rich maroon Shadda and a premium Zanna Bukar cap, sitting with his younger teenage brother (15) who wears a neat white Shadda. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a luxury outdoor sofa on the veranda, looking outward toward the estate entrance. The older brother is sharing wisdom about choosing the right friends and building a strong network, both brothers looking thoughtful and deeply connected.<br><br>
+
+Lighting: Magnificent, warm afternoon daylight filtering through the estate trees, creating a rich depth of color and casting soft, realistic shadows across their expressive faces.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed embroidery on both caps, plush outdoor sofa cushions, and sharp, ultra-realistic micro-textures of their skin under soft light.<br><br>
+
+Theme: 🌿 Northern Nigerian elite family lifestyle / luxury veranda observation / mentoring the youth on social connections / ultra-realistic lifestyle photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows opening to a private courtyard.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing gracefully on a designer chaise lounge, looking out toward the courtyard where her family members are gathering. She has a peaceful, focused expression on her face, deeply valuing the balance between her personal space and her vibrant social circle.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, and fresh, used textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / young lady embracing social and family ties / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a high-end Northern Nigerian setting.<br><br>
+
+The scene: An exclusive rooftop terrace overlooking a peaceful, affluent estate skyline during a crisp, clear evening, featuring minimalist glass railings and subtle embedded floor lighting.<br><br>
+
+The subject: A sharp, ambitious 22-year-old Northern Nigerian man with immense steez, wearing a rich maroon Shadda and a perfectly matching, sharply folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, looking out into the evening horizon. He has a serious, deep, and intellectual expression, reflecting on the responsibility of supporting his family and maintaining meaningful, loyal friendships as he builds his life.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the city lights illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Premium heavy folds of the maroon Shadda fabric, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and realistic facial details.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man contemplating social and community impact / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10familyfriends">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring high-end modern green architecture, glass walkways, and an elite educational environment where students gather.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent, focused, and decent. She is wearing a stylishly tailored Atampa dress with a modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing near a stone fountain on campus, waving warmly to a group of friends off-camera. She has an incredibly happy, confident, and motivated smile, her posture radiating clarity and the joy of a healthy social life on campus.<br><br>
+
+Lighting: Bright, clean, and optimistic afternoon daylight filtering through architectural canopies, beautifully illuminating her face, her vibrant Atampa dress, and her clean study accessories.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady thriving in her social community / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10familyfriends')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10familyfriends')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="personal-goals">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='thinking-about.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Goals</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A sleek, ultra-modern private study inside an elite residential estate, featuring minimalist dark wood bookshelves, a clean glass desk, and architectural metrics displayed in the background.<br><br>
+
+The subject: A highly focused 20-year-old Northern Nigerian young man with sharp, intelligent features and a perfectly lined beard, embodying incredible youthful steez. He is wearing a rich, chocolate-brown Shadda (yadi) with precise, minimalist neck embroidery and a sharply folded matching traditional cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting at the desk, leaning forward slightly with an intense, analytical expression. He has a metallic fountain pen in hand, drawing a clear timeline and milestone chart inside a leather-bound journal labeled 'Vision & Goals'. His face projects absolute clarity and unshakeable motivation.<br><br>
+
+Lighting: Crisp, premium interior lighting mixed with soft afternoon daylight streaming through a large window, perfectly illuminating his sharp jawline, his traditional cap, and his organized workspace.<br><br>
+
+Texture: Stiff, crisp fabric folds of the premium brown Shadda, fine thread lines on the cap embroidery, smooth reflective glass desk surface, and ultra-realistic skin details with natural micro-pores.<br><br>
+
+Theme: 🌿 Ambitious Northern Nigerian youth steez / strategic goal setting and vision / young male leader mapping the future / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium corporate lounge or university library alcove featuring contemporary glass architecture, minimalist furniture, and a quiet, highly sophisticated atmosphere.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian young lady looking exceptionally intelligent, focused, and decent. She is wearing an exquisite, high-end milky-white Abaya with delicate, sophisticated gold embroidery along the borders, paired with a perfectly draped, matching flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a sleek wooden table with a high-end tablet open to a professional strategic planning application. She has a pen paused over her digital notebook, looking slightly off-camera with a visionary, determined smile as she mentally finalizes her long-term professional goals.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting from massive glass panels, beautifully illuminating her face, her pristine milky Abaya, and her organized study materials.<br><br>
+
+Texture: Fine, lightweight silk texture of the premium Abaya, soft smooth folds of the chiffon hijab, matte screen reflection on the tablet, and ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian female life / vision of future success / beautiful young lady designing her milestone goals / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, sunlit private office inside an elite estate, boasting high ceilings, polished marble floors, and large glass windows looking out onto a serene landscape.<br><br>
+
+The subject: A handsome, sharp-featured 22-year-old Northern Nigerian professional projecting immense steez and intellectual potential. He is sharply dressed in a modern, slim-fit charcoal gray suit shirt, a perfectly knotted dark blue silk tie, and a luxury watch visible on his wrist. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting confidently in a high-back leather executive chair, looking intently at a large desktop monitor displaying financial market charts and technical analysis frameworks. His brow is slightly furrowed in deep concentration, a look of unshakeable motivation on his face as he locks in his financial performance metrics.<br><br>
+
+Lighting: Low-key cinematic indoor lighting mixed with vibrant afternoon daylight from the large windows, creating rich color depth and striking highlights across his tailored shirt and sharp jawline.<br><br>
+
+Texture: Crisp premium cotton of the suit shirt, smooth silk texture of the tie, plush leather of the chair, and crisp, lifelike skin pores under direct light.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian corporate steez / financial goal focus / analytical mind tracking wealth targets / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A majestic, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 21-year-old Northern Nigerian lady with captivating, intelligent eyes. She is wearing a magnificent, shimmering silver-gray Abaya adorned with intricate metallic beadwork at the cuffs, and a long, flowing matching hijab draped perfectly. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, holding a sleek smartphone displaying a completed project checklist. She has a serene, deeply thoughtful expression, looking out toward the glowing orange horizon as she appreciates her growth and contemplates her next major life goals.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver sheen of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate metallic beadwork details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour reflection / luxury penthouse balcony / young lady valuing her progressive goals / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, premium university lounge featuring modern architecture, glass study pods, and a vibrant educational environment.<br><br>
+
+The subject: Two handsome Northern Nigerian colleagues (ages 21 and 23) embodying modern decency and high steez. One wears a rich royal blue Shadda with an intricately detailed Zanna Bukar cap; the other wears a crisp white Shadda with a flawlessly folded matching cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together at a sleek lounge table, looking over a business development roadmap on a high-end laptop. They are engaged in a serious, highly motivated discussion about aligning their collective venture targets, one pointing at the screen with an inspired smile while the other nods in analytical agreement.<br><br>
+
+Lighting: Bright, natural daylight streaming through the lounge's glass panels, beautifully illuminating their faces, their rich traditional attire, and their collaborative workspace.<br><br>
+
+Texture: Crisp, heavy weave of both blue and white Shadda fabrics, detailed structural lines on the traditional caps, smooth metallic laptop casing, and sharp, ultra-realistic pore textures on their jawlines.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian youth collaboration / goal alignment and brainstorming / high-steez professional ambitions / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite residence, featuring an elegant, organized desk area with vision boards and academic awards in the background.<br><br>
+
+The subject: A breathtakingly beautiful 20-year-old Northern Nigerian young lady with flawless skin and graceful features. She is dressed in an exquisitely tailored, vibrant emerald-green Atampa dress with high-end cultural patterns, paired with a perfectly styled chiffon hijab that radiates decency, maturity, and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully at her desk, holding a clean planner. She is looking up toward the ceiling with a visionary, focused expression, entirely lost in thought as she visualizes her upcoming career milestones and personal development goals.<br><br>
+
+Lighting: Warm, soft ambient light from a modern desk lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Premium cotton weave of the vibrant Atampa, delicate chiffon transparency of the hijab, clean texture of the planner pages, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / brilliant young lady dreaming of major life goals / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a high-end Northern Nigerian setting.<br><br>
+
+The scene: An exclusive rooftop terrace overlooking a peaceful, affluent estate skyline during a crisp, clear evening, featuring minimalist glass railings and subtle embedded floor lighting.<br><br>
+
+The subject: A sharp, ambitious 22-year-old Northern Nigerian man with immense steez, wearing a pristine, heavily starched white Shadda (yadi) and a perfectly matching, sharply folded black Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone displaying an analytical tracking portal. He is looking out into the evening horizon with a serious, deep, and intellectual expression, processing his next steps toward total career and financial independence.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the phone screen illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Premium heavy folds of the white Shadda fabric, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man visualizing his long-term goals / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring high-end modern green architecture, glass walkways, and an elite educational environment.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent, focused, and decent. She is wearing a stunning black Abaya featuring minimalist, elegant silver lace trim, with a modest flowing black hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at an outdoor courtyard study desk with high-end tech tools and a notebook titled 'Milestones & Targets'. She is looking forward with an incredibly determined, confident, and motivated expression, her posture radiating clarity and ambition.<br><br>
+
+Lighting: Bright, clean, and optimistic afternoon daylight filtering through architectural canopies, beautifully illuminating her face, her sophisticated black Abaya, and her study space.<br><br>
+
+Texture: Fine fluid texture of the premium black fabric, soft smooth folds of the hijab, clean paper texture of the open notebook, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / brilliant young lady completely focused on goal metrics / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite family estate, boasting high ceilings, premium marble tiling, and massive glass windows looking out onto a wealthy neighborhood avenue.<br><br>
+
+The subject: A distinguished, handsome 23-year-old Northern Nigerian youth with immense presence and steez. He is sharply styled in a crisp, fitted light blue dress shirt, a clean navy blue tie, and a sophisticated leather belt. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back thoughtfully on a massive luxury sofa, holding a sleek tablet showing a career metrics dashboard. He is looking slightly off-camera with an analytical, visionary gaze, deeply considering the path toward building his own technological or corporate venture.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from grand chandeliers mixed with soft evening daylight from the large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium cotton fabric folds of the blue shirt, sharp texture of the silk tie, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his jawline.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury parlor reflection / young visionary mapping his business goals / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10personalgoals">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows opening to a private park.<br><br>
+
+The subject: A beautiful 22-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing a richly patterned, deep indigo and gold Atampa dress with high-end cultural tailoring and a beautifully styled, modest flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, holding a smartphone connected to wireless earbuds. She has a focused, highly intelligent expression on her face, listening intently to a goal-setting and personal leadership podcast, a notepad resting beside her.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the smartphone, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / young lady building goal-oriented knowledge / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10personalgoals')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10personalgoals')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="travel-adventure">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='thinking-about.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Adventure</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious modern study inside an elite estate, with large glass windows showing a distant view of beautiful, rugged rocky hills and natural landscapes under a vast sky.<br><br>
+
+The subject: A handsome 24-year-old Northern Nigerian youth with sharp features, a perfectly lined beard, and effortless high steez. He is wearing a rich, deep chocolate-brown Shadda (yadi) and a sharply folded black-and-white Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning against a dark wood bookshelf, looking intently at a large travel map laid out on his desk alongside a high-end compass and a digital tablet showing rugged terrain routes. He has an inspired, analytical expression on his face, deeply tracking a bold weekend expedition route.<br><br>
+
+Lighting: Moody and cinematic interior lighting with a strong key light from the side, casting sharp contrast across his face and creating dramatic highlights on his traditional cap.<br><br>
+
+Texture: Stiff, premium folds of the starched Shadda fabric, precise structural lines of the Zanna Bukar cap, matte paper texture of the map, and incredibly detailed skin textures.<br><br>
+
+Theme: 🌿 Analytical youth steez / dreaming of wilderness exploration / plotting a rugged weekend trek / ultra-realistic contemporary portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An elegant wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 22-year-old Northern Nigerian lady with captivating, intelligent eyes. She is dressed in a premium, flowing silver-gray Abaya adorned with intricate metallic beadwork, paired with a perfectly draped chiffon hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, holding a premium digital camera with a telephoto lens securely in her hands. She has a serene, deeply thoughtful expression, looking out toward the horizon as she envisions her next documentary photography adventure into the vast natural savannahs.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and creating an ethereal glow around her outfit.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, cold smooth metal casing of the camera lens, metallic beadwork details, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour reflection / luxury penthouse balcony / beautiful young lady planning a travel adventure / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated private garden pavilion inside a wealthy estate, featuring dark polished wood pillars, premium outdoor woven seating, and a background filled with white rose bushes and lush green lawns.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian man embodying modern decency and high steez. He is sharply dressed in a crisp, fitted light blue dress shirt, a clean navy blue tie, and a sophisticated luxury watch visible on his wrist. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting back comfortably on an outdoor lounge chair, holding a high-end smartphone showing a travel itinerary of exotic destinations. He is pausing his work, looking outward toward the open lawns with a highly composed, visionary look as he plans a major international safari tour.<br><br>
+
+Lighting: Low-key cinematic daylight mixed with soft ambient garden reflections, casting sharp highlights across his shoulders and the clean lines of his jaw.<br><br>
+
+Texture: Crisp premium cotton of the dress shirt, smooth silk texture of the tie, polished phone screen reflections, and realistic matte finish of his skin under direct light.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian corporate steez / luxury travel focus / analytical mind tracking safari targets / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows opening to a private courtyard.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end, vibrant cultural patterns and a beautifully styled, modest flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing gracefully on a designer chaise lounge, holding a premium travel magazine featuring ancient historical sites. She has a focused, highly intelligent expression on her face, a slight smile on her lips as she maps out a journey to historical ruins.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth paper texture of the travel magazine, and fresh, crisp skin tones.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / young lady dreaming of historical exploration / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive rooftop terrace overlooking a peaceful, affluent estate skyline during a crisp, clear evening, featuring minimalist glass railings and subtle embedded floor lighting.<br><br>
+
+The subject: A sharp, ambitious 22-year-old Northern Nigerian man with immense steez, wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone displaying a flight booking portal for a remote resort. He is looking out into the evening horizon with a serious, deep, and intellectual expression, processing his next major solo travel venture.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the city lights illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man visualizing his next travel milestone / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite residence, featuring an elegant, organized desk area with a classic globe and luxury leather travel bags visible in the background.<br><br>
+
+The subject: A breathtakingly beautiful 20-year-old Northern Nigerian young lady with flawless skin and graceful features. She is dressed in a stunning, modest black Abaya featuring minimalist, elegant silver lace trim, with a perfectly styled matching chiffon hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully at her desk, holding a detailed travel planner journal. She is looking up toward the ceiling with a visionary, focused expression, entirely lost in thought as she visualizes trekking through scenic mountain ranges.<br><br>
+
+Lighting: Warm, soft ambient light from a modern desk lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Premium smooth fabric of the black Abaya, delicate silver lace embroidery, crisp texture of the journal pages, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / brilliant young lady dreaming of mountain exploration / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, premium university lounge featuring modern architecture, glass study pods, and a vibrant educational environment.<br><br>
+
+The subject: Two handsome Northern Nigerian colleagues (ages 21 and 23) embodying modern decency and high steez. One wears a pristine, heavily starched white Shadda (yadi) with a Zanna Bukar cap; the other wears a neat cream Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together at a sleek lounge table, looking over a topography map on a high-end laptop screen. They are engaged in an intense, highly motivated discussion about planning a cross-country off-road expedition, one pointing at the terrain route with an inspired smile while the other nods in analytical agreement.<br><br>
+
+Lighting: Bright, natural daylight streaming through the lounge's glass panels, beautifully illuminating their faces, their rich traditional attire, and their collaborative workspace.<br><br>
+
+Texture: Crisp, heavy weave of both white and cream Shadda fabrics, detailed structural lines on the traditional caps, smooth metallic laptop casing, and sharp, ultra-realistic pore textures on their jawlines.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian youth collaboration / adventure planning and brainstorming / high-steez outdoor ambitions / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring high-end modern green architecture, glass walkways, and an elite educational environment.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent, focused, and decent. She is wearing an exquisite, high-end milky-white Abaya with sophisticated minimal gold lining, and a matching flowing hijab wrapped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at an outdoor courtyard study desk with a book titled 'Wonders of the Natural World'. She is looking forward with an incredibly determined, confident, and motivated expression, her posture radiating clarity and an absolute desire to travel and explore the globe.<br><br>
+
+Lighting: Bright, clean, and optimistic afternoon daylight filtering through architectural canopies, beautifully illuminating her face, her pristine milky Abaya, and her study space.<br><br>
+
+Texture: Fine fluid texture of the premium fabric, soft smooth folds of the hijab, clean paper texture of the open book, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / brilliant young lady completely focused on global travel goals / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite family estate, boasting high ceilings, premium marble tiling, and massive glass windows looking out onto a wealthy neighborhood avenue.<br><br>
+
+The subject: A distinguished, handsome 23-year-old Northern Nigerian youth with immense presence and steez. He is wearing a magnificent royal blue Shadda (yadi) and a premium, flawlessly folded matching Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back thoughtfully on a massive luxury sofa, holding a sleek tablet showing pictures of beautiful, remote wildlife nature reserves. He is looking slightly off-camera with an analytical, visionary gaze, deeply considering the path toward organizing an eco-tourism or wilderness travel group.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from grand chandeliers mixed with soft evening daylight from the large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium heavy fabric folds of the royal blue Shadda, detailed geometric patterns on the Zanna Bukar cap, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his jawline.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury parlor reflection / young visionary mapping his wilderness travel plans / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10traveladventure">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, open-air veranda of an elite family estate during a peaceful afternoon, with large security pillars and a clear view of a highly secure private park area.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man in a rich maroon Shadda and a premium Zanna Bukar cap, sitting with his younger teenage brother (15) who wears a neat white Shadda. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a luxury outdoor sofa on the veranda, looking over a physical survival guide and a tactical flashlight device. The older brother is sharing wisdom about outdoor safety, camping preparation, and survival skills, both brothers looking highly motivated and focused.<br><br>
+
+Lighting: Magnificent, warm afternoon daylight filtering through the estate trees, creating a rich depth of color and casting soft, realistic shadows across their expressive faces.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed embroidery on both caps, rugged metallic casing of the tactical flashlight, plush outdoor sofa cushions, and sharp, ultra-realistic micro-textures of their skin under soft light.<br><br>
+
+Theme: 🌿 Northern Nigerian elite family lifestyle / luxury veranda observation / mentoring the youth on outdoor safety and travel adventure / ultra-realistic lifestyle photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10traveladventure')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10traveladventure')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="creativity-hobbies">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='thinking-about.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Hobbies</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, modern children's playroom and workshop inside an elite estate, featuring light-colored wood tables, organized bins of colorful blocks, and creative sketches pinned neatly to the wall.<br><br>
+
+The subject: A brilliant, sharp-featured 10-year-old Northern Nigerian boy embodying an intelligent and highly focused aura. He is wearing a crisp, miniature pastel-blue Shadda with clean, simple neck embroidery and a neatly fitted small Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting at a small wooden desk, leaning forward with an intense expression of deep concentration. He is assembling an intricate, complex robotic model or building-block structure, a small screwdriver in one hand, completely lost in his creative engineering hobby.<br><br>
+
+Lighting: Beautifully bright, clean daylight streaming through a large window, creating soft shadows and perfectly highlighting his focused eyes, his traditional cap, and his creative project.<br><br>
+
+Texture: Crisp, stiff fabric lines of the small Shadda, detailed geometric patterns on the mini Zanna Bukar cap, smooth matte plastic surfaces of the building blocks, and ultra-realistic child skin textures under soft light.<br><br>
+
+Theme: 🌿 Creative Northern Nigerian childhood / young brilliant mind exploring robotics / tech-focused hobby and focus / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A beautiful, sunlit private art studio or corner conservatory lounge inside a luxury mansion, surrounded by elegant indoor greenery and smooth marble floors.<br><br>
+
+The subject: A beautiful, exceptionally intelligent 8-year-old Northern Nigerian girl with bright, curious eyes. She is wearing a lovely, modestly tailored miniature pink Abaya with subtle, elegant silver borders and a perfectly styled, soft matching hijab wrapped neatly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully at a small child-sized easel, holding a paintbrush paused over a vibrant canvas painting of a futuristic city landscape. She is looking slightly off-camera with a visionary, proud smile, entirely immersed in her creative painting hobby.<br><br>
+
+Lighting: Crisp, optimistic afternoon daylight flowing through floor-to-ceiling glass panels, beautifully illuminating her expressive face, her neat pink Abaya, and the colorful brushstrokes on the canvas.<br><br>
+
+Texture: Fine, lightweight weave of the miniature Abaya, smooth fluid folds of the chiffon hijab, wet glossy oil paint texture on the canvas, and fresh, detailed micro-textures of her skin.<br><br>
+
+Theme: 🌿 Artistic Northern Nigerian child lifestyle / youthful imagination and creativity / beautiful young girl painting her vision / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A sleek, high-tech private family study inside an elite residential estate, featuring polished wood finishes and minimalist modern décor in the background.<br><br>
+
+The subject: A handsome, focused 11-year-old Northern Nigerian boy projecting an intellectual and tech-savvy vibe. He is sharply dressed in a crisp, fitted white dress shirt, a neat black tie, and a small, sophisticated digital watch on his wrist. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting confidently in an adjustable study chair, looking intently at a tablet screen or small laptop displaying a colorful block-based coding game interface. His brow is slightly furrowed in deep concentration, an expression of sheer motivation on his face as he builds his first basic logic script.<br><br>
+
+Lighting: Low-key cinematic indoor lighting mixed with soft daylight from the side, creating rich color depth and striking highlights across his tailored white shirt and sharp jawline.<br><br>
+
+Texture: Crisp premium cotton of the white shirt, smooth fabric texture of the tie, glossy glass reflection on the screen, and sharp, lifelike skin pores under direct light.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth tech-steez / coding and logic hobby / young analytical mind mastering early digital skills / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A majestic, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 12-year-old Northern Nigerian girl with captivating, intelligent eyes. She is wearing a magnificent, shimmering silver-gray Abaya adorned with intricate metallic beadwork at the cuffs, and a long, flowing matching hijab draped perfectly. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, holding a sleek digital camera with a telephoto lens securely in her hands. She has a serene, deeply thoughtful expression, looking out toward the horizon as she practices her photography hobby during the breathtaking sunset.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver sheen of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate metallic beadwork details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour reflection / childhood photography hobby / young lady capturing creative moments / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, premium home library lounge featuring modern architecture, glass panels, and a vibrant, inspiring educational environment.<br><br>
+
+The subject: Two handsome Northern Nigerian brothers (ages 7 and 9) embodying modern decency and exceptional focus. One wears a rich chocolate-brown Shadda with an intricately detailed mini Zanna Bukar cap; the other wears a crisp white Shadda with a flawlessly folded matching cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together at a sleek low lounge table, working on a complex architectural drawing project. They are engaged in a serious, highly motivated collaboration, the older brother guiding a ruler while the younger brother watches with an inspired, analytical smile as they create a blueprint design together.<br><br>
+
+Lighting: Bright, natural daylight streaming through the lounge's glass panels, beautifully illuminating their faces, their rich traditional attire, and their collaborative creative space.<br><br>
+
+Texture: Crisp, heavy weave of both brown and white Shadda fabrics, detailed structural lines on the traditional caps, matte paper texture of the large blueprint sheet, and sharp, ultra-realistic pore textures on their young jawlines.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian childhood collaboration / creative design and drafting hobby / high-end youthful ambitions / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary or playroom in an elite residence, featuring an elegant, organized desk area with craft tools and model sketches in the background.<br><br>
+
+The subject: A breathtakingly beautiful 9-year-old Northern Nigerian girl with flawless skin and graceful features. She is dressed in an exquisitely tailored, vibrant emerald-green Atampa dress with high-end cultural patterns, paired with a perfectly styled matching chiffon hijab that radiates decency and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully at her desk, holding a pair of craft scissors and intricately folding elegant origami paper shapes. She is looking slightly upward with a visionary, focused expression, entirely lost in thought as she visualizes her next creative paper art piece.<br><br>
+
+Lighting: Warm, soft ambient light from a modern desk lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Premium cotton weave of the vibrant Atampa, delicate chiffon transparency of the hijab, crisp matte texture of the origami paper, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian child lifestyle / private luxury craft space / brilliant young girl dreaming of creative designs / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a high-end Northern Nigerian setting.<br><br>
+
+The scene: An exclusive rooftop terrace or balcony overlooking a peaceful, affluent estate skyline during a crisp, clear evening, featuring minimalist glass railings and subtle embedded floor lighting.<br><br>
+
+The subject: A sharp, ambitious 12-year-old Northern Nigerian boy with immense style, wearing a pristine, heavily starched white Shadda (yadi) and a perfectly matching, sharply folded black Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding a high-end acoustic string instrument or a digital tablet displaying music composition scales. He is looking out into the evening horizon with a serious, deep, and intellectual expression, processing complex creative patterns or lyrics mentally.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the terrace lighting, illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Premium heavy folds of the white Shadda fabric, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and polished device screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical childhood creativity / young Northern boy contemplating his artistic hobby / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium private courtyard garden featuring high-end modern green architecture, glass walkways, and an elite, calm environment.<br><br>
+
+The subject: A beautiful 10-year-old Northern Nigerian girl, looking highly intelligent, focused, and decent. She is wearing a stunning black Abaya featuring minimalist, elegant silver lace trim, with a modest flowing black hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at an outdoor courtyard study desk with a premium leather sketchbook open. She is holding a charcoal drawing pencil, looking forward with an incredibly determined, confident, and motivated expression, her posture radiating clarity and intense passion for her creative hobby.<br><br>
+
+Lighting: Bright, clean, and optimistic afternoon daylight filtering through architectural canopies, beautifully illuminating her face, her sophisticated black Abaya, and her art space.<br><br>
+
+Texture: Fine fluid texture of the premium black fabric, soft smooth folds of the hijab, grainy texture of the drawing paper, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian childhood / premium estate garden / brilliant young girl completely focused on sketching / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite family estate, boasting high ceilings, premium marble tiling, and massive glass windows looking out onto a wealthy neighborhood avenue.<br><br>
+
+The subject: A distinguished, handsome 6-year-old Northern Nigerian young boy with immense presence and charm. He is sharply styled in a crisp, fitted light blue dress shirt, a clean navy blue tie, and a sophisticated small leather belt. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back thoughtfully on a massive luxury sofa, holding a sleek digital drawing tablet displaying an intricate digital 3D model design. He is looking slightly off-camera with an analytical, visionary gaze, deeply focused on learning the mechanics of his modern digital art hobby.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from grand chandeliers mixed with soft evening daylight from the large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium cotton fabric folds of the blue shirt, sharp texture of the silk tie, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his young face.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury parlor reflection / young digital prodigy tracking his hobby milestones / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10creativityhobbies">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows opening to a private park.<br><br>
+
+The subject: A beautiful 5-year-old Northern Nigerian young girl with striking, sophisticated features. She is wearing a richly patterned, deep indigo and gold miniature Atampa dress with high-end cultural tailoring and a beautifully styled, modest flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer child-sized lounge chair, sorting out beautiful, intricately colored mosaic craft tiles on a tray. She has a focused, highly intelligent expression on her little face, listening intently to an educational audio clip through wireless earbuds, a true prodigy at work.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth ceramic surface of the craft tiles, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female childhood / luxury estate lifestyle / young girl building creative and artistic knowledge / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10creativityhobbies')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10creativityhobbies')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

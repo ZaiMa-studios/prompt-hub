@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling1 – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0d0; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="sorry">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Sorry</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 80mm f/1.7 lens, 4:5 vertical aspect ratio, 8K resolution, "The Heavy Heart" aesthetic, masterpiece quality.<br><br>
+
+The scene: A quiet, "shadow-filled" traditional courtyard (Gida) in Old Kano or Zaria at dusk. The background is a soft, "aching" blur of a "Cold" clay water pot, an "Unlit" hurricane lantern, and a heavy wooden door that has just been closed. On a woven plastic mat sits a "Forgotten" prayer bead (Tasbih) and a "Small, Tied" leather pouch containing an apology gift that was refused. The air is "stagnant," "cooling," and smells of damp earth, "Fading Woodsmoke," and the "heavy" scent of night-blooming jasmine. The atmosphere is one of leaden, silent "Sorry" regret.<br><br>
+
+The subject: A 31-year-old handsome Hausa man, a "Humbled Husband" or a "Remorseful Brother." He is sitting on the edge of the mat, his back "curved" and his head "bowed" so low his chin touches his chest. He wears a simple, "Soft-Charcoal" polished cotton Kaftan that is "rumpled" from a long day of waiting and a white hula that is "clutched" tightly in his trembling hands. His face is a masterpiece of "Apologetic Pain"—his eyes are "squeezed shut" in a silent plea, his brow is "furrowed" with a deep ache, and his skin is "streaked" with the salt of a single, heavy tear. He looks like a man who has realized the weight of his words only after they broke a heart. He is "Sorry" because "I'm sorry" wasn't enough.<br><br>
+
+Symbolism: The "Soft-Charcoal Kaftan" represents "A Spirit Dimmed by Guilt." The "Closed Wooden Door" symbolizes "A Barrier Built by Mistakes." The "Forgotten Tasbih" represents "A Prayer for Forgiveness." The "Unlit Lantern" symbolizes "The Loss of Guidance and Warmth." It is the "Sorry" of a man who is willing to wait a lifetime for the door to open.<br><br>
+
+Lighting: "The Blue Hour of Regret." The primary light is a "faint, indigo-blue" twilight falling from the open roof, hitting his shoulders to make them look "heavy and cold." A secondary, warm "amber" glow from a distant kitchen fire catches the side of his neck. The shadows are "long," "soft," and suffocating.<br><br>
+
+Texture: The "rough, woven" plastic of the mat, the "smooth, cool" clay of the water pot, the "stiff, wrinkled" cotton of the charcoal Kaftan, the "grainy, old" wood of the door, and the "beaming, tear-stained" texture of his skin.<br><br>
+
+Theme: Sorry / Remorse / The Refused Apology / Silent Guilt / Broken Trust
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 35mm f/1.8 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Silent Hallway" aesthetic, masterpiece quality.<br><br>
+
+The scene: A narrow, "dimly-lit" hallway leading to a master bedroom in a modern home in Kaduna or Abuja at 11:30 PM. The background is a soft, "aching" blur of a "Closed" mahogany door with a sliver of light escaping from the bottom, a "Tilted" framed wedding portrait on the wall, and a side table with a "Cold" glass of water. On the carpet sits a "Discarded" silk veil and a "Single" gold earring. The air is "stifling," "chilled," and smells of expensive perfume, "Stale Incense," and the "sharp" scent of a recent storm. The atmosphere is one of heavy, vibrating "Sorry" regret.<br><br>
+
+The subject: A 26-year-old beautiful Hausa lady, a "Remorseful Wife" or a "Regretful Partner." She is leaning against the cold wall outside the bedroom door, her knees "pulled to her chest" and her forehead resting on her shins. She wears a rich, "Burgundy-Wine" velvet Abaya with silver-thread embroidery that is "crushed" at the folds and her hair is "loosely tied" since her hijab has fallen to her shoulders. Her face is a masterpiece of "Quiet Remorse"—her eyes are "red-rimmed and hollow," her lower lip is "trembling," and her skin is "waxen" in the dim light. She looks like a woman who let her pride speak for her, and now she is terrified of the silence that followed. She is "Sorry" because her anger won the battle but lost the peace.<br><br>
+
+Symbolism: The "Burgundy-Wine Velvet" represents "Passion Turned to a Heavy Weight." The "Closed Mahogany Door" symbolizes "The Distance Created by a Single Word." The "Tilted Portrait" represents "A Relationship Knocked Off Balance." The "Sliver of Light" symbolizes "A Hope that is Almost Out of Reach." It is the "Sorry" of a woman who is a stranger at her own door.<br><br>
+
+Lighting: "The Hallway Gloom." The primary light is a "sharp, clinical-white" beam from the bedroom gap, hitting her feet and the silk veil to make them look "isolated and cold." A secondary, "warm-amber" ceiling light from the far end of the hall casts "long, distorted" shadows behind her. The shadows are "deep," "sharp," and suffocating.<br><br>
+
+Texture: The "thick, soft" velvet of the burgundy Abaya, the "rough, cold" paint of the wall, the "slick, thin" silk of the veil, the "grainy, dark" wood of the door, and the "beaming, salt-burned" texture of her skin.<br><br>
+
+Theme: Sorry / Wifely Regret / After the Argument / Pride’s Price / The Long Wait
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Prodigal Son" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "stern" living room in a family home in Sokoto or Katsina during the quiet hour before Fajr. The background is a soft, "heavy" blur of an antique wooden clock, a prayer rug "folded" with precision, and a high-backed armchair that sits "Empty" but imposing. On a low table sits a "Crumpled" letter of apology and a "Cold" glass of water with a "Layer of Dust" on the surface. The air is "stale," "chilled," and smells of burnt oud, "Old Books," and the "sharp" scent of a long-held grudge. The atmosphere is one of crushing, heavy "Sorry" repentance.<br><br>
+
+The subject: A 28-year-old handsome Hausa man, a "Wayward Son" or a "Remorseful Heir." He is kneeling on the bare floor, his forehead "pressed" against the "hard" wooden base of his father’s empty chair. He wears a faded, "Slate-Grey" polished cotton Kaftan that is "wrinkled" at the knees from hours of kneeling and a white hula that has "fallen" to the floor beside him. His face is a masterpiece of "Filial Remorse"—his eyes are "swollen and shut," his jaw is "trembling," and his skin is "streaked" with the salt of a silent, desperate prayer. He looks like a man who has traveled a thousand miles to say a word he was once too proud to speak. He is "Sorry" because he broke a heart he was meant to protect.<br><br>
+
+Symbolism: The "Slate-Grey Kaftan" represents "A Spirit Cloaked in Ash." The "Empty Armchair" symbolizes "An Authority that is Present even in Absence." The "Fallen Hula" represents "A Loss of Pride and Status." The "Dusty Glass of Water" symbolizes "A Kindness that has Gone Stale." It is the "Sorry" of a man who is begging a ghost for a second chance.<br><br>
+
+Lighting: "The Pre-Dawn Penance." The primary light is a "sharp, cold-blue" moonlight cutting through a high window, hitting his back to make his shoulders look "heavy and isolated." A secondary, "faint-amber" glow from a nightlight in the hallway hits the floor, creating "long, reaching" shadows. The shadows are "deep," "sharp," and suffocating.<br><br>
+
+Texture: The "cold, polished" wood of the chair, the "rough, unwashed" cotton of the grey Kaftan, the "grainy, old" carpet of the floor, the "smooth, cold" glass of the water, and the "beaming, tear-stained" texture of his skin.<br><br>
+
+Theme: Sorry / Son’s Regret / Family Forgiveness / Repentance / The Long Journey Home
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 85mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Broken Trust" aesthetic, masterpiece quality.<br><br>
+
+The scene: A quiet, "tension-thick" private study or a modern home office in Abuja or Kano at 2:00 AM. The background is a soft, "bleak" blur of two leather chairs facing away from each other, a "Dying" candle on a glass table, and a laptop screen glowing with a "Drafted" apology email. On a coaster sits a "Cold, Untasted" cup of spiced tea with a "Skin" formed on the surface and a "Torn" photograph of two childhood friends. The air is "heavy," "stifling," and smells of burnt wick, "Old Paper," and the "metallic" tang of a cooling room. The atmosphere is one of profound, gut-wrenching "Sorry" regret.<br><br>
+
+The subject: A 34-year-old handsome Hausa man, a "Betrayer of Confidence" or a "Remorseful Best Friend." He is standing by a bookshelf, his forehead "pressed" against the hard spine of a thick book. He wears a high-quality, "Midnight-Navy" polished cotton Kaftan with charcoal embroidery that is "rumpled" at the shoulders and a white hula that is "clutched" behind his back. His face is a masterpiece of "Social Remorse"—his eyes are "closed tight" in a wince of shame, his jaw is "locked" in a painful knot, and his skin is "radiant" with a cold, guilty sweat. He looks like a man who traded a twenty-year friendship for a moment of ego. He is "Sorry" because he realized that some bridges, once burned, leave you stranded forever.<br><br>
+
+Symbolism: The "Midnight-Navy Kaftan" represents "A Dark Night of the Soul." The "Torn Photograph" symbolizes "A Shared History Ripped Apart." The "Cold Spiced Tea" represents "A Warmth that has Been Neglected." The "Closed Eyes" symbolize "The Inability to Face the Damage Done." It is the "Sorry" of a man who would give everything to go back five minutes in time.<br><br>
+
+Lighting: "The Guilt-Ridden Glow." The primary light is a "sharp, electric-blue" glare from the laptop screen, hitting the side of his face and making him look "ashen and ghostly." A secondary, "faint-orange" ember from the dying candle catches the embroidery on his chest. The shadows are "heavy," "jagged," and invasive.<br><br>
+
+Texture: The "rough, cold" leather of the chairs, the "stiff, starched" cotton of the navy Kaftan, the "grainy, dry" paper of the photo, the "smooth, chilled" glass of the table, and the "beaming, feverish" texture of his skin.<br><br>
+
+Theme: Sorry / Betrayed Friendship / Social Guilt / The Irreversible Mistake / Silent Penance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 63mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Forgotten Promise" aesthetic, masterpiece quality.<br><br>
+
+The scene: A quiet, "tension-thick" dining room in a modern home in Abuja at 10:00 PM. The background is a soft, "aching" blur of a "Set Table" for two, a "Cold" silver bowl of Masa, and a "Muted" TV screen showing a romantic movie's end credits. On a granite countertop sits a "Melted" box of luxury chocolates and a "Single" wilted red rose in a glass of tap water. The air is "stagnant," "filtered," and smells of fried rice, "Vanilla Candle Wax," and the "metallic" scent of a cooling air conditioner. The atmosphere is one of heavy, domestic "Sorry" guilt.<br><br>
+
+The subject: A 33-year-old handsome Hausa man, a "Workaholic Husband" or a "Forgetful Partner." He is standing by the kitchen island, his head "bowed" and his palms "flat" on the cold stone surface. He wears a high-quality, "Olive-Drab" polished cotton Kaftan with black silk embroidery that is "wrinkled" from a long day at the office, and his hula is "tilted" back, exposing a forehead "slick" with fatigue and regret. His face is a masterpiece of "Apologetic Exhaustion"—his eyes are "bloodshot and downcast," his jaw is "slack with shame," and his mouth is "slightly open" as if the words are stuck in his throat. He looks like a man who chose his career over his companion one too many times. He is "Sorry" because he missed the one night that mattered most.<br><br>
+
+Symbolism: The "Olive-Drab Kaftan" represents "A Soldier of Work who lost the Home Front." The "Melted Chocolates" symbolize "A Sweet Gesture that Arrived too Late." The "Set Table" represents "The Expectation that was Met with Absence." The "Wilted Rose" symbolizes "A Love Neglected." It is the "Sorry" of a man who realizes his excuses are starting to sound like lies.<br><br>
+
+Lighting: "The Late-Night Penance." The primary light is a "sharp, cool-white" glow from the under-cabinet LEDs, hitting his hands and the granite to make them look "isolated and clinical." A secondary, "faint-warm" glow from a distant hallway light catches the side of his hula. The shadows are "short," "heavy," and intrusive.<br><br>
+
+Texture: The "cold, hard" granite of the counter, the "stiff, wrinkled" cotton of the olive Kaftan, the "sticky, soft" texture of the melted chocolate, the "smooth, chilled" glass of the water, and the "beaming, salt-crusted" texture of his skin.<br><br>
+
+Theme: Sorry / Domestic Neglect / The Workaholic’s Guilt / Broken Anniversary / Silent Regret
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Burden of Truth" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "heavily-curtained" parlor in a family home in Katsina or Sokoto at midnight. The background is a soft, "suffocating" blur of a "Half-Eaten" bowl of dates, an "Old Family Photo" in a silver frame face-down on a side table, and a heavy wooden "Chest" with a key still in the lock. On a Persian rug sits a "Crinkled" old letter with a "Faint" signature and a "Damp" handkerchief. The air is "stagnant," "thick," and smells of frankincense, "Old Wood," and the "metallic" tang of a long-held secret. The atmosphere is one of heavy, crushing "Sorry" confession.<br><br>
+
+The subject: A 29-year-old beautiful Hausa lady, a "Daughter" or a "Secret-Keeper." She is sitting on the floor, her hands "pressed hard" against her temples as if to stop her head from spinning. She wears a delicate, "Dusty-Rose" lace Kaftan with frayed silk threads at the sleeves and a matching grey chiffon hijab that is "clutched" at her throat. Her face is a masterpiece of "Confessional Remorse"—her eyes are "swollen and red," her jaw is "trembling," and her mouth is "slightly parted" as she breathes through a panic of guilt. She looks like a woman who just let a secret out that will change her family forever. She is "Sorry" because the truth she kept was a ghost that grew too big for its cage.<br><br>
+
+Symbolism: The "Dusty-Rose Lace" represents "A Gentle Heart Tattered by Guilt." The "Face-Down Photo" symbolizes "The Fear of Facing One's Lineage." The "Key in the Lock" represents "The Opening of a Dangerous Past." The "Damp Handkerchief" symbolizes "The Slow Drain of Holding a Lie." It is the "Sorry" of a woman who destroyed a peace built on a lie.<br><br>
+
+Lighting: "The Confessional Shadow." The primary light is a "narrow, harsh" sliver of yellow light from a doorway, hitting only her trembling hands and the old letter. A secondary, "faint-grey" moonlight from a high vent hits the top of her hijab. The shadows are "deep," "sharp," and jagged.<br><br>
+
+Texture: The "scratchy, torn" lace of the rose Kaftan, the "rough, cold" wool of the rug, the "brittle, thin" paper of the old letter, the "glassy, hard" surface of the silver frame, and the "beaming, tear-streaked" texture of her skin.<br><br>
+
+Theme: Sorry / Hidden Truth / Family Honor / The Burden of Secrecy / Final Confession
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Fractured Bloodline" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "echoing" family corridor in an ancestral home in Zaria or Sokoto at 4:30 AM. The background is a soft, "aching" blur of a "Divided" inheritance trunk, a "Dusty" stack of old school notebooks tied with twine, and a "Single" prayer mat laid out for Tahajjud. On a low wooden stool sits a "Cracked" antique tea set and a "Tattered" childhood photograph of two boys holding a single kite. The air is "stagnant," "chilled," and smells of cedar wood, "Damp Plaster," and the "metallic" tang of a decade-long silence. The atmosphere is one of heavy, soul-deep "Sorry" reconciliation.<br><br>
+
+The subject: A 36-year-old handsome Hausa man, a "Successful Older Brother" or a "Regretful Rival." He is standing by a stone pillar, his forehead "pressed" against the rough masonry and his eyes "clenched" tight. He wears a majestic, "Deep-Forest Green" polished cotton Babban Riga with heavy bronze embroidery that is "stiff" and imposing, and his hula is "clutched" behind his back in a grip of pure agony. His face is a masterpiece of "Sibling Remorse"—his jaw is "clenched until it aches," his brow is "heavy with the weight of years," and his skin is "slick" with a cold, ashamed sweat. He looks like a man who realized that being the "favorite son" meant nothing if it cost him his brother. He is "Sorry" because he used his success as a weapon.<br><br>
+
+Symbolism: The "Deep-Forest Green Babban Riga" represents "A Growth that Choked the Garden." The "Tattered Childhood Photo" symbolizes "An Innocence Ripped Apart." The "Cracked Tea Set" represents "A Hospitality Broken by Ego." The "Single Prayer Mat" symbolizes "The Solitary Path to Forgiveness." It is the "Sorry" of a man who is ready to be second if it means being a brother again.<br><br>
+
+Lighting: "The Pre-Dawn Penance." The primary light is a "sharp, icy-blue" moonlight from a courtyard opening, hitting his back to make his silhouette look "massive and lonely." A secondary, "faint-amber" glow from a lantern at the end of the hall catches the bronze embroidery. The shadows are "long," "sharp," and rigid.<br><br>
+
+Texture: The "rough, cold" stone of the pillar, the "stiff, starched" cotton of the green Babban Riga, the "brittle, thin" paper of the old photo, the "smooth, chilled" ceramic of the tea set, and the "beaming, salt-burned" texture of his skin.<br><br>
+
+Theme: Sorry / Sibling Rivalry / The Cost of Ego / Family Healing / Belated Regret
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Matriarch’s Silence" aesthetic, masterpiece quality.<br><br>
+
+The scene: A warm, "cluttered" traditional kitchen or a private inner room (Dakuna) in a family house in Zaria or Sokoto at 7:00 PM. The background is a soft, "aching" blur of a "Bubbling" pot of miyar kuka on a low stove, a "Stack" of hand-washed metal bowls, and a "Well-Worn" prayer mat in the corner. On a low wooden stool sits a "Half-Peeled" orange and a "Single" gold bangle that was a gift of reconciliation. The air is "thick," "warm," and smells of locust beans, "Steamed Flour," and the "sweet" scent of burning citrus peels. The atmosphere is one of heavy, humbling "Sorry" devotion.<br><br>
+
+The subject: A 25-year-old beautiful Hausa lady, a "Modern Daughter" or a "Remorseful Bride." She is kneeling on the floor at the feet of an empty chair, her hands "resting" on the seat's edge and her forehead "pressed" into the wood. She wears a soft, "Sage-Green" swiss lace Kaftan with delicate floral embroidery that is "damp" at the shoulders and a cream chiffon hijab that is "loosely wrapped." Her face is a masterpiece of "Filial Remorse"—her eyes are "swollen and downcast," her jaw is "slack with humility," and her skin is "radiant" with the heat of the kitchen and the salt of her tears. She looks like a woman who chose her own path, only to realize her mother’s footsteps were the ones that kept her safe. She is "Sorry" because she mistook her mother's counsel for control.<br><br>
+
+Symbolism: The "Sage-Green Lace" represents "Growth through Healing." The "Bubbling Pot" symbolizes "The Unconditional Nourishment of Home." The "Single Gold Bangle" represents "An Attempt to Repair a Golden Bond." The "Empty Chair" symbolizes "An Authority that is Felt through Absence." It is the "Sorry" of a woman who is waiting to be touched on the shoulder and told she is forgiven.<br><br>
+
+Lighting: "The Hearth’s Forgiveness." The primary light is a "warm, flickering-orange" glow from the stove, hitting her face from the side to create "soft, glowing" highlights on her cheekbones and the lace fabric. A secondary, "faint-purple" twilight from a high window fills the room's corners. The shadows are "soft," "inviting," and deep.<br><br>
+
+Texture: The "rough, warm" wood of the stool, the "soft, intricate" lace of the sage Kaftan, the "pitted, hot" surface of the metal pot, the "grainy, cool" floor of the kitchen, and the "beaming, tear-softened" texture of her skin.<br><br>
+
+Theme: Sorry / Mother-Daughter Bond / Returning Home / Humility / Traditional Values
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9happy">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 110mm f/2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Scholar’s Shame" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "dust-mote-filled" library or a private Zaure (entrance hall) in Zaria or Kano at 10:00 AM. The background is a soft, "reverent" blur of floor-to-ceiling wooden shelves packed with "Indigo-Dyed" manuscripts, a "Straight" row of leather-bound Hadith collections, and an "Untouched" inkwell. On a low, hand-carved bookstand (Rehal) sits a "Closed" Quran and a "Folded" student’s gown that has been returned. The air is "cool," "stagnant," and smells of sandalwood, "Old Parchment," and the "sharp" scent of a cooling pot of ginger tea. The atmosphere is one of profound, intellectual "Sorry" disgrace.<br><br>
+
+The subject: A 32-year-old handsome Hausa man, a "Disgraced Scholar" or a "Remorseful Protege." He is kneeling on the bare floor, several feet away from the empty seat of his mentor, his head "tilted sideways" in a gesture of absolute submissiveness. He wears a high-quality, "Slate-Blue" polished cotton Kaftan with simple white embroidery that is "rumpled" at the collar, and his hula is "placed neatly" on the floor beside him as a sign of surrendered pride. His face is a masterpiece of "Scholarly Remorse"—his eyes are "staring at the floorboards," his jaw is "hanging slightly slack," and his brow is "clenched" with the pain of lost trust. He looks like a man who was given the key to a city of knowledge and traded it for a moment of vanity. He is "Sorry" because his brilliance couldn't mask his lack of character.<br><br>
+
+Symbolism: The "Slate-Blue Kaftan" represents "A Wisdom that has been Clouded." The "Empty Seat" symbolizes "A Guidance that has been Withdrawn." The "Surrendered Hula" represents "The Loss of Honor before an Elder." The "Closed Quran" symbolizes "A Path that is Blocked until the Heart is Clean." It is the "Sorry" of a man who realized that knowledge without humility is a fire that burns the house down.<br><br>
+
+Lighting: "The Morning Light of Judgment." The primary light is a "sharp, golden-white" beam of morning sun cutting through a high ventilation hole, illuminating the dust motes and hitting his bowed neck to create a "vivid, tragic" highlight. A secondary, "cool-grey" fill from the stone walls makes his expression look "etched in stone." The shadows are "long," "sharp," and unforgiving.<br><br>
+
+Texture: The "rough, cold" stone of the floor, the "stiff, starched" cotton of the blue Kaftan, the "brittle, dry" leather of the books, the "grainy, dark" wood of the Rehal, and the "beaming, sweat-sheened" texture of his skin.<br><br>
+
+Theme: Sorry / Lost Mentorship / Intellectual Pride / The Broken Covenant / Seeking Forgiveness
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 100mm f/2.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Cemetery Silence" aesthetic, masterpiece quality.<br><br>
+
+The scene: A quiet, "wind-swept" family cemetery or a private garden in Zaria or Abuja at 6:30 PM. The background is a soft, "aching" blur of a "Low" stone wall, a "Single" swaying acacia tree against a bruised-purple sky, and a "Distant" silhouette of a mosque minaret. On a fresh mound of earth sits a "Withered" bouquet of white lilies and a "Small, Locked" diary with a gold key still in the lock. The air is "thin," "cooling," and smells of dry grass, "Incense Smoke," and the "metallic" scent of coming rain. The atmosphere is one of eternal, unresolvable "Sorry" regret.<br><br>
+
+The subject: A 27-year-old beautiful Hausa lady, a "Grieving Lover" or a "Silent Admirer." She is sitting on her heels beside the grave, her hand "clutched" over her heart and her eyes "fixed" on the headstone. She wears a heavy, "Charcoal-Black" velvet Abaya with silver-beaded embroidery that looks like "Falling Tears" along the sleeves, and a matching black chiffon hijab that is "pinned tightly" but trembling with her breath. Her face is a masterpiece of "Unspoken Sorry"—her eyes are "swollen and dry," her jaw is "clenched in a silent scream," and her mouth is "pressed" into a thin, white line of agony. She looks like a woman who spent years waiting for the "perfect" moment to say "I love you," only for time to run out. She is "Sorry" because her silence became a permanent wall.<br><br>
+
+Symbolism: The "Charcoal-Black Velvet" represents "A Grief that is Thick and Suffocating." The "Locked Diary" symbolizes "The Words that will Never be Read." The "Withered Lilies" represent "A Hope that Died in the Bud." The "Acacia Tree" symbolizes "A Resilience that is Now Lonely." It is the "Sorry" of a woman who is talking to someone who can no longer hear her.<br><br>
+
+Lighting: "The Last Light of Regret." The primary light is a "deep-orange and violet" sunset hitting her from behind, creating a "sharp, tragic" rim-light on her black Abaya. A secondary, "cool-blue" shadow fills her face, making her expression look "like a marble statue." The shadows are "long," "stretching," and final.<br><br>
+
+Texture: The "thick, dusty" velvet of the black Abaya, the "rough, dry" earth of the grave, the "cold, smooth" leather of the diary, the "grainy, hard" stone of the wall, and the "beaming, salt-streaked" texture of her skin.<br><br>
+
+Theme: Sorry / Unspoken Love / Grief and Regret / The Finality of Death / Silent Devotion
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cold">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Cold</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1sad">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 85mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Harmattan Haze" aesthetic, masterpiece quality.<br><br>
+
+The scene: A desolate, "dust-choked" open balcony or a high courtyard in Jos or Zaria at 5:45 AM during the peak of Harmattan. The background is a soft, "ghostly" blur of a "Pale-Grey" morning mist, a "Swaying" skeleton of a dry Neem tree, and a "Dimly-Lit" lantern flickering in the wind. On a wrought-iron table sits a "Cracked" ceramic mug with "Steam" rising in thin, jagged wisps and a "Frost-Tipped" copy of a morning newspaper. The air is "biting," "dry," and smells of woodsmoke, "Fine Sahara Dust," and the "metallic" scent of freezing iron. The atmosphere is one of shivering, isolated "Cold" endurance.<br><br>
+
+The subject: A 32-year-old handsome Hausa man, a "Solitary Thinker" or a "Early-Riser." He is huddled into himself, his arms "wrapped tightly" around his torso and his shoulders "hunched" up to his ears. He wears a heavy, "Stone-Grey" wool Babban Riga over a thick turtleneck, the fabric "caked" with a fine layer of white Harmattan dust, and a matching hula "pulled low" over his brow. His face is a masterpiece of "Clench-Jawed Cold"—his eyes are "squinting and watery" against the biting wind, his lips are a "pale, bluish-purple" tint, and his skin is "goose-fleshed" and tight. He looks like a man who is fighting a battle against an invisible, freezing enemy. He is "Cold" because the desert wind has no mercy for the lonely.<br><br>
+
+Symbolism: The "Stone-Grey Wool" represents "A Heart Turning to Flint." The "Whirling Dust" symbolizes "The Blurring of One's Path." The "Thin Steam" represents "A Life Force Escaping into the Void." The "Cracked Mug" symbolizes "The Fragility of Warmth." It is the "Cold" of a man who has forgotten what it feels like to be touched by the sun.<br><br>
+
+Lighting: "The Dawn of Ash." The primary light is a "weak, silver-blue" pre-dawn glow filtering through the thick dust, hitting his forehead and the wool fabric to make them look "frozen and brittle." A secondary, "faint-orange" spark from the lantern provides a "dying" warmth to his knuckles. The shadows are "flat," "grey," and suffocating.<br><br>
+
+Texture: The "rough, scratchy" wool of the Babban Riga, the "gritty, fine" texture of the Sahara dust, the "cold, biting" iron of the chair, the "smooth, frozen" ceramic of the mug, and the "beaming, wind-burned" texture of his skin.<br><br>
+
+Theme: Cold / Harmattan / Endurance / Solitude / The Biting Wind
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Marble Ice" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vast, "hollow-sounding" grand parlor in an ultra-modern mansion in Abuja or Kano at 3:00 AM. The background is a soft, "clinical" blur of floor-to-ceiling glass windows frosted with "Condensation," a "White-Leather" sectional sofa that looks untouched, and a "Modernist" fireplace that is dark and empty. On a glass coffee table sits a "Tall, Frosted" glass of ice water and a "Single" discarded silk shawl. The air is "sterile," "chilled," and smells of expensive floor wax, "Industrial AC," and the "metallic" scent of an empty house. The atmosphere is one of sharp, sophisticated "Cold" isolation.<br><br>
+
+The subject: A 27-year-old beautiful Hausa lady, a "High-Society Wife" or a "Lonely Heiress." She is sitting perfectly still on a hard marble ledge, her legs "tightly tucked" to one side and her fingers "clasping" her own upper arms. She wears a magnificent, "Icy-Silver" silk Abaya with crystal-beaded embroidery that looks like "Frozen Rain" along the hem, and a matching sheer silk hijab that is "shimmering" but provides no warmth. Her face is a masterpiece of "Interior Cold"—her eyes are "wide and crystalline," staring at the dark fireplace, her lips are "pale and set," and her skin is "radiant" but looks as if it would be cold to the touch. She looks like a woman living in a palace of ice where the heat was turned off years ago. She is "Cold" because her wealth is a beautiful, freezing cage.<br><br>
+
+Symbolism: The "Icy-Silver Silk" represents "A Beauty that is High and Unreachable." The "Empty Fireplace" symbolizes "A Heart that has Run Out of Fuel." The "Frosted Glass" represents "The Barrier Between the Soul and the World." The "White Marble" symbolizes "A Foundation that is Solid but Freezing." It is the "Cold" of a woman who has everything except a reason to stay warm.<br><br>
+
+Lighting: "The Moonlit Freezer." The primary light is a "sharp, blue-white" moonlight flooding through the glass walls, hitting the crystal beads to create "blinding, cold" sparks. A secondary, "faint-cyan" glow from the AC control panel hits the side of her face. The shadows are "sharp," "linear," and unforgiving.<br><br>
+
+Texture: The "slick, frozen" surface of the marble, the "smooth, thin" silk of the silver Abaya, the "sharp, jagged" texture of the crystal beads, the "hard, clear" glass of the windows, and the "beaming, marble-like" texture of her skin.<br><br>
+
+Theme: Cold / Emotional Distance / Wealthy Loneliness / The Ice Palace / Silent Shiver
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 50mm f/1.7 lens, 4:5 vertical aspect ratio, 8K resolution, "The Emotional Tundra" aesthetic, masterpiece quality.<br><br>
+
+The scene: A spacious, "over-cooled" master bedroom in a luxury villa in Abuja at 2:00 AM. The background is a soft, "aching" blur of a "King-Sized" bed where two people lie at the extreme opposite edges, a "Blue-Light" hum from a large television on mute, and a "Frosty" mist coming from a high-powered AC unit. On a glass nightstand sits a "Cold" humidifying machine and a "Untouched" wedding ring resting on a marble coaster. The air is "stagnant," "refrigerated," and smells of expensive linen, "Crisp Air," and the "metallic" scent of an unspoken standoff. The atmosphere is one of shivering, interpersonal "Cold" distance.<br><br>
+
+The subject: A 34-year-old handsome Hausa man, a "High-Earning Professional" or a "Distanced Husband." He is sitting on the edge of the bed, his back "turned like a wall" and his hands "clutched" between his knees. He wears a high-quality, "Ice-Blue" silk pajama set that is "thin and shivering" against his skin, and his hula is "absent," showing a head "bowed" in a posture of defeat. His face is a masterpiece of "Relationship Cold"—his eyes are "heavy and frosted," staring at the dark floor, his jaw is "locked tight" to keep his teeth from chattering, and his skin is "pale and dry." He looks like a man who is freezing to death in a room full of luxury. He is "Cold" because the person inches away from him feels a thousand miles away.<br><br>
+
+Symbolism: The "Ice-Blue Silk" represents "A Comfort that has lost its Warmth." The "King-Sized Bed" symbolizes "The Great Divide Between Two Souls." The "Humidifying Mist" represents "The Fog of Misunderstanding." The "Marble Coaster" symbolizes "A Foundation that is Solid but Heartless." It is the "Cold" of a man who realized that physical closeness can be the loneliest place on earth.<br><br>
+
+Lighting: "The Digital Winter." The primary light is a "sharp, flickering-blue" glow from the muted TV, hitting his back and the silk pajamas to create "jagged, icy" highlights. A secondary, "dim-white" light from the hallway gap hits the floor. The shadows are "long," "sharp," and intrusive.<br><br>
+
+Texture: The "slick, thin" silk of the blue pajamas, the "rough, cold" cotton of the sheets, the "smooth, frozen" marble of the coaster, the "hard, dark" wood of the bedframe, and the "beaming, goose-fleshed" texture of his skin.<br><br>
+
+Theme: Cold / Marital Distance / The Silent Treatment / Emotional Frostbite / Luxury Loneliness
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4sad">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 35mm f/1.8 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Dust-Storm Shiver" aesthetic, masterpiece quality.<br><br>
+
+The scene: A deserted, "ghostly" open-air market (Kasuwa) in Gombe or Sokoto at 6:15 AM during a severe Harmattan surge. The background is a soft, "suffocating" blur of "Closed" metal stalls, a "Tattered" blue tarp flapping in the wind, and a "Dimly-Lit" street lamp struggling against the haze. On a wooden table sits a "Frozen" layer of fine red dust and an "Overturned" tea glass with a "Brown Ring" of dried dregs. The air is "razor-sharp," "opaque," and smells of dry sand, "Charcoal Dust," and the "metallic" tang of frozen iron. The atmosphere is one of brutal, gritty "Cold" desolation.<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady, a "Market Vendor" or a "Wayfarer." She is standing under a concrete overhang, her arms "locked" across her chest and her chin "tucked deep" into a heavy scarf. She wears a thick, "Navy-Blue" wool wrap over her Atampa dress that is "powdered" with white dust, and a black Pashmina hijab "pinned tightly" around her face to leave only her eyes visible. Her face is a masterpiece of "Exposed Cold"—her eyes are "narrowed and stinging" from the dust, her eyelashes are "frosted" with fine sand, and her skin is "chapped and tight" around her temples. She looks like a woman standing at the edge of the world’s end. She is "Cold" because the wind is a thief that steals the breath from her lungs.<br><br>
+
+Symbolism: The "Navy-Blue Wool" represents "The Weight of Survival." The "Closed Stalls" symbolize "A Commerce that has been Frozen by Nature." The "Tattered Tarp" represents "The Fraying of Human Shelter." The "Frosted Eyelashes" symbolize "A Vision Obscured by the Elements." It is the "Cold" of a woman who is waiting for a sun that has been swallowed by the Sahara.<br><br>
+
+Lighting: "The Amber Haze." The primary light is a "sickly, diffused-orange" glow from the street lamp, fighting through the dust to hit her forehead and the wool wrap. A secondary, "sharp-cyan" pre-dawn light hits the metal stalls in the background. The shadows are "blurred," "heavy," and muddy.<br><br>
+
+Texture: The "coarse, itchy" wool of the blue wrap, the "gritty, sandpaper" feel of the dust-covered table, the "cold, jagged" corrugated iron of the stalls, the "smooth, frozen" glass of the tea cup, and the "beaming, wind-cracked" texture of her skin.<br><br>
+
+Theme: Cold / The Harmattan Storm / Gritty Survival / Market Silence / The Biting Sand
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5sad">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 100mm f/2.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Faded Frost" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vast, "bone-chilled" open field on the outskirts of Jos or Zaria at 6:00 AM during a peak Harmattan morning. The background is a soft, "ghostly" blur of a "Layer of White Frost" covering the dry grass, a "Single" naked shea tree struggling against the heavy haze, and a "Flickering-Blue" light from a single, distant lantern. On a broken terracotta pot sits a "Layer of Ice" formed overnight on a small puddle of water and a "Brittle" dry leaf. The air is "stagnant," "crystal-sharp," and smells of dry earth, "Woodsmoke Fumes," and the "metallic" tang of a frozen landscape. The atmosphere is one of shivering, desolate "Cold" solitude.<br><br>
+
+The subject: A 31-year-old handsome Hausa man, a "Solitary Wanderer" or an "Early-Rising Farmer." He is sitting on a large stone, his knees "pulled tightly" to his chest and his arms "wrapped" around his legs. He wears a heavy, "Moss-Green" traditional wool Babban Riga that is "stiff and caked" with a fine dust and a white knitted hula "pulled down" over his ears. His face is a masterpiece of "Clenched Cold"—his eyes are "squinted and watery," his jaw is "set like iron" to stop his teeth from chattering, and his lips are a "pale, bluish-tint" against his ashen skin. He looks like a man who has been standing guard against the winter for a thousand years. He is "Cold" because the earth itself has turned into a freezer.<br><br>
+
+Symbolism: The "Moss-Green Wool" represents "The Cold Weight of Survival." The "White Frost" symbolizes "The Loss of Greenery." The "Layer of Ice" represents "The Trapping of Movement." The "Distant Lantern" symbolizes "A Hope that is Miles Away." It is the "Cold" of a man who is watching his own breath turn into smoke.<br><br>
+
+Lighting: "The Dawn of Silver." The primary light is a "weak, diffused-blue" dawn light cutting through the thick dust haze, hitting his shoulders and his face to make him look "frozen and fragile." A secondary, "faint-cyan" glow from the distant lantern provides a "dying" contrast. The shadows are "long," "grey," and suffocating.<br><br>
+
+Texture: The "coarse, scratchy" wool of the green Babban Riga, the "smooth, icy" layer on the terracotta pot, the "rough, cold" stone of his seat, the "brittle, dry" grass of the field, and the "beaming, goose-fleshed" texture of his skin.<br><br>
+
+Theme: Cold / The Harmattan Frost / Isolation / Brittle Nature / The Morning Shiver
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 45mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Glacial Silence" aesthetic, masterpiece quality.<br><br>
+
+The scene: A massive, "hollow" formal dining room in a penthouse in Abuja or Kaduna at 10:30 PM. The background is a soft, "refrigerated" blur of a "Ten-Foot" mahogany table, a "Dark" crystal chandelier that looks like hanging icicles, and a wall of glass showing a "Foggy" city skyline. On the table sit two "Full" plates of Jollof rice that have gone "Waxy and Cold" and two "Condensation-Drenched" silver chalices. The air is "sterile," "motionless," and smells of expensive floor polish, "Aerosol Mint," and the "metallic" scent of an industrial AC set to 16°C. The atmosphere is one of shivering, interpersonal "Cold" hostility.<br><br>
+
+The subject: A 35-year-old handsome Hausa man and a 29-year-old beautiful Hausa lady, a "Power Couple" or "Estranged Partners." They are sitting at opposite ends of the long table, their bodies "angled away" from each other. He wears a stiff, "Midnight-Black" polished cotton Kaftan that is "sharp-edged" and cold; she wears a "Sapphire-Blue" velvet Abaya that is "heavy and dark" around her frame. Their faces are masterpieces of "Emotional Permafrost"—his eyes are "fixed on the far wall" with a look of iron indifference, her jaw is "frozen in a tight line," and both have skin that looks "marble-pale" under the LED lights. They look like two statues placed in a freezer. They are "Cold" because the fire of their love didn't just go out; it turned to ice.<br><br>
+
+Symbolism: The "Midnight-Black Kaftan" represents "A Heart in Total Eclipse." The "Sapphire-Blue Velvet" symbolizes "A Wealth that offers no Warmth." The "Ten-Foot Table" represents "The Vast Distance of a Failed Conversation." The "Waxy Rice" symbolizes "A Nourishment that has been Rejected." It is the "Cold" of two people who are breathing the same air but living in different winters.<br><br>
+
+Lighting: "The Fluorescent Frost." The primary light is a "harsh, clinical-blue" LED strip from the ceiling, hitting the top of their heads and the table to create "cold, white" specular highlights. A secondary, "faint-cyan" glow from the city lights outside casts "long, ghostly" shadows across the floor. The shadows are "sharp," "linear," and disconnected.<br><br>
+
+Texture: The "hard, polished" mahogany of the table, the "thick, cold" velvet of the sapphire Abaya, the "slick, starched" cotton of the black Kaftan, the "beaded, wet" surface of the silver chalices, and the "beaming, porcelain-like" texture of their skin.<br><br>
+
+Theme: Cold / Marital Standoff / The Great Divide / High-Society Isolation / Frozen Love
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7sad">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Fujifilm GFX100 II, 63mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Asphalt Tundra" aesthetic, masterpiece quality.<br><br>
+
+The scene: A bleak, "wind-battered" street corner in a bustling market area of Jos or Kano at 5:15 AM during peak Harmattan. The background is a soft, "suffocating" blur of a "Layer of Dust" covering a padlocked kiosk, a "Distant" street light struggling against the thick haze, and a "Single" discarded plastic water bottle rolling on the frozen pavement. On a wooden cart sits a "Thin Layer of Frost" on a pile of raw, "Unsold" sugarcane stalks and a "Condensation-Heavy" tin mug containing a "Dreg" of cold, milky tea. The air is "razor-sharp," "opaque," and smells of burnt charcoal dust, "Fading Woodsmoke," and the "metallic" tang of freezing iron. The atmosphere is one of shivering, gritty "Cold" hustling.<br><br>
+
+The subject: A 29-year-old handsome Hausa man, a "Market Hustler" or an "Early-Rising Sugarcane Vendor." He is huddled into himself, his arms "clamped" tightly over his chest and his body "rocking" slightly to generate heat. He wears a heavy, "Moss-Green" wool Babban Riga that is "stiff" and coated in a fine layer of gray dust over a faded hooded sweatshirt, and a dark knit cap "pulled low" over his brow, leaving only his face exposed. His face is a masterpiece of "Exposed Cold"—his eyes are "squinting and watery," his lips are a "pale, bluish-tint," and his jaw is "set like iron" to lock his chattering teeth. He looks like a man who is fighting an unwinnable battle against the Sahara’s breath. He is "Cold" because his sweat has turned to ice before it can dry.<br><br>
+
+Symbolism: The "Moss-Green Wool" represents "The Cold Weight of Survival." The "Padlocked Kiosk" symbolizes "A Commerce Frozen by Time." The "Frosted Sugarcane" symbolizes "A Sweetness Turned Brittle and Harsh." The "Watery Eyes" represent "A Vision Blurred by Endurance." It is the "Cold" of a man who knows that if he stops moving, the frost will claim him.<br><br>
+
+Lighting: "The Pre-Dawn Penance." The primary light is a "weak, silver-blue" dawn glow filtering through the thick dust haze, hitting his shoulders and the wool fabric to make them look "frozen and brittle." A secondary, "faint-cyan" spark from a distant lantern provides a "dying" contrast to his profile. The shadows are "long," "sharp," and suffocating.<br><br>
+
+Texture: The "rough, scratchy" wool of the green Babban Riga, the "gritty, sandpaper" texture of the dust-covered sugarcane, the "smooth, frozen" pavement of the street, the "hard, chipped" wood of the cart, and the "beaming, goose-fleshed" texture of his skin.<br><br>
+
+Theme: Cold / Harmattan Hustling / Survival Instinct / Early-Morning Grinding / Grit and Endurance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8sad">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Frozen Celebration" aesthetic, masterpiece quality.<br><br>
+
+The scene: An expansive, "over-decorated" outdoor garden party in a high-walled estate in Jos or Kaduna at 1:30 AM during a sudden Harmattan cold snap. The background is a soft, "chilled" blur of a "Silent" marquee tent with flapping white silk, "Empty" gold-painted tiffany chairs, and a "Smoky" haze of fine dust illuminated by string lights. On a round table draped in white lace sits a "Abandoned" tiered wedding cake with "Cracking" fondant and several "Frosty" glasses of pink punch with "Settle-Dust" on the surface. The air is "biting," "dry," and smells of expensive oud, "Extinguished Charcoal," and the "metallic" scent of freezing night air. The atmosphere is one of shivering, glamourous "Cold" abandonment.<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady, a "Daughter of the Elite" or a "Late-Night Guest." She is standing near a decorative stone fountain that has been turned off, her arms "wrapped" tightly around her ribs and her shoulders "drawn up" to her jaw. She wears an exquisite, "Emerald-Green" heavy velvet Mermaid-cut dress with silver sequins that look like "Ice Crystals" scattered across her chest, and a matching pashmina that she has "wrapped twice" around her neck. Her face is a masterpiece of "Party Cold"—her eyes are "wide and shimmering" with involuntary tears from the wind, her nose is "pink-tipped," and her skin is "goose-fleshed" under the delicate lace of her sleeves. She looks like a woman who stayed too long for the music, only to be caught in the winter’s grip. She is "Cold" because the elegance of the night didn't come with a heater.<br><br>
+
+Symbolism: The "Emerald-Green Velvet" represents "A Beauty that is Thick but Breathless." The "Empty Gold Chairs" symbolize "The Departure of Warmth and Company." The "Cracking Fondant" represents "A Celebration Turned Brittle." The "String Lights" symbolize "A Cheer that is Small and Distant." It is the "Cold" of a woman who is the last one left in a beautiful, freezing dream.<br><br>
+
+Lighting: "The Festive Frost." The primary light is a "sharp, cool-white" glow from the overhead string lights, hitting the silver sequins to create "blinding, icy" glints. A secondary, "pale-blue" moonlight from above makes her green velvet dress look "deep and cavernous." The shadows are "short," "sharp," and dancing with dust motes.<br><br>
+
+Texture: The "thick, soft" velvet of the emerald dress, the "rough, cold" stone of the fountain, the "slick, frozen" surface of the tiffany chairs, the "grainy, dry" lace of the tablecloth, and the "beaming, wind-chilled" texture of her skin.<br><br>
+
+Theme: Cold / The After-Party / Harmattan Night / Glamourous Suffering / The Abandoned Venue
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 35mm f/1.8 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Chalk-Dust Frost" aesthetic, masterpiece quality.<br><br>
+
+The scene: A drafty, "high-ceilinged" classroom in a government boarding school in Jos or Zaria at 6:45 AM during the peak of Harmattan. The background is a soft, "hazy" blur of "Scratched" wooden desks, a "Ghostly" chalkboard with half-erased math equations, and "Open" louvre windows letting in the biting grey mist. On a front desk sits a "Chipped" plastic ruler and a "Curled" notebook with pages "Stiff" from the humidity-free air. The air is "razor-thin," "powdery," and smells of chalk dust, "Dry Concrete," and the "metallic" tang of a sharpening blade. The atmosphere is one of shivering, disciplined "Cold" focus.<br><br>
+
+The subject: A 17-year-old handsome Hausa student, a "Prefect" or a "Diligent Scholar." He is sitting upright but "tensed" against the chill, his hands "stuffed" deep into the pockets of his school blazer. He wears a "Sky-Blue" starched school uniform under a "Heavy-Knit" navy blue sweater that is "pilled" at the elbows, and a white hula "pulled low" to trap the heat. His face is a masterpiece of "Academic Cold"—his nose is "red-tipped," his breath is a "visible, faint plume" of white vapor, and his jaw is "clenched" so hard his cheekbones stand out. He looks like a young man whose ambition is the only thing keeping him from shaking. He is "Cold" because the pursuit of a future has no fireplace.<br><br>
+
+Symbolism: The "Navy-Blue Sweater" represents "A Shield against a Harsh Environment." The "Visible Breath" symbolizes "The Life Force in a Sterile Room." The "Open Louvre Windows" represent "An Unprotected Mind." The "Half-Erased Equations" symbolize "The Struggle to Focus through the Shiver." It is the "Cold" of a student who knows that the pen is his only way out of the frost.<br><br>
+
+Lighting: "The Grey Morning Study." The primary light is a "flat, icy-grey" dawn light pouring through the louvres, hitting the side of his face and the chalk dust in the air. A secondary, "faint-yellow" glow from a single flickering bulb in the corridor casts "jagged, weak" shadows. The shadows are "long," "thin," and invasive.<br><br>
+
+Texture: The "rough, pilled" wool of the sweater, the "cold, smooth" wood of the desk, the "grainy, dry" chalk on the board, the "stiff, starched" cotton of the blue shirt, and the "beaming, wind-chapped" texture of his skin.<br><br>
+
+Theme: Cold / School Life / Harmattan Education / Discipline / The Price of Knowledge
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10sad">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Rain-Slicked Glass" aesthetic, masterpiece quality.<br><br>
+
+The scene: A high-floor, "minimalist" penthouse apartment in a luxury district of Lagos or Abuja during a violent, "bone-chilling" tropical rainstorm at 11:00 PM. The background is a soft, "distorted" blur of floor-to-ceiling glass walls drenched in "Driving Rain," reflecting the "Blurry-Neon" lights of the city below. On a white marble floor sits a "Discarded" damp trench coat and two "Untouched" glasses of chilled white wine. The air is "sterile," "over-conditioned," and smells of ozone, "Rain-Soaked Concrete," and the "metallic" scent of an expensive fragrance. The atmosphere is one of shivering, high-altitude "Cold" detachment.<br><br>
+
+The subject: A 31-year-old handsome Hausa man and a 26-year-old beautiful Hausa lady, a "Success-Driven Couple" or "Distant Lovers." They are standing near the glass, but "not touching"—he is leaning against a pillar with his arms "tightly folded," she is hugging herself with her fingers "digging" into her own elbows. He wears a heavy, "Charcoal-Grey" cashmere turtleneck that looks "stiff and unyielding"; she wears a "Icy-Blue" silk slip dress that is "shivering" against her frame. Their faces are masterpieces of "Atmospheric Cold"—his eyes are "dark and unreadable" as he watches the rain, her jaw is "clenched" to stop a shiver, and their skin is "pale and radiant" under the sharp interior lights. They look like two people trapped in a beautiful, climate-controlled aquarium. They are "Cold" because the storm outside has seeped into the silence between them.<br><br>
+
+Symbolism: The "Charcoal Cashmere" represents "A Wealth that has become a Shield." The "Icy-Blue Silk" symbolizes "A Vulnerability that is Freezing." The "Rain-Drenched Glass" represents "The Invisible Barrier to True Intimacy." The "Untouched Wine" symbolizes "A Celebration that has Lost its Heat." It is the "Cold" of a couple who have reached the top of the city only to find it is the coldest place to be.<br><br>
+
+Lighting: "The Neon Tundra." The primary light is a "sharp, cool-white" recessed ceiling LED, hitting the marble and their profiles to create "clinical, harsh" highlights. A secondary, "flickering-magenta and cyan" glow from the city's neon signs filters through the rain-streaked glass. The shadows are "deep," "sharp," and isolating.<br><br>
+
+Texture: The "cold, slick" surface of the marble floor, the "soft, heavy" cashmere of the grey sweater, the "thin, freezing" silk of the blue dress, the "wet, jagged" texture of the rain on glass, and the "beaming, marble-pale" texture of their skin.<br><br>
+
+Theme: Cold / Luxury Isolation / The Rainstorm / Emotional Distance / High-Rise Loneliness
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cute">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Cute</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 85mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Golden Hour Nap" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sun-drenched, "honey-toned" nursery or a cozy family bedroom in a modern home in Abuja or Kano at 4:30 PM. The background is a soft, "creamy" blur of a "Hand-Knitted" wool blanket, a "Soft-Focus" wooden rocking horse, and a "Floating" dust mote dancing in a beam of light. On a plush rug sits a "Tiny" pair of hand-stitched leather booties and a "Half-Eaten" slice of sweet watermelon. The air is "warm," "still," and smells of baby powder, "Fresh Laundry," and the "sweet" scent of vanilla incense. The atmosphere is one of heart-melting, innocent "Cute" serenity.<br><br>
+
+The subject: A 32-year-old handsome Hausa father and his 8-month-old "chubby-cheeked" son. The father is lying on his back on the carpet, and the baby is "sprawled" fast asleep on his chest, a tiny string of drool escaping his lip. The father wears a soft, "Butter-Cream" polished cotton Kaftan that is "rumpled" by the baby's weight, and his hula has fallen off, resting near his hand. The baby wears a miniature "Deep-Indigo" babban riga that is way too big for him, making him look like a "Little Emir." The father’s face is a masterpiece of "Protective Love"—his eyes are "closed in a smile," his jaw is "completely relaxed," and his skin is "radiant" with a peaceful, golden warmth. He looks like a man who has found the only treasure that matters. He is "Cute" because even the strongest man becomes a softie for his mini-me.<br><br>
+
+Symbolism: The "Butter-Cream Kaftan" represents "A Gentle Strength." The "Oversized Indigo Babban Riga" symbolizes "The Legacy Waiting to be Grown Into." The "Rocking Horse" represents "The Journey of Childhood." The "Watermelon Slice" symbolizes "The Simple Sweetness of Life." It is the "Cute" of a legacy resting safely on its foundation.<br><br>
+
+Lighting: "The Honey-Dripped Afternoon." The primary light is a "thick, golden-orange" sunbeam from a large window, hitting the baby’s fuzzy hair and the father’s cheek to create a "halo-like" glow. A secondary, "soft-yellow" bounce from the rug fills the shadows. The shadows are "long," "soft," and warm.<br><br>
+
+Texture: The "plush, fuzzy" wool of the rug, the "stiff-yet-soft" cotton of the cream Kaftan, the "velvety, smooth" skin of the sleeping baby, the "worn, warm" wood of the floor, and the "beaming, glowing" texture of their skin.<br><br>
+
+Theme: Cute / Fatherhood / Innocent Sleep / Generational Bond / Pure Joy
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Fujifilm GFX100 II, 80mm f/1.7 lens, 4:5 vertical aspect ratio, 8K resolution, "The Sugar-Stained Smile" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vibrant, "dust-mote-filled" traditional courtyard or a shaded "Zaure" in a family home in Kano or Zaria at 4:00 PM. The background is a soft, "creamy" blur of a "Half-Open" turquoise wooden door, a "Worn" straw mat leaning against a mud-brick wall, and a "Distant" silhouette of a mother's colorful lace wrapper. On a low wooden stool sits a "Brightly-Colored" plastic bowl filled with "Sticky" golden masa and a "Half-Full" bottle of pink Zobo. The air is "warm," "hazy," and smells of fried dough, "Hibiscus," and the "earthy" scent of sun-baked clay. The atmosphere is one of giggling, sugar-high "Cute" mischief.<br><br>
+
+The subject: A 4-year-old handsome Hausa boy and his 3-year-old beautiful little sister. They are sitting cross-legged on the floor, "leaning" into each other with their shoulders touching. He wears a miniature "Forest-Green" polished cotton Kaftan that is "dusted" with flour, and his hula is "tilted sideways" over one eye. She wears a tiny "Sunshine-Yellow" lace blouse with a matching headtie that is "unraveling" at the back. Their faces are masterpieces of "Sibling Joy"—his mouth is "wide open" in a gap-toothed laugh, her cheeks are "puffed out" with a mouthful of masa, and both have "Sugar-Glaze" shining on their chins. They look like two little rebels who just raided the kitchen. They are "Cute" because happiness is shared one bite at a time.<br><br>
+
+Symbolism: The "Forest-Green Kaftan" represents "The Sprouting of a New Branch." The "Sunshine-Yellow Lace" symbolizes "The Pure Radiance of Childhood." The "Sticky Masa" represents "A Sweetness that Binds Them." The "Unraveling Headtie" symbolizes "The Freedom of Play over Order." It is the "Cute" of a bond that doesn't need words, only snacks.<br><br>
+
+Lighting: "The Dappled Sun." The primary light is a "warm, honey-gold" sunlight filtering through a thatched roof, hitting their sparkling eyes and the sugar on their faces. A secondary, "soft-terracotta" bounce from the ground fills the shadows under their chins. The shadows are "playful," "mottled," and soft.<br><br>
+
+Texture: The "slick, sticky" texture of the masa, the "crisp, starched" cotton of the green Kaftan, the "rough, dry" straw of the mat, the "bubbly, porous" surface of the food, and the "beaming, velvet-soft" texture of their skin.<br><br>
+
+Theme: Cute / Sibling Love / Childhood Innocence / Traditional Snack Time / Pure Mischief
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 100mm f/2.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Mirror Mirror" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional, "cluttered-yet-warm" family parlor or a mother's private room in a home in Sokoto or Katsina at 2:30 PM. The background is a soft, "creamy" blur of a "Half-Open" turquoise wardrobe, a "Stack" of colorful Ankara fabrics, and a "Well-Worn" leather armchair. On a large, gold-framed mirror sits a "Foggy" condensation ring from a recent shower and several "Hand-Worn" antique silver bracelets on a velvet cushion. The air is "stagnant," "warm," and smells of frankincense, "Old Wood," and the "metallic" scent of tarnished silver. The atmosphere is one of giggling, curious "Cute" vanity.<br><br>
+
+The subject: A 5-year-old beautiful Hausa girl, a "Aspiring Grown-Up" or a "Little Mother." She is standing on her tiptoes on the edge of the velvet cushion to reach the mirror, her body "pushed forward" in concentration. She wears a miniature "Dusty-Rose" swiss lace Kaftan that is way too big for her, making her look like a "Melting Flower," and a matching grey chiffon hijab that is "tilted" far to the left. Her face is a masterpiece of "Aspiring Elegance"—her eyes are "wide and shimmering" as she studies her reflection, her lips are "pursed" in a pout of mimicry, and her cheeks are "glowing" with a natural shyness. She looks like a child who has found the keys to her mother’s beauty. She is "Cute" because she thinks she looks grown-up, but the world sees her as an angel.<br><br>
+
+Symbolism: The "Dusty-Rose Lace" represents "The Sprouting of a New Bloom." The "Oversized silver bracelets" symbolize "A Heritage Waiting to be Grown Into." The "Velvet Cushion" represents "The Gentle Foundation of Home." The "Tilted Hijab" symbolizes "The Unfinished Journey to Maturity." It is the "Cute" of a vanity that is still innocent and sweet.<br><br>
+
+Lighting: "The Mirror’s Edge." The primary light is a "warm, diffused-gold" sunlight filtering through a high ventilation window, hitting the silver bracelets and her cheeks to create "blinding, soft" glints. A secondary, "faint-yellow" bounce from the mirror fills the shadows under her chin. The shadows are "long," "thin," and playful.<br><br>
+
+Texture: The "thick, soft" velvet of the cushion, the "thin, fragile" lace of the rose Kaftan, the "rough, tarnished" silver of the bracelets, the "smooth, cool" glass of the mirror, and the "beaming, velvet-soft" texture of her skin.<br><br>
+
+Theme: Cute / Girlhood / Curiosity / Imitation / Traditional Elegance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Little Imam" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sun-lit, "peaceful" corner of a family parlor or a private prayer room in a home in Zaria or Maiduguri at 1:45 PM (just after Dhuhr). The background is a soft, "golden" blur of a "Tall" wooden bookshelf filled with religious texts, a "Half-Open" window showing a clear blue sky, and a "Large" adult-sized prayer mat spread out. On a small side table sits a "Shiny" silver Tasbih (prayer beads) and a "Half-Full" glass of water. The air is "warm," "haze-filled," and smells of Oud, "Sun-Dried Cotton," and a "faint" hint of laundry detergent. The atmosphere is one of heart-warming, imitative "Cute" devotion.<br><br>
+
+The subject: A 3-year-old handsome Hausa boy, a "Miniature Scholar" or a "Father’s Shadow." He is kneeling on his own tiny, "Bright-Orange" prayer mat placed right next to the large one, his small hands "pressed" against his chubby cheeks in a mimicry of Supplication (Dua). He wears a crisp, "Snow-White" miniature Babban Riga that is "slightly stiff" and a tiny, oversized "Deep-Red" knitted hula that has slipped down, almost covering his eyebrows. His face is a masterpiece of "Concentrated Innocence"—his eyes are "squeezed shut" with intense effort, his tongue is "peeking out" slightly at the corner of his mouth, and his cheeks are "flushed" with the heat of his earnestness. He looks like a soul trying to reach the heavens before he can even reach the door handle. He is "Cute" because his faith is as big as his hula is oversized.<br><br>
+
+Symbolism: The "Snow-White Babban Riga" represents "A Purity that is Blinding." The "Oversized Red Hula" symbolizes "A Wisdom he is Eager to Carry." The "Tiny Prayer Mat" represents "The First Steps on a Long Path." The "Squeezed Eyes" symbolize "A Sincerity that Needs no Words." It is the "Cute" of a boy who wants to be exactly like the man he looks up to.<br><br>
+
+Lighting: "The Divine Glow." The primary light is a "sharp, white-gold" sunbeam cutting through the window, hitting his white outfit to make it "glow from within" and catching the fuzz on his knit cap. A secondary, "soft-amber" bounce from the carpet fills the shadows under his chin. The shadows are "short," "clean," and gentle.<br><br>
+
+Texture: The "coarse, bumpy" wool of the red hula, the "slick, starched" cotton of the white Babban Riga, the "soft, plush" velvet of the orange prayer mat, the "grainy, warm" wood of the floor, and the "beaming, edible-soft" texture of his skin.<br><br>
+
+Theme: Cute / Early Faith / Like Father Like Son / Innocent Devotion / The Little Prayer
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 110mm f/2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Henna Lesson" aesthetic, masterpiece quality.<br><br>
+
+The scene: A shaded, "sun-dappled" veranda or a cool "Tsakar Gida" (courtyard) in a traditional family home in Zaria or Daura at 11:00 AM. The background is a soft, "warm-hued" blur of a "Tall" terracotta water pot, a "Swaying" branch of a neem tree, and a "Resting" colorful plastic kettle (Buta). On a low hand-woven mat sits a "Small, Ornate" bowl of fresh, dark-green henna paste and a "Tiny" wooden applicator stick. The air is "still," "dust-mote-filled," and smells of eucalyptus, "Wet Earth," and the "earthy" scent of the henna plant. The atmosphere is one of patient, generational "Cute" learning.<br><br>
+
+The subject: A 65-year-old beautiful Hausa grandmother and her 4-year-old "bright-eyed" granddaughter. The grandmother is sitting with her legs outstretched, and the little girl is "leaning" heavily against her, her small hand "resting" in the grandmother’s wrinkled, wise palm. The grandmother wears a "Faded-Indigo" cotton wrapper; the little girl wears a vibrant "Magenta-and-Orange" Atampa dress with puffed sleeves. The girl's face is a masterpiece of "Wondrous Concentration"—her tongue is "pressed" against her upper lip in effort, her eyes are "wide and unblinking" as she watches a tiny dot of henna being placed on her pinky, and her cheeks are "flushed" with the pride of being a "big girl." She looks like a student who has just discovered a secret language. She is "Cute" because she thinks she’s being very serious, while her grandmother is trying not to laugh at her intensity.<br><br>
+
+Symbolism: The "Wrinkled Palm" represents "A Map of a Thousand Stories." The "Tiny Henna Dot" symbolizes "The First Mark of a Heritage." The "Magenta Atampa" represents "The Vibrant Future of a Lineage." The "Wet Henna Paste" symbolizes "A Tradition that is Still Fresh and Growing." It is the "Cute" of a beauty secret being passed down through the ages.<br><br>
+
+Lighting: "The Tree-Filtered Sun." The primary light is a "soft, golden-green" sunlight filtering through the neem leaves, hitting the little girl's forehead and the henna bowl to create "twinkling, dappled" highlights. A secondary, "warm-brown" bounce from the clay walls fills the shadows. The shadows are "soft," "mottled," and comforting.<br><br>
+
+Texture: The "rough, leathery" skin of the grandmother, the "thick, cool" paste of the henna, the "stiff, starched" cotton of the magenta dress, the "bumpy, woven" texture of the mat, and the "beaming, satin-soft" texture of the girl's skin.<br><br>
+
+Theme: Cute / Grandmother's Love / Traditional Art / Henna Night (Early) / Generational Wisdom
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Golden Fur" aesthetic, masterpiece quality.<br><br>
+
+The scene: A shaded, "sun-dusted" corner of a family garden or a "Kofar Gida" (front of house) in a quiet neighborhood in Zaria or Abuja at 5:00 PM. The background is a soft, "creamy" blur of a "Low" white-washed wall, a "Single" terracotta flower pot with a sprouting marigold, and a "Distant" pair of adult leather sandals. On the smooth concrete floor sits a "Bright-Red" round lollipop with a "Glossy" shine and a "Tiny" bowl of milk that has been tipped over. The air is "warm," "golden," and smells of damp grass, "Sugar Syrup," and the "clean" scent of sun-warmed fur. The atmosphere is one of heart-melting, innocent "Cute" friendship.<br><br>
+
+The subject: A 4-year-old handsome Hausa boy and a "tiny, fluffy" ginger-and-white kitten. The boy is lying flat on his stomach, his chin "propped up" by his hands, and the kitten is "curled" right under his nose, its tiny paw "resting" on his thumb. He wears a miniature "Turquoise-Blue" Kaftan that is "puckered" at the chest and a white hula that is "skewed" almost off his head. His face is a masterpiece of "Wide-Eyed Wonder"—his eyes are "sparkling" as he whispers to the kitten, his mouth is "pursed" in a silent "shhh," and his cheeks are "puffed out" with suppressed excitement. He looks like a boy who has just discovered a magical creature from a storybook. He is "Cute" because he’s trying so hard to be still so he doesn't scare his new best friend.<br><br>
+
+Symbolism: The "Turquoise-Blue Kaftan" represents "A Peace that is Bright and New." The "Tiny Ginger Kitten" symbolizes "A Fragile Trust." The "Tipped Milk Bowl" represents "A Sacrifice for a Friend." The "Skewed Hula" symbolizes "A Joy that has Forgotten Order." It is the "Cute" of a boy who has found a soul smaller than his own to protect.<br><br>
+
+Lighting: "The Backlit Whiskers." The primary light is a "thick, amber-gold" sunset light hitting them from behind, creating a "shimmering, halo-like" rim-light on the kitten’s fur and the boy’s fuzzy hair. A secondary, "soft-blue" fill from the sky hits their faces. The shadows are "long," "soft," and dreamy.<br><br>
+
+Texture: The "wispy, silk-soft" fur of the kitten, the "smooth, sticky" surface of the lollipop, the "stiff, starched" cotton of the blue Kaftan, the "rough, cool" concrete of the floor, and the "beaming, velvet-soft" texture of the boy's skin.<br><br>
+
+Theme: Cute / Boy and Kitten / Innocent Friendship / Golden Hour / Pure Gentleness
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 80mm f/1.9 lens, 4:5 vertical aspect ratio, 8K resolution, "The Heartbeat Blur" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dimly lit, "candle-glow" corner of a private balcony or a cozy living room in an Abuja penthouse at 9:00 PM. The background is a soft, "dreamy" blur of a "Floating" silk curtain, a "Warm" string of fairy lights reflecting in the window, and a "Single" vase of fresh white jasmine. On a small marble table sits a "Half-Eaten" plate of date cakes and two "Crystal" glasses of sparkling apple juice. The air is "still," "perfumed," and smells of expensive Oud, "Fresh Jasmine," and the "electric" scent of a first-date spark. The atmosphere is one of heart-pounding, breathless "Cute" anticipation.<br><br>
+
+The subject: A 24-year-old beautiful Hausa lady and a 27-year-old handsome Hausa man, a "New Couple" or "Bashful Lovers." They are standing inches apart, his hand "grazing" her jawline as he tilts his head down toward hers. She wears a soft, "Peach-Cream" chiffon Abaya with delicate pearl embroidery that looks like "Dewdrops" on her shoulders; he wears a "Midnight-Blue" polished cotton Kaftan that is "sharp" and masculine. Her face is a masterpiece of "Cute Surrender"—her eyes are "fluttering closed," her nose is "slightly scrunched" in a shy giggle, and her mouth is "parting slightly" in a soft, involuntary response as she leans into the space between them. He looks like a man who has found his favorite poem; she looks like she’s about to float away. They are "Cute" because the distance between them is the loudest thing in the room.<br><br>
+
+Symbolism: The "Peach-Cream Chiffon" represents "A Heart that is Soft and Opening." The "Midnight-Blue Kaftan" symbolizes "A Strength that is Gentled by Love." The "Parted Lips" represent "The Threshold of a New Chapter." The "Fairy Lights" symbolize "The Magic in the Ordinary." It is the "Cute" of a moment that feels like a thousand years and a single second at the same time.<br><br>
+
+Lighting: "The Candlelight Glow." The primary light is a "warm, flickering-amber" glow from a nearby candle, hitting her lips and his knuckles to create "soft, golden" highlights. A secondary, "faint-magenta" rim-light from the city lights outside outlines their silhouettes. The shadows are "deep," "soft," and intimate.<br><br>
+
+Texture: The "wispy, airy" chiffon of the peach Abaya, the "stiff, cool" cotton of the blue Kaftan, the "smooth, cold" marble of the table, the "delicate, bumpy" pearl embroidery, and the "beaming, velvet-soft" texture of their skin.<br><br>
+
+Theme: Cute / The First Kiss (Almost) / Shy Romance / Romantic Tension / Young Love
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alone">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 85mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Mirror of Affection" aesthetic, masterpiece quality.<br><br>
+
+The scene: A brightly lit, "cluttered-with-beauty" master bedroom in a modern home in Abuja or Kano at 11:30 AM. The background is a soft, "golden" blur of a "Half-Open" jewelry box spilling over with gold bangles, a "Towering" stack of colorful Ankara headties (Geles) on a vanity, and a "Warm" glow from a large dressing mirror. On the marble vanity sits a "Forgotten" tube of red lipstick and a "Tangled" silver necklace. The air is "sweet," "electric," and smells of expensive Oud, "Hair Spritz," and the "metallic" scent of safety pins. The atmosphere is one of giggling, domestic "Cute" frustration.<br><br>
+
+The subject: A 30-year-old handsome Hausa man and his 25-year-old beautiful Hausa wife. He is standing behind her, his brow "furrowed" in extreme concentration as he tries to tie her stiff, "Royal-Purple" Aso-Oke Gele. She is sitting on a velvet stool, her head "tilted back" to look up at him through the mirror, her hands "raised" as if she’s about to take over. He wears a simple "White" cotton undershirt that shows his tensed muscles; she wears a matching "Purple-and-Gold" lace wrapper that is "shimmering" under the room lights. Her face is a masterpiece of "Suppressed Laughter"—her eyes are "crinkled" at the corners, her cheeks are "puffed out" as she holds back a joke, and her mouth is "curled" into a wide, loving smirk. He looks like a man trying to solve a complex engineering puzzle; she looks like she’s never loved him more. They are "Cute" because his effort is worth more than a perfect knot.<br><br>
+
+Symbolism: The "Royal-Purple Gele" represents "A Crown that is Earned through Patience." The "Stiff Aso-Oke" symbolizes "The Challenges of Early Marriage." The "White Undershirt" represents "A Raw, Unfiltered Devotion." The "Tangled Necklace" symbolizes "A Life that is Messy but Beautifully Connected." It is the "Cute" of a man willing to be a novice just to make his queen shine.<br><br>
+
+Lighting: "The Vanity Glow." The primary light is a "sharp, warm-white" ring-light from the mirror, hitting his concentrated forehead and the gold threads in her lace to create "blinding, festive" glints. A secondary, "soft-amber" sunlight from the window fills the room. The shadows are "short," "clean," and happy.<br><br>
+
+Texture: The "rough, stiff" texture of the Aso-Oke fabric, the "soft, ribbed" cotton of his undershirt, the "delicate, bumpy" embroidery of the lace, the "smooth, cold" marble of the vanity, and the "beaming, velvet-soft" texture of their skin.<br><br>
+
+Theme: Cute / Domestic Bliss / Husbandly Effort / The Big Day Prep / Playful Romance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Leica M11, 50mm f/1.4 Summilux lens, 4:5 vertical aspect ratio, 8K resolution, "The Silver Rain" aesthetic, masterpiece quality.<br><br>
+
+The scene: A narrow, "charcoal-grey" paved street in a quiet residential area of Kano or Zaria at 5:45 PM during a gentle, "mist-like" evening drizzle. The background is a soft, "watery" blur of a "Bougainvillea" hedge with dripping pink flowers, a "Faintly-Lit" porch light, and the "Glistening" surface of a small puddle. On a stone curb sits a "Forgotten" clay tea cup and a "Single" wet hibiscus petal. The air is "cool," "freshened," and smells of wet earth (Petrichor), "Damp Cotton," and the "sweet" scent of rain-washed leaves. The atmosphere is one of timeless, quiet "Cute" devotion.<br><br>
+
+The subject: A 72-year-old handsome Hausa man and his 68-year-old beautiful Hausa wife, an "Everlasting Couple" or "Soulmates." They are walking slowly, his arm "hooked" firmly into hers, while his other hand holds a "Small, Faded-Black" umbrella strictly over *her* head, leaving his own shoulder "drenched" by the rain. He wears a heavy, "Slate-Grey" wool Babban Riga that is "darkening" with moisture; she wears a "Deep-Maroon" velvet wrap and a matching hijab "pinned neatly." Her face is a masterpiece of "Contented Grace"—her eyes are "crinkled" in a soft smile as she looks at the path, her hand is "patting" his arm in a rhythmic gesture of thanks, and her skin has a "soft, dewy" glow. He looks like a king who would rather be wet than see his queen catch a chill. They are "Cute" because fifty years later, he still treats her like a first date.<br><br>
+
+Symbolism: The "Small Umbrella" represents "A Protection that is Selfless." The "Drenched Shoulder" symbolizes "The Sacrifices of a Long Love." The "Deep-Maroon Velvet" represents "A Passion that has Ripened into Comfort." The "Dripping Bougainvillea" symbolizes "A Beauty that Endures the Storm." It is the "Cute" of a love that doesn't need a forecast to stay warm.<br><br>
+
+Lighting: "The Twilight Drizzle." The primary light is a "silvery, diffused" evening sky, hitting the raindrops on the umbrella to create "twinkling, diamond-like" beads. A secondary, "warm-amber" glow from a nearby window provides a "homely" contrast on their faces. The shadows are "blurred," "soft," and merging.<br><br>
+
+Texture: The "coarse, heavy" wool of the grey Babban Riga, the "thick, sodden" canvas of the umbrella, the "plush, wet" velvet of the maroon wrap, the "slick, pebbled" texture of the wet pavement, and the "beaming, parchment-soft" texture of their aged skin.<br><br>
+
+Theme: Cute / Old Age Love / Selfless Devotion / Rainy Evening / Eternal Partnership
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 70-200mm f/2.8 GM II lens (at 135mm), 4:5 vertical aspect ratio, 8K resolution, "The Gentle Giant" aesthetic, masterpiece quality.<br><br>
+
+The scene: A sun-drenched, "dusty-gold" family courtyard or a "Garke" (livestock pen) in a suburban home in Kano or Katsina at 4:45 PM. The background is a soft, "creamy" blur of a "Weathered" mud-brick wall, a "Large" colorful plastic water trough, and a "Single" drying stalk of corn. On the earth sits a "Scattered" trail of green bean husks and a "Small" blue plastic bucket. The air is "warm," "hazy," and smells of sun-dried hay, "Warm Earth," and the "animal" scent of clean wool. The atmosphere is one of heart-melting, brave "Cute" kindness.<br><br>
+
+The subject: A 3-year-old handsome Hausa boy and a "massive, majestic" white Balami ram with "spiraled" brown horns. The boy is standing on his tiptoes, his small hands "straining" to hold up a long, leafy green branch toward the ram's mouth. He wears a miniature "Saffron-Yellow" starched cotton Kaftan that is "cinched" at the waist and a white knit cap that is "tilted" back to see the ram’s face. The ram is "towering" over him but has its head "bowed low," its large, dark eye "soft and patient" as it gently nibbles the leaves. The boy’s face is a masterpiece of "Focused Courage"—his eyes are "wide and unblinking," his mouth is "puckered" in a silent "O," and his cheeks are "puffed out" with the importance of his task. He looks like a tiny king tending to his largest subject. He is "Cute" because he is shorter than the ram's horns, but has a heart twice as big.<br><br>
+
+Symbolism: The "Saffron-Yellow Kaftan" represents "A Joy that is Sun-Bright." The "Spiraled Brown Horns" symbolize "A Power that is Gentled by Innocence." The "Long Green Branch" represents "The Bridge Between Two Worlds." The "Bowed Head" symbolizes "A Respect for the Smallest of Hands." It is the "Cute" of a friendship that doesn't care about size.<br><br>
+
+Lighting: "The Backlit Dust." The primary light is a "thick, amber-orange" golden-hour sun hitting the ram’s white wool to make it "glow like a cloud" and highlighting the boy’s fuzzy hair. A secondary, "warm-brown" bounce from the courtyard floor fills the shadows. The shadows are "long," "soft," and comforting.<br><br>
+
+Texture: The "thick, oily" wool of the ram, the "crisp, starched" cotton of the yellow Kaftan, the "rough, dry" texture of the bean husks, the "cracked, warm" earth of the floor, and the "beaming, velvet-soft" texture of the boy's skin.<br><br>
+
+Theme: Cute / The Little Shepherd / Gentle Giant / Animal Bond / Traditional Courtyard Life
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fabulous">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Fabulous</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 35mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Royal Gold" aesthetic, masterpiece quality.<br><br>
+
+The scene: The grand entrance of a luxury event center in Abuja or a palace courtyard in Kano at 7:30 PM. The background is a soft, "expensive" blur of "Valet-Parked" black SUVs, a "Red Carpet" flanked by golden stanchions, and "Dazzling" crystal chandeliers visible through glass doors. On the marble steps sits a "Single" discarded white rose petal and a "Shimmering" reflection of camera flashes. The air is "perfumed," "vibrant," and smells of premium Oud, "Fresh Lilies," and the "metallic" scent of new leather. The atmosphere is one of breathtaking, high-society "Fabulous" prestige.<br><br>
+
+The subject: A 26-year-old stunningly beautiful Hausa lady, a "Fashion Icon" or "Modern Royalty." She is stepping out of a vintage white Rolls-Royce, one hand "gracefully" lifting her skirt. She wears a structural "Gold-and-Cream" heavy silk Atampa gown with "Architectural" pleated sleeves and a six-foot train that is "cascading" like liquid metal. Her headtie (Gele) is a "Masterpiece" of sharp, multi-layered folds in metallic gold, pinned with a "Blinding" diamond brooch. Her face is a masterpiece of "Unapologetic Radiance"—her eyes are "fierce and winged" with gold-flecked liner, her lips are a "perfectly-contoured" nude gloss, and her skin is "strobed" to a high-fashion glow. She looks like a woman who doesn't just enter a room; she owns the air within it. She is "Fabulous" because the sun seems to follow her even at night.<br><br>
+
+Symbolism: The "Gold-and-Cream Silk" represents "A Wealth that is Both Ancient and Modern." The "Six-Foot Train" symbolizes "The Space She Commands in the World." The "Diamond Brooch" represents "A Point of Unbreakable Focus." The "Vintage Rolls-Royce" symbolizes "A Class that is Timeless." It is the "Fabulous" of a woman who is her own masterpiece.<br><br>
+
+Lighting: "The Paparazzi Glow." The primary light is a "sharp, cool-white" burst of flash photography hitting the gold fabric to create "molten, blinding" specular highlights. A secondary, "warm-amber" glow from the palace torches outlines her silhouette. The shadows are "sharp," "dramatic," and expensive.<br><br>
+
+Texture: The "thick, stiff" silk of the gold gown, the "glittering, cold" diamonds of the brooch, the "smooth, buttery" leather of the car interior, the "polished, mirror-like" marble of the steps, and the "beaming, airbrushed-perfect" texture of her skin.<br><br>
+
+Theme: Fabulous / High Fashion / Royal Entrance / Abuja Luxury / Unstoppable Elegance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 105mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Elite Turf" aesthetic, masterpiece quality.<br><br>
+
+The scene: A manicured, "emerald-green" polo field in Kaduna or Kano at 5:45 PM. The background is a soft, "golden-hour" blur of a "White-and-Navy" luxury marquee, a "Sleek" dark-brown stallion being led by a groom, and "Exclusive" leather-clad spectators holding silver tumblers. On a polished mahogany railing sits a "Single" pair of designer tortoiseshell sunglasses and a "Glistening" silver stopwatch. The air is "crisp," "vibrant," and smells of freshly cut grass, "Premium Leather," and the "expensive" musk of a signature niche fragrance. The atmosphere is one of commanding, athletic "Fabulous" masculinity.<br><br>
+
+The subject: A 32-year-old handsome Hausa man, a "Polo Patron" or "Modern Aristocrat." He is leaning against the railing with one hand "casually" tucked into his pocket, his posture "effortlessly" straight. He wears a bespoke "Midnight-Black" polished cotton Babban Riga with "Intricate" silver-thread embroidery that looks like "Lightning Bolts" across his chest, over a crisp white linen undershirt. His hula is a "Masterpiece" of hand-woven velvet in deep charcoal, tilted "perfectly" to the side. His face is a masterpiece of "Quiet Power"—his eyes are "sharp and observant," his jaw is "chiselled" and smooth-shaven, and his skin is "radiant" with a healthy, sun-kissed glow. He looks like a man who wins before the game even begins. He is "Fabulous" because his presence is the trophy everyone is watching.<br><br>
+
+Symbolism: The "Midnight-Black Babban Riga" represents "A Mystery that is Perfectly Tailored." The "Silver-Thread Embroidery" symbolizes "A Wealth that is Sharp and Cutting." The "Tortoiseshell Sunglasses" represent "A Vision that is Protected and Private." The "Brown Stallion" symbolizes "A Power that has Been Perfectly Tamed." It is the "Fabulous" of a man who defines the room he is in.<br><br>
+
+Lighting: "The Golden Goal." The primary light is a "thick, horizontal-amber" sunbeam hitting the silver embroidery to create "shimmering, white-hot" glints. A secondary, "soft-blue" fill from the evening sky softens the shadows on his face. The shadows are "long," "sharp," and athletic.<br><br>
+
+Texture: The "slick, starched" cotton of the black Riga, the "soft, dense" velvet of the hula, the "smooth, cool" mahogany of the railing, the "grainy, rich" leather of the horse's saddle in the background, and the "beaming, pore-perfect" texture of his skin.<br><br>
+
+Theme: Fabulous / Polo Club Life / Modern Aristocracy / Sharp Tailoring / Elite Masculinity
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Henna & Gold" aesthetic, masterpiece quality.<br><br>
+
+The scene: A lavishly decorated "Leafe-and-Floral" throne area during a Kamun ceremony in a luxury villa in Kano or Katsina at 8:00 PM. The background is a soft, "golden-dusted" blur of "Cascading" white orchids, "Shimmering" sequined drapes, and a "Glimmering" brass incense burner puffing out thick Turaren Wuta. On a velvet ottoman sits a "Gold-Plated" tray of crystalized dates and a "Bejeweled" handheld fan. The air is "intoxicating," "heavy," and smells of expensive sandalwood, "Sweet Musk," and the "earthy" richness of fresh bridal henna. The atmosphere is one of breathtaking, celebratory "Fabulous" tradition.<br><br>
+
+The subject: A 23-year-old breathtakingly beautiful Hausa bride, the "Center of the Universe." She is seated on a carved ivory-colored throne, her posture "regal" and still. She wears a bespoke "Royal-Emerald" velvet and French lace gown, encrusted with "Thousands" of hand-stitched Swarovski crystals that look like "Green Fire" in the light. Her "Lulubi" (bridal veil) is a sheer, "Mist-Like" silver tulle that is "pinned" with a heavy emerald tiara. Her face is a masterpiece of "Bridal Radiance"—her eyes are "deep and smoky" with charcoal kohl, her hands are "intricately painted" with pitch-black henna patterns that reach her elbows, and her skin is "illuminated" with a diamond-dust highlighter. She looks like a queen being crowned by her own beauty. She is "Fabulous" because she is the dream every woman in the room is whispering about.<br><br>
+
+Symbolism: The "Royal-Emerald Velvet" represents "A Growth that is Rich and Timeless." The "Swarovski Crystals" symbolize "A Light that Cannot be Dimmed." The "Intricate Black Henna" represents "The Deep Roots of Her Heritage." The "Silver Tulle Veil" symbolizes "A Mystery that is About to be Unveiled." It is the "Fabulous" of a tradition that has been turned into high art.<br><br>
+
+Lighting: "The Emerald Spark." The primary light is a "warm, focused-amber" spotlight hitting the crystals on her dress to create "dancing, green-and-white" flare-ups. A secondary, "cool-blue" accent light from the floor highlights the texture of the lace. The shadows are "deep," "soft," and velvet-like.<br><br>
+
+Texture: The "plush, heavy" velvet of the emerald gown, the "wispy, airy" tulle of the silver veil, the "cold, hard" stones of the tiara, the "stained, matte" texture of the henna on her palms, and the "beaming, satin-flawless" texture of her skin.<br><br>
+
+Theme: Fabulous / Bridal Kamun / Royal Tradition / Luxury Couture / Emerald Radiance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Fujifilm GFX100 II, 45mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Corporate Alchemist" aesthetic, masterpiece quality.<br><br>
+
+The scene: A high-floor, "glass-and-steel" executive suite overlooking the Abuja Central Business District or Eko Atlantic at 6:15 PM. The background is a soft, "cobalt-blue" blur of a "Towering" skyline, a "Sleek" glass desk with a minimalist laptop, and "Architectural" floor lamps that look like modern sculptures. On a low leather coffee table sits a "Heavy" crystal ashtray and a "Single" gold-nibbed fountain pen. The air is "filtered," "quiet," and smells of expensive leather, "Fresh Espresso," and the "sharp" scent of a bespoke vetiver cologne. The atmosphere is one of dominating, sophisticated "Fabulous" ambition.<br><br>
+
+The subject: A 38-year-old handsome Hausa man, a "Tech Mogul" or "Global Investor." He is standing by the floor-to-ceiling window, one hand "adjusting" his platinum cufflinks while looking out at the city lights. He wears a bespoke "Desert-Sand" heavy silk Kaftan with "Subtle" tone-on-tone embroidery on the collar, paired with "Impeccably" pressed slim-fit trousers. His hula is a "Masterpiece" of rigid, pure white brocade that looks like "Folded Marble." His face is a masterpiece of "Visionary Calm"—his eyes are "analytical and steady," his beard is "laser-trimmed," and his skin is "radiant" under the cool office LEDs. He looks like a man who moves the market with a single text. He is "Fabulous" because power doesn't need to shout; it just needs to be perfectly tailored.<br><br>
+
+Symbolism: The "Desert-Sand Silk" represents "A Wealth that is Natural and Enduring." The "Platinum Cufflinks" symbolize "A Precision that is Cold and Correct." The "Glass Walls" represent "A Transparency that is Hard to Break." The "White Brocade Hula" symbolizes "A Mind that is Sharp and Structured." It is the "Fabulous" of a success that has its own zip code.<br><br>
+
+Lighting: "The Executive Blue Hour." The primary light is a "cool, clinical-white" LED from the ceiling hitting his shoulders to create "sharp, professional" highlights. A secondary, "warm-orange" glow from the setting sun reflects off the glass buildings outside. The shadows are "short," "clean," and decisive.<br><br>
+
+Texture: The "slick, fluid" silk of the sand Kaftan, the "cold, smooth" metal of the cufflinks, the "grainy, rich" texture of the leather chair, the "thick, heavy" glass of the window, and the "beaming, pore-less" texture of his skin.<br><br>
+
+Theme: Fabulous / Corporate Power / Modern Luxury / Executive Style / Abuja Skyline
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 100mm f/2.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Museum Marble" aesthetic, masterpiece quality.<br><br>
+
+The scene: The opening night gala of a contemporary art museum or a prestigious international gallery in Lagos or Abuja at 9:30 PM. The background is a soft, "cream-and-gold" blur of "Towering" abstract sculptures, a "Swirling" marble staircase with glass railings, and "Sparkling" champagne flutes held by "Exclusively" dressed attendees. On a black pedestal sits a "Single" modern bronze piece reflecting the light and a "Golden" VIP lanyard discarded near a bench. The air is "chilled," "filtered," and smells of expensive Oud, "Fresh Oil Paint," and the "metallic" scent of polished brass. The atmosphere is one of high-culture, sophisticated "Fabulous" art world prestige.<br><br>
+
+The subject: A 28-year-old breathtakingly beautiful Hausa lady, an "Art Patron" or "Cultural Ambassador." She is standing near a sculpture, turning her head "gracefully" over her shoulder, her gaze "strikingly" confident as she looks directly at the viewer. She wears a striking high-fashion "Onyx-Black" and "Liquid-Gold" abstract patterned silk crepe Abaya with "Voluminous" structured sleeves and a "Fluid" matching hijab that is "draped" with precision. Her neck is adorned with a "Masterpiece" architectural gold choker with "Smoky" quartz stones. Her face is a masterpiece of "Sculpted Elegance"—her eyes are "defined and fierce" with a graphic gold eyeliner, her lips are a "matte-nude" perfection, and her skin is "strobed" to a high-fashion, radiant glow. She looks like a work of art that has come to life. She is "Fabulous" because she makes the sculptures look ordinary.<br><br>
+
+Symbolism: The "Onyx-and-Gold Silk" represents "A Beauty that is Both Night and Day." The "Architectural Gold Choker" symbolizes "A Voice that is Defined and Clear." The "Marble Staircase" represents "An Ascent into Elevated Society." The "Smoky Quartz" symbolizes "A Wisdom that is Hidden and Deep." It is the "Fabulous" of a beauty that is intellectually fierce.<br><br>
+
+Lighting: "The Spotlit Gallery." The primary light is a "sharp, directional-warm" spotlight hitting her face and the gold pattern to create "molten, blinding" reflections. A secondary, "cool-blue" accent light from a display case highlights the contours of the sculpture. The shadows are "deep," "clean," and dramatic.<br><br>
+
+Texture: The "slick, fluid" texture of the silk crepe, the "cold, smooth" metal of the gold choker, the "grainy, rich" texture of the quartz, the "rough, heavy" texture of the abstract sculpture, and the "beaming, airbrushed-perfect" texture of her skin.<br><br>
+
+Theme: Fabulous / High Culture / Gallery Opening / Sophisticated Style / Black and Gold
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 85mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Champagne Sun" aesthetic, masterpiece quality.<br><br>
+
+The scene: A lush, "emerald-manicured" private garden overlooking a polo field in Kaduna or Abuja at 5:15 PM. The background is a soft, "golden-dappled" blur of "White-Lace" parasols, "Tiered" silver cake stands with macarons, and a "Sleek" white horse in the distance. On a wrought-iron garden table sits a "Condensation-Covered" bucket of champagne and a "Single" discarded lace glove. The air is "breezy," "sweet," and smells of expensive jasmine, "Iced Tea," and the "expensive" scent of sun-warmed silk. The atmosphere is one of elite, high-society "Fabulous" romance.<br><br>
+
+The subject: A 30-year-old handsome Hausa man and his 25-year-old stunningly beautiful Hausa wife, a "Power Couple" or "The Toast of the Town." They are standing close, his hand "possessively" resting on the small of her back as she leans her head "slightly" toward his shoulder. He wears a bespoke "Powder-Blue" polished cotton Babban Riga with "Ice-White" silk embroidery and a matching hula; she wears a "Floral-Bloom" 3D-embellished lace Abaya in shades of peach and cream, with "Exaggerated" organza sleeves. Her face is a masterpiece of "Enchanted Joy"—her eyes are "sparkling" behind gold-rimmed designer sunglasses, her lips are a "soft-coral" satin finish, and her skin is "glowing" with a dewy, high-fashion finish. They look like the cover of a luxury lifestyle magazine. They are "Fabulous" because their love is the most expensive thing in the garden.<br><br>
+
+Symbolism: The "Powder-Blue Babban Riga" represents "A Calm that is Sophisticated." The "3D-Embellished Lace" symbolizes "A Beauty that is Multi-Dimensional." The "Wrought-Iron Table" represents "A Tradition that is Unbreakable." The "Designer Sunglasses" symbolize "A Vision that is Protected and Elite." It is the "Fabulous" of a romance that thrives in the sunlight.<br><br>
+
+Lighting: "The Backlit Sparkle." The primary light is a "warm, honey-gold" afternoon sun hitting them from behind, creating a "shimmering, halo-like" rim-light on her organza sleeves and his white embroidery. A secondary, "soft-peach" fill from the table linens softens the shadows on their faces. The shadows are "long," "soft," and dreamy.<br><br>
+
+Texture: The "wispy, crisp" organza of the peach sleeves, the "slick, starched" cotton of the blue Riga, the "bumpy, delicate" 3D floral embroidery, the "cold, condensation-wet" bucket, and the "beaming, velvet-soft" texture of their skin.<br><br>
+
+Theme: Fabulous / High-Society Romance / Garden Party / Polo Lifestyle / Pastel Luxury
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 50mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Rose Gold Horizon" aesthetic, masterpiece quality.<br><br>
+
+The scene: The "dark-oak" interior of a bespoke tailoring studio or a private humidor lounge in Maitama, Abuja at 7:45 PM. The background is a soft, "mahogany-toned" blur of "Hand-Stitched" leather bags, a "Crystal" decanter with amber liquid, and "Ambient" backlit shelves of premium fabrics. On a velvet tray sits a "Single" discarded measuring tape and a "Gold" signet ring. The air is "heavy," "masculine," and smells of expensive tobacco, "Old Parchment," and the "sharp" citrus of a luxury cologne. The atmosphere is one of undeniable, self-made "Fabulous" success.<br><br>
+
+The subject: A 33-year-old handsome Hausa man, a "Serial Entrepreneur" or "Global Venture Capitalist." He is sitting on the edge of a leather desk, his arm "bent" as he checks his watch, the sleeve of his Kaftan "pushed back" just enough to reveal the hardware. He wears a bespoke "Midnight-Emerald" heavy silk Kaftan with "Ghost-Grey" piping and a matching hula that is "stiff and angular." His face is a masterpiece of "Quiet Ambition"—his eyes are "steely and focused," his beard is "sculpted to perfection," and his skin is "radiant" under the warm interior spotlights. He looks like a man who knows that time is the only currency that matters. He is "Fabulous" because he doesn't just check the time; he commands the hour.<br><br>
+
+The focus: A "Skeleton-Dial" rose gold luxury wristwatch with a "Deep-Brown" alligator strap, the gears "visible and shimmering" under the light. It looks like a "Mechanical Heart" on his wrist.<br><br>
+
+Symbolism: The "Midnight-Emerald Silk" represents "A Growth that is Private and Wealthy." The "Skeleton-Dial Watch" symbolizes "A Transparency in Power." The "Mahogany Interior" represents "A Foundation that is Solid and Aged." The "Gold Signet Ring" symbolizes "A Legacy that is Being Written." It is the "Fabulous" of a man who is the architect of his own destiny.<br><br>
+
+Lighting: "The Watchmaker’s Glow." The primary light is a "warm, focused-golden" spotlight hitting the watch and his knuckles to create "blinding, metallic" glints and "sharp" reflections on the rose gold. A secondary, "soft-blue" rim-light from a window highlights the edge of his Babban Riga. The shadows are "deep," "clean," and masculine.<br><br>
+
+Texture: The "slick, heavy" silk of the emerald Kaftan, the "cold, hard" rose gold of the watch, the "bumpy, rich" alligator leather of the strap, the "grainy, warm" oak of the desk, and the "beaming, pore-perfect" texture of his skin.<br><br>
+
+Theme: Fabulous / Entrepreneurial Success / Luxury Horology / Modern Traditional / Dark Elegance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Mercury Glow" aesthetic, masterpiece quality.<br><br>
+
+The scene: A private, "high-glitz" booth at an ultra-exclusive rooftop restaurant in Lagos or Dubai at 10:15 PM. The background is a soft, "bokeh-drenched" blur of "Deep-Purple" velvet curtains, a "Glistening" wall of champagne bottles, and the "Distant" twinkling city lights through a glass floor. On a black marble table sits a "Sculptural" gold dessert spoon and a "Single" crystal glass of sparkling water with a "Shimmering" mint leaf. The air is "chilled," "perfumed," and smells of white truffles, "Fresh Roses," and the "metallic" crispness of high-end air conditioning. The atmosphere is one of breathtaking, nocturnal "Fabulous" indulgence.<br><br>
+
+The subject: A 25-year-old stunningly beautiful Hausa lady, a "Global Socialite" or "Luxury Connoisseur." She is sitting leaning slightly forward, her chin "resting" on the back of her interlaced fingers, her gaze "playful yet piercing" toward someone off-camera. She wears a bespoke "Liquid-Silver" silk-lame Abaya that looks like "Molten Metal," with "Exquisite" hand-beaded crystal fringes on the cuffs that "shiver" with every movement. Her hijab is a "Sheer-Platinum" chiffon, draped "effortlessly" to reveal a pair of "Blinding" teardrop diamond earrings. Her face is a masterpiece of "Evening Glamour"—her eyes are "cat-flicked" with silver glitter, her lips are a "deep-berry" matte, and her skin is "dewy and radiant" under the candlelight. She looks like a star that has decided to dine among mortals. She is "Fabulous" because she reflects every light in the room.<br><br>
+
+Symbolism: The "Liquid-Silver Lame" represents "A Beauty that is Fluid and Unstoppable." The "Crystal Fringes" symbolize "A Life that is Celebratory in Every Detail." The "Black Marble" represents "A Foundation that is Hard and Expensive." The "Teardrop Diamonds" symbolize "A Luxury that is Both Pure and Heavy." It is the "Fabulous" of a woman who turns a simple dinner into a historic event.<br><br>
+
+Lighting: "The Chandelier Reflection." The primary light is a "sharp, cool-white" sparkle from a crystal chandelier above, hitting the silver fabric to create "blinding, electric" specular highlights. A secondary, "warm-candlelight" glow from the table softens the shadows on her neck. The shadows are "deep," "sharp," and sophisticated.<br><br>
+
+Texture: The "slick, metallic" silk of the silver Abaya, the "wispy, airy" chiffon of the platinum hijab, the "cold, hard" diamond of the earrings, the "smooth, mirror-like" marble of the table, and the "beaming, airbrushed-perfect" texture of her skin.<br><br>
+
+Theme: Fabulous / Luxury Dining / Liquid Silver / High Society / Nocturnal Radiance
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9lost">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Nikon Z9, 85mm f/1.2 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Midas Touch" aesthetic, masterpiece quality.<br><br>
+
+The scene: A grand, "gold-leafed" ballroom during a high-profile wedding reception in Abuja or Kano at 10:00 PM. The background is a soft, "honey-gold" blur of "Ornate" Corinthian columns, "Twinkling" fairy lights draped from the ceiling, and "Distant" figures in vibrant silks. On a white linen-covered banquet table sits a "Heavy" gold-plated charger plate and a "Single" tall glass of sparkling juice with a "Glistening" stirrer. The air is "vibrant," "perfumed," and smells of premium Oud, "Fresh Hibiscus," and the "metallic" scent of heavy embroidery. The atmosphere is one of overwhelming, regal "Fabulous" celebration.<br><br>
+
+The subject: A 35-year-old handsome Hausa man, a "Groom’s Best Friend" or a "High-Profile Guest." He is standing with a "Relaxed Authority," one hand "adjusting" the heavy fold of his Babban Riga over his shoulder as he laughs at a joke off-camera. He wears a bespoke "Royal-Gold" heavy brocade Babban Riga with "Intricate" tone-on-tone embroidery that creates a "3D-Sculpted" effect across the chest. His hula is a "Masterpiece" of hand-woven deep-brown velvet with "Gold-Thread" accents, tilted "sharply" to the left. His face is a masterpiece of "Magnetic Charisma"—his eyes are "bright and laughing," his smile is "perfectly aligned," and his skin is "radiant" under the warm ballroom chandeliers. He looks like a man who was born to be in the center of the light. He is "Fabulous" because even in a room full of stars, he is the sun.<br><br>
+
+Symbolism: The "Royal-Gold Brocade" represents "A Success that is Unapologetic." The "Heavy Folds" symbolize "A Tradition that Carries Weight." The "Gold-Thread Hula" represents "A Mind that is Attuned to Excellence." The "Corinthian Columns" symbolize "A Foundation of Ancient Strength." It is the "Fabulous" of a celebration that knows no limits.<br><br>
+
+Lighting: "The Ballroom Glow." The primary light is a "warm, brilliant-white" chandelier light hitting the gold fabric to create "shimmering, molten" highlights. A secondary, "soft-amber" bounce from the carpet fills the shadows under his jaw. The shadows are "short," "clean," and festive.<br><br>
+
+Texture: The "rough, heavy" brocade of the gold Riga, the "soft, dense" velvet of the hula, the "slick, cool" linen of the tablecloth, the "smooth, cold" metal of the gold charger plate, and the "beaming, pore-perfect" texture of his skin.<br><br>
+
+Theme: Fabulous / Wedding Guest / Royal Gold / Celebration / Magnetic Charisma
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 35mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Ivory Yacht" aesthetic, masterpiece quality.<br><br>
+
+The scene: The polished teak deck of a luxury yacht or a private infinity pool terrace overlooking the Abuja hills at 6:30 PM. The background is a soft, "burning-violet" blur of a "Hazy" horizon, a "Sleek" white railing, and "Distant" city lights starting to flicker like fallen stars. On a low glass table sits a "Condensation-Heavy" crystal pitcher of hibiscus ginger tea and a "Single" white orchid. The air is "warm," "salt-kissed," and smells of expensive Oud, "Fresh Mint," and the "expensive" scent of sun-warmed teak wood. The atmosphere is one of ultimate, serene "Fabulous" achievement.<br><br>
+
+The subject: A 32-year-old handsome Hausa man and his 27-year-old stunningly beautiful Hausa wife, the "Sovereigns of the Skyline." They are standing at the edge of the deck; he is standing behind her, his hands "lightly" resting on her waist as she leans back against him, her head "tilted" to the sky. He wears an "Ice-White" heavy silk Kaftan with "Silver-Chain" embroidery on the cuffs; she wears a "Crystalline-Blue" silk-chiffon Abaya that is "billowing" in the wind like a captured cloud. Her hijab is a "Shimmering" silver-silk wrap, pinned with a "Large" sapphire brooch. Her face is a masterpiece of "Transcendently Happy"—her eyes are "closed" in bliss, her lips are "parted" in a soft smile, and her skin is "illuminated" by the last ray of the sun. They look like they own the horizon. They are "Fabulous" because they’ve reached the top together and the view is perfect.<br><br>
+
+Symbolism: The "Crystalline-Blue Silk" represents "A Peace that is Infinite." The "Ice-White Kaftan" symbolizes "A Success that is Pure." The "Sapphire Brooch" represents "A Loyalty that is Precious." The "Infinity Pool" symbolizes "A Life without Boundaries." It is the "Fabulous" of a dream that has finally become a reality.<br><br>
+
+Lighting: "The Last Light." The primary light is a "fierce, horizontal-magenta" sunset hitting them from the side, creating "long, dramatic" shadows and "burning-gold" rim-lights on their silhouettes. A secondary, "cool-indigo" fill from the sky softens the highlights. The shadows are "long," "sharp," and poetic.<br><br>
+
+Texture: The "wispy, flying" chiffon of the blue Abaya, the "slick, heavy" silk of the white Kaftan, the "grainy, warm" teak of the deck, the "cold, hard" sapphire of the brooch, and the "beaming, satin-flawless" texture of their skin.<br><br>
+
+Theme: Fabulous / Ultimate Luxury / Power Couple / Sunset Serenity / Skyline Success
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="great">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Great</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 35mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Golden Grain" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vast, "limitless" field of ripe, golden guinea corn (Sorghum) on the outskirts of Funtua or Malumfashi at 10:30 AM. The background is a soft, "heat-hazed" blur of a "Solo" baobab tree, a "Dusty" blue tractor, and a "High" clear sky. On a large woven mat sits a "Beaded" terracotta water jug and a "Polished" sickle resting on a pile of stalks. The air is "dry," "vibrant," and smells of sun-dried straw, "Toasted Earth," and the "sweet" scent of success. The atmosphere is one of triumphant, hard-earned "Great" satisfaction.<br><br>
+
+The subject: A 45-year-old handsome Hausa farmer, a "Provider" or "Landowner." He is standing in the center of his harvest, one hand "firmly" gripping a massive bundle of golden stalks over his shoulder, the other hand "wiping" sweat from his brow. He wears a rugged, "Earth-Brown" heavy cotton Kaftan with "Reinforced" stitching and a "Faded-Indigo" hula pushed back. His face is a masterpiece of "Resilient Pride"—his eyes are "squinting" against the sun with a deep-seated joy, his smile is "broad and gap-toothed," and his skin is "glistening" with the honest sweat of labor. He looks like a man who has looked at the earth and made it obey. He is "Great" because his hard work will feed a hundred families.<br><br>
+
+Symbolism: The "Golden Stalks" represent "A Wealth that is Grown, Not Taken." The "Earth-Brown Kaftan" symbolizes "A Soul Rooted in the Soil." The "Solo Baobab" represents "An Enduring Strength." The "Dusty Blue Tractor" symbolizes "The Marriage of Tradition and Progress." It is the "Great" of a man who knows the true value of a day’s work.<br><br>
+
+Lighting: "The High Noon Victory." The primary light is a "harsh, brilliant-yellow" sun hitting the grain to make it "explode in gold" and casting "strong, heroic" shadows across his chest. A secondary, "warm-orange" bounce from the dry ground fills the shadows under his chin. The shadows are "short," "sharp," and powerful.<br><br>
+
+Texture: The "rough, prickly" texture of the corn stalks, the "coarse, durable" cotton of the brown Kaftan, the "grainy, dry" earth of the field, the "cool, porous" terracotta of the jug, and the "beaming, weathered-tough" texture of his skin.<br><br>
+
+Theme: Great / Hard-Earned Success / The Harvest / Provider Pride / Connection to Land
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Sony A7R V, 50mm f/1.2 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Graduate's Glow" aesthetic, masterpiece quality.<br><br>
+
+The scene: The "Sun-Splashed" front porch of a modest, well-kept family home in Zaria or Sokoto at 4:30 PM. The background is a soft, "golden-hour" blur of a "Tall" bougainvillea bush with vibrant purple flowers, a "Proud" cluster of neighbors clapping, and a "Large" hand-painted banner that says "Barka da Kokari" (Congratulations on your effort). On a low wooden bench sits a "Polished" silver tea tray and a "Stack" of celebratory fried snacks (Kosai). The air is "dusty-sweet," "vibrant," and smells of fried bean cakes, "Fresh Ink," and the "metallic" scent of a brand-new graduation gown. The atmosphere is one of overwhelming, communal "Great" pride.<br><br>
+
+The subject: A 23-year-old handsome Hausa man, a "First-Generation Graduate" or "Family Hero." He is standing between his elderly father and mother, one arm "firmly" around each of them, holding a "Gold-Trimmed" degree certificate high in the air with his free hand. He wears a "Sky-Blue" academic gown over a crisp "Snow-White" Kaftan and a matching "Deep-Blue" velvet hula. His face is a masterpiece of "Triumphant Humility"—his eyes are "sparkling" with unshed tears of joy, his smile is "beaming" with a set of perfect white teeth, and his skin is "radiant" under the afternoon sun. He looks like a man who has just unlocked a door for his entire lineage. He is "Great" because his success belongs to everyone who sacrificed for him.<br><br>
+
+Symbolism: The "Gold-Trimmed Certificate" represents "A Key to a New World." The "Sky-Blue Gown" symbolizes "An Ambition that has No Ceiling." The "Purple Bougainvillea" represents "A Beauty that Grows from Hard Ground." The "Snow-White Kaftan" symbolizes "A Character that is Unblemished." It is the "Great" of a victory that was won with books, not bullets.<br><br>
+
+Lighting: "The Achievement Sun." The primary light is a "thick, honey-gold" sunset light hitting his face and the gold seal on the certificate to create "shimmering, white-hot" glints. A secondary, "soft-lavender" fill from the flowers softens the shadows on the parents' faces. The shadows are "long," "soft," and celebratory.<br><br>
+
+Texture: The "slick, synthetic" polyester of the gown, the "stiff, textured" paper of the certificate, the "soft, worn" cotton of the parents' clothes, the "grainy, warm" wood of the porch, and the "beaming, smooth-youthful" texture of his skin.<br><br>
+
+Theme: Great / Educational Victory / Family Pride / Graduation Day / A New Beginning
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3free">Style: Cinematic, ultra-hyper-realistic indoor-to-outdoor photography, shot on Fujifilm GFX100 II, 35mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Entrepreneur’s Key" aesthetic, masterpiece quality.<br><br>
+
+The scene: The entrance of a "Brilliant-White" modern boutique or a tech-hub office in a bustling commercial area of Kano or Abuja at 11:00 AM. The background is a soft, "sun-washed" blur of a "Glistening" glass storefront, a "Lush" potted palm tree, and a "Vibrant" street with yellow tricycles (Keke Napep) passing by. On a small glass table inside sits a "Single" bouquet of yellow roses and a "Brand-New" card reader. The air is "fresh," "electric," and smells of new paint, "Lemon Cleaner," and the "sharp" scent of a celebratory perfume. The atmosphere is one of unstoppable, glass-ceiling-shattering "Great" ambition.<br><br>
+
+The subject: A 26-year-old beautiful Hausa lady, a "Self-Made Entrepreneur" or "Boutique Owner." She is standing in the doorway, her hand "firmly" gripping a "Silver" key ring with a "Bright-Pink" leather tassel, holding it up toward the camera with a "Triumphant" flourish. She wears a bespoke "Turquoise-and-Silver" Atampa dress with "Empowered" puffed shoulders and a matching "Artfully-Wrapped" hijab. Her face is a masterpiece of "Focused Joy"—her eyes are "wide and dancing" with the thrill of ownership, her smile is "radiant and confident," and her skin is "glowing" with the sweat of a job well done. She looks like a woman who has stopped asking for a seat at the table and built her own office instead. She is "Great" because she turned "No" into a business empire.<br><br>
+
+Symbolism: The "Silver Key Ring" represents "The Power to Open Her Own Doors." The "Turquoise Atampa" symbolizes "A Calmness that is Full of Life." The "Glass Storefront" represents "A Vision that is Clear and Boundless." The "Yellow Roses" symbolize "A Friendship with the Future." It is the "Great" of a woman who is her own first investor.<br><br>
+
+Lighting: "The Morning of Success." The primary light is a "sharp, crisp-white" morning sun hitting the silver keys to create "blinding, diamond-like" starbursts. A secondary, "soft-blue" fill from the sky reflects off the glass to highlight her silhouette. The shadows are "short," "clean," and optimistic.<br><br>
+
+Texture: The "slick, cold" metal of the silver key, the "stiff, starched" cotton of the Atampa dress, the "smooth, reflective" glass of the door, the "rough, leafy" texture of the palm, and the "beaming, flawless-matte" texture of her skin.<br><br>
+
+Theme: Great / Female Entrepreneurship / New Business / Opening Day / Financial Freedom
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Leica M11, 35mm f/1.4 Summilux lens, 4:5 vertical aspect ratio, 8K resolution, "The Wisdom Circle" aesthetic, masterpiece quality.<br><br>
+
+The scene: A traditional "Zaure" (entrance hall) or a shaded courtyard under a "Massive" neem tree in Daura or Bauchi at 5:00 PM. The background is a soft, "earth-toned" blur of "Aged" mud walls, "Intricately" carved wooden pillars, and "Four" elderly men sitting on colorful prayer mats, nodding in unison. On a small low table sits a "Polished" slate board and a "Single" wooden ink pot. The air is "still," "hallowed," and smells of dry neem leaves, "Old Paper," and the "earthy" scent of a cooling clay floor. The atmosphere is one of profound, generational "Great" pride.<br><br>
+
+The subject: A 9-year-old handsome Hausa boy, a "Prodigy" or "Future Leader." He is standing tall in the center of the circle, his chest "puffed out" slightly, his right hand "gesturing" with eloquence as he recites a complex passage from memory. He wears a "Crisp-White" starched Kaftan with "Minimalist" navy-blue piping and a "Perfectly-Sized" red knit hula. His face is a masterpiece of "Articulate Focus"—his eyes are "bright and steady," his mouth is "forming" a difficult word with precision, and his skin is "radiant" with a youthful, intellectual glow. He looks like a small bridge connecting the past to the future. He is "Great" because he carries the weight of a thousand years in a ten-pound body.<br><br>
+
+Symbolism: The "Reciting Hand" represents "A Voice that is Finding its Power." The "Red Knit Hula" symbolizes "A Mind that is Being Crowned with Knowledge." The "Aged Mud Walls" represent "A History that is Still Standing." The "Nodding Elders" symbolize "A Validation that is Earned, Not Given." It is the "Great" of a legacy that refuses to be forgotten.<br><br>
+
+Lighting: "The Golden Ray of Truth." The primary light is a "single, thick" shaft of afternoon sunlight piercing through the thatched roof, hitting the boy’s white Kaftan to make it "glow like a beacon." A secondary, "soft-brown" bounce from the clay floor illuminates the respectful faces of the elders. The shadows are "long," "dusty," and reverent.<br><br>
+
+Texture: The "slick, starched" cotton of the white Kaftan, the "rough, ancient" bark of the neem tree, the "grainy, cool" clay of the walls, the "soft, woven" texture of the prayer mats, and the "beaming, smooth-childhood" texture of his skin.<br><br>
+
+Theme: Great / Intellectual Mastery / Generational Wisdom / Traditional Education / Future Leader
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5free">Style: Cinematic, ultra-hyper-realistic indoor-outdoor photography, shot on Sony A7R V, 35mm f/1.4 GM lens, 4:5 vertical aspect ratio, 8K resolution, "The Steam and Spice" aesthetic, masterpiece quality.<br><br>
+
+The scene: A vibrant, "bunting-strewn" outdoor cooking competition stage in a bustling festival ground in Bauchi or Kaduna at 2:30 PM. The background is a soft, "colorful-haze" blur of a "Cheering" crowd, a "Large" digital scoreboard showing a 1st Place trophy, and "Other" steaming giant pots. On a stainless-steel prep table sits a "Single" discarded bunch of Yakuwa leaves and a "Glistening" silver trophy. The air is "thick," "savory," and smells of roasted pumpkin, "Groundnut Oil," and the "spicy-sweet" aroma of Miyan Taushe. The atmosphere is one of hard-won, flavorful "Great" victory.<br><br>
+
+The subject: A 29-year-old beautiful Hausa lady, a "Home Cook Turned Champion" or "Culinary Artist." She is standing behind her signature pot, one hand "pumping" a wooden stirring spoon (Muciya) into the air, the other clutching a "Large" blue-and-gold winner's ribbon. She wears a "Bright-Orange" starched Atampa with "Bold" green circular patterns and a "High-Wrapped" matching turban. Her face is a masterpiece of "Exhausted Triumph"—her eyes are "squinted" in a joyful laugh, a "Single" bead of sweat is rolling down her temple, and her skin is "glowing" from the heat of the hearth. She looks like a woman who just fed the soul of the city. She is "Great" because she turned her grandmother’s recipe into a gold medal.<br><br>
+
+Symbolism: The "Wooden Muciya" represents "A Tool that Feeds the Nation." The "Bright-Orange Atampa" symbolizes "A Passion that is High-Heat." The "Steam Rising" from the pot represents "The Breath of Life." The "Blue-and-Gold Ribbon" symbolizes "An Excellence that is Formally Recognized." It is the "Great" of a taste that brings a whole community together.<br><br>
+
+Lighting: "The Victory Hearth." The primary light is a "bright, overhead" midday sun hitting her orange dress to make it "glow like an ember." A secondary, "warm-flicker" from the gas burners below provides a "fiery" under-light on her jaw. The shadows are "short," "vibrant," and energetic.<br><br>
+
+Texture: The "rough, smoothed" wood of the Muciya, the "stiff, waxy" cotton of the Atampa, the "bubbling, thick" texture of the pumpkin soup, the "cold, polished" silver of the trophy, and the "beaming, flushed-warm" texture of her skin.<br><br>
+
+Theme: Great / Culinary Mastery / Competition Win / Traditional Flavor / Community Heroine
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Nikon Z9, 35mm f/1.4 S lens, 4:5 vertical aspect ratio, 8K resolution, "The Golden Vine" aesthetic, masterpiece quality.<br><br>
+
+The scene: A dry, "cracked-earth" experimental farm plot on the outskirts of Dutse, Jigawa at 11:00 AM. The background is a soft, "dusty-amber" blur of a "Lone" massive baobab tree, a "Faded-Blue" hand pump well, and a "High" clear sky over a distant village. On a woven mat sits a "Single" small, traditional clay pot (Tukunya) for water. The air is "dry," "vibrant," and smells of sun-baked earth, "Sweet Sap," and the "metallic" scent of success. The atmosphere is one of hard-earned, groundbreaking "Great" satisfaction.<br><br>
+
+The subject: A 31-year-old handsome Hausa man, a "Horticultural Innovator" or "Experimental Farmer." He is sitting cross-legged in the dirt, one arm "firmly" wrapped around a truly massive, perfectly ripe watermelon that looks like a "Green Boulder" next to him. His other hand holds a second, slightly smaller melon, while he points to it with a "Triumphant" flourish toward the camera. He wears a rugged, "Faded-Blue" heavy cotton Kaftan with "Reinforced" knee patches and a "Dusty-Brown" hula pushed back on his head. His face is a masterpiece of "Resilient Pride"—his eyes are "squinting" against the sun in a joyful laugh, his smile is "broad and gap-toothed," and his skin is "glistening" with sweat and fine dust. He looks like a man who has tricked the desert into giving up its best. He is "Great" because his experiment will change farming in the region forever.<br><br>
+
+Symbolism: The "Massive Watermelon" represents "A Wealth that is Both Sweet and Rare." The "Experimental Plot" symbolizes "A Vision that is Ahead of its Time." The "Baobab Tree" represents "An Endurance that is Rooted in Tradition." The "Faded-Blue Kaftan" symbolizes "A Practicality that isn't Afraid to Get Dirty." It is the "Great" of a man who grows water where others see dust.<br><br>
+
+Lighting: "The Midday Triumph." The primary light is a "fierce, brilliant-white" noon sun hitting the glossy green skin of the melon to create "blinding, diamond-like" starbursts and high-contrast "shimmering" specular highlights. A secondary, "warm-orange" bounce from the dry earth fills the shadows under his chin. The shadows are "short," "sharp," and powerful.<br><br>
+
+Texture: The "slick, tough" skin of the massive green melon, the "coarse, rugged" cotton of the faded-blue Kaftan, the "dry, cracked" earth of the farm, the "bumpy, porous" texture of the traditional clay pot, and the "beaming, weathered-tough" texture of his skin.<br><br>
+
+Theme: Great / Experimental Farming / Giant Harvest / Drought Resilience / Groundbreaking Success
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7free">Style: Cinematic, ultra-hyper-realistic indoor-outdoor photography, shot on Fujifilm GFX100 II, 35mm f/2.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Steel and Silk" aesthetic, masterpiece quality.<br><br>
+
+The scene: A "Looming" construction site of a modern skyscraper in Abuja’s Central Business District or a massive solar farm in Kano at 9:00 AM. The background is a soft, "industrial-blue" blur of "Towering" yellow cranes, "Glistening" steel beams, and a "High" clear morning sky. On a wooden cable drum sits a "Single" rolled-up blueprint and a "Shiny" white hard hat with a "New" company logo. The air is "electric," "vibrant," and smells of freshly poured concrete, "Ozone," and the "sharp" scent of success. The atmosphere is one of groundbreaking, barrier-shattering "Great" pride.<br><br>
+
+The subject: A 25-year-old breathtakingly beautiful Hausa lady, a "Lead Structural Engineer" or "Industry Pioneer." She is standing with one hand "firmly" on her hip, the other holding a "Sleek" black tablet showing a 3D structural model. She wears a bespoke "Steel-Grey" tailored power suit over a "Crisp-White" high-neck silk blouse and a "Matching" grey hijab tucked neatly into her collar. Her face is a masterpiece of "Intellectual Authority"—her eyes are "sharp and visionary," her smile is "composed and victorious," and her skin is "radiant" under the morning sun. She looks like a woman who doesn't just build structures; she builds the future. She is "Great" because she is the first woman in her family to wear a hard hat as a crown.<br><br>
+
+Symbolism: The "Steel-Grey Suit" represents "A Professionalism that is Unshakeable." The "White Hard Hat" symbolizes "A Protection of the Mind." The "Yellow Cranes" represent "The Heavy Lifting of Ambition." The "3D Structural Model" symbolizes "A Vision that is Multi-Dimensional." It is the "Great" of a woman who turned her "Impossible" into a career.<br><br>
+
+Lighting: "The Morning of Progress." The primary light is a "crisp, brilliant-white" morning sun hitting the steel beams to create "blinding, metallic" reflections and "sharp" highlights on her suit. A secondary, "soft-blue" fill from the sky softens the shadows on her face. The shadows are "short," "clean," and optimistic.<br><br>
+
+Texture: The "fine, woven" wool of the grey suit, the "slick, cold" glass of the tablet, the "smooth, hard" plastic of the hard hat, the "rough, gritty" concrete of the floor, and the "beaming, pore-perfect" texture of her skin.<br><br>
+
+Theme: Great / Female Engineer / Career Breakthrough / Modern Professional / Breaking Glass Ceilings
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8free">Style: Cinematic, ultra-hyper-realistic indoor photography, shot on Hasselblad X2D 100C, 50mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Golden Scroll" aesthetic, masterpiece quality.<br><br>
+
+The scene: The "Ornate" throne room (Kofar Fada) of the Emir’s Palace in Kano or Katsina at 10:00 AM. The background is a soft, "honey-gold" blur of a "Glistening" brass ceiling, "Thick" Persian carpets, and a "Nodding" row of seated elders and traditional title holders. On a low table sits a "Single" discarded white rose petal and a "Polished" silver inkwell. The air is "hallowed," "cool," and smells of expensive Oud, "Fresh Dates," and the "metallic" scent of heavy embroidery. The atmosphere is one of overwhelming, generational "Great" validation.<br><br>
+
+The subject: A 32-year-old handsome Hausa man, a "Grassroots Organizer" or "Village Hero." He is kneeling "respectfully" on one knee before the Emir, holding a "Thick," "Gold-Trimmed" rolled-up certificate tied with a "Royal-Blue" ribbon, a "Blinding" official seal visible. He wears a bespoke "Crimson-Red" heavy silk Babban Riga with "Intricate" silver-thread embroidery that looks like "Vine Patterns" on the collar, and a "Matching" crimson velvet hula. His face is a masterpiece of "Humble Triumph"—his eyes are "sparkling" with a deep-seated pride and gratitude, his smile is "composed and respectful," and his skin is "radiant" under the palace chandeliers. He looks like a man who has carried his village on his shoulders and has just been told it was worth it. He is "Great" because his selflessness will inspire a whole generation.<br><br>
+
+Symbolism: The "Gold-Trimmed Scroll" represents "A Recognition that is Formally Sealed." The "Crimson-Red Silk" symbolizes "A Passion that is High-Heat and Resilient." The "Persian Carpet" represents "A Tradition that is Soft but Unending." The "Royal-Blue Ribbon" symbolizes "A Loyalty that is Royal." It is the "Great" of a victory that belongs to a thousand neighbors.<br><br>
+
+Lighting: "The Emir’s Grace." The primary light is a "warm, brilliant-white" chandelier light hitting the silver thread on his Riga to create "shimmering, molten" highlights. A secondary, "soft-amber" bounce from the carpet fills the shadows under his jaw. The shadows are "short," "clean," and reverent.<br><br>
+
+Texture: The "slick, heavy" silk of the red Riga, the "soft, dense" velvet of the hula, the "stiff, textured" paper of the scroll, the "plush, deep" wool of the carpet, and the "beaming, pore-perfect" texture of his skin.<br><br>
+
+Theme: Great / Community Recognition / National Award / Grassroots Hero / Royal Validation
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9free">Style: Cinematic, ultra-hyper-realistic indoor-outdoor photography, shot on Hasselblad X2D 100C, 35mm f/2.2 lens, 4:5 vertical aspect ratio, 8K resolution, "The Alphabet Bloom" aesthetic, masterpiece quality.<br><br>
+
+The scene: A transformed, "Sky-Blue" and "Sun-Yellow" painted community literacy center in a semi-urban neighborhood of Bauchi or Gombe at 10:30 AM. The background is a soft, "bright" blur of a "Colorful" alphabet mural, "Handmade" bookshelves filled with new books, and a "Group" of five diverse, smiling adult students holding their first primers. On a central low table sits a "Large" ribbon-cutting pair of "Golden" scissors and a "Single" discarded green balloon. The air is "fresh," "electric," and smells of new paper, "Lemon Chalk," and the "spicy" scent of success. The atmosphere is one of overwhelming, life-changing "Great" triumph.<br><br>
+
+The subject: A 36-year-old beautiful Hausa lady, an "Educator" or "Community Advocate." She is standing in the doorway, her hands "raised" with open palms in a "Jubilant" pose, looking directly at the camera with a "Triumphant" gaze. She wears a bespoke "Turquoise-and-Silver" starched Atampa with "Bold" geometric patterns and a matching "Artfully-Wrapped" hijab that flows "slightly" in the breeze. Her face is a masterpiece of "Focused Joy"—her eyes are "wide and dancing" with the thrill of her dream achieved, her smile is "beaming and confident," and her skin is "glowing" with the sweat of a long battle. She looks like a woman who didn't just open a door; she built a whole bridge. She is "Great" because she is illuminating a thousand minds.<br><br>
+
+Symbolism: The "Golden Scissors" represent "A Precision that Cuts Through Barriers." The "Alphabet Mural" symbolizes "A Voice that is Being Found." The "Turquoise Atampa" symbolizes "A Calmness that is Full of Life." The "Smiling Students" represent "A Success that is Multiplied." It is the "Great" of a woman who turned her "Impossible" into a classroom.<br><br>
+
+Lighting: "The Morning of Minds." The primary light is a "sharp, crisp-white" morning sun hitting the turquoise fabric to create "shimmering, molten" highlights. A secondary, "soft-blue" fill from the sky reflects off the chalkboards to highlight her profile. The shadows are "short," "clean," and optimistic.<br><br>
+
+Texture: The "stiff, waxy" cotton of the turquoise Atampa, the "rough, chalky" surface of the chalkboard, the "smooth, reflective" metal of the golden scissors, the "soft, worn" paper of the books, and the "beaming, flawless-matte" texture of her skin.<br><br>
+
+Theme: Great / Literacy Center Open / Female Educator / Community Triumph / Educational Victory
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10free">Style: Cinematic, ultra-hyper-realistic outdoor photography, shot on Hasselblad X2D 100C, 35mm f/1.8 lens, 4:5 vertical aspect ratio, 8K resolution, "The Empire Sun" aesthetic, masterpiece quality.<br><br>
+
+The scene: The expansive, "limestone-paved" terrace of a newly completed private estate or a luxury hilltop resort in the Asokoro district of Abuja at 5:45 PM. The background is a soft, "golden-ember" blur of a "Modernist" infinity pool, "Lush" tiered gardens, and the "Distant" panoramic view of the city’s skyline under a soft purple haze. On a minimalist outdoor table sits a "Single" heavy glass paperweight over a set of architectural plans and two "Frosted" glasses of freshly pressed pomegranate juice. The air is "breezy," "serene," and smells of damp earth, "Night-Blooming Jasmine," and the "expensive" scent of success. The atmosphere is one of ultimate, peaceful "Great" achievement.<br><br>
+
+The subject: A 38-year-old handsome Hausa man and his 32-year-old stunningly beautiful Hausa wife, "The Visionaries." They are standing at the edge of the terrace, looking out over the city. He has one hand "firmly" in his pocket, the other arm "draped" protectively around her shoulders; she has her hand "resting" on his chest, holding a small "Golden" shovel ornament from the groundbreaking ceremony. He wears a bespoke "Slate-Grey" heavy polished cotton Kaftan with "Ghost-White" embroidery; she wears a "Desert-Rose" silk-crepe Abaya with "Intricate" 3D-lace detailing on the hem and a matching chiffon hijab. Their faces are masterpieces of "Shared Satisfaction"—their eyes are "calm and expansive," their smiles are "knowing and deep," and their skin is "bronzed" by the setting sun. They look like a couple who didn't just build a house, but a dynasty. They are "Great" because they built their dream side-by-side.<br><br>
+
+Symbolism: The "Slate-Grey Kaftan" represents "A Strength that is Solid as Stone." The "Desert-Rose Silk" symbolizes "A Beauty that Thrives in any Climate." The "Golden Shovel Ornament" represents "The First Step of a Long Journey." The "Infinity Pool" symbolizes "A Success that has No Boundary." It is the "Great" of two souls who became one powerhouse.<br><br>
+
+Lighting: "The Sovereign Sunset." The primary light is a "thick, horizontal-gold" sun hitting them from the side, creating "shimmering, metallic" highlights on her lace and his embroidery. A secondary, "cool-indigo" fill from the sky softens the shadows on their faces. The shadows are "long," "poetic," and decisive.<br><br>
+
+Texture: The "slick, cool" silk-crepe of the rose Abaya, the "stiff, smooth" cotton of the grey Kaftan, the "rough, heavy" texture of the limestone floor, the "cold, polished" glass of the table, and the "beaming, satin-flawless" texture of their skin.<br><br>
+
+Theme: Great / Power Couple / Architectural Achievement / Sunset Success / Family Legacy
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Theme:|Places:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

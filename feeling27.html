@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling1 – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0d0; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="focused">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Focused</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1happy">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 90mm f/2.8 Macro G OSS. Focus on "Glossy-Black-Ink-Beads" on a reed pen and the "Steady-Tension" of her fingertips, background a soft luxury-study-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Dead-Silent" private atelier in Kano at 11:30 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" hanging parchment scrolls and a single burning incense stick. In the foreground, a "Thick-Hand-Cut-Bamboo-Qalam" is "Hovering-Millimeters-above-a-Gold-Flaked-Paper." Her "Right-Hand" is "Fingers-Griping-the-Reed-with-Absolute-Rigidity-to-Let-the-Last-Drop-of-Ink-Settle-Precisely."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Silent Scribe." She is "Sitting-at-the-Low-Desk-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Perfect-Stillness." Her right hand is "Touching-the-Bamboo-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Paper-Margin-to-Keep-it-from-Breathing," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement." Her face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Blurred-Static" as she stares at the unfinished letter.
+
+Symbolism: The "Bamboo Qalam" represents "The Precision of her Lifelong Career." The "Gold Flakes" (foreground) symbolizes "The High-Value of her Attention." The "Incense Smoke" (background) represents "The Passing of Time she has Ignored."
+
+Lighting: "The Sharp-Task-and-Shadow-Glow." Primary light is a "thick, clinical-white" desk-lamp-leak hitting her jaw and the pen. Secondary "weak-indigo" moonlight-leak fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, wet" ink, the "rough, fibrous" paper, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Ink.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2happy">Style: Cinematic, ultra-hyper-realistic macro photography, Sony A7R V, 90mm f/2.8 Macro G OSS. Focus on "Glowing-Green-Solder-Points" and the "Steady-Tension" of his fingertips on a needle-thin probe, background a soft hardware-lab-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Oxygen-Thin" private clean-room in a Lagos tech-hub at 2:00 AM. The background is a "Deep-Slate-and-Cyan" blur of "Multiple" high-definition monitors and a single humming server rack. In the foreground, a "Tiny-Exposed-Circuit-Board" is "Fixed-in-a-Brass-Vice-with-Microscopic-Copper-Traces." His "Right-Hand" is "Fingers-Griping-the-Soldering-Iron-with-Absolute-Rigidity-to-Let-the-Last-Lead-Drop-Settle-Precisely."
+
+The subject: A 28-year-old handsome Hausa man, "The Hardware Sage." He is "Sitting-at-the-Steel-Desk-with-Shoulders-Rounded-and-Head-Held-Low," his body "Tensed-with-the-Exertion-of-Perfect-Stillness." His right hand is "Touching-the-Tool-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Workbench-to-Keep-from-Breathing," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement." His face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Amber-Reflections" as he stares at a microscopic fault.
+
+Symbolism: The "Circuit Board" represents "The Invisible Complexity of his Success." The "Milk Shadda" symbolizes "The Pristine Reputation he has in the Digital-World." The "Cyan Glow" (background) represents "The Cold Logic of his Career."
+
+Lighting: "The Sharp-Task-and-Monitor-Glow." Primary light is a "thick, clinical-white" desk-lamp-leak hitting his jaw and the copper. Secondary "weak-cyan" screen-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" steel, the "rough, gritty" solder, the "heavy, limp" cotton, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Circuit.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3happy">Style: Cinematic, ultra-hyper-realistic sports-adventure photography, Sony A7R V, 135mm f/1.8 GM. Focus on "Frayed-Nock-Fibers" on the string and the "Steady-Tension" of her fingertips against the cold riser, background a soft outdoor-range-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Air-Stagnant" professional archery range in Abuja at 6:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" straw targets and a single distant yellow center-ring. In the foreground, a "Cold-Matte-Black-Competition-Bow-Riser" is "Griped-Firmly-with-a-Stabilizer-Rod-Pointing-Forward." Her "Right-Hand" is "Fingers-Hooked-Slackly-around-the-D-Loop-to-Let-the-Last-Muscle-Twitch-Settle-Precisely."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Predator Scribe." She is "Standing-Parallel-to-the-Firing-Line-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Perfect-Stillness." Her right hand is "Touching-the-String-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Grip-to-Keep-from-Breathing," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement-in-the-Wind." Her face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Blurred-Static" as she stares at the target 70 meters away.
+
+Symbolism: The "Bow String" represents "The Tension between her Goal and her Current Reality." The "Milk Abaya" symbolizes "The Pure Reputation she must Hit the Mark to Defend." The "Distant Gold" (background) represents "The High-Value of her Aim."
+
+Lighting: "The Sharp-Task-and-Dawn-Glow." Primary light is a "thick, clinical-grey" pre-dawn-leak through the range-hangar hitting her jaw and the bow. Secondary "weak-indigo" shadow-fill fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" carbon fiber, the "rough, fibrous" string, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Target.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4happy">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 85mm f/1.4 GM lens. Tight shallow-depth-of-field shot, focus on "Polished-Rosewood-Grain" on the king piece and the "Steady-Tension" of his fingertips, background a soft luxury-club-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Air-Stagnant" private chess parlor in a Kaduna members-club at 10:45 PM. The background is a "Deep-Sepia-and-Slate" blur of "Multiple" antique clocks and a single abandoned tea-cup. In the foreground, a "Heavy-Weighted-Rosewood-King" is "Hovering-Millimeters-above-the-E4-Square." His "Right-Hand" is "Fingers-Griping-the-Base-with-Absolute-Rigidity-to-Let-the-Last-Doubt-Settle-Precisely."
+
+The subject: A 28-year-old handsome Hausa man, "The Strategy Sage." He is "Sitting-at-the-Ebony-Table-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Perfect-Stillness." His right hand is "Touching-the-Wood-to-Anchor-his-Will," while his left hand is "Pressing-into-his-own-Knee-to-Keep-from-Breathing," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement." His face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Amber-Reflections" as he stares at the board.
+
+Symbolism: The "Rosewood King" represents "The Weight of his Final Career Decision." The "Milk Shadda" symbolizes "The Pristine Image of a Mastermind." The "Abandoned Tea" (background) represents "The Physical Needs he has Forgotten."
+
+Lighting: "The Sharp-Task-and-Shadow-Glow." Primary light is a "thick, clinical-white" overhead-lamp-leak hitting his jaw and the chess piece. Secondary "weak-orange" wall-sconce-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" polished wood, the "rough, heavy" cotton-damask, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Square.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5happy">Style: Cinematic, ultra-hyper-realistic medical photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Cold-Stainless-Steel-Reflections" on the scalpel blade and the "Steady-Tension" of her fingertips, background a soft sterile-operating-theater-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Sterile-and-Chilled" modern surgical suite in Abuja at 3:00 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" vital-sign monitors and a single overhead surgical-light-array. In the foreground, a "Silver-Precision-Scalpel" is "Held-Millimeters-above-the-Incision-Site." Her "Right-Hand" is "Fingers-Griping-the-Handle-with-Absolute-Rigidity-to-Maintain-the-Trajectory-of-the-Cut."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Life-Saver." She is "Standing-over-the-Table-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Perfect-Stillness." Her right hand is "Touching-the-Metal-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Surgical-Drape-to-Keep-it-from-Shifting," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya-Style-Surgical-Gown" and a "Matching-Hijab-and-Cap" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement." Her face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Amber-Reflections" as she stares at the surgical field.
+
+Symbolism: The "Silver Scalpel" represents "The Thin Margin between her Success and Failure." The "Milk White Gown" symbolizes "The Purity of her Intention to Heal." The "Vital-Sign Monitors" (background) represents "The Constant Rhythms of Life she is Protecting."
+
+Lighting: "The Sharp-Surgical-and-Monitor-Glow." Primary light is a "thick, clinical-white" overhead-leak hitting her jaw and the blade. Secondary "weak-teal" screen-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" steel, the "rough, textured" latex gloves, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Scalpel.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6happy">Style: Cinematic, ultra-hyper-realistic indoor shooting range photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Chequered-Steel-Texture" on the gun grip and the "Steady-Tension" of his fingertips, background a soft industrial-range-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Gunpowder-Thin" private indoor firing lane in a Kano security facility at 6:30 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" spent shell casings on the floor and a single glowing red "EXIT" sign. In the foreground, a "Large-Black-Service-Pistol" (Glock 19) is "Pointed-Downrange-with-Absolute-Horizontal-Stillness." His "Right-Hand" is "Griping-the-Textured-Handle-with-Absolute-Rigidity-to-Anchor-the-Recoil-Before-it-Happens."
+
+The subject: A 28-year-old handsome Hausa man, "The Marksman Specialist." He is "Standing-in-a-Stable-Two-Handed-Stance-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Perfect-Stillness." His right hand is "Touching-the-Frame-to-Anchor-his-Will," while his left hand is "Cupping-the-Grip-to-Reinforce-the-Stability," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement-in-the-Wind." His face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Amber-Reflections" as he stares through the iron sights.
+
+Symbolism: The "Iron Sights" represent "The Perfect Alignment of his Opportunity and Will." The "Milk Shadda" symbolizes "The Disciplined Image of a Professional." The "Red Exit Sign" (background) represents "The External Calm he maintains inside the chaos."
+
+Lighting: "The Sharp-Surgical-and-Industrial-Glow." Primary light is a "thick, clinical-grey" overhead-leak hitting his jaw and the steel slide. Secondary "weak-orange" booth-light fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "rough, chequered" polymer, the "slick, freezing" steel, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Shot.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7happy">Style: Cinematic, ultra-hyper-realistic indoor music-studio photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Glossy-Spruce-Top-Grain" on the acoustic guitar and the "Steady-Tension" of her fingertips, background a soft luxury-lounge-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Dead-Silent" private recording studio lounge in Abuja at 10:15 PM. The background is a "Deep-Slate-and-Cyan" blur of "Multiple" professional microphones and a single glowing audio-mixer board. In the foreground, a "Large-Natural-Spruce-Acoustic-Guitar" is "Held-Millimeters-above-the-First-Strum-Position." Her "Right-Hand" is "Griping-the-Neck-with-Absolute-Rigidity-to-Let-the-Last-Muscle-Twitch-Settle-Precisely-into-a-Chord."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Melodic Soul." She is "Sitting-on-the-Plush-Rug-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Perfect-Stillness." Her right hand is "Touching-the-Wood-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Guitar-Body-to-Keep-from-Breathing," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement-in-the-Air." Her face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Blurred-Static" as she stares at the first fret.
+
+Symbolism: The "Acoustic Guitar" represents "The Vibrations of her Inner Success." The "Milk Abaya" symbolizes "The Pure Reputation of a Mastermind." The "Audio Mixer" (background) represents "The External Noise she is Ignoring."
+
+Lighting: "The Sharp-Task-and-Monitor-Glow." Primary light is a "thick, clinical-white" overhead-leak hitting her jaw and the spruce top. Secondary "weak-cyan" screen-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, wet" gloss wood, the "rough, dry" metal strings, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Vibration.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8happy">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 35mm f/1.4 GM. Focus on "Glowing-Green-and-Red-Text" and the "White-Pressure-of-his-Fingertips" on the desk edge, background a soft open-plan-office-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Air-Stagnant" private high-frequency trading office in a Lagos finance hub at 3:30 PM (pre-market close). The background is a "Deep-Obsidian-and-Gold" blur of "Multiple" colleagues staring silently at their screens and a single coffee cup. In the foreground, a "Wall-of-Six-Curved-Monitors" is "Flooding-the-Room-with-Flashing-Data-Graphs." His "Right-Hand" is "Fingers-Griping-the-Desk-Base-with-Absolute-Rigidity-to-Steady-his-Breathing-Before-the-Final-Trade-Confirmation."
+
+The subject: A 28-year-old handsome Hausa man, "The Market Sage." He is "Standing-Parallel-to-the-Desk-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Rigidity." His right hand is "Touching-the-Wood-to-Anchor-his-Will," while his left hand is "Hanging-Ready-at-his-Side-to-Touch-the-Mouse," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement." His face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Static-Green-Reflections" as he stares at the screen.
+
+Symbolism: The "Data Graphs" represent "The Invisible Chaos of his Career." The "Milk Shadda" symbolizes "The Disciplined Reputation of his Financial Success." The "Coffee Cup" (background) represents "The Physical Needs he has Ignored."
+
+Lighting: "The Screen-and-Office-Glow." Primary light is a "thick, clinical-green-and-red" monitor-leak hitting his jaw and the desk. Secondary "weak-orange" office-sconce-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, wet" monitor glass, the "rough, dry" wooden desk, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Second.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9happy">Style: Cinematic, ultra-hyper-realistic macro photography, Sony A7R V, 90mm f/2.8 Macro G OSS. Focus on "Glowing-Cyan-Brilliance" of the diamond and the "Steady-Tension" of her fingertips holding the metal tweezers, background a soft jewelry-atelier-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Dead-Silent" high-security diamond cutting studio in a Dutse facility at 11:30 PM. The background is a "Deep-Teal-and-Indigo" blur of "Multiple" cutting wheels and a single lit magnifier. In the foreground, a "Large-Brilliant-Facet-Diamond" is "Fixed-in-the-Grip-of-Surgical-Stainless-Steel-Tweezers." Her "Right-Hand" is "Griping-the-Metal-Shaft-with-Absolute-Rigidity-to-Let-the-Last-Muscle-Twitch-Settle-Precisely-Before-the-Final-Cut."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Gem Scribe." She is "Standing-over-the-Dop-Table-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Perfect-Stillness." Her right hand is "Touching-the-Metal-to-Anchor-her-Will," while her left hand is "Pressing-into-her-own-Thigh-to-Steady-her-Heart-Rate," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement-in-the-Air." Her face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Blurred-Cyan-Static" as she stares at the raw crystal.
+
+Symbolism: The "Facet Diamond" represents "The Brilliant Complexity of her Success." The "Milk Abaya" symbolizes "The Pure Reputation of a Mastermind." The "Magnifier" (background) represents "The External Noise she is Ignoring."
+
+Lighting: "The Sharp-Task-and-Brilliance-Glow." Primary light is a "thick, clinical-white" overhead-leak hitting her jaw and the diamond. Secondary "weak-indigo" shadow-fill fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" diamond and metal, the "rough, dry" cutting table, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Facet.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10happy">Style: Cinematic, ultra-hyper-realistic indoor music-studio photography, Sony A7R V, 85mm f/1.4 GM. Focus on "Buffed-Worn-Felt" of the baton handle and the "Steady-Tension" of his fingertips on the aged manuscript, background a soft recording-studio-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Warmly-Lit," "Dead-Silent" private conductor’s lounge in a Kaduna music academy at 1:30 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" vintage sound-mixing boards and a single glowing red "ON AIR" sign. In the foreground, a "Heavy-Aged-Vellum-Symphony-Score" is "Open-on-the-Wooden-Stand-with-Handwritten-Notes-in-Faded-Black-Ink." His "Right-Hand" is "Fingers-Griping-the-Baton-Handle-with-Absolute-Rigidity-to-Maintain-the-Stillness-Before-the-Downbeat."
+
+The subject: A 28-year-old handsome Hausa man, "The Strategy Sage." He is "Sitting-at-the-Ebony-Desk-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Perfect-Stillness." His right hand is "Touching-the-Baton-to-Anchor-her-Will," while his left hand is "Pressing-into-the-Manuscript-to-Keep-from-Breathing," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement-in-the-Air." His face shows "Absolute Exhilarated Focus"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Amber-Reflections" as he stares at a difficult rest.
+
+Symbolism: The "Handwritten Score" represents "The High-Value of his Life’s Career-Choice." The "Milk Shadda" symbolizes "The Pure Reputation of his Musical Genius." The "Red On Air Sign" (background) represents "The High-Performance of his Professional-Life."
+
+Lighting: "The Sharp-Task-and-Studio-Glow." Primary light is a "thick, clinical-white" desk-lamp-leak hitting his jaw and the baton. Secondary "weak-red" screen-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" conductor's baton and wood stand, the "rough, fibrous" vellum paper, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Focused / Success / The Trial of the Rest.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="caring">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Caring</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Individual-Water-Droplets" on a damp cloth and the "White-Pressure-of-her-Fingertips" on the silver bowl rim, background a soft luxury-bedroom-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private master suite in a Kano villa at 3:15 AM. The background is a "Deep-Indigo-and-Gold" blur of "Multiple" medicine bottles on a nightstand and a single sleeping figure (out of focus) in a plush bed. In the foreground, a "Hand-Engraved-Silver-Bowl" is "Filled-with-Ice-and-Clear-Water." Her "Right-Hand" is "Fingers-Submerged-Slackly-in-the-Freezing-Water-as-if-to-Absorb-the-Heat-from-the-Room."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Compassionate Guardian." She is "Sitting-on-the-Edge-of-the-Bed-with-Shoulders-Rounded-and-Head-Held-Low," her body "Relaxed-with-the-Weight-of-Deep-Empathy." Her right hand is "Touching-the-Ice-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Damp-White-Towel-to-Keep-it-from-Dripping," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Softly-Draped-and-Catching-the-Dim-Nightlight-Glow." Her face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as she stares at her ailing younger sibling.
+
+Symbolism: The "Silver Bowl" represents "The Value of her Unwavering Devotion." The "Milk Abaya" symbolizes "The Pure Reputation of her Family Role." The "Medicine Bottles" (background) represents "The Constant Care of her Successful Household."
+
+Lighting: "The Incandescent-and-Night-Glow." Primary light is a "thick, honey-warm" lamp-leak hitting her jaw and the water. Secondary "weak-blue" moonlight-leak fills her neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, freezing" silver and ice, the "rough, wet" cotton towel, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Fever.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Warm-Glass-Reflections" on a tea-cup and the "Steady-Tension" of his fingertips, background a soft luxury-bedroom-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private master suite in an Abuja estate at 2:15 AM. The background is a "Deep-Slate-and-Indigo" blur of "Multiple" silk pillows and a single sleeping woman (out of focus) under a heavy duvet. In the foreground, a "Small-Steaming-Glass-of-Honeyed-Tea" is "Held-Millimeters-above-the-Nightstand-Surface." His "Right-Hand" is "Fingers-Griping-the-Base-with-Absolute-Rigidity-to-Avoid-the-Clink-of-Glass-on-Marble."
+
+The subject: A 28-year-old handsome Hausa man, "The Devoted Protector." He is "Sitting-on-the-Edge-of-the-Bed-with-Shoulders-Rounded-and-Head-Held-Low," his body "Relaxed-with-the-Weight-of-Deep-Empathy." His right hand is "Touching-the-Warm-Glass-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Soft-Duvet-to-Keep-it-from-Rustling-as-she-Sleeps," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as he stares at his resting wife.
+
+Symbolism: The "Steaming Tea" represents "The Warmth of his Unwavering Devotion." The "Milk Shadda" symbolizes "The Pure Character of a Successful Husband." The "Silk Pillows" (background) represents "The High-Value of the Peace he provides her."
+
+Lighting: "The Incandescent-and-Night-Glow." Primary light is a "thick, honey-warm" bedside-lamp-leak hitting his jaw and the tea. Secondary "weak-indigo" night-light-leak fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, warm" glass, the "rough, heavy" cotton-damask, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Watch.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Teething-Marks-on-the-Wood" and the "White-Pressure-of-her-Fingertips" on the cradle's edge, background a soft luxury-nursery-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private nursery in a Kano family home at 1:15 AM. The background is a "Deep-Teal-and-Indigo" blur of "Multiple" plush toys and a single glowing star-projector on the ceiling. In the foreground, a "Hand-Carved-Mahogany-Cradle" is "Holding-a-Sleeping-Infant-Wrapped-in-White-Muslin." Her "Right-Hand" is "Fingers-Griping-the-Wooden-Railing-with-Absolute-Rigidity-to-Steady-the-Rhythm-of-the-Rocking."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Life-Giver." She is "Kneeling-on-the-Plush-Rug-with-Shoulders-Rounded-and-Head-Held-Low," her body "Relaxed-with-the-Weight-of-Deep-Empathy." Her right hand is "Touching-the-Smooth-Wood-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Soft-Mattress-to-Keep-from-Breathing-too-Loudly," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Softly-Draped-and-Catching-the-Star-Projector-Glow." Her face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as she stares at her sleeping child.
+
+Symbolism: The "Mahogany Cradle" represents "The Solid-Foundation of her Family’s Success." The "Milk Abaya" symbolizes "The Honesty she Provides her Household." The "Star Projector" (background) represents "The Infinite-Dreams she has for her Children."
+
+Lighting: "The Star-Projector-and-Night-Glow." Primary light is a "thick, honey-warm" night-lamp-leak hitting her jaw and the cradle. Secondary "weak-indigo" star-glow fills her neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, polished" wood, the "rough, soft" muslin cotton, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Cradle.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Individual-Wool-Fibers" on a thick knit shawl and the "Steady-Tension" of his fingertips, background a soft luxury-parlor-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private living room in a Kano mansion at 9:15 PM. The background is a "Deep-Mahogany-and-Slate" blur of "Multiple" silver tea-sets and a single sleeping elderly man (his father, out of focus) in a high-backed armchair. In the foreground, a "Heavy-Hand-Knit-Grey-Wool-Shawl" is "Being-Adjusted-Millimeters-at-a-Time-to-Cover-his-Father's-Shoulders." His "Right-Hand" is "Fingers-Griping-the-Woolen-Edge-with-Absolute-Rigidity-to-Avoid-Waking-the-Old-Man."
+
+The subject: A 28-year-old handsome Hausa man, "The Loyal Successor." He is "Standing-over-the-Chair-with-Shoulders-Rounded-and-Head-Held-Low," his body "Relaxed-with-the-Weight-of-Deep-Empathy." His right hand is "Touching-the-Coarse-Wool-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Back-of-the-Chair-to-Steady-his-Weight-as-he-Leans-In," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as he stares at his aging father.
+
+Symbolism: The "Wool Shawl" represents "The Warmth of his Gratitude for his Upbringing." The "Milk Shadda" symbolizes "The Integrity of the Man his Father Raised." The "Silver Tea-Set" (background) represents "The External Success he provides his Parents."
+
+Lighting: "The Incandescent-and-Shadow-Glow." Primary light is a "thick, honey-warm" wall-sconce-leak hitting his jaw and the wool. Secondary "weak-indigo" night-light-leak fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "rough, dry" wool, the "slick, polished" wood, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Shawl.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5sad">Style: Cinematic, ultra-hyper-realistic outdoor-veranda photography, Sony A7R V, 90mm f/2.8 Macro G OSS. Focus on "Individual-Wicker-Strands" on a basket rim and the "Steady-Tension" of her fingertips, background a soft luxury-garden-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Blue-Hued" private veranda in a Kano estate at 6:45 PM. The background is a "Deep-Indigo-and-Slate" blur of "Multiple" bougainvillea vines and a single distant garden-lantern. In the foreground, a "Woven-Wicker-Recovery-Basket" is "Resting-on-the-Stone-Floor-with-a-Small-Injured-Falcon-on-Soft-Cloths." Her "Right-Hand" is "Fingers-Griping-the-Woven-Rim-with-Absolute-Rigidity-to-Maintain-Stillness-for-the-Bird."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Life-Preserver." She is "Kneeling-on-the-Tiles-with-Shoulders-Rounded-and-Head-Held-Low," her body "Relaxed-with-the-Weight-of-Deep-Empathy." Her right hand is "Touching-the-Rough-Wicker-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Soft-Towel-to-Keep-the-Bird-from-Struggling," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Softly-Draped-and-Catching-the-Blue-Dusk-Light." Her face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as she stares at the fragile creature.
+
+Symbolism: The "Wicker Basket" represents "The Shelter she provides for the Vulnerable." The "Milk Abaya" symbolizes "The Pure Reputation of her Kindness." The "Garden Lantern" (background) represents "The External Success she uses to Protect Others."
+
+Lighting: "The Twilight-and-Lantern-Glow." Primary light is a "thick, clinical-blue" dusk-leak hitting her jaw and the basket. Secondary "weak-orange" lantern-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "rough, dry" wicker, the "slick, freezing" stone tiles, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Wing.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Frayed-Fiber-Edges" on a handwritten letter and the "Steady-Tension" of his fingertips on the paper, background a soft luxury-library-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private study in a Kano mansion at 11:45 PM. The background is a "Deep-Mahogany-and-Slate" blur of "Multiple" legal-ledgers and a single flickering desk-candle. In the foreground, a "Heavy-Vellum-Paper-Letter" is "Resting-Open-on-the-Flat-Palm-of-his-Right-Hand." His "Right-Hand" is "Fingers-Griping-the-Edge-with-Absolute-Rigidity-to-Absorb-the-Words-of-his-Younger-Brother’s-Struggle."
+
+The subject: A 28-year-old handsome Hausa man, "The Anchoring Mentor." He is "Sitting-at-the-Ebony-Desk-with-Shoulders-Rounded-and-Head-Held-Low," his body "Relaxed-with-the-Weight-of-Deep-Empathy." His right hand is "Touching-the-Paper-to-Anchor-his-Will," while his left hand is "Pressing-into-his-own-Temple-to-Steady-his-Thoughts," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as he reads about his brother's failures and plans how to help him.
+
+Symbolism: The "Handwritten Letter" represents "The Emotional Burden of his Success." The "Milk Shadda" symbolizes "The Pristine Example he sets for his Siblings." The "Flickering Candle" (background) represents "The Guidance he provides in the Dark."
+
+Lighting: "The Candle-and-Shadow-Glow." Primary light is a "thick, honey-warm" candle-flicker hitting his jaw and the vellum. Secondary "weak-indigo" moonlight-leak fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "rough, fibrous" paper, the "slick, polished" wood, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Letter.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 90mm f/2.8 Macro G OSS. Focus on "Oil-Stained-Vellum-Texture" on an old recipe book and the "White-Pressure-of-her-Fingertips" on the spine, background a soft luxury-kitchen-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private modern kitchen in a Kano estate at 10:45 PM. The background is a "Deep-Indigo-and-Gold" blur of "Multiple" copper pots and a single bowl of freshly ground spices. In the foreground, an "Old-Hand-Bound-Leather-Recipe-Book" is "Open-to-a-Page-with-Faded-Arabic-and-Hausa-Script." Her "Right-Hand" is "Fingers-Griping-the-Edge-with-Absolute-Rigidity-to-Absorb-the-Wisdom-of-her-Late-Grandmother."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Legacy Keeper." She is "Sitting-at-the-Marble-Island-with-Shoulders-Rounded-and-Head-Held-Low," her body "Relaxed-with-the-Weight-of-Deep-Empathy." Her right hand is "Touching-the-Paper-to-Anchor-her-Will," while her left hand is "Pressing-into-her-own-Chest-to-Steady-her-Heart-Rate," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Softly-Draped-and-Catching-the-Warm-Under-Cabinet-Glow." Her face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as she memorizes the flavor of a memory.
+
+Symbolism: The "Stained Page" represents "The High-Value of her Invisible Heritage." The "Milk Abaya" symbolizes "The Pure Reputation of the Woman she became." The "Copper Pots" (background) represents "The Physical Tools of her Successful Household."
+
+Lighting: "The Under-Cabinet-and-Shadow-Glow." Primary light is a "thick, honey-warm" LED-strip-leak hitting her jaw and the vellum. Secondary "weak-blue" night-light-leak fills her neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, cold" marble, the "rough, dry" aged paper, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Recipe.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8sad">Style: Cinematic, ultra-hyper-realistic outdoor night photography, Sony A7R V, 90mm f/2.8 Macro G OSS. Focus on "Individual-Hairs-of-Dog-Fur" and the "White-Pressure-of-his-Fingertips" on its chest, background a soft luxury-backyard-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Moonlight-Bathed" private backyard patio in a Kano mansion at 12:45 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" bougainvillea vines and a single warm, golden patio lantern. In the foreground, a "Small-Scruffy-Aged-Lurcher-Dog" is "Resting-Slackly-in-his-Lap-on-the-Stone-Bench." His "Right-Hand" is "Fingers-Griping-the-Soft-Fur-of-its-Chest-with-Absolute-Rigidity-to-Absorb-the-Animal's-Silent-Pain."
+
+The subject: A 28-year-old handsome Hausa man, "The Quiet Protector." He is "Sitting-on-the-Patio-with-Shoulders-Rounded-and-Head-Held-Low," his body "Relaxed-with-the-Weight-of-Deep-Empathy." His right hand is "Touching-the-Fur-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Soft-Paws-to-Steady-its-Breathing," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as he stares at the animal that just lost its owner, his grandfather.
+
+Symbolism: The "Aged Dog" represents "The Loyalty of his Invisible Heritage." The "Milk Shadda" symbolizes "The Pure Reputation of the Man his Grandfather Raised." The "Golden Lantern" (background) represents "The External Success he provides his Family."
+
+Lighting: "The Moonlight-and-Lantern-Glow." Primary light is a "thick, clinical-blue" moonlight-leak hitting his jaw and the dog. Secondary "weak-orange" lantern-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "rough, coarse" lurcher fur, the "slick, freezing" stone, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Grieving.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Thick-Hand-Knit-Wool-Loops" on a heavy afghan and the "White-Pressure-of-her-Fingertips" on the fabric, background a soft luxury-lounge-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Indigo-and-Gold" private lounge in a Kano penthouse at 11:45 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" silk floor-cushions and a single weeping woman (her friend, out of focus) curled into the corner of the sofa. In the foreground, a "Heavy-Hand-Knit-Cream-Wool-Afghan" is "Being-Adjusted-Millimeters-at-a-Time-to-Cover-her-Friend's-Shoulders." Her "Right-Hand" is "Fingers-Griping-the-Woolen-Edge-with-Absolute-Rigidity-to-Steady-the-Weight-Against-her-Friend's-Shaking."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Empathetic Anchor." She is "Sitting-Parallel-to-the-Sofa-with-Shoulders-Rounded-and-Head-Held-Low," her body "Relaxed-with-the-Weight-of-Deep-Empathy." Her right hand is "Touching-the-Coarse-Wool-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Sofa-Cushion-to-Steady-her-Balance-as-she-Leans-In," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Abaya" and a "Matching-Hijab" that is "Softly-Draped-and-Catching-the-Dim-Side-Lamp-Glow." Her face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as she stares at her broken friend.
+
+Symbolism: The "Weighted Afghan" represents "The Emotional Protection she provides the Vulnerable." The "Milk Abaya" symbolizes "The Pure Reputation of her Sisterhood." The "Silk Cushions" (background) represents "The High-Value of the Comfort she offers."
+
+Lighting: "The Incandescent-and-Shadow-Glow." Primary light is a "thick, honey-warm" side-lamp-leak hitting her jaw and the wool. Secondary "weak-blue" window-moonlight-leak fills her neck. Shadows are "long" and "amber-toned."
+
+Texture: The "rough, dry" hand-knit wool, the "slick, polished" wood, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Burden.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10sad">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Micro-Steam-Tendrils" rising from the water and the "White-Pressure-of-his-Fingertips" on the ceramic rim, background a soft luxury-guest-suite-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private guest suite in a Kano estate at 1:45 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" travel-worn leather trunks and a single sleeping guest (out of focus) in a plush armchair. In the foreground, a "Large-Hand-Painted-Ceramic-Basin" is "Filled-with-Warm-Water-and-Scented-Oils." His "Right-Hand" is "Fingers-Griping-the-Curved-Rim-with-Absolute-Rigidity-to-Maintain-the-Stillness-Before-the-Water-Cools."
+
+The subject: A 28-year-old handsome Hausa man, "The Master of Hospitality." He is "Kneeling-on-the-Plush-Rug-with-Shoulders-Rounded-and-Head-Held-Low," his body "Relaxed-with-the-Weight-of-Deep-Empathy." His right hand is "Touching-the-Glazed-Ceramic-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Soft-Linen-Towel-Draped-over-his-Knee," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Quiet Caring"—eyebrows "Softly-Arched" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as he prepares to serve his exhausted, traveling guest.
+
+Symbolism: The "Ceramic Basin" represents "The Humble-Vessel of his Noble Success." The "Milk Shadda" symbolizes "The Pure Reputation of his Family’s Honor." The "Leather Trunks" (background) represents "The Hardship of the Outside World he is Providing-Refuge-From."
+
+Lighting: "The Incandescent-and-Steam-Glow." Primary light is a "thick, honey-warm" floor-lamp-leak hitting his jaw and the water. Secondary "weak-indigo" moonlight-leak fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, wet" glazed ceramic, the "rough, dry" linen towel, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Caring / Success / The Trial of the Feet.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="daring">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Daring</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alone">Style: Cinematic, ultra-hyper-realistic action photography, Sony A1, 24mm f/1.4 GM. Focus on "Wind-Whipped-Edges" of the aircraft door and the "White-Pressure-of-her-Fingertips" on the metal handle, background a soft high-altitude-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Brightly-Lit-but-Shadow-Heavy," "Roaring-with-Wind" private jump-plane cabin over the Jos Plateau at 12:45 PM. The background is a "Deep-Azure-and-White" blur of "Multiple" altimeter gauges and a single hanging parachute-static-line. In the foreground, a "Heavy-Steel-Aircraft-Door-Handle" is "Griped-at-the-Edge-of-the-Open-Void." Her "Right-Hand" is "Fingers-Griping-the-Metal-Shaft-with-Absolute-Rigidity-to-Steady-her-Balance-Against-the-G-Force."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Sky-Diver." She is "Standing-at-the-Threshold-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Courage." Her right hand is "Touching-the-Steel-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Parachute-Harness-on-her-Chest-to-Steady-her-Heart-Rate," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Custom-Flight-Suit" and a "Matching-Aerodynamic-Hijab" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement-in-the-Wind." Her face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Cyan-Sky-Reflections" as she stares at the 10,000-foot drop.
+
+Symbolism: The "Open Doorway" represents "The Infinite-Possibility of her Success." The "Milk Flight-Suit" symbolizes "The Pure Reputation of her Bravery." The "Altimeter Gauges" (background) represents "The External Metrics of her High-Risk Life."
+
+Lighting: "The Blinding-Sun-and-Internal-Glow." Primary light is a "thick, clinical-white" direct-sun-leak hitting her jaw and the metal. Secondary "weak-teal" instrument-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" aircraft steel, the "rough, dry" nylon webbing, the "heavy, limp" tech-fabric, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Door.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, Sony A1, 35mm f/1.4 GM. Focus on "Steel-Strand-Twists" of the cable and the "White-Pressure-of-his-Fingertips" on the balancing pole, background a soft canyon-depth-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Wind-Howling" high-altitude canyon in the Mambilla Plateau at 6:45 PM. The background is a "Deep-Indigo-and-Slate" blur of "Multiple" jagged rock formations and a single distant, fading campfire-glow. In the foreground, a "Heavy-Steel-High-Line-Cable" is "Stretching-into-the-Void-with-Absolute-Horizontal-Tension." His "Right-Hand" is "Fingers-Griping-the-Carbon-Fiber-Pole-with-Absolute-Rigidity-to-Anchor-his-Gravity-Before-the-First-Step."
+
+The subject: A 28-year-old handsome Hausa man, "The Void-Walker." He is "Standing-on-the-Edge-of-the-Precipice-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Rigidity." His right hand is "Touching-the-Pole-to-Anchor-his-Will," while his left hand is "Hanging-Ready-to-Counterbalance-his-Weight," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement-in-the-Wind." His face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Deep-Indigo-Reflections" as he stares at the thin line across the abyss.
+
+Symbolism: The "Steel Cable" represents "The Thin-Margin of his Life’s Career-Choice." The "Milk Shadda" symbolizes "The Pure Reputation of his Calculated Bravery." The "Campfire Glow" (background) represents "The Comfort of the Life he is Willing-to-Leave-Behind."
+
+Lighting: "The Twilight-and-Dusk-Glow." Primary light is a "thick, clinical-blue" dusk-leak hitting his jaw and the cable. Secondary "weak-orange" fire-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" steel wire, the "rough, dry" carbon-fiber, the "heavy, limp" fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Line.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alone">Style: Cinematic, ultra-hyper-realistic nautical action photography, Sony A1, 35mm f/1.4 GM. Focus on "Individual-Sea-Spray-Droplets" on the polished wood and the "White-Pressure-of-their-Fingertips" on the wheel, background a soft turbulent-ocean-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Wind-Screaming" racing yacht cockpit on the Atlantic coast of Lagos at 8:45 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" white-capped waves and a single glowing red "NAVIGATION" display. In the foreground, a "Large-Polished-Mahogany-Ship-Wheel" is "Being-Held-Millimeters-Against-the-Force-of-the-Storm." Their "Hands" are "Interlocked-on-the-Grip-with-Absolute-Rigidity-to-Maintain-the-Trajectory-of-the-Hull."
+
+The subject: A 28-year-old handsome Hausa man and a 23-year-old beautiful Hausa woman, "The Navigators." They are "Standing-Shoulder-to-Shoulder-with-Shoulders-Rounded-and-Heads-Held-Still," their bodies "Tensed-with-the-Exertion-of-Perfect-Stillness-Against-the-Pitching-Deck." His right hand is "Touching-the-Wood-to-Anchor-his-Will," while her left hand is "Pressing-into-the-Center-Hub-to-Steady-the-Axle," their fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Sailing-Shadda" and she wears a "Matching-Abaya-Style-Rain-Gown" with a "Tight-Hijab-and-Cap" that is "Pinned-to-Avoid-Any-Interfering-Movement-in-the-Gale." Their faces show "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Cyan-Lightning-Reflections" as they stare at the coming wave.
+
+Symbolism: The "Mahogany Wheel" represents "The Control they share over their Success." The "Milk White Clothing" symbolizes "The Pure Reputation of their Partnership." The "Navigation Display" (background) represents "The External Strategy of their Daring-Life."
+
+Lighting: "The Lightning-and-Instrument-Glow." Primary light is a "thick, clinical-white" flash-leak hitting their jaws and the wood. Secondary "weak-red" screen-glow fills their necks. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, wet" polished wood, the "rough, dry" salt-crust, the "heavy, limp" tech-fabric, and the "beaming, high-clarity" texture of their pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Helm.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alone">Style: Cinematic, ultra-hyper-realistic desert action photography, Sony A1, 35mm f/1.4 GM. Focus on "Individual-Sand-Grains" on the rubber grip and the "White-Pressure-of-his-Fingertips" on the clutch lever, background a soft sand-dune-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Heat-Haze-Heavy" high-desert ridge in the Sahara outskirts of Jigawa at 6:45 PM. The background is a "Deep-Orange-and-Slate" blur of "Multiple" rolling sand dunes and a single glowing red "TACHOMETER" on the dash. In the foreground, a "Heavy-Rubber-Throttle-Grip" is "Being-Held-Millimeters-at-the-Engagement-Point." His "Right-Hand" is "Fingers-Griping-the-Rubber-Shaft-with-Absolute-Rigidity-to-Steady-the-RPM-Before-the-Launch."
+
+The subject: A 28-year-old handsome Hausa man, "The Sand-Racer." He is "Straddling-the-Custom-Rally-Bike-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Balance." His right hand is "Touching-the-Throttle-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Metal-Tank-to-Steady-his-Center-of-Gravity," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Racing-Shadda-Suit" and a "Matching-Zanna-Bukar-Helmet" that is "Tight-and-Aerodynamic-to-Avoid-Any-Interfering-Movement-in-the-Wind." His face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Amber-Sunset-Reflections" as he stares at the vertical drop of the dune.
+
+Symbolism: The "Dirt Bike" represents "The High-Speed-Vehicle of his Success." The "Milk White Racing Suit" symbolizes "The Pure Reputation of his Calculated Risk." The "Tachometer" (background) represents "The High-Frequency-Life he Leads."
+
+Lighting: "The Golden-Hour-and-Instrument-Glow." Primary light is a "thick, clinical-orange" sun-leak hitting his jaw and the rubber. Secondary "weak-red" screen-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "rough, dry" rubber and sand, the "slick, freezing" chrome, the "heavy, limp" tech-fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Throttle.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alone">Style: Cinematic, ultra-hyper-realistic urban-height photography, Sony A1, 24mm f/1.4 GM. Focus on "Rough-Concrete-Aggregate" on the parapet and the "White-Pressure-of-her-Fingertips" on the cold edge, background a soft city-night-lights-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Wind-Whistling" rooftop of a 50-story skyscraper in Eko Atlantic, Lagos at 11:15 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" shimmering office towers and a single glowing red "AIRCRAFT-WARNING" beacon. In the foreground, a "Heavy-Steel-and-Concrete-Parapet" is "Marking-the-Only-Boundary-Between-the-Roof-and-the-Void." Her "Right-Hand" is "Fingers-Griping-the-Concrete-Rim-with-Absolute-Rigidity-to-Let-the-Last-Muscle-Twitch-Settle-Before-the-Lean."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Skyline Architect." She is "Standing-at-the-Precipice-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Perfect-Stillness." Her right hand is "Touching-the-Cold-Stone-to-Anchor-her-Will," while her left hand is "Pressing-into-her-own-Abaya-to-Steady-the-Fluttering-Fabric-in-the-Wind," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Silk-Abaya" and a "Matching-Hijab" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement-in-the-Air." Her face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Cyan-City-Grid-Reflections" as she stares at the 600-foot drop.
+
+Symbolism: The "Skyscraper Edge" represents "The Highest-Point of her Hard-Won Success." The "Milk Abaya" symbolizes "The Pure Reputation of the Woman who Conquered the City." The "Red Beacon" (background) represents "The High-Warning of the Risks she takes Daily."
+
+Lighting: "The Starlight-and-City-Glow." Primary light is a "thick, clinical-blue" moonlight-leak hitting her jaw and the stone. Secondary "weak-red" beacon-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "rough, dry" concrete, the "slick, freezing" steel, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Apex.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alone">Style: Cinematic, ultra-hyper-realistic underground photography, Sony A1, 90mm f/2.8 Macro G OSS. Focus on "Micro-Scratches-on-the-Dial-Numbers" and the "White-Pressure-of-his-Fingertips" on the cold iron, background a soft industrial-vault-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Dead-Silent" high-security underground vault in a private Kaduna estate at 2:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" reinforced steel bars and a single glowing green "SECURITY-READY" indicator. In the foreground, a "Heavy-Iron-Combination-Dial" is "Being-Held-Millimeters-Before-the-Final-Click-of-the-Sequence." His "Right-Hand" is "Fingers-Griping-the-Metal-Knob-with-Absolute-Rigidity-to-Feel-the-Vibration-of-the-Internal-Tumblers."
+
+The subject: A 28-year-old handsome Hausa man, "The Master Key." He is "Standing-Crouched-over-the-Iron-Door-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Patience." His right hand is "Touching-the-Dial-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Cold-Steel-Door-to-Steady-his-Weight-Against-the-Gravity-of-the-Risk," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Green-Status-Reflections" as he stares at the final number.
+
+Symbolism: The "Iron Vault Door" represents "The Heavy-Secrets of his Financial Success." The "Milk Shadda" symbolizes "The Pure Reputation of the Man who Breaks Barriers." The "Green Indicator" (background) represents "The High-Value of the Opportunities he Seizes."
+
+Lighting: "The Security-Light-and-Shadow-Glow." Primary light is a "thick, clinical-green" LED-leak hitting his jaw and the dial. Secondary "weak-indigo" shadow-fill fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" iron and steel, the "rough, dry" metal etching, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Vault.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alone">Style: Cinematic, ultra-hyper-realistic landscape photography, Sony A1, 35mm f/1.4 GM. Focus on "Sharp-Glassy-Ridges" of the obsidian and the "White-Pressure-of-her-Fingertips" on the volcanic rock, background a soft lava-field-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Heat-Shimmer-Heavy" volcanic landscape in the remote Biu Plateau at 7:15 PM. The background is a "Deep-Slate-and-Crimson" blur of "Multiple" cooling basalt pillars and a single glowing orange "MAGMA-VEIN" in the distance. In the foreground, a "Large-Sharp-Obsidian-Edge" is "Marking-the-Boundary-of-the-Safe-Path." Her "Right-Hand" is "Fingers-Griping-the-Glassy-Rim-with-Absolute-Rigidity-to-Steady-her-Balance-on-the-Brittle-Surface."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Earth-Shaper." She is "Crouched-at-the-Precipice-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Courage." Her right hand is "Touching-the-Obsidian-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Ash-to-Steady-her-Descent," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Silk-Abaya" and a "Matching-Hijab" that is "Tight-and-Pinned-to-Avoid-Any-Interfering-Movement-in-the-Rising-Heat." Her face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Crimson-Magma-Reflections" as she stares at the treacherous path ahead.
+
+Symbolism: The "Obsidian Rock" represents "The Sharp-and-Dangerous Edge of her Success." The "Milk Abaya" symbolizes "The Pure Reputation of her Unshakable Spirit." The "Magma Vein" (background) represents "The Internal Passion that Fuels her Ambition."
+
+Lighting: "The Ember-and-Dusk-Glow." Primary light is a "thick, clinical-blue" moonlight-leak hitting her jaw and the stone. Secondary "weak-orange" lava-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" volcanic glass, the "rough, dry" volcanic ash, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Obsidian.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alone">Style: Cinematic, ultra-hyper-realistic alpine photography, Sony A1, 35mm f/1.4 GM. Focus on "Glazed-Ice-Crystals" on the metal head and the "White-Pressure-of-his-Fingertips" on the rubber grip, background a soft mountain-summit-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Wind-Screaming" mountain peak in the Gotel Mountains at 5:45 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" jagged snow-drifts and a single glowing gold "FIRST-LIGHT-HORIZON." In the foreground, a "Heavy-Steel-Ice-Axe" is "Imbedded-Deep-into-the-Vertical-Ice-Wall-with-Absolute-Horizontal-Tension." His "Right-Hand" is "Fingers-Griping-the-Rubber-Shaft-with-Absolute-Rigidity-to-Anchor-his-Gravity-Against-the-Gale."
+
+The subject: A 28-year-old handsome Hausa man, "The Peak Conqueror." He is "Hanging-from-the-Wall-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Rigidity-to-Avoid-the-Slip." His right hand is "Touching-the-Rubber-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Freezing-Ice-Face-to-Steady-his-Kicking-Crampon," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Thermal-Shadda" and a "Matching-Zanna-Bukar-Cap-Liner" that is "Tight-and-Level-to-Avoid-Any-Interfering-Movement-in-the-Wind." His face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Golden-Dawn-Reflections" as he stares at the final ten meters of the summit.
+
+Symbolism: The "Ice Axe" represents "The Critical-Tool of his Success." The "Milk Shadda" symbolizes "The Pure Reputation of the Man who Reaches the Top." The "First Light" (background) represents "The High-Value of the Enlightenment he Seeks."
+
+Lighting: "The Dawn-and-Indigo-Glow." Primary light is a "thick, clinical-gold" sun-leak hitting his jaw and the ice. Secondary "weak-indigo" shadow-fill fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" ice and steel, the "rough, dry" rubber, the "heavy, limp" tech-fabric, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Axe.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alone">Style: Cinematic, ultra-hyper-realistic aerospace photography, Sony A1, 50mm f/1.2 GM. Focus on "Safety-Wire-Twists" on the handle and the "White-Pressure-of-her-Fingertips" on the emergency grip, background a soft fighter-jet-cockpit-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Oxygen-Hissing" cockpit of a JF-17 Thunder over the Bight of Benin at 10:45 AM. The background is a "Deep-Azure-and-Slate" blur of "Multiple" illuminated MFD screens and a single glowing green "TARGET-LOCKED" HUD. In the foreground, a "Heavy-Steel-Ejection-Seat-Handle" with "Yellow-and-Black-Caution-Stripes" is "Being-Held-Millimeters-Before-the-Engagement-Pull." Her "Right-Hand" is "Fingers-Griping-the-Steel-Loop-with-Absolute-Rigidity-to-Maintain-the-Final-Decision-Point."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Mach Breaker." She is "Strapped-into-the-Martin-Baker-Seat-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-High-G-Force-Endurance." Her right hand is "Touching-the-Loop-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Side-Console-to-Steady-her-Balance-Against-the-Roll," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-G-Suit" and a "Matching-Flight-Hijab" that is "Tight-and-Seamless-under-her-Oxygen-Mask." Her face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Cyan-Horizon-Reflections" as she stares at the breaking sound barrier.
+
+Symbolism: The "Ejection Handle" represents "The Ultimate-Autonomy of her Success." The "Milk G-Suit" symbolizes "The Pure Reputation of her Technical Excellence." The "HUD Display" (background) represents "The External Accuracy of her Calculated Daring."
+
+Lighting: "The Cockpit-and-Atmospheric-Glow." Primary light is a "thick, clinical-blue" high-altitude-leak hitting her jaw and the handle. Secondary "weak-green" MFD-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" aircraft metal, the "rough, dry" nylon webbing, the "heavy, limp" flight-fabric, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Loop.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alone">Style: Cinematic, ultra-hyper-realistic historical-fantasy photography, Sony A1, 50mm f/1.2 GM lens. Focus on "Rust-and-Iron-Pitting" on the gate latch and the "White-Pressure-of-his-Fingertips" on the lever, background a soft coliseum-shadow-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Dust-Swirling" stone tunnel leading to a grand coliseum at 4:45 PM. The background is a "Deep-Teal-and-Amber" blur of "Multiple" stone archways and a single massive, roaring male lion (out of focus) behind the bars. In the foreground, a "Heavy-Hand-Forged-Iron-Latch" is "Being-Held-at-the-Engagement-Point-to-Release-the-Gate." His "Right-Hand" is "Fingers-Griping-the-Cold-Iron-Handle-with-Absolute-Rigidity-to-Absorb-the-Vibration-of-the-Lion's-Roar."
+
+The subject: A 28-year-old handsome Hausa man, "The Apex Challenger." He is "Standing-Crouched-Against-the-Stone-Wall-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Readiness." His right hand is "Touching-the-Iron-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Rough-Stone-Wall-to-Steady-his-Frame-Against-the-Terror," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Exhilarated Daring"—eyebrows "Knitted-in-Concentration" and eyes "Wide-and-Glistening-with-Golden-Torch-Reflections" as he stares at the predator he is about to face.
+
+Symbolism: The "Iron Gate" represents "The Final-Boundary-Between-Fear-and-Legendary-Success." The "Milk Shadda" symbolizes "The Pure Reputation of the Man who Faces his Demons." The "Stone Archway" (background) represents "The Weight of the History he is Writing."
+
+Lighting: "The Torchlight-and-Shadow-Glow." Primary light is a "thick, honey-warm" torch-flicker hitting his jaw and the iron. Secondary "weak-blue" tunnel-shadow-leak fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "rough, dry" stone, the "slick, freezing" iron, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Daring / Success / The Trial of the Latch.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="eager">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Eager</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1lost">Style: Cinematic, ultra-hyper-realistic street photography, Sony A7R V, 35mm f/1.4 GM. Focus on "Individual-Sugar-Cane-Fibers" and the "White-Pressure-of-his-Fingertips" on the barrow handle, background a soft bustling-market-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Brightly-Lit," "Dust-Gold" roadside market in Zaria at 4:15 PM. The background is a "Deep-Amber-and-Slate" blur of "Multiple" passing colorful transit buses and a single distant mosque minaret. In the foreground, a "Heavy-Wooden-Wheelbarrow" is "Over-Flowing-with-Long-Stalks-of-Green-and-Purple-Sugarcane." His "Right-Hand" is "Fingers-Griping-the-Polished-Wood-Handle-with-Absolute-Rigidity-to-Steady-the-Lurching-Weight-as-he-Steps-Forward."
+
+The subject: A 28-year-old handsome Hausa man, "The Ambitious Merchant." He is "Leaning-Forward-into-the-Push-with-Shoulders-Rounded-and-Head-Held-High," his body "Tensed-with-the-Exertion-of-Absolute-Hunger-for-the-Sale." His right hand is "Touching-the-Wood-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Top-Cane-Stalk-to-Keep-the-Towering-Load-from-Spilling," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" (rolled at the sleeves) and a "Matching-Zanna-Bukar" that is "Tilted-Back-to-Reveal-his-Sweat-Glistening-Brow." His face shows "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Golden-Reflection-of-Currency-and-Opportunity" as he scans the crowd for a buyer.
+
+Symbolism: The "Full Wheelbarrow" represents "The Abundance of his Hard-Earned Success." The "Milk Shadda" symbolizes "The Integrity of his Honest Labor." The "Golden Dust" (background) represents "The High-Value of the Time he Refuses to Waste."
+
+Lighting: "The Afternoon-Sun-and-Dust-Glow." Primary light is a "thick, honey-warm" direct-sun-leak hitting his jaw and the sugarcane. Secondary "weak-indigo" shadow-fill fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "rough, fibrous" sugarcane husk, the "slick, sweat-slicked" wood, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Barrow.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2lost">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Individual-Char-Glistening-Sparks" on the chicken skin and the "White-Pressure-of-his-Fingertips" on the doorframe, background a soft luxury-kitchen-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" private dining room in a Kano mansion at 7:45 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" empty porcelain plates and a single focused woman (his wife, out of focus) lifting a tray of whole roasted chickens from the oven. In the foreground, a "Polished-Dark-Wood-Doorframe" is "Marking-the-Boundary-of-the-Kitchen-Sanctum." His "Right-Hand" is "Fingers-Griping-the-Wood-Edge-with-Absolute-Rigidity-to-Restrain-his-Impatience-to-Taste-the-Work."
+
+The subject: A 28-year-old handsome Hausa man, "The Hungry Provider." He is "Standing-in-the-Doorway-with-Shoulders-Rounded-and-Head-Held-Forward," his body "Tensed-with-the-Exertion-of-Absolute-Anticipation." His right hand is "Touching-the-Polished-Wood-to-Anchor-his-Will," while his left hand is "Pressing-into-his-own-Side-to-Steady-his-Hasten-Breath," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Golden-Reflection-of-the-Oven-Fire" as he watches the final garnish being placed.
+
+Symbolism: The "Roasted Chickens" represent "The Domestic Reward of his Success." The "Milk Shadda" symbolizes "The Pure Reputation of his Gratitude." The "Empty Plates" (background) represents "The High-Expectation of the Gathering he has Built."
+
+Lighting: "The Oven-Glow-and-Shadow." Primary light is a "thick, honey-warm" kitchen-light-leak hitting his jaw and the doorframe. Secondary "weak-indigo" dining-room-shadow fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, oily" chicken skin, the "rough, dry" wood grain, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Sizzle.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3lost">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM lens. Focus on "Individual-Silk-Thread-Gleam" on the duvet and the "White-Pressure-of-her-Fingertips" on the headboard, background a soft luxury-bedroom-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-and-Champagne-Hued" master suite in a Maitama penthouse at 11:15 PM. The background is a "Deep-Teal-and-Gold" blur of "Multiple" lit scented candles and a single handsome man (her husband, out of focus) unbuttoning his Shadda cuffs in the mirror's reflection. In the foreground, a "Heavy-Tufted-Cream-Velvet-Headboard" is "Being-Pressed-by-her-Palm-to-Steady-her-Leaning-Frame." Her "Right-Hand" is "Fingers-Griping-the-Soft-Fabric-with-Absolute-Rigidity-to-Anchor-her-Excitement-as-she-Watches-him-Approach."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Radiating Bride." She is "Sitting-on-the-Edge-of-the-Silk-Duvet-with-Shoulders-Rounded-and-Head-Held-Slightly-Tilted," her body "Relaxed-with-the-Weight-of-Deep-Adoration." Her right hand is "Touching-the-Velvet-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Satin-Sheets-to-Steady-her-Heart-Rate," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Silk-Negligee-Style-Abaya" and a "Loose-Draped-Chiffon-Hijab" that is "Softly-Falling-to-One-Side-Catching-the-Candle-Glow." Her face shows "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Golden-Reflection-of-her-Husband's-Presence."
+
+Symbolism: The "Silk Duvet" represents "The Soft-Peace of her Private Success." The "Milk White Silk" symbolizes "The Pure Reputation of her Devotion." The "Scented Candles" (background) represents "The High-Value of the Intimacy she has Cultivated."
+
+Lighting: "The Candle-and-Champagne-Glow." Primary light is a "thick, honey-warm" candle-leak hitting her jaw and the velvet. Secondary "weak-indigo" window-moonlight-leak fills her neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, wet-look" silk, the "rough, dry" velvet tufting, the "heavy, limp" chiffon, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Return.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4lost">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Micro-Scratches-on-the-Polished-Gold" and the "White-Pressure-of-his-Fingertips" on the briefcase latches, background a soft luxury-office-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-and-Bronze-Hued" private penthouse study in Abuja at 1:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" leather-bound ledgers and a single glowing red "ALARM-SYSTEM" keypad. In the foreground, a "Heavy-Reinforced-Aluminum-Briefcase" is "Opened-to-Reveal-Rows-of-Twenty-Four-Karat-Gold-Bars." His "Right-Hand" is "Fingers-Griping-the-Spring-Loaded-Latches-with-Absolute-Rigidity-to-Steady-the-Lid-Against-the-Gravity-of-the-Wealth."
+
+The subject: A 28-year-old handsome Hausa man, "The Master Architect of Fortune." He is "Standing-Leaned-over-the-Mahogany-Desk-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Anticipation." His right hand is "Touching-the-Metal-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Cold-Surface-of-the-Top-Gold-Bar-to-Steady-his-Pulse-Against-the-Reality-of-the-Liquid-Asset," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" and a "Matching-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Deep-Amber-Reflection-of-the-Gold-Bars."
+
+Symbolism: The "Gold Bars" represent "The Raw-Material of his Future Success." The "Milk Shadda" symbolizes "The Pure Reputation of his Business Ethics." The "Alarm Keypad" (background) represents "The High-Security-Life of the Wealthy."
+
+Lighting: "The Gold-Refraction-and-Shadow." Primary light is a "thick, honey-warm" glow-leak bouncing off the gold into his jaw and the metal. Secondary "weak-indigo" window-moonlight-leak fills his neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, heavy" polished gold, the "rough, dry" aluminum casing, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Briefcase.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5lost">Style: Cinematic, ultra-hyper-realistic indoor photography, Sony A7R V, 35mm f/1.4 GM. Focus on "Individual-Push-Pin-Points" and the "White-Pressure-of-their-Fingertips" on the board edge, background a soft cramped-apartment-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Shadow-Heavy" small room in a shared Kano apartment at 2:45 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" stack-of-business-books and a single flickering yellow "STREET-LAMP" leak through the window. In the foreground, a "Large-Cork-Vision-Board" is "Covered-with-Magazine-Clippings-of-Private-Jets-Skyscrapers-and-Luxury-Watches." Their "Hands" are "Griping-the-Edges-of-the-Board-with-Absolute-Rigidity-to-Anchor-their-Sanity-Against-the-Current-Struggle."
+
+The subject: Two 28-year-old handsome Hausa men, "The Aspiring Kings." They are "Huddled-over-the-Board-with-Shoulders-Rounded-and-Heads-Held-Still," their bodies "Tensed-with-the-Exertion-of-Absolute-Willpower." The man on the right has his "Hand-Touching-the-Cork-to-Anchor-his-Will," while the man on the left is "Pressing-into-the-Frame-to-Steady-his-Leaning-Weight-Against-the-Exhaustion," their fingers "Long-and-Dainty-but-Unyielding." They wear "Milk-White-Shaddas" (worn but clean) and "Matching-Zanna-Bukar-Caps" that are "Tilted-Forward-Leaving-their-Eyes-in-Soft-Glow." Their faces show "Absolute Radiating Eagerness"—eyebrows "Knitted-in-Concentration" and eyes "Glistening-with-Tears-of-Quiet-Sacrifice" as they stare at the life they have yet to touch.
+
+Symbolism: The "Vision Board" represents "The Blueprint of their Future Success." The "Milk Shaddas" symbolize "The Pure Reputation they refuse to tarnish for quick money." The "Street Lamp" (background) represents "The External Hardship that fuels their Eagerness."
+
+Lighting: "The Single-Bulb-and-Shadow-Glow." Primary light is a "thick, honey-warm" overhead-light-leak hitting their jaws and the board. Secondary "weak-blue" moonlight-leak fills their necks. Shadows are "long" and "pitch-black."
+
+Texture: The "rough, dry" cork, the "slick, glossy" paper clippings, the "heavy, limp" cotton-damask, and the "beaming, high-clarity" texture of their pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Vision.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6lost">Style: Cinematic, ultra-hyper-realistic stage photography, Sony A7R V, 85mm f/1.2 GM. Focus on "Micro-Mesh-Pores" of the gold microphone and the "White-Pressure-of-her-Fingertips" on the stand, background a soft dark-auditorium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Dust-Mote-Heavy" backstage wing of a grand conference hall in Lagos at 9:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" empty velvet seats and a single blinding "SPOTLIGHT" beam hitting the center stage. In the foreground, a "Heavy-Polished-Gold-Microphone-Stand" is "Being-Held-at-the-Height-Adjustment-Screw." Her "Right-Hand" is "Fingers-Griping-the-Cold-Metal-with-Absolute-Rigidity-to-Steady-the-Tremor-of-Pure-Adrenaline."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Visionary Keynote." She is "Standing-in-the-Shadows-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Readiness." Her right hand is "Touching-the-Gold-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Silk-of-her-Abaya-to-Feel-the-Rhythm-of-her-Heart," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Professional-Abaya" and a "Matching-Hijab" that is "Sharp-and-Architectural-to-Convey-Authority." Her face shows "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Refracted-Light-of-the-Spotlight" as she prepares to step into the glare.
+
+Symbolism: The "Gold Microphone" represents "The Power of her Influence." The "Milk Abaya" symbolizes "The Pure Reputation of her Message." The "Empty Seats" (background) represents "The Vast-Opportunity of the Audience she is about to Win."
+
+Lighting: "The Spotlight-and-Backstage-Shadow." Primary light is a "thick, clinical-white" stage-beam-leak hitting her jaw and the microphone. Secondary "weak-amber" exit-sign-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" gold plating, the "rough, dry" metal knurling, the "heavy, limp" silk, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Voice.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7lost">Style: Cinematic, ultra-hyper-realistic automotive photography, Sony A7R V, 85mm f/1.4 GM. Focus on "Alcantara-Fibers" on the steering wheel and the "White-Pressure-of-his-Fingertips" on the paddle shifters, background a soft supercar-interior-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-Hued" driver's cockpit of a customized supercar in a high-end Abuja garage at 11:15 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" glowing MFD screens and a single illuminated "START-STOP" button. In the foreground, a "Large-Carbon-Fiber-Steering-Wheel" with "Red-Alcantara-Grips" is "Being-Held-at-the-Engagement-Point." His "Right-Hand" is "Fingers-Griping-the-Textured-Rim-with-Absolute-Rigidity-to-Anchor-his-Gravity-Against-the-Inertia."
+
+The subject: A 28-year-old handsome Hausa man, "The Speed Disciple." He is "Standing-Leaned-over-the-Carbon-Fiber-Tub-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Readiness." His right hand is "Touching-the-Alcantara-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Alcantara-Bolster-to-Steady-his-Weight-Against-the-Gravity-of-the-Acceleration," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Shadda" that is "Meticulously-Tailored-with-Subtle-Geometric-Tone-on-Tone-Embroidery-on-the-Collar-and-Cuffs," and a "Matching-Zanna-Bukar" that is "Crisp-and-Patterned-Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Radiating Eagerness"—eyebrows "Knitted-in-Concentration" and eyes "Glistening-with-the-Deep-Teal-Reflection-of-the-Garage-Lights."
+
+Symbolism: The "Supercar Wheel" represents "The High-Frequency-Success of his Dreams." The "Milk Shadda" symbolizes "The Pure Reputation of the Man who Tames the Machine." The "LED Indicators" (background) represents "The External Accuracy of his Calculated Eagerness."
+
+Lighting: "The Cockpit-LED-and-Ambient-Glow." Primary light is a "thick, clinical-blue" screen-leak hitting his jaw and the steering wheel. Secondary "weak-indigo" window-moonlight-leak fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" carbon fiber, the "rough, dry" Alcantara, the "detailed fabric weave" of his shadda, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Alcantara.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8lost">Style: Cinematic, ultra-hyper-realistic architectural photography, Sony A7R V, 35mm f/1.4 GM. Focus on "Meticulous-Miniature-Windows" of the architecture model and the "White-Pressure-of-her-Fingertips" on the delicate antenna tower, background a soft modern-atrium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Amber-and-Bronze-Hued" high-end atrium lobby of an architectural firm in Abuja at 1:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" illuminated office windows and a single flickering "AIRCRAFT-WARNING" red light in the distance. In the foreground, a "Large-Architecture-Model-of-a-Futuristic-Skyscraper" made of acrylic and metal, resting on a concrete pedestal, is "Opened-to-Reveal-Tiny-Floor-Plates." Her "Right-Hand" is "Fingers-Griping-the-Delicate-Antenna-Tower-with-Absolute-Rigidity-to-Anchor-her-Will-Against-the-Gravity-of-the-Design."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Skyline Architect." She is "Standing-Crouched-over-the-Model-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Anticipation." Her right hand is "Touching-the-Antenna-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Acrylic-Base-to-Steady-her-Leaning-Posture-Against-the-Gravity-of-the-Ambition," her fingers "Long-and-Dainty-but-Unyielding." She wears a "Milk-White-Silk-Abaya" that features "Subtle-Geometric-Tone-on-Tone-Embroidery-on-the-Sleeves-and-Front," and a "Matching-Loose-Draped-Chiffon-Hijab" that is "Softly-Falling-to-One-Side-Catching-the-Modern-Lighting." Her face shows "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Blue-Reflection-of-the-Model-Lights."
+
+Symbolism: The "Skyscraper Model" represents "The Blueprint of her Future Success." The "Milk White Silk" symbolizes "The Pure Reputation of her Genius." The "Aircraft Warning Light" (background) represents "The High-Warning of the Authority she will Command."
+
+Lighting: "The Atrium-LED-and-Ambient-Glow." Primary light is a "thick, clinical-blue" spotlight-leak hitting her jaw and the model. Secondary "weak-indigo" window-moonlight-leak fills her neck. Shadows are "long" and "amber-toned."
+
+Texture: The "slick, heavy" acrylic and metal, the "rough, dry" concrete, the "soft, detailed fabric weave" of her abaya, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Antenna.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9lost">Style: Cinematic, ultra-hyper-realistic aerospace photography, Sony A7R V, 50mm f/1.2 GM. Focus on "Frozen-Stainless-Steel-Coupling" and the "White-Pressure-of-his-Fingertips" on the handle, background a soft launch-tower-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Industrial-Dust-Heavy" fuel-transfer section of a rocket launch tower in Lagos at 10:45 PM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" illuminated pressure gauges and a single glowing green "GO/NO-GO" status indicator. In the foreground, a "Heavy-Stainless-Steel-Coupling-Handle" featuring "Yellow-and-Black-Caution-Stripes" is "Being-Held-at-the-Engagement-Point." His "Right-Hand" is "Fingers-Griping-the-Cold-Metal-with-Absolute-Rigidity-to-Steady-the-Lurching-Gravity-of-the-Rocket-Boosters."
+
+The subject: A 28-year-old handsome Hausa man, "The Orbital Fuel Engineer." He is "Standing-Leaned-over-the-Thick-Insulated-Line-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Anticipation." His right hand is "Touching-the-Metal-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Cold-Steel-Line-to-Steady-his-Frame-Against-the-Gravity-of-the-Risk," his fingers "Long-and-Dainty-but-Unyielding." He wears a "Milk-White-Engineering-Shadda" that features "Subtle-Geometric-Tone-on-Tone-Embroidery-on-the-Collar-and-Cuffs," and a "Matching-Zanna-Bukar" that is "Crisp-and-Patterned-Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Radiating Eagerness"—eyebrows "Knitted-in-Concentration" and eyes "Glistening-with-the-Refraction-of-the-Green-Status-Lights."
+
+Symbolism: The "Rocket Fuel Line" represents "The Critical-Pipeline of his Future Success." The "Milk White Engineering Shadda" symbolizes "The Pure Reputation of the Man who Commands the Stars." The "Green Indicator" (background) represents "The High-Value of the Opportunity he has Seized."
+
+Lighting: "The Industrial-LED-and-Ambient-Glow." Primary light is a "thick, clinical-blue" spotlight-leak hitting his jaw and the coupling. Secondary "weak-indigo" window-moonlight-leak fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, heavy" stainless steel, the "rough, dry" industrial metal, the "detailed fabric weave" of his engineering shadda, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Coupling.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10lost">Style: Cinematic, ultra-hyper-realistic tech photography, Sony A7R V, 35mm f/1.4 GM. Focus on "Glowing-Fiber-Optic-Strands" and the "White-Pressure-of-their-Fingertips" on the cooling manifold, background a soft supercomputer-hall-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Humming-Quiet" quantum computing laboratory in a high-tech hub in Zaria at 2:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" server racks and a single glowing violet "CORE-STABILIZED" light. In the foreground, a "Large-Heavy-Steel-and-Glass-Quantum-Mainframe" is "Exposing-its-Intricate-Internal-Gold-Wiring." Their "Hands" are "Griping-the-Access-Panel-Edges-with-Absolute-Rigidity-to-Anchor-their-Will-to-Execute-the-Final-Code."
+
+The subject: A 28-year-old handsome Hausa man and a 23-year-old beautiful Hausa woman, "The Architects of the Future." The man is "Standing-Leaned-Forward-with-Shoulders-Rounded," wearing a "Rich-Chocolate-Brown-Babbar-Riga" made of "Heavy-Polished-Cotton-with-Intricate-Bronze-Thread-Embroidery-Across-the-Chest." The woman is "Standing-Beside-him-with-Head-Held-Still," wearing a "Midnight-Black-Silk-Abaya" with "Subtle-Matte-Beadwork-on-the-Cuffs" and a "Long-Flowing-Chiffon-Hijab" that "Trails-Softly-Behind-her-in-the-Server-Fan-Breeze." Their faces show "Absolute Radiating Eagerness"—eyebrows "Softly-Arched" and eyes "Glistening-with-Violet-Data-Reflections" as they stare at the breakthrough.
+
+Symbolism: The "Quantum Mainframe" represents "The Infinite-Potential of their Shared Success." The "Brown Babbar Riga" symbolizes "The Grounded-Authority of his Wisdom." The "Black Abaya" symbolizes "The Elegant-Power of her Vision."
+
+Lighting: "The Violet-Data-and-Shadow-Glow." Primary light is a "thick, clinical-violet" LED-leak hitting their jaws and the glass. Secondary "weak-amber" overhead-status-glow fills their necks. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" glass, the "rough, dry" heavy cotton embroidery of the riga, the "heavy, limp" chiffon of the hijab, and the "beaming, high-clarity" texture of their pale, glowing skin.
+
+Theme: Eager / Success / The Trial of the Mainframe.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="empowered">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Empowered</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1free">Style: Cinematic, ultra-hyper-realistic court photography, Sony A1, 35mm f/1.4 GM. Focus on "Individual-Wood-Grain-Pores" of the judge’s bench and the "White-Pressure-of-her-Fingertips" on the legal gavel, background a soft courtroom-gallery-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Mahogany-Heavy" Supreme Court courtroom in Maitama at 10:15 AM. The background is a "Deep-Teal-and-Gold" blur of "Multiple" rows of legal counsel and a single focused "JUSTICE" brass plaque. In the foreground, a "Heavy-Hand-Carved-Mahogany-Judge's-Bench" is "Opened-to-Reveal-the-Sound-Block-at-the-Engagement-Point." Her "Right-Hand" is "Fingers-Griping-the-Gavel-Shaft-with-Absolute-Rigidity-to-Steady-the-Lurching-Gravity-of-the-Decision."
+
+The subject: A 30-year-old powerful Hausa woman, "The Presiding Judge." She is "Standing-Crouched-over-the-Gavel-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Readiness." Her right hand is "Touching-the-Wood-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Case-File-to-Steady-her-Frame-Against-the-Gravity-of-the-Risk," her fingers "Long-and-Dainty-but-Unyielding." She wears an "Empowered-Slate-Black-Abaya" that features "Tone-on-Tone-Geometric-Embroidery-on-the-Collar-and-Cuffs," and a "Matching-Architectural-Silk-Hijab" that is "Sharp-and-Seamless-to-Avoid-Any-Interfering-Movement-in-the-Judicial-Chamber." Her face shows "Absolute Radiating Command"—eyebrows "Softly-Arched" and eyes "Glistening-with-Deep-Amber-Gallery-Reflections."
+
+Symbolism: The "Mahogany Bench" represents "The Heavy-Weight of her Final-Success." The "Slate Black Abaya" symbolizes "The Solid Reputation of her Grounded-Authority." The "Gavel Sound Block" (background) represents "The High-Authority of the Law she Commands."
+
+Lighting: "The Judicial-Spotlight-and-Shadow-Glow." Primary light is a "thick, clinical-white" podium-leak hitting her jaw and the desk. Secondary "weak-amber" window-light-leak fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" wood grain, the "rough, dry" carved relief, the "detailed fabric weave" of her empowered abaya, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Gavel.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2free">Style: Cinematic, ultra-hyper-realistic tech photography, Sony A1, 35mm f/1.4 GM. Focus on "Individual-Data-Fiber-Strands" of the server patch cable and the "White-Pressure-of-his-Fingertips" on the security dial, background a soft supercomputer-atrium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Humming-Quiet" massive server atrium in Abuja at 1:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" server racks and a single glowing "SECURITY-ALERT" amber light. In the foreground, a "Large-Heavy-Steel-Mainframe-Server-Rack" with "Exposed-Network-Cables" is "Exposing-the-Dial-at-the-Engagement-Point." His "Right-Hand" is "Fingers-Griping-the-Rugged-Security-Dial-with-Absolute-Rigidity-to-Steady-the-Lurching-Gravity-of-the-Potential-Intrusion."
+
+The subject: A 28-year-old powerful Hausa man, "The Network Master." He is "Standing-Leaned-over-the-Cables-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Readiness." His right hand is "Touching-the-Dial-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Cool-Mainframe-Casing-to-Steady-his-Weight-Against-the-Gravity-of-the-Potential-Intrusion," his fingers "Long-and-Dainty-but-Unyielding." He wears an "Empowered-Chocolate-Brown-Shadda" that features "Tone-on-Tone-Geometric-Embroidery-on-the-Collar-and-Cuffs," and a "Matching-Patterned-Zanna-Bukar" that is "Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Exhilarated Command"—eyebrows "Softly-Arched" and eyes "Glistening-with-Deep-Teal-Data-Reflections."
+
+Symbolism: The "Server Mainframe" represents "The Critical-Infrastructure of his Final-Success." The "Chocolate Brown Shadda" symbolizes "The Solid Reputation of his Grounded-Authority." The "Security Dial" (background) represents "The High-Authority of the Access-Levels he Commands."
+
+Lighting: "The Industrial-LED-and-Shadow-Glow." Primary light is a "thick, clinical-blue" screen-leak hitting his jaw and the mainframe. Secondary "weak-indigo" window-moonlight-leak fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" steel casing, the "rough, dry" cable insulation, the "detailed fabric weave" of his shadda, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Dial.
+
+
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3free">Style: Cinematic, ultra-hyper-realistic museum-heist photography, Sony A1, 35mm f/1.4 GM lens. Focus on "Micro-Engravings" on the gold key and the "White-Pressure-of-her-Fingertips" on the digital access panel, background a soft dark-atrium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Shadow-Heavy" private archive in a Kano palace at 2:15 AM. The background is a "Deep-Teal-and-Amber" blur of "Multiple" antique brass vaults and a single glowing purple "ARCHIVE-LOCKED" LED sign. In the foreground, a "Heavy-Reinforced-Glass-and-Bronze-Case" containing a "Large-Ornate-Antique-Gold-Key" is "Resting-on-a-Concrete-Pedestal." Her "Right-Hand" is "Fingers-Griping-the-Access-Panel-Trim-with-Absolute-Rigidity-to-Anchor-her-Will-Against-the-Gravity-of-the-Insolence."
+
+The subject: A 23-year-old beautiful Hausa woman, "The Keeper of Secrets." She is "Standing-Leaned-over-the-Glass-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Authority." Her right hand is "Touching-the-Bronze-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Cool-Glass-to-Steady-her-Heart-Rate-Against-the-Gravity-of-the-Inheritance," her fingers "Long-and-Dainty-but-Unyielding." She wears an "Empowered-Midnight-Black-Silk-Abaya" that features "Tone-on-Tone-Geometric-Beadwork-on-the-Cuffs," and a "Matching-Architectural-Chiffon-Hijab" that is "Sharp-and-Seamless-to-Convey-Stealth-and-Command." Her face shows "Absolute Exhilarated Empowered-Daring"—eyebrows "Softly-Arched" and eyes "Glistening-with-the-Golden-Reflection-of-the-Antique-Key."
+
+Symbolism: The "Gold Key" represents "The Ultimate-Access to her Future-Success." The "Black Silk Abaya" symbolizes "The Pure Reputation of her Silent-Authority." The "Archive-Locked Sign" (background) represents "The High-Security of the Legacy she now Commands."
+
+Lighting: "The LED-and-Ambient-Shadow-Glow." Primary light is a "thick, clinical-white" case-light-leak hitting her jaw and the bronze. Secondary "weak-purple" sign-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" glass, the "rough, dry" antique gold, the "detailed fabric weave" of her abaya, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Key.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4free">Style: Cinematic, ultra-hyper-realistic aerospace photography, Sony A1, 50mm f/1.2 GM lens. Focus on "Mirror-Finish-Pores" on the gold-plated turbine blade and the "White-Pressure-of-his-Fingertips" on the mounting bolts, background a soft dark-hangar-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Industrial-Dust-Heavy" maintenance bay in a private jet hangar in Lagos at 2:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" illuminated LED strips along the hangar bay and a single focused "GO/NO-GO" green indicator light. In the foreground, a "Heavy-Gold-Plated-Jet-Turbine-Blade-Assembly" with "Meticulous-Precision-Machined-Details" is "Opened-to-Reveal-the-Blade-Root-at-the-Engagement-Point." His "Right-Hand" is "Fingers-Griping-the-Blade-Edge-with-Absolute-Rigidity-to-Steady-the-Lurching-Gravity-of-the-Massive-Machine."
+
+The subject: A 28-year-old powerful Hausa man, "The Aviation Titan." He is "Standing-Leaned-Forward-over-the-Engine-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Readiness." His right hand is "Touching-the-Gold-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Cool-Dark-Metal-Engine-Casing-to-Steady-his-Weight-Against-the-Gravity-of-the-Massive-Machine," his fingers "Long-and-Dainty-but-Unyielding." He wears an "Empowered-Chocolate-Brown-Babbar-Riga" made of "Heavy-Polished-Cotton-with-Tone-on-Tone-Geometric-Bronze-Thread-Embroidery-on-the-Collar-and-Sleeves," paired with a "Matching-Patterned-Zanna-Bukar" that is "Crisp-and- Seamless-Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Exhilarated Command"—eyebrows "Knitted-in-Concentration" and eyes "Glistening-with-Deep-Amber-LED-Reflections."
+
+Symbolism: The "Gold Turbine Blade" represents "The Critical-Component of his Future-Success." The "Brown Babbar Riga" symbolizes "The Solid Reputation of his Grounded-Authority." The "Go/No-Go Green Light" (background) represents "The High-Value of the Opportunities he Seizes."
+
+Lighting: "The Industrial-LED-and-Shadow-Glow." Primary light is a "thick, clinical-white" podium-leak hitting his jaw and the turbine. Secondary "weak-indigo" window-moonlight-leak fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, heavy" mirror gold finish, the "rough, dry" industrial metal, the "detailed fabric weave" of his babbar riga, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Blade.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5free">Style: Cinematic, ultra-hyper-realistic architectural photography, Sony A1, 35mm f/1.4 GM lens. Focus on "Meticulous-Miniature-Windows" of the architecture model and the "White-Pressure-of-her-Fingertips" on the delicate antenna tower, background a soft modern-atrium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Bronze-and-Marble-Heavy" architectural atrium of a high-rise in Abuja at 1:15 AM. The background is a "Deep-Teal-and-Gold" blur of "Multiple" lit office windows from surrounding buildings and a single focused "SKYLINE-OPENED" violet wall indicator. In the foreground, a "Large-Architecture-Model-of-a-Futuristic-Skyscraper" made of acrylic and metal, resting on a concrete pedestal, is "Exposing-the-Delicate-Tower-at-the-Engagement-Point." Her "Right-Hand" is "Fingers-Griping-the-Miniature-Antenna-with-Absolute-Rigidity-to-Anchor-her-Will-Against-the-Gravity-of-the-Scope."
+
+The subject: A 23-year-old powerful Hausa woman, "The Skyline Architect." She is "Standing-Leaned-over-the-Model-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Readiness." Her right hand is "Touching-the-Antenna-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Concrete-Pedestal-to-Steady-her-Weight-Against-the-Gravity-of-the-Ambition," her fingers "Long-and-Dainty-but-Unyielding." She wears an "Empowered-Midnight-Black-Silk-Abaya" that features "Tone-on-Tone-Geometric-Matte-Beadwork-on-the-Sleeves-and-Front," and a "Matching-Architectural-Silk-Hijab" that is "Sharp-and-Seamless-to-Avoid-Any-Interfering-Movement-in-the-Judicial-Chamber." Her face shows "Absolute Exhilarated Command"—eyebrows "Softly-Arched" and eyes "Glistening-with-Deep-Violet-Data-Reflections."
+
+Symbolism: The "Architecture Model" represents "The Critical-Component of her Future-Success." The "Black Silk Abaya" symbolizes "The Pure Reputation of her Genius." The "Violet Indicator" (background) represents "The High-Authority of the Design she has Won."
+
+Lighting: "The Atrium-LED-and-Shadow-Glow." Primary light is a "thick, clinical-blue" podium-leak hitting her jaw and the model. Secondary "weak-violet" wall-indicator-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" glass casing, the "rough, dry" concrete, the "detailed fabric weave" of her empowered abaya, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Antenna.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6free">Style: Cinematic, ultra-hyper-realistic luxury photography, Sony A1, 35mm f/1.4 GM. Focus on "Micro-Scratches" on the aluminum briefcase and the "White-Pressure-of-his-Fingertips" on the spring-loaded latches, background a soft vault-atrium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Shadow-Heavy" high-security vault atrium in a private Abuja estate at 3:15 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" stainless-steel safety deposit boxes and a single glowing "ASSETS-OPENED" violet wall indicator. In the foreground, a "Heavy-Reinforced-Aluminum-Briefcase" is "Opened-to-Reveal-Rows-of-Twenty-Four-Karat-Gold-Bars." His "Right-Hand" is "Fingers-Griping-the-Metal-Side-with-Absolute-Rigidity-to-Anchor-his-Will-Against-the-Gravity-of-the-Liquid-Capital."
+
+The subject: A 28-year-old powerful Hausa man, "The Master of Liquidity." He is "Standing-Leaned-over-the-Briefcase-with-Shoulders-Rounded-and-Head-Held-Still," his body "Tensed-with-the-Exertion-of-Absolute-Readiness." His right hand is "Touching-the-Metal-to-Anchor-his-Will," while his left hand is "Pressing-into-the-Cool-Surface-of-a-Top-Gold-Bar-to-Steady-his-Weight-Against-the-Gravity-of-the-Fortune," his fingers "Long-and-Dainty-but-Unyielding." He wears an "Empowered-Chocolate-Brown-Babbar-Riga" that features "Tone-on-Tone-Geometric-Bronze-Thread-Embroidery-on-the-Grand-Collar," and a "Matching-Patterned-Zanna-Bukar" that is "Crisp-and-Seamless-Tilted-Forward-Leaving-his-Eyes-in-Soft-Glow." His face shows "Absolute Exhilarated Command"—eyebrows "Softly-Arched" and eyes "Glistening-with-Deep-Violet-Digital-Reflections."
+
+Symbolism: The "Gold Bars" represent "The Critical-Component of his Future-Success." The "Brown Babbar Riga" symbolizes "The Solid Reputation of his Grounded-Authority." The "Violet Indicator" (background) represents "The High-Authority of the Wealth he Commands."
+
+Lighting: "The Vault-LED-and-Ambient-Shadow-Glow." Primary light is a "thick, clinical-blue" case-light-leak hitting his jaw and the gold. Secondary "weak-violet" wall-indicator-glow fills his neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" aluminum, the "rough, dry" polished gold, the "detailed fabric weave" of his babbar riga, and the "beaming, high-clarity" texture of his pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Briefcase.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7free">Style: Cinematic, ultra-hyper-realistic tech photography, Sony A1, 35mm f/1.4 GM. Focus on "Individual-Data-Fiber-Strands" and the "White-Pressure-of-her-Fingertips" on the cold steel server handle, background a soft supercomputer-atrium-blur. 4:5 vertical, 8K resolution.
+
+The scene: A "Dimly-Lit," "Humming-Quiet" massive server atrium in a high-tech center in Zaria at 1:45 AM. The background is a "Deep-Teal-and-Slate" blur of "Multiple" server racks and a single glowing violet "ACCESS-GRANTED" wall indicator. In the foreground, a "Large-Heavy-Steel-Mainframe-Server-Rack" with "Exposed-Network-Cables" is "Exposing-the-Pull-Handle-at-the-Engagement-Point." Her "Right-Hand" is "Fingers-Griping-the-Textured-Steel-Handle-with-Absolute-Rigidity-to-Anchor-her-Will-Against-the-Gravity-of-the-Global-Network."
+
+The subject: A 23-year-old powerful Hausa woman, "The Data Sovereign." She is "Standing-Leaned-over-the-Cables-with-Shoulders-Rounded-and-Head-Held-Still," her body "Tensed-with-the-Exertion-of-Absolute-Readiness." Her right hand is "Touching-the-Steel-to-Anchor-her-Will," while her left hand is "Pressing-into-the-Cool-Mainframe-Casing-to-Steady-her-Weight-Against-the-Gravity-of-the-Information-Flow," her fingers "Long-and-Dainty-but-Unyielding." She wears an "Empowered-Midnight-Black-Silk-Abaya" that features "Tone-on-Tone-Geometric-Matte-Beadwork-on-the-Sleeves-and-Cuffs," and a "Matching-Architectural-Chiffon-Hijab" that is "Sharp-and-Seamless-to-Avoid-Any-Interfering-Movement-in-the-Control-Chamber." Her face shows "Absolute Exhilarated Command"—eyebrows "Softly-Arched" and eyes "Glistening-with-Deep-Violet-Digital-Reflections."
+
+Symbolism: The "Server Mainframe" represents "The Critical-Infrastructure of her Final-Success." The "Black Silk Abaya" symbolizes "The Pure Reputation of her Genius." The "Access-Granted Indicator" (background) represents "The High-Authority of the Data she now Commands."
+
+Lighting: "The Industrial-LED-and-Shadow-Glow." Primary light is a "thick, clinical-blue" screen-leak hitting her jaw and the mainframe. Secondary "weak-violet" wall-indicator-glow fills her neck. Shadows are "long" and "pitch-black."
+
+Texture: The "slick, freezing" steel casing, the "rough, dry" cable insulation, the "detailed fabric weave" of her abaya, and the "beaming, high-clarity" texture of her pale, glowing skin.
+
+Theme: Empowered / Success / The Trial of the Handle.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, bold warm color grading with high contrast, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A modern Northern Nigerian city rooftop or high terrace during sunset. The skyline stretches into the distance, symbolizing ambition and achievement.
+
+The subject: A young Nigerian woman in her mid-20s wearing a stylish flowing abaya or elegant atamfa with gyale stands confidently near the edge of the rooftop. Her posture is upright, shoulders back, chin slightly raised, arms relaxed or gently crossed. Her expression is calm, focused, and powerful, reflecting confidence and self-belief.
+
+Symbolism: Elevated position and strong posture symbolize empowerment, independence, and control over one’s life. The open skyline represents limitless opportunities and vision.
+
+Lighting: Warm sunset light highlights her face and flowing fabrics, creating strong cinematic shadows, golden edges, and a bold, empowering ambiance.
+
+Texture: Ultra-detailed realism — flowing fabrics, subtle wind movement, natural skin tones, city textures captured with DSLR clarity.
+
+Theme: Empowered / Confidence / Strength / Nigerian Young Adult Woman / Rooftop / Leadership & Independence / Bold & Cinematic<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, bold warm-to-neutral color grading with strong contrast, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A modern Northern Nigerian city street or open plaza during sunset. Tall buildings and open space create a sense of scale and authority, with subtle movement in the background.
+
+The subject: A young Nigerian man in his mid-20s wearing a crisp Babbar riga with a Zanna Bukar style cap stands firmly in the center. His posture is upright and grounded, feet slightly apart, shoulders back. His hands are either clasped behind his back or resting confidently at his sides. His gaze is forward and focused, reflecting determination and control.
+
+Symbolism: Strong stance and forward gaze symbolize leadership, confidence, and personal power. The open urban space emphasizes influence, ambition, and presence.
+
+Lighting: Warm sunset light highlights his silhouette, face, and clothing, creating bold shadows, golden edges, and a powerful cinematic ambiance.
+
+Texture: Ultra-detailed realism — crisp Babbar riga fabric, subtle movement in clothing, natural skin tones, and environmental textures captured with DSLR clarity.
+
+Theme: Empowered / Leadership / Confidence / Nigerian Young Adult Man / Urban Scene / Strength & Authority / Bold & Cinematic<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10free">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, bold golden-hour color grading with high contrast, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A Northern Nigerian open landscape, rooftop, or wide city overlook at sunrise. The horizon stretches far, symbolizing new beginnings and limitless possibilities.
+
+The subject: A young Nigerian man or woman in their mid-20s stands at the highest point of the scene. Wearing elegant traditional attire (Babbar riga or flowing atamfa with gyale), they raise one hand slightly upward or spread their arms open, facing the rising sun. Their posture is strong, balanced, and full of confidence, capturing a moment of achievement and personal victory.
+
+Symbolism: Raised arms and elevated position symbolize triumph, success, and empowerment. Facing the sunrise represents new beginnings, growth, and unstoppable progress.
+
+Lighting: Golden sunrise light illuminates the subject from the front or side, creating powerful highlights, long shadows, and a radiant, victorious ambiance.
+
+Texture: Ultra-detailed realism — flowing fabrics catching light, natural skin tones, environmental textures like ground or rooftop surfaces captured with DSLR clarity.
+
+Theme: Empowered / Victory / Achievement / Nigerian Young Adult / New Beginnings / Strength & Confidence / Bold & Cinematic<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+function fixAllPrompts() {
+  document.querySelectorAll('[id^="prompt"], .prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+
+    // Strip any existing <br><br> and <strong> around section labels first
+    html = html.replace(/<br><br>\s*<strong>(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)<\/strong>/g, '$1');
+    html = html.replace(/<br><br>\s*(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)/g, '$1');
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)<\/strong>/g, '$1');
+
+    // Convert real line breaks (\n) before section labels to <br><br>
+    html = html.replace(/\n\s*(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)/g, '<br><br>$1');
+
+    // Now bold all section labels
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)/g, '<br><br><strong>$1</strong>');
+
+    // Remove leading <br><br> from very first label
+    html = html.replace(/^(\s*<br><br>)+/, '');
+
+    el.innerHTML = html;
+  });
+}
+document.addEventListener('DOMContentLoaded', fixAllPrompts);
+</script>
+</body>
+</html>

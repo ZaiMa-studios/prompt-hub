@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <title>What are you feeling?</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+  background: #ffffff;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+    /* ── HEADER ── */
+   .header-section {
+  padding: 18px 16px 0; /* Increased top padding for better status bar clearance */
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+  z-index: 100;
+  /* Keep border-bottom only if you want a line below the entire header */
+}
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .back-btn svg {
+      width: 22px;
+      height: 22px;
+      stroke: #0d0d0d;
+      stroke-width: 2.5;
+    }
+
+    .top-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0d0d0d;
+      letter-spacing: -0.2px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── SEARCH ── */
+  .search-box {
+  margin-left: -16px;    /* ← pull to left edge */
+  margin-right: -16px;   /* ← pull to right edge */
+  width: calc(100% + 32px);  /* ← extend full width */
+}
+
+.search-box input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border-radius: 0;        /* ← no border radius */
+  border: none;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: #f8f9fa;     
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: #0d0d0d;
+  outline: none;
+}
+
+    .search-box input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  border-radius: 0; 
+  border: none; /* This clears all default borders */
+  
+  /* REMOVED: border-bottom */
+  /* OPTIONAL: Keep border-top only if you need a line ABOVE the search bar */
+  border-top: 1px solid rgba(0,0,0,0.06); 
+  
+  background: #f8f9fa;     
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: #0d0d0d;
+  outline: none;
+}
+
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      stroke: #aaa;
+      stroke-width: 2.5;
+      fill: none;
+    }
+    .search-box {
+  position: relative;
+  margin-left: -16px;
+  margin-right: -16px;
+  width: calc(100% + 32px);
+}
+
+    /* ── TABS ── */
+    .tab-container {
+      display: flex;
+      gap: 28px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-top: 12px;
+    }
+
+    .tab {
+      font-size: 14px;
+      font-weight: 600;
+      color: #94a3b8;
+      cursor: pointer;
+      padding-bottom: 10px;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+      transition: color 0.2s;
+    }
+
+    .tab.active {
+      color: #7C3AED;
+      font-weight: 700;
+      border-bottom: 2.5px solid #7C3AED;
+    }
+
+    /* ── MAIN CONTENT ── */
+   .main-content {
+  background: #ffffff;
+  padding: 20px 16px 40px 16px;  /* equal left and right */
+  width: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+    .section-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #94a3b8;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+}
+    /* ── GRID ── */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%; 
+}
+
+    /* ── CARD ── */
+  .card {
+  background: white;
+  border-radius: 14px;
+  padding: 20px 16px;    /* ← increase from 16px to 20px */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 12px;             /* ← increase from 10px to 12px */
+  cursor: pointer;
+  width: 100%;
+  min-width: 0;
+}
+
+    .card:active {
+        transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(108, 71, 255, 0.15);
+  background: #f0ebff;
+  transition: all 0.1s ease;
+  
+}
+
+    .emoji {
+      font-size: 28px;
+    transition: transform 0.2s ease-out;
+    display: block;
+    min-width: 36px;
+    text-align: center;
+    border-radius:12px;
+  }
+
+   .feeling-name {
+  font-weight: 600;
+  color: #1A1A1A;
+  font-size: 12px;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;        /* ← allows text to shrink */
+}
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      grid-column: 1/-1;
+      text-align: center;
+      padding: 60px 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header-section">
+  <div class="top-nav">
+    <button class="back-btn" onclick="window.location.href='index.html'">
+      <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+    </button>
+    <h1 class="top-title">What are you feeling?</h1>
+  </div>
+
+  <div class="search-box">
+    <svg class="search-icon" viewBox="0 0 24 24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" id="searchInput" placeholder="Search 150 feelings...">
+  </div>
+
+  <div class="tab-container">
+    <button class="tab active" id="feelingsTab" onclick="switchTab('feelings')">Feelings</button>
+    <button class="tab" id="activitiesTab" onclick="switchTab('activities')">Activities</button>
+  </div>
+</div>
+
+<div class="main-content">
+  <p class="section-title">Feeling Categories</p>
+  <div class="grid" id="feelingsGrid"></div>
+</div>
+
+<script>
+  const feelingData = [
+    { n: "Happy", e: "😊" }, { n: "Sad", e: "😔" }, { n: "Alone", e: "🚶 " }, { n: "Lost", e: "🌀 " },
+    { n: "Free", e: "🕊️" }, { n: "Horrible", e: "🤢" }, { n: "Celebration", e: "🥳" }, { n: "Comfortable", e: "🛋️ " },
+    { n: "Inspired", e: "💡" }, { n: "Motivated", e: "💪" }, { n: "Zen", e: "🧘" }, { n: "Grateful", e: "🙏" },
+    { n: "Blessed", e: "😇" }, { n: "Loved", e: "🥰" }, { n: "Excited", e: "🤩" }, { n: "Angry", e: "😠" },
+    { n: "Anxious", e: "😰" }, { n: "Brave", e: "🦁" }, { n: "Creative", e: "🎨" }, { n: "Tired", e: "😴" },
+    { n: "Productive", e: "⚡" }, { n: "Curious", e: "🤔" }, { n: "Peaceful", e: "🍃" }, { n: "Strong", e: "🏋️" },
+    { n: "Broken", e: "💔" }, { n: "Beautiful", e: "✨" }, { n: "Stressed", e: "🤯" }, { n: "Hungry", e: "😋" },
+    { n: "Professional", e: "💼" }, { n: "Guilty", e: "😞" }, { n: "Alive", e: "🌱" }, { n: "Weird", e: "👽" },
+    { n: "Thankful", e: "🙏" }, { n: "In love", e: "🥰" }, { n: "Crazy", e: "🤪" }, { n: "Blissful", e: "😌" },
+    { n: "Fantastic", e: "🤩" }, { n: "Silly", e: "😜" }, { n: "Festive", e: "🥳" }, { n: "Wonderful", e: "✨" },
+    { n: "Cool", e: "😎" }, { n: "Amused", e: "🤭" }, { n: "Relaxed", e: "🛀" }, { n: "Positive", e: "📈" },
+    { n: "Chill", e: "🥤" }, { n: "Hopeful", e: "🌷" }, { n: "Joyful", e: "😊" }, { n: "Proud", e: "😏" },
+    { n: "Thoughtful", e: "🤔" }, { n: "OK", e: "👌" }, { n: "Nostalgic", e: "📜" }, { n: "Sick", e: "🤒" },
+    { n: "Delighted", e: "😁" }, { n: "Drained", e: "😩" }, { n: "Emotional", e: "🥺" }, { n: "Confident", e: "😎" },
+    { n: "Awesome", e: "😃" }, { n: "Fresh", e: "🧼" }, { n: "Determined", e: "🧐" }, { n: "Exhausted", e: "😫" },
+    { n: "Annoyed", e: "😠" }, { n: "Glad", e: "🙂" }, { n: "Lucky", e: "🍀" }, { n: "Heartbroken", e: "💔" },
+    { n: "Bored", e: "😑" }, { n: "Sleepy", e: "😴" }, { n: "Energized", e: "⚡" }, { n: "Pained", e: "😣" },
+    { n: "Disappointed", e: "😞" }, { n: "Optimistic", e: "🌤️" }, { n: "Cold", e: "🥶" },
+    { n: "Cute", e: "☺️" }, { n: "Fabulous", e: "💅" }, { n: "Great", e: "😄" }, { n: "Sorry", e: "😔" },
+    { n: "Super", e: "🦸" }, { n: "Worried", e: "😟" }, { n: "Funny", e: "🥸" }, { n: "Bad", e: "☹️" },
+    { n: "Down", e: "😔" }, { n: "Satisfied", e: "😌" }, { n: "Pumped", e: "😎" }, { n: "Calm", e: "😌" },
+    { n: "Confused", e: "😕" }, { n: "Goofy", e: "🤪" }, { n: "Missing", e: "🫂" }, { n: "Good", e: "🙂" },
+    { n: "Sarcastic", e: "😏" }, { n: "Lonely", e: "😞" }, { n: "Concerned", e: "😟" }, { n: "Special", e: "🌟" },
+    { n: "Depressed", e: "🌑" }, { n: "Jolly", e: "🎅" }, { n: "Low", e: "📉" }, { n: "Welcome", e: "👋" },
+    { n: "Irritated", e: "😬" }, { n: "Incomplete", e: "🌗" }, { n: "Hyper", e: "🚀" }, { n: "Mischievous", e: "😈" },
+    { n: "Amazed", e: "😲" }, { n: "Pissed off", e: "😡" }, { n: "Fed up", e: "😫" }, { n: "Puzzled", e: "🧐" },
+    { n: "Furious", e: "😤" }, { n: "Pissed", e: "🤬" }, { n: "Refreshed", e: "🍃" }, { n: "Accomplished", e: "🏆" },
+    { n: "Surprised", e: "😧" }, { n: "Perplexed", e: "🤨" }, { n: "Frustrated", e: "😤" }, { n: "Meh", e: "😑" },
+    { n: "Pretty", e: "💅" }, { n: "Better", e: "📈" }, { n: "Safe", e: "🔒" }, { n: "Old", e: "👴" },
+    { n: "Lazy", e: "🥱" }, { n: "Worse", e: "📉" }, { n: "Stupid", e: "🥴" }, { n: "Ashamed", e: "😳" },
+    { n: "Terrible", e: "😫" }, { n: "Asleep", e: "😴" }, { n: "Well", e: "🌿" }, { n: "Shy", e: "😊" },
+    { n: "Rough", e: "🧱" }, { n: "Human", e: "👤" }, { n: "Hurt", e: "🤕" }, { n: "Awful", e: "🤮" },
+    { n: "Adventurous", e: "🧗" }, { n: "Appreciative", e: "💖" }, { n: "Burned out", e: "🕯️" }, { n: "Caring", e: "🫂" },
+    { n: "Daring", e: "🏎️" }, { n: "Eager", e: "🏁" }, { n: "Empowered", e: "👑" }, { n: "Focused", e: "🎯" },
+    { n: "Forgiving", e: "🤝" }, { n: "Humble", e: "🙇" }, { n: "Impatient", e: "⏳" }, { n: "Insecure", e: "🫣" },
+    { n: "Kind", e: "🍬" }, { n: "Mindful", e: "🧘‍♂️" }, { n: "Needed", e: "🫂" }, { n: "Open-minded", e: "🔓" },
+    { n: "Resilient", e: "🛡️" }, { n: "Serene", e: "🌊" }, { n: "Unstoppable", e: "🚀" },
+    { n: "Vibrant", e: "🌈" }, { n: "Worthy", e: "💎" }
+  ];
+
+  const activityData = [
+    { n: "Watching", e: "📺" }, { n: "Drinking", e: "☕" }, { n: "Attending", e: "🎫" },
+    { n: "Looking for", e: "🔍" }, { n: "Supporting", e: "🙌" }, { n: "Playing", e: "🎮" },
+    { n: "Celebrating", e: "🥳" }, { n: "Eating", e: "🍕" }, { n: "Traveling to", e: "✈️" },
+    { n: "Thinking about", e: "🧠 " }, { n: "Reading", e: "📖" }, { n: "Listening to", e: "🎧" }
+  ];
+
+  let currentTab = 'feelings';
+
+  function switchTab(tabName) {
+  currentTab = tabName;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('feelingsTab').classList.toggle('active', tabName === 'feelings');
+  document.getElementById('activitiesTab').classList.toggle('active', tabName === 'activities');
+  
+  // ← Change title based on tab
+  document.querySelector('.top-title').innerText = 
+    tabName === 'feelings' ? 'What are you feeling?' : 'What are you doing?';
+
+  document.querySelector('.section-title').innerText =
+    tabName === 'feelings' ? 'Feeling Categories' : 'Activity Categories';
+  document.getElementById('searchInput').placeholder =
+    tabName === 'feelings' ? 'Search 150 feelings...' : 'Search activities...';
+  render(tabName === 'feelings' ? feelingData : activityData);
+}
+
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    const dataToSearch = currentTab === 'feelings' ? feelingData : activityData;
+    render(dataToSearch.filter(item => item.n.toLowerCase().includes(term)));
+  });
+
+  const grid = document.getElementById('feelingsGrid');
+
+  function render(list) {
+    grid.replaceChildren();
+    if (list.length === 0) {
+      grid.innerHTML = `
+        <div class="empty-state">
+          <p style="font-size:40px;margin-bottom:10px;">🔍</p>
+          <p style="color:#64748b;font-weight:700;">No categories found.</p>
+          <p style="color:#94a3b8;font-size:13px;margin-top:4px;">Try switching tabs or adjusting your search.</p>
+        </div>`;
+      return;
+    }
+
+    list.forEach(f => {
+      let targetLink = '';
+      if (currentTab === 'feelings') {
+  
+  const index = feelingData.findIndex(item => item.n === f.n);
+  const fileNum = Math.floor(index / 5) + 1;
+  const safeID = f.n.toLowerCase().trim().replace(/\s+/g, '');
+  
+  targetLink = `feeling${fileNum}.html#${safeID}`;
+  
+} else {
+  
+  const activityLinks = {
+    'Watching': 'watching.html',
+    'Drinking': 'drinking.html',
+    'Attending': 'attending.html',
+    'Looking for': 'looking-for.html',
+    'Supporting': 'supporting.html',
+    'Playing': 'playing.html',
+    'Celebrating': 'celebrating.html',
+    'Eating': 'eating.html',
+    'Traveling to': 'traveling.html',
+    'Thinking about': 'thinking-about.html',
+    'Reading': 'reading.html',
+    'Listening to': 'listening-to.html'
+  };
+  
+  targetLink = activityLinks[f.n] || '#';
+  
+}
+
+      const div = document.createElement('div');
+      div.innerHTML = `
+        <div class="card" onclick="window.location.href='${targetLink}'">
+          <span class="emoji">${f.e}</span>
+          <span class="feeling-name">${f.n}</span>
+        </div>`;
+      grid.appendChild(div);
+    });
+  }
+
+  render(feelingData);
+  if (window.location.hash === '#activities') switchTab('activities');
+
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('scrollPos', window.scrollY);
+  });
+
+  window.addEventListener('load', () => {
+    const scrollPos = sessionStorage.getItem('scrollPos');
+    if (scrollPos) {
+      window.scrollTo(0, parseInt(scrollPos));
+      sessionStorage.removeItem('scrollPos');
+    }
+  });
+</script>
+</body>
+</html>

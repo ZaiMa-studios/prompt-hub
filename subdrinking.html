@@ -1,0 +1,1626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subdrinking – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1A1A1A; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: none; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; color: #f97316; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="coffee-tea">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='drinking.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Hot drinks</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1coffeetea">Style: Cinematic, ultra-hyper-realistic, high-fashion moody photography (Leica SL2 aesthetic), 5:6 vertical aspect ratio, 16K resolution, low-key "Dawn-Misting" lighting with warm, fiery accents.<br><br>
+
+The scene: A "Private-Sunrise-Balcony" of a modern Jos villa, built from "Rough-Hewn-Granite" and "Polished-Teak-Wood." The view is of the rolling Jos hills, shrouded in "Cold-Morning-Fog." The atmosphere is "Intellectual-Reverence-and-Elite-Stillness."<br><br>
+
+The subject: A 31-year-old Northern Nigerian strategy consultant, a man of "Refined-Intellectual-Steeze." He wears a "Structured-Slate-Grey-Kaftan" made of "Heavy-Matte-Cotton" with "Subtle-Tonal-Islamic-Geometry-Embroidery" and a "Simple-Cream-Tagiyah." He is seated on a "Plush-Leather-Armchair," leaning forward, a "Knowing-Smile" playing on his lips.<br><br>
+
+The activity: He is holding a "Ceremonial-Spiced-Coffee" (Gahwa) with both hands, bringing it to his nose to inhale the aroma. The mood is one of "Reflective-Preparation."<br><br>
+Symbolism: On a "Polished-Wood-Pedestal" rests an "Antique-Brass-Dallah" (coffee pot), an "Aviation-Chronograph-Watch," and a "Stack-of-Modern-Geopolitical-Journals." The floating proverbs represent the fusion of cultural philosophy and strategic foresight, showing the consultant’s connection to his heritage.<br><br>
+
+Lighting: "Dramatic-Chiaroscuro." The "Soft-Blue-Dawn-Light" defines his profile, while the "Warm-Amber-Glow" from the floating holographic words and the coffee itself casts a "Spiritual-Luminescence" on his Kaftan and the steam rising from his cup.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Fibrous-Quality-of-the-Heavy-Cotton," the "Condensation-Misty-Film-on-the-Balcony-Glass," the "Wet-Gleam-on-the-Polished-Stone," and the "Pore-Level-Detail" of his thoughtful, focused facial features.<br><br>
+
+Theme: ☕ Morning-Gahwa-Ritual / Intellectual-Steeze / Plateau-Mist / Floating-Calligraphy.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2coffeetea">Style: Ultra-hyper-realistic, corporate-editorial photography (Hasselblad H6D-400c aesthetic), 5:6 vertical aspect ratio, 16K resolution, sharp "High-Executive" lighting with natural depth of field.<br><br>
+
+The scene: A "Minimalist-Executive-Boardroom" in a skyscraper overlooking the city of Abuja. The table is a single slab of "Matte-Black-Obsidian-Stone." Floor-to-ceiling windows show a sharp, clear afternoon sky. The atmosphere is "Absolute-Authority-and-Unshakable-Confidence."<br><br>
+
+The subject: A 45-year-old Northern Nigerian industrialist, a man of "Statesman-Steeze." He wears a "Starch-Crisp-White-Babban-Riga" with "Intricate-Tone-on-Tone-White-Hand-Stitched-Embroidery." His posture is "Perfectly-Upright-and-Sovereign." He looks directly into the distance with a "Piercing-Calm-Gaze" that suggests he has already won the day.<br><br>
+
+The activity: He is in the middle of a high-level negotiation, holding a "Steaming-Cup-of-Shahi" (Black Tea). He isn't drinking yet; he is using the pause to let his last sentence hang in the air. The steam rises in a "Natural-Simple-Plume," catching the sunlight.<br><br>
+
+Symbolism: On the obsidian table sits a "Leather-Bound-Executive-Planner," a "Montblanc-Meisterstück-Fountain-Pen," and a "Small-Plate-of-Premium-Medjool-Dates." The simplicity of the tea against the luxury of the room symbolizes a leader who remains "Rooted-in-Tradition" while dominating modern commerce.<br><br>
+
+Lighting: "Natural-High-Contrast." Bright "Side-Lighting" from the window creates a strong highlight on the side of his face and the white fabric, while the tea glass acts as a "Prism," casting a small, warm amber glow on his hand.<br><br>
+
+Texture: Maximum-fidelity detail—the "Tactile-Grain-of-the-High-Quality-Cotton," the "Tiny-Bubbles-at-the-Rim-of-the-Tea," the "Polished-Sheen-of-the-Gold-Handle," and the "Individual-Pores-and-Character-Lines" on his hands and face.<br><br>
+
+Theme: ☕ Executive-Shahi-Break / Power-Steeze / Unshakable-Confidence / High-Stakes-Realism.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3coffeetea">Style: Ultra-hyper-realistic, documentary-editorial photography (Phase One XF aesthetic), 5:6 vertical aspect ratio, 16K resolution, moody "Library-Glow" lighting with deep natural shadows.<br><br>
+
+The scene: A "Traditional-Gidan-Sarauta-Style-Library" (Palace Style) in Sokoto. The walls are made of "Hand-Pressed-Adobe" with integrated niches holding "Ancient-Leather-Bound-Islamic-Manuscripts." A large window overlooks a "Tranquil-Courtyard-Garden." The atmosphere is "Profound-Knowledge-and-Quiet-Dignity."<br><br>
+
+The subject: A 62-year-old Northern Nigerian historian, a man of "Weathered-Wisdom-Steeze." He wears a "Structured-Earth-Toned-Kaftan" in "Deep-Indigo-and-Brown-Fabric" with "Hand-Stitched-Zanna-Patterns" and a "Simple-Cream-Kufi-Cap." His posture is "Relaxed-yet-Intent," his expression "Thoughtful-and-Serene." He wears "Minimalist-Reading-Glasses."<br><br>
+
+The activity: He is in the middle of translating an ancient text, holding a "Steaming-Cup-of-Kunu-Tsamiya." He is taking a small sip, looking out the window, processing a complex thought. The steam is "Natural-and-Wispy."<br><br>
+
+Symbolism: On the rough wooden desk lies a "Worn-Leather-Bound-Journal," a "Pair-of-Antique-Brass-Spectacles," and a "Small-Plate-of-Dry-Tamarind-Pods." The Kunu against the high-stakes knowledge symbolizes a leader who remains "Intellectually-Rooted" while interpreting the past for the future.<br><br>
+
+Lighting: "Natural-Soft-Contrast." Soft "Window-Light" illuminates his face and the side of the tumbler, while the background falls into "Deep-Warm-Shadows," creating a sense of "Timelessness" around him.<br><br>
+
+Texture: Maximum-fidelity detail—the "Raw-Grit-of-the-Adobe-Walls," the "Frayed-Edge-of-the-Manuscript," the "Coarse-Texture-of-the-Clay-Tumbler," and the "Individual-Age-Lines" on his hands and face.<br><br>
+
+Theme: ☕ Scholar's-Kunu-Moment / Timeless-Wisdom-Steeze / Intimacy-of-Focus / Intellectual-Heritage.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4coffeetea">Style: Ultra-hyper-realistic, luxury-lifestyle photography (Nikon Z9 aesthetic), 5:6 vertical aspect ratio, 16K resolution, "Golden-Hour" natural lighting with high-end architectural depth.<br><br>
+
+The scene: A "Private-Infinity-Pool-Rooftop" of a luxury penthouse in Abuja. The floor is "Italian-White-Marble." In the background, the iconic "Zuma-Rock" rises majestically against a "Lavender-and-Gold-Sunset-Sky," its massive granite face reflecting the evening light. The atmosphere is "Peak-Sophistication-and-Serene-Dominance."<br><br>
+
+The subject: A 29-year-old Northern Nigerian tech-executive, a woman of "Modern-Royal-Steeze." She wears a "Structured-Silk-Abaya" in "Emerald-Green" with "Delicate-Gold-Thread-Linear-Embroidery" and a "Matching-Silk-Chiffon-Hijab" that catches the light breeze. Her expression is one of "Deep-Contentment-and-Quiet-Power," eyes fixed on the horizon.<br><br>
+
+The activity: She is relaxing after a high-stakes day, holding a "Hot-Gourmet-Latte." She is leaning elegantly against a "Glass-Balustrade," the cup held near her face so the "Natural-Steam" lightly catches the sunset glow. No rush, just the "Pure-Enjoyment" of the moment.<br><br>
+
+Symbolism: On a "Sleek-Marble-Side-Table" sits a "Pair-of-Designer-Oversized-Sunglasses," a "Latest-Model-Foldable-Smartphone," and a "Small-Gold-Plate-of-Macarons." The latte represents the "Refinement-of-Taste" in a globalized Abuja, while the view of the rock grounds her in her "Northern-Identity."<br><br>
+
+Lighting: "Cinematic-Golden-Hour." The "Low-Hanging-Sun" creates a "Halo-Effect" around her hijab and casts a "Warm-Honey-Glow" on her skin. The white marble floor acts as a "Natural-Reflector," filling the shadows with soft light.<br><br>
+
+Texture: Maximum-fidelity detail—the "Shimmering-Sheen-of-the-Silk-Abaya," the "Crisp-Granite-Texture-of-Zuma-Rock" in the distance, the "Creamy-Density-of-the-Latte-Foam," and the "Impeccable-Manicure" on her hand holding the mug.<br><br>
+
+Theme: ☕ Rooftop-Coffee-Abuja / Modern-Northern-Woman / Zuma-Rock-Grandeur / Success-Steeze.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5coffeetea">Style: Ultra-hyper-realistic, architectural-interior photography (Sony A7R V aesthetic), 5:6 vertical aspect ratio, 16K resolution, moody "Shadow-Play" lighting with warm amber accents.<br><br>
+
+The scene: A "Renovated-Adobe-Creative-Studio" in the heart of Zaria. The walls are "Traditional-Red-Mud" but feature "Inserted-Glass-Flooring" and "Industrial-Steel-Beams." Outside the narrow vertical window, the "Minaret-of-the-Zaria-Central-Mosque" is visible in the twilight. The atmosphere is "Groundbreaking-Creativity-and-Ancestral-Soul."<br><br>
+
+The subject: A 26-year-old Northern Nigerian furniture designer, a man of "Craft-Steeze." He wears a "Short-Sleeve-Indigo-Dye-Kaftan" made of "Hand-Woven-Aso-Oke-Fabric" with "Exposed-Copper-Stitching." His sleeves are rolled up, revealing "Sketches-of-Modern-Thrones" on his drafting table. His expression is "Introspective-and-Satisfied."<br><br>
+
+The activity: He is taking a break from his work, holding a "Hot-Spiced-Cocoa-infused-with-Ginger-and-Cloves." He is leaning back in a "Chair-of-his-own-Design," looking at his latest prototype. The steam is "Thick-and-Whirling" in a shaft of light.<br><br>
+
+Symbolism: On the drafting table lies a "Heavy-Brass-Compass," a "Lump-of-Unprocessed-Clay," and a "Modern-Stylus-Pen." The hot cocoa represents the "Nourishment-of-Ideas," while the Zaria minaret in the background connects his "Modern-Studio" to his "Spiritual-Compass."<br><br>
+
+Lighting: "Atmospheric-Spotlighting." A "Single-Warm-Pendant-Light" hangs over the table, creating a "Circle-of-Focus" on the mug and his hands, while the rest of the adobe studio remains in "Cool-Indigo-Shadows."<br><br>
+
+Texture: Maximum-fidelity detail—the "Gritty-Pores-of-the-Adobe-Wall," the "Rich-Creamy-Bubbles-in-the-Cocoa," the "Fiber-Texture-of-the-Indigo-Fabric," and the "Subtle-Sheen-of-Sweat" on his neck from the studio’s warmth.<br><br>
+
+Theme: ☕ Zaria-Studio-Cocoa / Creative-Craft-Steeze / Heritage-Innovation / Focused-Ambition.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6coffeetea">Style: Ultra-hyper-realistic, high-fashion lifestyle photography (Canon EOS R3 aesthetic), 5:6 vertical aspect ratio, 16K resolution, bright "High-Sun" lighting with crisp, sharp shadows.<br><br>
+
+The scene: A "Modern-Glass-Pavilion" set within a lush, private "Oasis-Garden" in Maiduguri. Outside the glass, "Desert-Date-Trees" and "Bougainvillea" sway in the heat haze, while inside is "Climate-Controlled-Perfection." The floor is "Polished-Sandstone." The atmosphere is "Vibrant-Cooling-and-Elite-Leisure."<br><br>
+
+The subject: A 24-year-old Northern Nigerian lifestyle influencer, a woman of "Ethereal-Summer-Steeze." She wears a "Flowing-Silk-Kaftan" in "Citrus-Yellow" with "Laser-Cut-Floral-Patterns" at the hem. She is lounging on a "White-Linen-Daybed," her posture "Fluid-and-Graceful." Her expression is "Playfully-Confident," with a "Glistening-Smile."<br><br>
+
+The activity: She is about to take a sip of a "Chilled-Mango-and-Ginger-Blend." She holds the glass with "Delicate-Precision," the coldness of the drink providing a "Tactile-Contrast" to the bright sun visible through the glass walls. <br><br>
+
+Symbolism: On a "Clear-Acrylic-Side-Table" sits a "Pair-of-Gold-Rimmed-Sunglasses," a "Designer-Sun-Hat" made of fine straw, and a "Small-Crystal-Bowl-of-Baobab-Sweets." The juice represents "Internal-Hydration-and-Vitality," while the glass pavilion symbolizes a "Shield-of-Success" against the harsh desert elements.<br><br>
+
+Lighting: "Brilliant-and-Transparent." Intense "Overhead-Sunlight" is filtered through the glass, creating "Refractive-Rainbows" on the sandstone floor. The golden juice in the glass acts as a "Secondary-Light-Source," casting a "Warm-Citrus-Glow" on her hand and cheek.<br><br>
+
+Texture: Maximum-fidelity detail—the "Prickly-Texture-of-the-Mint-Leaf," the "Micro-Bubbles-in-the-Ice," the "Smooth-Slippery-Surface-of-the-Silk-Kaftan," and the "Hydrated-Glow-of-her-Skin."<br><br>
+
+Theme: 🍹 Desert-Oasis-Juice / Summer-Steeze / Crystal-Hydration / Maiduguri-Luxury.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7coffeetea">Style: Ultra-hyper-realistic, cinematic portraiture (Canon EOS R5 aesthetic), 5:6 vertical aspect ratio, 16K resolution, moody "Fire-and-Steel" lighting.<br><br>
+
+The scene: A "Private-Lounge-Annex" in a mansion in Katsina. The room is lined with "Dark-Polished-Wood-Paneling" and "Hand-Woven-Hadejia-Mats" on the floor. In the corner, a "Modern-Brass-Stove" mimics a traditional coal fire. The atmosphere is "Exclusive-Fraternity-and-High-Level-Debate."<br><br>
+
+The subject: A 38-year-old Northern Nigerian media mogul, a man of "Commanding-Presence-Steeze." He wears a "Deep-Navy-Blue-Cashmere-Kaftan" with "Intricate-Black-Silk-Tilling-Embroidery" and a "Perfectly-Folded-White-Zanna-Cap." He is seated on a "Low-Profile-Velvet-Majlis-Sofa," leaning back with one arm draped over the cushion, looking "Sovereign-and-Relaxed."<br><br>
+
+The activity: He is watching his personal "Tea-Master" pour a "Special-Spiced-Black-Tea" from a height to create foam. He holds his own empty glass, waiting with "Patient-Confidence." The air is thick with the scent of "Cardamom-and-Cloves."<br><br>
+
+Symbolism: On a "Carved-Ebony-Side-Table" sits a "Silver-Tray-of-Fresh-Mint," a "Luxury-Car-Key-Fob," and a "Small-Bowl-of-Rock-Sugar-Crystals." The tea ritual represents "Brotherhood-and-Consultation," while the expensive fabric of his Kaftan highlights his "Economic-Success."<br><br>
+
+Lighting: "Warm-and-Directional." The "Orange-Glow" from the brass stove illuminates one side of his face, while "Cool-Ambient-Blue-Light" from a hidden architectural strip light defines the edges of his Navy Kaftan. <br><br>
+
+Texture: Maximum-fidelity detail—the "Soft-Fuzz-of-the-Cashmere," the "Glossy-Bubbles-of-the-Tea-Head," the "Metallic-Sheen-of-the-Silver-Tray," and the "Pore-Level-Detail" of his calm, powerful face.<br><br>
+
+Theme: ☕ Elite-Shayi-Lounge / Command-Steeze / Katsina-Fraternity / Refined-Tradition.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8coffeetea">Style: Ultra-hyper-realistic, intimate lifestyle photography (Fujifilm GFX100S aesthetic), 5:6 vertical portrait, 16K resolution, moody "Shadow-Play" lighting with soft, diffused golden hour accents.<br><br>
+
+The scene: A private, secluded alcove on a luxury Abuja rooftop. The space is constructed of "Fluted-Concrete" and "Rich-Teak-Wood," nestled behind large, potted desert plants (agave and cacti). Outside the "Frameless-Glass-Balustrade," the sunset cityscape and the silhouette of Zuma Rock are visible but soft-focused. The atmosphere is "Timeless-Solitude-and-Refined-Self-Worth."<br><br>
+
+The subject: Halima, 24, an introverted literature student. She embodies "Quiet-Intellectual-Steeze." She wears a structured, yet cozy, earth-toned "Knit-Abaya" in deep olive and terracotta with subtle geometric Northern Nigerian embroidery on the sleeve, and a loose-draped soft pashmina hijab. Her reading glasses are wire-frame; her posture is "Curled-Up-yet-Contained" in the armchair. She looks completely absorbed, a peaceful, contented smile playing on her lips.<br><br>
+
+The activity: She is in her absolute element—solitude. She holds a "Classic-Hardcover-Book" (e.g., *Chronicles of the Savannah*) in one hand, while the other rests near a "Steaming-Mug." She isn't performing; she is just *existing*. The natural steam is caught in a shaft of sunset light.<br><br>
+
+Symbolism: On a "Low-Polished-Walnut-Bookshelf" sits a "Stack-of-Modern-African-Literature," a "Small-Plate-of-Premium-Dates-and-Pastries," and a "Minimalist-Ceramic-Vase" with dried savanna grass. The setting (Abuja rooftop vs. ancient Zuma Rock) frames her as a modern thinker who still values quiet tradition.<br><br>
+
+Lighting: "Cinematic-Golden-Hour." The sunset light filters through the plants, creating soft, moving geometric shadow patterns across the scene. The primary light source is the warm sunset, which catches the steam and highlights her profile.<br><br>
+
+Texture: Maximum-fidelity detail—the "Raw-Concrete-Wall," the "Shearling-Lining" of the leather armchair, the "Pore-Level-Detail" of her relaxed face, and the "Fine-Red-Dust-Patina" on her book cover.<br><br>
+
+Theme: ☕ Abuja-Rooftop-Solitude / Intellectual-Steeze / Reading-Ritual / Contained-Power.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9coffeetea">Style: Ultra-hyper-realistic, intimate lifestyle photography (Fujifilm GFX100S aesthetic), 5:6 vertical portrait, 16K resolution, moody "Shadow-Play" lighting with soft, diffused golden hour accents.<br><br>
+
+The scene: A private "Zen-Courtyard" outside a modern-minimalist adobe home in Sokoto. The floor is covered in "Smooth-Grey-River-Stones" and "Polished-Concrete-Slabs." A single "Desert-Palm" casts long, thin shadows against a "Fluted-Mud-Wall." The atmosphere is "Timeless-Stillness-and-Personal-Sanctuary."<br><br>
+
+The subject: Musa, 21, an aspiring architect with "Quiet-Intellectual-Steeze." He wears a relaxed, structured "Indigo-Dyed-Heavy-Cotton-Kaftan" with "Raw-Edge-Hems" and "Contrast-Stitching." He is seated in a "Mid-Century-Modern-Lounge-Chair" made of "Polished-Teak-Wood." He is leaning back, eyes closed, head tilted slightly back, a peaceful expression on his face.<br><br>
+
+The activity: He is in his personal zone of comfort. He holds a "Sleek-Matte-Grey-Stoneware-Mug" with both hands, resting it near his chest as he inhales the aroma of "Spiced-Black-Coffee." A gentle, natural plume of steam rises, catching the sunlight.<br><br>
+
+Symbolism: The Zen courtyard represents "Mental Clarity, Discipline, and Inner Balance." The desert palm and moving shadows symbolize "Growth Through Harsh Conditions and the Passage of Time." The stoneware coffee mug reflects "Grounded Simplicity and Personal Comfort," while the rising steam represents "Quiet Ambition, Reflection, and Ideas Slowly Taking Shape."<br><br>
+
+Lighting: "Soft-Dappled-Sunlight." The mid-morning sun filters through the palm fronds, creating "Moving-Geometric-Shadows" across his face and the gravel path.<br><br>
+
+Texture: Maximum-fidelity detail—the "Gritty-Pores-of-the-Adobe-Wall," the "Woven-Rattan-Chair-Back," and the "Fine-Micro-Steam-Droplets" forming on the rim of the mug.<br><br>
+
+Theme: ☕ Solitary-Sokoto-Coffee / Intellectual-Steeze / Personal-Retreat / Timeless-Stillness.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10coffeetea">Style: Ultra-hyper-realistic, cinematic portraiture (Phase One IQ4 aesthetic), 5:6 vertical portrait, 16K resolution, "Late-Afternoon-Glow" with deep, warm shadows.<br><br>
+
+The scene: A private "Citrus-Orchard-Garden" within a sprawling family estate in Kano. The background features "Heavy-Fruit-Laden-Trees" (Grapefruit and Orange) and a "White-Marble-Fountain" that is barely audible. The atmosphere is "Generational-Wealth-and-Deep-Peace."<br><br>
+
+The subject: A 60-year-old patriarch, a man of **"Sovereign-Legacy-Steeze."** He wears an "Oversized-Cream-Babban-Riga" made of "Hand-Spun-Hulba-Silk" with "White-on-White-Royal-Embroidery." His "Zanna-Cap" is slightly tilted, and his hands are "Wise-and-Steady." He looks toward the trees with a "Knowing-Smile."<br><br>
+
+The activity: He is enjoying his "Afternoon-Mint-Infusion." He holds the glass with a "Firm-but-Gentle-Grip," savoring the warmth against his palms before taking a sip. The world slows down around him.<br><br>
+
+Symbolism: The citrus orchard represents "Generational Growth, Patience, and Abundance." The flowing marble fountain symbolizes "Continuity, Wisdom, and Quiet Influence Across Time." The warm mint infusion reflects "Calm Authority and Inner Peace," while the glowing Babban Riga and golden backlight symbolize "Legacy, Honor, and the Enduring Presence of a Respected Patriarch."<br><br>
+
+Lighting: "Liquid-Gold-Backlighting." The sun is low, hitting the back of his Riga and making the fabric "Glow-like-a-Halo." The glass of tea catches this light, acting as a "Bright-Amber-Lantern" in his hand.<br><br>
+
+Texture: Maximum-fidelity detail—the "Coarse-Grain-of-the-Marble-Table," the "Pitted-Skin-of-a-Nearby-Orange," the "Soft-Wisps-of-his-White-Beard," and the "Steam-Vapor-Swirling" into the cool evening air.<br><br>
+
+Theme: ☕ Kano-Orchard-Tea / Legacy-Steeze / Patriarch-Peace / Sovereign-Relaxation.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10coffeetea')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10coffeetea')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="juice-smoothie">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='drinking.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Juices</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1juicesmoothie">Style: Ultra-hyper-realistic, high-fashion editorial (Leica SL2 aesthetic), 5:6 vertical aspect ratio, 16K resolution, "Gallery-White" lighting with sharp, artistic shadows.<br><br>
+
+The scene: A "High-End-Contemporary-Art-Gallery" with white-washed walls and "Polished-Concrete-Floors." In the background, "Abstract-Hausa-Calligraphy-Canvases" hang in a clean line. The atmosphere is "Elite-Cultural-Pride-and-Modern-Minimalism."<br><br>
+
+The subject: A 26-year-old Northern Nigerian curator, a woman of "Minimalist-Steeze." She wears a "Structured-Oversized-White-Linen-Kaftan" with "Asymmetrical-Hemlines" and "Bold-Silver-Chunky-Jewelry." Her expression is "Intense-and-Visionary."<br><br>
+
+The activity: She is holding a glass of "Deep-Crimson-Zobo" (Hibiscus and Ginger). She is standing perfectly still, the drink held like a piece of art itself, poised and confident.<br><br>
+
+The cup: A "Sleek-Stemless-Crystal-Wine-Glass." The juice is a "Rich-Velvety-Purple-Red," chilled with a "Single-Perfectly-Clear-Ice-Sphere" containing a "Frozen-Hibiscus-Petal" inside.<br><br>
+
+The moment: Her self-esteem is in her "Quiet-Defiance"—she treats this local drink with more prestige than a vintage wine. The realism is in the "Frosted-Mist" on the crystal glass and the "Individual-Fibers" of her linen outfit visible under the gallery lights.<br><br>
+
+Lighting: "Studio-Hard-Light." A sharp spotlight creates a "Crisp-Red-Reflection" of the juice on the white wall behind her, casting a dramatic shadow.<br><br>
+
+Texture: Maximum-fidelity detail—the "Condensation-Trails" on the glass, the "Matte-Skin-Finish" of her face, and the "Refractive-Light" passing through the ice sphere.<br><br>
+
+Theme: 🍷 Zobo-Artistry / Minimalist-Steeze / Cultural-Curator / Crimson-Elegance.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2juicesmoothie">Style: Ultra-hyper-realistic, corporate-lifestyle photography (Sony A7R V aesthetic), 5:6 vertical portrait, 16K resolution, "Clean-Morning-Light" mixed with "Cool-LED-Office-Glow."<br><br>
+
+The scene: A "Futuristic-Home-Office" with a curved glass desk and a panoramic view of the Abuja skyline at mid-morning. The aesthetic is "Glass-and-Chrome-Luxury."<br><br>
+
+The subject: A 30-year-old Northern Nigerian tech entrepreneur with "Precision-Driven-Steeze." He wears a "Modern-Slim-Fit-Kaftan" in "Electric-Blue" made of "Polished-Tech-Fabric" with "Hidden-Zippers" and a "Sleek-Smartwatch." His posture is "Lean-and-Athletic," poised and active.<br><br>
+
+The activity: He is taking a brief break from a "Global-Video-Call" with a "Silicon-Valley-Firm," holding a glass of "Freshly-Pressed-Pineapple-and-Ginger-Juice" while reviewing floating analytics on ultra-wide monitors. He looks "Focused-and-Energized," embodying productive energy and peak-performance discipline.<br><br>
+
+Lighting: "Natural-Daylight" from the panoramic window mixed with a "Cool-LED-Desktop-Light," creating sharp clean shadows, glossy reflections on glass surfaces, and cinematic contrast across the office environment.<br><br>
+
+Texture: Ultra-detailed tech-fabric weave, brushed-metal smartwatch finish, condensation and pulp residue on the juice glass, individual bubbles inside the juice, monitor reflections on the glass surface, pore-level facial realism, chrome architectural surfaces, and high dynamic-range material detail throughout the environment.<br><br>
+
+Symbolism: The futuristic glass office represents "Vision, Innovation, and Global Ambition." The Abuja skyline symbolizes "Modern Northern Nigerian Progress and Expanding Influence." The pineapple-and-ginger juice reflects "Vitality, Discipline, and Sustained Mental Performance," while the fusion of daylight and cool LED lighting symbolizes "Balance Between Human Creativity and Advanced Technology."<br><br>
+
+Theme: 🍍 Abuja-Tech-Mogul / Precision-Steeze / Peak-Performance-Lifestyle / Modern-Northern-Innovation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3juicesmoothie">Style: Ultra-hyper-realistic, high-fashion lifestyle photography (Canon EOS R3), 5:6 vertical portrait, 16K resolution, "Sunset-Amber" lighting with long cinematic shadows and rich golden-hour contrast.<br><br>
+
+The scene: A "Minimalist-Sandstone-Terrace" overlooking the vast golden plains of Northern Nigeria, with a distant "Ancient-Baobab-Tree-Silhouette" against the sunset sky. The atmosphere is "Earthy-and-Expensive-Serenity" with calm wind movement and soft desert haze.<br><br>
+
+The subject: A 27-year-old Northern Hausa woman with "Heritage-Steeze" and quiet luxury presence. She wears a "Flowing-Bronze-Silk-Abaya" that reflects light like liquid metal, paired with a "Perfectly-Draped-Chiffon-Hijab." Her expression is "Serene-and-Deeply-Rooted," embodying timeless elegance and inner confidence.<br><br>
+
+The activity: She slowly swirls a glass of "Refined-Baobab-Cream-Juice" (Kuka infused with honey) while watching the sun disappear beneath the horizon. Her movements are slow, intentional, and emotionally grounded in peace, reflection, and connection to the land.<br><br>
+
+Lighting: "Golden-Hour-Backglow." The low sunset sun creates a translucent glow through the silk abaya sleeves, illuminates fine airborne mist particles, and casts cinematic amber highlights across the sandstone terrace and crystal glass.<br><br>
+
+Texture: Ultra-detailed silk sheen, flowing chiffon fabric layers, gritty sandstone surface texture, thick creamy juice viscosity clinging naturally to the crystal rim, fine cinnamon powder detail, pore-level glowing skin realism, and refractive sparkle from the delicate coupe glass.<br><br>
+
+Symbolism: The ancient baobab tree symbolizes "Legacy, Endurance, and Deep Cultural Roots." The sandstone terrace represents "Grounded Luxury and Stability." The baobab cream juice reflects "Nourishment from Tradition and Inner Fulfillment," while the sunset horizon symbolizes "Graceful Maturity, Reflection, and Timeless Northern Identity."<br><br>
+
+Theme: 🥤 Baobab-Luxe / Earthy-Steeze / Northern-Heritage-Elegance / Sunset-Reflection.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4juicesmoothie">Style: Ultra-hyper-realistic, urban-night-editorial (Leica M11 aesthetic), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A "Cyber-Traditional" street-side lounge in Kano’s commercial district. Glowing "Hausa-Calligraphy-Neon-Signs" reflect off "Rain-Slicked-Asphalt."<br><br>
+
+The subject: A 22-year-old Northern Nigerian man of Hausa heritage with deep mahogany skin. He embodies "Street-King-Steeze." He wears a "Modern-Crop-Kaftan" in "Safety-Orange-Tech-Silk" with "Reflective-Silver-Northern-Embroidery" and a "Black-Structured-Zanna-Cap."<br><br>
+
+The activity: He is holding a "Classic-Glass-Bottle-of-Fanta" like a scepter, leaning against a "Custom-Painted-Vespa" with a "Defiant-and-Iconic-Gaze."<br><br>
+
+Symbolism: The "Vibrant-Orange-Liquid" clashing with "Reflective-Silver-Embroidery" symbolizes the "Electric-Modernity" of Northern youth culture.<br><br>
+
+Lighting: "Dual-Tone-Neon-Glow." High-contrast "Orange-and-Teal" lighting creates "Cinematic-Highlights" on his skin and the glass bottle.<br><br>
+
+Texture: Maximum-fidelity detail—the "Thick-Condensation-Droplets" on the bottle, the "Fabric-Sheen" of the tech-silk, the "Pore-Level-Detail" of his face, and the "Gritty-Texture-of-the-Concrete."<br><br>
+
+Theme: 🍊 Fanta-Street-Glow / Hausa-Cyber-Steeze / Electric-Identity.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5juicesmoothie">Style: Ultra-hyper-realistic, high-fashion portrait (Hasselblad H6D), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A private, sun-drenched terrace in a Gombe estate. The background features "White-Linen-Drapery" and "Bougainvillea-Flowers."<br><br>
+
+The subject: A 28-year-old Northern Nigerian woman of Hausa heritage. She embodies "Soft-Power-Steeze." She wears a "Blush-Pink-Organza-Kaftan" with "3D-Floral-Appliqués" and a "Fine-Silk-Turban."<br><br>
+
+The activity: She is gracefully holding a "Gold-Rimmed-Crystal-Coupe" of "Fresh-Pink-Guava-Juice." Her expression is "Serene-and-High-Value."<br><br>
+
+Symbolism: The "Pink-Organza" and "Floral-Appliqués" symbolize "Sophisticated-Fertility-and-Elegance."<br><br>
+
+Lighting: "Dreamy-Sun-Drenched-Backlighting," creating a "Luminous-Halo" effect around her silhouette and the glass.<br><br>
+
+Texture: Maximum-fidelity detail—the "Sheer-Translucency-of-Organza," the "Velvety-Viscosity" of the guava juice, the "Pore-Level-Detail" of her face, and "Fine-Crystal-Etching."<br><br>
+
+Theme: 🌸 Guava-Rose-Elegance / Soft-Power-Steeze / Pink-Refinement.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6juicesmoothie">Style: Ultra-hyper-realistic, high-fashion portrait (Hasselblad H6D), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A private, sun-drenched terrace in a Gombe estate. The background features "White-Linen-Drapery" and "Bougainvillea-Flowers."<br><br>
+
+The subject: A 28-year-old Northern Nigerian woman of Hausa heritage. She embodies "Soft-Power-Steeze." She wears a "Blush-Pink-Organza-Kaftan" with "3D-Floral-Appliqués" and a "Fine-Silk-Turban."<br><br>
+
+The activity: She is gracefully holding a "Gold-Rimmed-Crystal-Coupe" of "Fresh-Pink-Guava-Juice." Her expression is "Serene-and-High-Value."<br><br>
+
+Symbolism: The "Pink-Organza" and "Floral-Appliqués" symbolize "Sophisticated-Fertility-and-Elegance."<br><br>
+
+Lighting: "Dreamy-Sun-Drenched-Backlighting," creating a "Luminous-Halo" effect around her silhouette and the glass.<br><br>
+
+Texture: Maximum-fidelity detail—the "Sheer-Translucency-of-Organza," the "Velvety-Viscosity" of the guava juice, the "Pore-Level-Detail" of her face, and "Fine-Crystal-Etching."<br><br>
+
+Theme: 🌸 Guava-Rose-Elegance / Soft-Power-Steeze / Pink-Refinement.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7juicesmoothie">Style: Ultra-hyper-realistic, executive-lifestyle portrait (Sony A7R V), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A "Minimalist-Teak-and-Marble-Office" in Maitama, Abuja. In the background, a "Framed-Vintage-Map" hangs on a dark-grey wall.<br><br>
+
+The subject: A 40-year-old Northern Nigerian man of Hausa-Fulani heritage. He embodies "Legacy-Steeze." He wears a "Charcoal-Grey-Stiff-Kaftan" with "Geometric-Black-Stitchwork" on the collar and a "Matching-Grey-Zanna-Cap."<br><br>
+
+The activity: He is leaning over a "Polished-Marble-Desk," holding a "Weighted-Modern-Tumbler" of "Chilled-Tamarind-Juice" (Tsamiya). His expression is "Analytical-and-Calm."<br><br>
+
+Symbolism: The "Dark-Tamarind-Liquid" and "Charcoal-Grey-Kaftan" symbolize "Rooted-Authority-and-Strategic-Depth."<br><br>
+
+Lighting: "Strong-Side-Window-Light," creating "Hard-Edge-Highlights" on his profile and "Reflective-Gleam" on the glass.<br><br>
+
+Texture: Maximum-fidelity detail—the "Heavy-Grain-of-the-Stiff-Fabric," the "Individual-Ice-Shards" in the juice, the "Pore-Level-Detail" of his skin, and the "Frosted-Glass-Finish."<br><br>
+
+Theme: 🥤 Tamarind-Executive / Legacy-Steeze / Strategic-Cool / Abuja-Power.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8juicesmoothie">Style: Ultra-hyper-realistic, high-fashion lifestyle editorial (Leica M11 aesthetic), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: Inside the rear cabin of a chauffeur-driven "Bentley-Mulsanne-Extended-Wheelbase." A minimalist wood grain panel and a plush cream leather seat define the space.<br><br>
+
+The subject: A Northern Nigerian couple in their early 30s. The man, of Hausa-Fulani heritage, has a "Visionary-Steeze" and wears a "Structured-Sand-Grey-Kaftan" with "Hidden-Silver-Zippers" on the chest and a "Crisp-Navy-Zanna-Cap." The woman, of Hausa heritage, embodies "International-Steeze" and wears a "Midnight-Black-Silk-Kaftan" with "Navy-Blue-Silk-Lining" and a luxury gold watch.<br><br>
+
+The activity: The man is enjoying "Cloudy-Ginger-Lemonade" from a glass tumbler with "Heavy-Base-Geometry" while the woman holds a crystal flute with a "Delicate-and-Confident-Grip," sipping a "Premium-Hibiscus-Vanilla-Blend" (Elevated Zobo).<br><br>
+
+Symbolism: The "Bentley-Mulsanne" and "Luxury-Gold-Watch" symbolize "Generational-Wealth-and-Status." The "Pale-Ginger-Lemonade" and "Ruby-Zobo" represent "Traditional-Culture-Elevated" for the global stage.<br><br>
+
+Lighting: "Soft-Ambient-Luxe-Glow." A subtle "Blue-Hour" light from a tinted window creates a "Cool-Contrast" against the warm interior lighting.<br><br>
+
+Texture: Maximum-fidelity detail—the "Grain-of-the-Premium-Leather," the "Silky-Sheen-of-the-Kaftans," the "Matte-Fabric-Texture" of the Zanna cap, and the "Refractive-Sparkle" of the purple and yellow liquids.<br><br>
+
+Theme: 🍷 Ginger-and-Hibiscus-Elite / Global-Northern-Steeze / Luxury-Mobility.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9juicesmoothie">Style: Ultra-hyper-realistic, high-fashion lifestyle editorial (Phase One IQ4), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A "Private-Poolside-Cabana" at a luxury estate in Sokoto. The background features "Minimalist-Stone-Pillars" and the "Turquoise-Reflection" of still water.<br><br>
+
+The subject: A Northern Nigerian couple in their late 20s. The man, of Hausa heritage, has an "Elite-Casual-Steeze," wearing a "Crisp-Sky-Blue-Linen-Kaftan" with "White-Linear-Embroidery." The woman, of Fulani heritage, has a "Graceful-Luxe-Steeze," wearing a "Flowing-White-Silk-Babban-Riga-Style-Gown" with a "Silver-Filigree-Belt."<br><br>
+
+The activity: They are seated on "Low-Profile-Outdoor-Loungers," sharing a moment while holding "Modern-Stemless-Glassware" filled with "Freshly-Squeezed-Mango-and-Passionfruit-Nectar."<br><br>
+
+Symbolism: The "Turquoise-Water" and "Sun-Drenched-Stone" symbolize "Modern-Oasis-and-Abundance." The "Golden-Mango-Liquid" represents "Tropical-Sophistication-and-Shared-Harmony."<br><br>
+
+Lighting: "Golden-Hour-Rim-Lighting," highlighting the "Fine-Fuzz-of-the-Linen" and creating a "Warm-Glow" on their deep-bronze skin.<br><br>
+
+Texture: Maximum-fidelity detail—the "Raw-Linen-Weave," the "Smooth-Reflective-Silk," the "Opaque-Golden-Pulse-of-the-Juice," and "Fine-Droplets-of-Water" on the side of the glasses.<br><br>
+
+Theme: 🥭 Mango-Oasis-Luxe / Northern-Couple-Steeze / Sun-Drenched-Refinement.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10juicesmoothie">Style: Ultra-hyper-realistic, fine-art portraiture (Leica M11 aesthetic), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: An opulent, high-ceilinged majlis (reception room) in a Kaduna estate. The background features "Ornate-Hausa-Architecture-Carvings" in dark wood and plush, "Deep-Crimson-Velvet" seating.<br><br>
+
+The subject: An elderly Northern Nigerian patriarch in his late 60s of Hausa-Fulani heritage. He embodies "Sovereign-Steeze." He wears a "Flowing-White-Babban-Riga" made of "Hand-Woven-Cotton" with "Intricate-Cream-Embroidery" and a matching "White-Zanna-Cap."<br><br>
+
+The activity: He is seated on a carved wooden throne-like chair, gracefully holding a "Traditional-Glass-Cupa" of "Chilled-Hibiscus-and-Dates-Nectar" (Tsamiyar Daba). His expression is "Knowing-and-Distinguished."<br><br>
+
+Symbolism: The "Babban-Riga" and "Ornate-Majlis" symbolize "Generational-Leadership-and-Cultural-Preservation." The "Deep-Crimson-Nectar" represents "Rooted-Ancestral-Vitality."<br><br>
+
+Lighting: "Soft-Warm-Indoor-Glow." A subtle light source from the side creates a "Gentle-Illumination" of his face and emphasizes the texture of his attire.<br><br>
+
+Texture: Maximum-fidelity detail—the "Heavy-Weave-of-the-Babban-Riga," the "Wispy-Grey-Beard," the "Fine-Gold-Rim-on-the-Glass-Cupa," and the "Refractive-Sparkle" of the dark purple liquid.<br><br>
+
+Theme: 🍷 Hibiscus-Legacy / Sovereign-Steeze / Traditional-Patriarch / Rooted-Refinement.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10juicesmoothie')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10juicesmoothie')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="soft-drinks">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='drinking.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Soft drinks</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1softdrinks">Style: Ultra-hyper-realistic, high-fashion lifestyle editorial (Phase One IQ4), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A minimalist rooftop lounge in Abuja’s Central Business District. The background features "Brushed-Steel-Railings" and the "Soft-Blur-of-City-High-rises."<br><br>
+
+The subject: A 25-year-old Northern Nigerian man of Hausa heritage. He embodies "Elite-Minimalist-Steeze." He wears a "Tailored-Slate-Grey-Kaftan" with "Hidden-Placket-Buttons" and a "Crisp-White-Zanna-Cap."<br><br>
+
+The activity: He is leaning back in a "Geometric-Leather-Chair," holding a "Classic-Glass-Bottle-of-Coca-Cola." He is tilting the bottle back for a sip, looking "Calm-and-Sovereign."<br><br>
+
+Symbolism: The "Iconic-Glass-Bottle" against the "Slate-Grey-Kaftan" symbolizes the "Seamless-Blend-of-Global-Commerce-and-Northern-Identity."<br><br>
+
+Lighting: "Direct-Sunset-Glow." The sun creates a "Fiery-Backlight" through the dark liquid in the bottle and a "Sharp-Glint" on the metal cap resting on the table.<br><br>
+
+Texture: Maximum-fidelity detail—the "Intense-Carbonation-Bubbles" clinging to the glass, the "Condensation-Mist" on the bottle, the "Micro-Fibers-of-the-Grey-Fabric," and "Pore-Level-Skin-Detail."<br><br>
+
+Theme: 🥤 Cola-Minimalism / Elite-Northern-Steeze / Abuja-Rooftop-Refreshment.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2softdrinks">Style: Ultra-hyper-realistic, high-fashion lifestyle editorial (Canon EOS R3), 5:6 vertical portrait, 16K resolution.<br><br>
+
+The scene: A "Lush-Garden-Courtyard" in a luxury estate in Kano. The background features "Sandstone-Arches" and "Potted-Date-Palms."<br><br>
+
+The subject: A 23-year-old Northern Nigerian woman of Hausa heritage. She embodies "Radiant-Pop-Steeze." She wears a "Turquoise-Silk-Kaftan" with "Orange-and-Gold-Thread-Embroidery" and a "Matching-Silk-Headwrap."<br><br>
+
+The activity: She is laughing while holding a "Frosty-Tall-Glass" of "Orange-Fanta." She is mid-sip, looking "Vibrant-and-High-Spirit."<br><br>
+
+Symbolism: The "Turquoise-Fabric" clashing with the "Luminous-Orange-Drink" symbolizes "Youthful-Energy-and-Cultural-Boldness."<br><br>
+
+Lighting: "Warm-Afternoon-Sunlight," creating "Soft-Skin-Glow" and "Refractive-Orange-Sparkles" through the carbonated drink.<br><br>
+
+Texture: Maximum-fidelity detail—the "Intricate-Thread-Work" on the kaftan, the "Rising-Carbonation-Bubbles," the "Wet-Glisten" on the glass, and "Pore-Level-Detail" on her face.<br><br>
+
+Theme: 🍊 Fanta-Radiance / Northern-Pop-Steeze / Turquoise-Contrast.
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (Leica SL2 aesthetic), 5:6 vertical aspect ratio, 16K resolution, crisp "Midday-Clarity" lighting with vibrant refractive highlights.<br><br>
+
+The scene: A "Skyline-Infinity-Rooftop-Lounge" in Abuja, built with "Smoked-Glass-Panels" and "Brushed-Steel-Framing." The horizon stretches endlessly under a "Bright-Cerulean-Sky," with faint heat shimmer rising from the city below. The atmosphere is "Elevated-Leisure-and-Quiet-Opulence."<br><br>
+
+The subject: A 26-year-old Northern Nigerian creative director, embodying "Effortless-Urban-Sophistication." He wears a "Tailored-Ivory-Linen-Shirt" with "Minimalist-Gold-Cuff-Buttons" and "Slim-Fit-Charcoal-Trousers." His posture is relaxed yet intentional, eyes focused beyond the skyline.<br><br>
+
+The activity: He gently tilts a "Crystal-Highball-Glass" filled with a "Deep-Ruby-Hibiscus-Soda," watching the carbonation rise as he rotates the glass slightly, preparing for a slow, mindful sip.<br><br>
+
+Symbolism: On a "Floating-Marble-Side-Table" rests a "Vintage-Rangefinder-Camera," a "Slim-Leather-Notebook," and "Tinted-Aviator-Sunglasses." Within the soda, the bubbles subtly "Morph-into-Tiny-Geometric-Orbs," suggesting "Ideas-in-Formation" and "Creative-Energy-in-Motion."<br><br>
+
+Lighting: "High-Definition-Natural-Light." The "Direct-Sunlight" refracts through the glass, casting "Prismatic-Reflections" across his hands and shirt, while subtle shadows define the architectural lines around him.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-Beads-on-the-Glass," the "Crisp-Weave-of-Linen-Fabric," the "Mirror-Like-Polish-of-the-Steel," and the "Effervescent-Clarity-of-the-Soda."<br><br>
+
+Theme: 🥤 Urban-Refreshment / Creative-Flow / Skyline-Luxury / Effervescence-in-Form.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (Leica SL2 aesthetic), 5:6 vertical aspect ratio, 16K resolution, soft "Evening-Luxury-Ambience" lighting with warm reflective highlights.<br><br>
+
+The scene: A "Private-Luxury-Parlor" designed with "Velvet-Upholstered-Walls," "Polished-Marble-Flooring," and "Gold-Inlaid-Decorative-Motifs." The environment exudes "Quiet-Affluence-and-Intimate-Domestic-Elegance," with sheer curtains diffusing the fading daylight.<br><br>
+
+The subject: A beautiful young Hausa woman of "Graceful-Composure-and-Refined-Elegance," wearing a "Flowing-Black-Abaya" made of "Silk-Matte-Fabric" with "Subtle-Embroidered-Edges." Beside her stands her husband, a man of "Dignified-Presence," dressed in a "Luxurious-Deep-Navy-Babbar-Riga" with a "Structured-Traditional-Cap," adjusting his sleeve with calm precision.<br><br>
+
+The activity: She delicately lifts a "Tall-Crystal-Glass" filled with a "Golden-Carbonated-Soft-Drink," bringing it toward her lips for a poised sip, while her husband completes his dressing ritual, glancing briefly in her direction.<br><br>
+
+Symbolism: On a "Carved-Walnut-Center-Table" rests a "Classic-Prayer-Beads-Set," a "Polished-Silver-Wristwatch," and a "Sealed-Letter-Envelope." The rising bubbles in the drink subtly "Align-into-Ascending-Patterns," symbolizing "Harmony-in-Partnership" and "Shared-Aspirations."<br><br>
+
+Lighting: "Layered-Warm-Interior-Lighting." A "Soft-Amber-Chandelier-Glow" blends with the "Cool-Dusk-Light" filtering through curtains, creating a balanced "Chiaroscuro-Contrast" that highlights their forms and attire.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Smooth-Flow-of-the-Abaya-Fabric," the "Rich-Embroidery-of-the-Babbar-Riga," the "Reflective-Sheen-of-the-Marble," and the "Effervescent-Bubbles-Clinging-to-the-Glass."<br><br>
+
+Theme: 🥤 Domestic-Luxury / Cultural-Elegance / Partnership-Harmony / Refined-Refreshment.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (Leica SL2 aesthetic), 5:6 vertical aspect ratio, 16K resolution, radiant "Golden-Hour-Glow" with soft atmospheric diffusion.<br><br>
+
+The scene: An "Open-Garden-Courtyard" of a contemporary Northern Nigerian villa, designed with "Sandstone-Tiles," "Minimalist-Water-Features," and "Lush-Tropical-Greens." The air carries a gentle breeze, and the environment feels like "Serene-Wealth-and-Natural-Balance."<br><br>
+
+The subject: A 24-year-old Hausa woman with "Radiant-Confidence-and-Natural-Grace," dressed in a "Soft-Pastel-Pink-Kaftan" made of "Lightweight-Flowing-Fabric" with "Delicate-Hand-Stitched-Patterns." She sits elegantly on a "Woven-Rattan-Lounge-Chair," her posture relaxed yet composed.<br><br>
+
+The activity: She holds a "Frosted-Glass-Goblet" filled with a "Bright-Orange-Citrus-Soft-Drink," gently swirling it as ice cubes clink softly, before lifting it for a refreshing sip under the warm sunlight.<br><br>
+
+Symbolism: A "Low-Stone-Table" beside her holds a "Freshly-Cut-Fruit-Platter," a "Slim-Tablet-Device," and a "Pair-of-Minimalist-Earbuds." Inside the drink, the condensation and bubbles subtly "Form-Expanding-Circular-Waves," symbolizing "Calm-Expansion" and "Modern-Leisure-in-Harmony-with-Nature."<br><br>
+
+Lighting: "Golden-Hour-Natural-Light." The "Warm-Sunlight" filters through leaves, casting "Soft-Dappled-Shadows" across her face and attire, while highlights shimmer across the glass surface.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Cool-Frost-on-the-Glass," the "Juicy-Translucence-of-the-Drink," the "Soft-Weave-of-the-Kaftan," and the "Natural-Grain-of-the-Stone-and-Wood."<br><br>
+
+Theme: 🥤 Garden-Refreshment / Soft-Luxury / Nature-Infusion / Radiant-Calm.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Canon EOS R5 DSLR), 4:5 vertical aspect ratio, 16K resolution, vibrant "Neon-Night-Ambience" with sharp reflective highlights.<br><br>
+
+The scene: A "Luxury-Night-Lounge" in Abuja with "Dark-Glass-Walls," "LED-Edge-Lighting," and "Polished-Black-Marble-Surfaces." The environment radiates "Modern-Energy-and-Exclusive-Nightlife-Elegance," with soft music implied in the atmosphere.<br><br>
+
+The subject: A 28-year-old Northern Nigerian entrepreneur with "Bold-Charisma-and-Urban-Sophistication," dressed in a "Fitted-Black-Turtleneck" and "Tailored-Slim-Fit-Trousers," complemented by a "Minimalist-Silver-Chain." He sits confidently on a "Low-Leather-Lounge-Seat," posture relaxed but alert.<br><br>
+
+The activity: He lifts a "Sleek-Transparent-Glass-Bottle" of a "Dark-Cola-Soft-Drink," tilting it slightly as condensation drips slowly, pausing just before taking a composed sip.<br><br>
+
+Symbolism: On a "Glossy-Obsidian-Table" rests a "High-End-Smartphone," a "Luxury-Car-Key-Fob," and a "Pair-of-Wireless-Earbuds." The condensation droplets on the bottle subtly "Align-into-Vertical-Streams," symbolizing "Focus," "Momentum," and "Upward-Trajectory."<br><br>
+
+Lighting: "Dynamic-Neon-Lighting." Electric blue and magenta hues reflect across surfaces, while a "Soft-Spotlight" isolates the subject, creating a high-contrast "Cinematic-Night-Depth."<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Cold-Condensation-on-the-Bottle," the "Glossy-Marble-Reflections," the "Matte-Fabric-of-the-Turtleneck," and the "Smooth-Leather-Seating-Surface."<br><br>
+
+Theme: 🥤 Night-Refreshment / Urban-Power / Neon-Luxury / Controlled-Energy.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on iPhone 15 Pro Max), 4:5 vertical aspect ratio, 16K resolution, soft "After-Rain-Clarity" with cool reflective tones.<br><br>
+
+The scene: A "Rain-Washed-City-Veranda" overlooking a quiet Abuja street, designed with "Transparent-Glass-Railings" and "Wet-Polished-Concrete-Flooring." The environment carries "Calm-After-Storm-Stillness," with faint droplets still falling from the roof edge.<br><br>
+
+The subject: A 22-year-old Hausa university student with "Thoughtful-Calm-and-Quiet-Ambition," dressed in a "Clean-White-Oversized-Shirt" and "Dark-Slim-Fit-Jeans." He leans lightly against the railing, gaze lowered in reflection.<br><br>
+
+The activity: He holds a "Clear-Plastic-Cup" filled with a "Bright-Lime-Lemon-Soft-Drink," gently stirring it with a straw as ice cubes shift, then pauses before taking a slow sip.<br><br>
+
+Symbolism: Resting on the railing beside him is a "Closed-Notebook," a "Simple-Backpack," and a "Budget-Wristwatch." The droplets on the cup subtly "Merge-into-Flowing-Paths," symbolizing "Resilience," "Fresh-Starts," and "Forward-Movement-After-Uncertainty."<br><br>
+
+Lighting: "Post-Rain-Diffused-Light." A soft grey sky creates "Even-Low-Contrast-Illumination," while reflections from wet surfaces add a gentle glow around the subject.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Water-Droplets-on-the-Railing," the "Condensation-on-the-Cup," the "Damp-Fabric-of-the-Shirt," and the "Reflective-Wet-Concrete-Surface."<br><br>
+
+Theme: 🥤 Quiet-Refreshment / After-Rain-Clarity / Youthful-Reflection / Subtle-Renewal.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Sony A7R V mirrorless), 4:5 vertical aspect ratio, 16K resolution, radiant "Sunset-Coastal-Glow" with warm reflective gradients.<br><br>
+
+The scene: A "Luxury-Beachfront-Terrace" with "Glass-Balustrades," "White-Stone-Flooring," and "Infinity-Ocean-View." The horizon burns with a "Deep-Orange-and-Purple-Sunset," and the atmosphere feels like "Expansive-Freedom-and-Refined-Escape."<br><br>
+
+The subject: A 27-year-old Northern Nigerian woman with "Confident-Elegance-and-Global-Sophistication," dressed in a "Flowing-Teal-Silk-Gown" with "Subtle-Metallic-Thread-Accents." She stands near the railing, posture poised, hair moving gently with the sea breeze.<br><br>
+
+The activity: She lifts a "Slim-Crystal-Flute" containing a "Rose-Tinted-Sparkling-Soft-Drink," rotating it slightly as the carbonation rises, then brings it toward her lips in a slow, graceful motion.<br><br>
+
+Symbolism: A "Minimalist-Glass-Table" beside her holds a "Passport," a "Luxury-Sunglasses-Case," and a "Folded-Travel-Itinerary." The bubbles in the drink subtly "Expand-into-Luminous-Spheres," symbolizing "Boundless-Possibilities" and "Life-in-Continuous-Expansion."<br><br>
+
+Lighting: "Golden-Sunset-Lighting." Warm light wraps around her silhouette, while reflective highlights shimmer across the glass and ocean surface, creating a "Soft-Cinematic-Glow."<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Silk-Flow-of-the-Gown," the "Sparkling-Effervescence-of-the-Drink," the "Smooth-Stone-Flooring," and the "Gentle-Motion-of-the-Ocean-Surface."<br><br>
+
+Theme: 🥤 Sunset-Refreshment / Coastal-Luxury / Expansive-Living / Radiant-Freedom.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9softdrinks">Style: Cinematic, ultra-hyper-realistic, surreal high-fashion photography (captured on Nikon Z9 mirrorless), 4:5 vertical aspect ratio, 16K resolution, luminous "Dreamlike-Daylight" with soft exaggerated highlights.<br><br>
+
+The scene: A "Vast-Open-Playground" with "Endless-Smooth-Sand-Surface" and a "Wide-Pastel-Sky" that fades from light blue to soft gold. The environment feels like "Childhood-Imagination-and-Boundless-Wonder," with no visible horizon limits.<br><br>
+
+The subject: Three small Hausa boys, ages around 6–8, embodying "Pure-Joy-and-Innocent-Curiosity," dressed in "Colorful-Casual-Outfits" with "Light-Cotton-Fabrics." Their expressions are bright, eyes wide with amazement.<br><br>
+
+The activity: Each boy holds an "Oversized-Transparent-Cup" filled with vividly colored "Fruit-Soft-Drinks" (orange, red, and green), nearly as large as their torsos, struggling playfully to lift the straws for a sip.<br><br>
+
+Symbolism: The giant cups subtly "Glow-from-Within," and the liquid inside forms "Slow-Moving-Wave-Patterns," symbolizing "Abundance," "Exaggerated-Childhood-Perception," and "Joy-Beyond-Scale." Their small footprints behind them fade into light, suggesting "Moments-That-Pass-But-Linger-in-Memory."<br><br>
+
+Lighting: "Soft-High-Key-Lighting." Even, glowing daylight removes harsh shadows, creating a "Floating-and-Ethereal-Atmosphere" with gentle highlights around the cups and faces.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Smooth-Glass-of-the-Oversized-Cups," the "Thick-Juicy-Consistency-of-the-Drinks," the "Fine-Grain-of-the-Sand," and the "Soft-Fabric-of-their-Clothing."<br><br>
+
+Theme: 🥤 Playful-Surrealism / Childhood-Joy / Abundance-in-Imagination / Scale-Distortion.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10softdrinks">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Leica Q3), 4:5 vertical aspect ratio, 16K resolution, deep "Late-Night-Introspective-Lighting" with subtle cool highlights.<br><br>
+
+The scene: A "Quiet-Modern-Penthouse-Interior" with "Floor-to-Ceiling-Glass-Windows" overlooking a dimly lit cityscape, "Dark-Wood-Flooring," and "Minimalist-Architectural-Furniture." The environment conveys "Silence-After-Success-and-Private-Reflection."<br><br>
+
+The subject: A 34-year-old Northern Nigerian executive with "Calm-Authority-and-Measured-Composure," dressed in a "Relaxed-Fit-White-Shirt" with sleeves slightly rolled and "Tailored-Dark-Trousers." He sits alone near the window, posture slightly leaned back, eyes thoughtful.<br><br>
+
+The activity: He holds a "Short-Crystal-Tumbler" containing a "Deep-Caramel-Cola-Soft-Drink," gently rotating it as the ice slowly melts, pausing before taking a quiet sip.<br><br>
+
+Symbolism: On a "Sleek-Wooden-Side-Table" rests a "Closed-Laptop," a "Leather-Document-Folder," and a "Minimalist-Desk-Lamp." The slow movement of the ice and bubbles subtly "Forms-Circular-Loops," symbolizing "Cycles-of-Decision," "Time," and "Continuous-Strategy."<br><br>
+
+Lighting: "Low-Key-Cinematic-Lighting." A "Cool-City-Glow" enters through the glass, while a "Single-Warm-Interior-Light" creates a balanced contrast, defining his silhouette and reflective mood.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-the-Tumbler," the "Smooth-Glass-Surface," the "Soft-Creases-of-the-Shirt," and the "Polished-Wood-Grain."<br><br>
+
+Theme: 🥤 Night-Reflection / Executive-Calm / Urban-Silence / Strategic-Cycles.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10softdrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10softdrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="alcohol">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='drinking.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Alcohol</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Sony FX3 cinema camera), 4:5 vertical aspect ratio, 16K resolution, moody "Midnight-Club-Ambience" with saturated neon contrast.<br><br>
+
+The scene: A "High-End-Nightclub-Interior" in Abuja with "Pulsing-LED-Lights," "Reflective-Black-Glass-Walls," and a "Crowded-Dancefloor" blurred into motion. The environment radiates "Escapism-and-Controlled-Chaos," with flashes of light cutting through haze.<br><br>
+
+The subject: A 29-year-old Northern Nigerian man with "Tired-Intensity-and-Suppressed-Frustration," dressed in a "Half-Unbuttoned-Black-Shirt" and "Slim-Dark-Jeans." His posture is slightly slouched, jaw tight, eyes distant despite the noise around him.<br><br>
+
+The activity: He grips a "Heavy-Whiskey-Tumbler" filled with "Amber-Liquor-and-Melting-Ice," raising it slowly before taking a deliberate, heavy sip, as if trying to silence something internal.<br><br>
+
+Symbolism: On the "Glass-Table" beside him lies a "Face-Down-Smartphone" with faint screen cracks, a "Discarded-Wristwatch," and an "Unanswered-Call-Notification." The swirling liquor subtly "Forms-Distorted-Ripples," symbolizing "Emotional-Turbulence," "Heartbreak," and "Escape-Through-Intoxication."<br><br>
+
+Lighting: "Harsh-Neon-and-Strobe-Lighting." Red and blue lights clash across his face, creating a "Fragmented-Emotional-Contrast," while brief flashes freeze moments of tension.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-the-Glass," the "Sharp-Ice-Edges," the "Sweat-Sheen-on-His-Skin," and the "Glossy-Reflections-of-the-Club-Surfaces."<br><br>
+
+Theme: 🥃 Night-Escape / Heartbreak-Tension / Emotional-Release / Controlled-Chaos.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Canon EOS R6 Mark II DSLR), 4:5 vertical aspect ratio, 16K resolution, dim "Late-Evening-Interior-Gloom" with soft shadow gradients.<br><br>
+
+The scene: A "Quiet-Low-Lit-Bar-Corner" with "Dark-Wood-Panels," "Aged-Leather-Seating," and "Amber-Wall-Lamps." The environment feels like "Isolation-Within-Public-Space," with distant murmurs fading into the background.<br><br>
+
+The subject: A 27-year-old Northern Nigerian woman with "Subtle-Sadness-and-Composed-Strength," dressed in a "Simple-Black-Dress" with "Minimal-Jewelry." Her posture is upright but emotionally withdrawn, eyes slightly glossy as she avoids eye contact with the room.<br><br>
+
+The activity: She holds a "Stemmed-Wine-Glass" filled with "Deep-Red-Wine," slowly rotating it while staring into the liquid, then taking a small, controlled sip.<br><br>
+
+Symbolism: On the "Round-Wooden-Table" rests a "Folded-Note," a "Silent-Smartphone," and a "Single-Rose-with-Wilting-Petals." The wine surface subtly "Forms-Faint-Circular-Vortices," symbolizing "Lingering-Memories," "Emotional-Depth," and "Quiet-Heartbreak."<br><br>
+
+Lighting: "Soft-Ambient-Low-Light." Warm amber tones create gentle highlights on the glass and her face, while shadows deepen the emotional isolation of the scene.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Glass-Clarity-and-Wine-Viscosity," the "Soft-Fabric-of-the-Dress," the "Worn-Leather-Seating," and the "Matte-Grain-of-the-Wood."<br><br>
+
+Theme: 🍷 Silent-Heartbreak / Emotional-Containment / Night-Isolation / Reflective-Sorrow.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Nikon D850 DSLR), 4:5 vertical aspect ratio, 16K resolution, dramatic "Low-Light-Contrast" with warm highlights and deep shadows.<br><br>
+
+The scene: A "Dimly-Lit-Exclusive-Lounge" with "Polished-Wood-Interiors," "Soft-Leather-Seating," and "Muted-Golden-Wall-Lamps." The atmosphere feels like "Private-Pressure-and-Quiet-Excess," away from the noise of the outside world.<br><br>
+
+The subject: A 35-year-old Northern Nigerian man with "Heavy-Authority-and-Emotional-Fatigue," dressed in a "Luxurious-Cream-Babbar-Riga" made of "Rich-Textured-Fabric" with a "Traditional-Cap." His posture is slightly leaned forward, shoulders weighed down, expression distant and burdened.<br><br>
+
+The activity: He holds a "Short-Crystal-Glass" of "Dark-Whiskey," gripping it firmly as he takes a slow, reluctant sip, pausing as if caught between restraint and surrender.<br><br>
+
+Symbolism: On a "Solid-Wood-Table" lies a "Stack-of-Official-Documents," a "Gold-Signet-Ring," and a "Half-Opened-Briefcase." The whiskey inside the glass subtly "Forms-Heavy-Swirling-Patterns," symbolizing "Burden-of-Responsibility," "Stress," and "Escapism-Through-Alcohol."<br><br>
+
+Lighting: "Focused-Warm-Spot-Lighting." A single overhead amber light isolates him, casting strong shadows that emphasize the folds of the Babbar Riga and the tension in his face.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Embossed-Patterns-of-the-Babbar-Riga," the "Thick-Viscosity-of-the-Whiskey," the "Glossy-Polish-of-the-Wood," and the "Subtle-Sweat-on-His-Skin."<br><br>
+
+Theme: 🥃 Cultural-Weight / Silent-Stress / Authority-and-Escape / Internal-Conflict.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Leica SL2-S cinema hybrid), 4:5 vertical aspect ratio, 16K resolution, gritty "Urban-Night-Neon-Atmosphere" with sharp color contrast.<br><br>
+
+The scene: A "Crowded-Night-Club-Lounge" with "Haze-Machines-Active," "Strobing-Purple-and-Red-Lights," and "Reflective-Mirrored-Walls." The environment feels like "Overstimulation-and-Emotional-Release," where music vibrates through the floor and air.<br><br>
+
+The subject: A 26-year-old Northern Nigerian man with "Restless-Energy-and-Emotional-Confusion," dressed in a "Partially-Unbuttoned-Designer-Shirt" with "Silver-Bracelet-Detailing." His tie is loosened, and his expression shows forced confidence masking inner frustration.<br><br>
+
+The activity: He raises a "Tall-Highball-Glass" filled with "Vodka-and-Energy-Drink," taking a quick sip before exhaling sharply, leaning back as the music overwhelms the space around him.<br><br>
+
+Symbolism: On a nearby "Glass-Bar-Counter" sits a "Cracked-Smartphone-Screen," a "Half-Finished-Text-Message," and a "Discarded-Wedding-Invite-Card." The liquid inside the glass subtly "Flickers-with-Light-Reflections," symbolizing "Emotional-Distraction," "Impulse-Escapism," and "Avoidance-of-Closure."<br><br>
+
+Lighting: "Aggressive-Neon-Strobe-Lighting." Rapid color shifts create fragmented shadows across his face, amplifying emotional instability and nightlife intensity.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-the-Glass," the "Sweat-on-His-Temple," the "Fabric-Tension-of-the-Shirt," and the "Blurred-Motion-of-the-Dancing-Crowd."<br><br>
+
+Theme: 🍸 Night-Escape / Emotional-Overload / Social-Distraction / Inner-Conflict.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Canon EOS R3), 4:5 vertical aspect ratio, 16K resolution, raw "Street-Daylight-Realism" with slightly desaturated tones and natural shadows.<br><br>
+
+The scene: A "Busy-Urban-Roadside-Market-Lane" in Northern Nigeria with "Dusty-Asphalt-Ground," "Scattered-Vegetable-Stalls," and "Passing-Motorcycles-in-Soft-Blur." The atmosphere feels like "Hustle-and-Heat-of-Daily-Survival," with sun beating down and ambient street noise implied.<br><br>
+
+The subject: A young handsome Hausa man with "Tired-Determination-and-Quiet-Resilience," wearing a "Simple-Faded-T-Shirt" and "Loose-Cotton-Trousers." His appearance is slightly sweaty from labor, but his expression remains focused and composed as he moves forward.<br><br>
+
+The activity: He pushes a "Metal-Wheelbarrow" loaded with fresh "Orange-Carrots," while subtly holding a "Small-Plastic-Bottle-of-Alcohol" tucked near his hand, taking quick discreet sips between steady pushes, maintaining his pace along the road.<br><br>
+
+Symbolism: Inside the wheelbarrow, the neatly arranged carrots represent "Hard Work and Survival," while the hidden bottle symbolizes "Private-Escape-from-Pressure." A "Worn-Cloth-Rag" tied to the handle and a "Cracked-Wristwatch" suggest long hours and ongoing struggle. The contrast between productivity and quiet intoxication forms a tension of "Reality vs Coping Mechanism."<br><br>
+
+Lighting: "Harsh-Midday-Sunlight." Strong overhead light casts sharp shadows beneath the wheelbarrow and the subject, emphasizing fatigue, heat, and endurance in motion.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Rough-Metal-of-the-Wheelbarrow," the "Fresh-Dust-on-Carrots," the "Sweat-on-Skin," and the "Dry-Asphalt-Texture-of-the-Road."<br><br>
+
+Theme: 🥃 Street-Hustle / Hidden-Escape / Survival-Pressure / Dual-Reality-of-Daily-Life.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Fujifilm GFX 100S medium format camera), 4:5 vertical aspect ratio, 16K resolution, dynamic "Street-Golden-Hour-Contrast" with warm highlights and crisp shadows.<br><br>
+
+The scene: A "Quiet-Residential-Dirt-Pathway" in Northern Nigeria with "Soft-Sand-Ground," "Low-Concrete-Structures," and "Scattered-Village-Life-Elements" in the background. The environment feels like "Local-Prestige-Meets-Informal-Hustle," with warm evening light stretching long shadows across the path.<br><br>
+
+The subject: A young Hausa man with "Confident-Boss-Like-Presence-and-Relaxed-Recklessness," dressed in a "Traditional-Flowing-Gariyan-Riga" with a "Fitted-Cap" and "Simple-Leather-Sandals." His posture is slightly unsteady yet expressive, carrying an air of informal authority mixed with intoxicated confidence.<br><br>
+
+The activity: He walks forward while holding a "Large-Glass-Bottle-of-Wine" loosely in one hand. His movement is exaggerated and off-balance—one leg stepping forward while his hand briefly adjusts or lifts the other leg in an awkward, stylized stride, as if dancing and walking at the same time under the influence.<br><br>
+
+Symbolism: The oversized wine bottle represents "Excess and Escapism," while his uneven walking motion symbolizes "Impaired-Judgment and Overconfidence." A "Dusty-Road-Edge" and "Faint-Spilled-Drops-on-the-Ground" suggest a trail of indulgence, while his traditional attire contrasts dignity with loss of control.<br><br>
+
+Lighting: "Warm-Golden-Hour-Lighting." The low sun casts elongated shadows, creating dramatic silhouettes that emphasize movement distortion and emotional imbalance.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Flowing-Fabric-of-the-Gariyan-Riga," the "Reflective-Glass-of-the-Wine-Bottle," the "Dust-Particles-in-the-Air," and the "Rough-Sand-Texture-underfoot."<br><br>
+
+Theme: 🍷 Intoxicated-Confidence / Street-King-Delusion / Cultural-Contrast / Alcohol-Induced-Expression.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on ARRI Alexa Mini LF cinema camera), 4:5 aspect ratio, 16K resolution, atmospheric "Rainy-Night-Urban-Glow" with reflective neon highlights.<br><br>
+
+The scene: A "Small-Roadside-Open-Bar-Spot" under a corrugated metal roof in an urban Nigerian setting, with "Wet-Concrete-Flooring," "Flickering-Red-Bulb-Lights," and "Light-Rain-Falling-Slowly-Outdoors." The environment feels like "Temporary-Escape-in-Daily-Struggle," with distant traffic sounds blurred into the background.<br><br>
+
+The subject: A young Hausa man with "Emotional-Exhaustion-and-Quiet-Surrender," wearing a "Simple-White-Kaftan-Slightly-Wrinkled" and a "Dark-Scarf-Loosely-Draped." His expression is blank yet heavy, eyes slightly unfocused as if carrying unresolved thoughts.<br><br>
+
+The activity: He sits on a "Plastic-Bar-Stool," holding a "Half-Filled-Glass-Bottle-of-Local-Spirit," slowly pouring it into a small cup before taking a long, unsteady sip while staring into the rainy street.<br><br>
+
+Symbolism: On the "Rough-Wooden-Table" lie a "Folded-Phone-with-Old-Chat-Open," a "Crumpled-Receipt," and a "Single-Damp-Note-of-Currency." The liquid inside the bottle subtly "Swirls-with-Heavy-Cloud-Like-Motion," symbolizing "Lingering-Regret," "Mental-Drain," and "Temporary-Forgetfulness."<br><br>
+
+Lighting: "Low-Intensity-Neon-and-Rain-Reflection-Light." A red bulb overhead casts uneven highlights, while street reflections ripple across wet surfaces, creating emotional distortion.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Rain-Drops-on-Table-Surface," the "Condensation-on-Glass-Bottle," the "Worn-Fabric-of-the-Kaftan," and the "Wet-Concrete-Reflectivity."<br><br>
+
+Theme: 🍷 Rainy-Escape / Emotional-Numbness / Street-Isolation / Temporary-Forgetfulness.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Sony A1 mirrorless camera), 4:5 aspect ratio, 16K resolution, moody "Post-Night-Club-Reset-Lighting" with softened neon remnants and cool ambient shadows.<br><br>
+
+The scene: A "Luxury-Nightclub-Lounge-Private-Booth" after peak hours, with "Dimmed-Neon-Lights," "Half-Empty-Glass-Tables," and "Slowly-Cooling-Atmosphere." The dancefloor is now blurred and quiet, with faint silhouettes in the background.<br><br>
+
+The subject: A group of young Hausa women with "Elegant-Fatigue-and-Calm-After-Energy," dressed in "Stylish-Evening-Outfits" blending modest fashion with modern nightlife aesthetics. Their makeup is slightly softened from the night, expressions reflective and composed as the energy of the night settles.<br><br>
+
+The activity: Empty and half-finished "Glass-Bottles-and-Cocktail-Glasses" are placed on the table as they sit back during a short break, one adjusting her outfit, another checking her phone, and another exhaling slowly while leaning into the seat—pausing from the nightlife rhythm.<br><br>
+
+Symbolism: On the table rests a "Clutch-Bag," a "Set-of-Heeled-Shoes-Slightly-Awry," and a "Phone-Screen-Fading-with-Notifications." The remaining liquid in glasses forms still reflections, symbolizing "Aftermath-of-Excitement," "Return-to-Reflection," and "The-Silent-Weight-After-Escapism."<br><br>
+
+Lighting: "Faded-Neon-Ambient-Light." Purple and blue club lights are now subdued, mixing with soft overhead warm light, creating a calm post-event cinematic tone.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-Glassware," the "Soft-Sheen-of-Fabric," the "Slightly-Worn-Table-Edges," and the "Gentle-Glow-of-Residual-Lighting."<br><br>
+
+Theme: 🍸 Night-After-Glow / Social-Aftermath / Emotional-Calm / Post-Escapism-Stillness.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Canon EOS R5 Mark II), 4:5 aspect ratio, 16K resolution, reflective "Post-Rain-Golden-Neon-Urban-Glow" with soft atmospheric diffusion.<br><br>
+
+The scene: A "Modern-High-Rise-Street-View-in-Kano" with emerging "Glass-Skyscrapers," "Wet-Asphalt-Roads," and "Reflective-Puddles" stretching along a quiet boulevard right after rainfall. The air is fresh, and the city lights begin to shimmer softly against the damp environment, creating a mood of "Urban-Refresh-and-Calm-Release."<br><br>
+
+The subject: A beautiful young Hausa woman with "Elegant-Calm-and-Soft-Confidence," dressed in a "Flowing-Black-Abaya" paired with a "Long-Flowing-Hijab" that moves gently with the evening breeze. Beside her is her boyfriend, a young Hausa man with "Relaxed-Self-Assurance-and-Street-Elegance," wearing a "Light-Blue-Iron-Shadda" with a "Matching-Structured-Cap" and "Traditional-Kambos-on-His-Legs."<br><br>
+
+The activity: They walk side by side along the wet road, both holding "Two-Small-Glass-Bottles-of-Alcohol" casually at their sides. They laugh naturally while stepping carefully over shallow puddles, sharing a light, carefree moment after the rain.<br><br>
+
+Symbolism: Reflections of the skyscrapers ripple in the water on the road, symbolizing "Modern-Transition-and-Youthful-Freedom." The bottles in their hands remain secondary elements within the scene, representing "Social-Escape-and-Urban-Lifestyle," while the rain-washed street suggests "Reset-and-After-Storm-Clarity."<br><br>
+
+Lighting: "Post-Rain-Neon-City-Lighting." Soft streetlights mix with early neon reflections from buildings, creating a balanced glow across wet surfaces and clothing textures.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Wet-Flow-of-the-Abaya-Fabric," the "Reflective-Sheen-of-the-Shadda," the "Glassy-Puddle-Surface," and the "Soft-Mist-Still-Hanging-in-the-Air."<br><br>
+
+Theme: 🍷 Post-Rain-Urban-Life / Youthful-Connection / City-Reflection / Calm-Night-Movement.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alcohol">Style: Cinematic, ultra-hyper-realistic, high-fashion editorial photography (captured on Nikon Z8 cinema-grade hybrid), 4:5 aspect ratio, 16K resolution, intense "Urban-Blue-Hour-Neon-Fog" with reflective street glow and soft haze diffusion.<br><br>
+
+The scene: A "Quiet-After-Party-City-Alleyway" behind an upscale lounge, with "Wet-Asphalt-Ground," "Faint-Neon-Signs-Flickering," and "Steam-Rising-from-Drainage-Grates." The atmosphere feels like "End-of-Night-Emotional-Drain," where silence replaces music and movement slows down.<br><br>
+
+The subject: A young Hausa man with "Disoriented-Reflection-and-Emotional-Fatigue," dressed in a "Partially-Unbuttoned-Designer-Kaftan-Top" layered with a "Light-Open-Jacket." His posture is slightly unstable, leaning against a wall, eyes half-lowered as if processing the night’s events.<br><br>
+
+The activity: He holds a "Nearly-Empty-Glass-Bottle-of-Whiskey," rotating it slowly in his hand while pausing between steps, as if deciding whether to leave or stay. He occasionally takes a small sip before lowering the bottle again.<br><br>
+
+Symbolism: On the ground beside him lies a "Cracked-Phone-Screen-Lit-Up-with-Unread-Messages," a "Dropped-Wallet-Spilling-Cards," and a "Neon-Reflection-Puddle." The remaining liquid in the bottle forms "Slow-Descending-Swirls," symbolizing "Emotional-Exhaustion," "Lingering-Regret," and "Aftereffects-of-Excess."<br><br>
+
+Lighting: "Blue-Neon-and-Backlit-Fog." Strong cool tones dominate the alley, while faint warm spill light from the club exit creates contrast, emphasizing isolation.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Wet-Reflective-Asphalt," the "Condensation-on-Glass-Bottle," the "Wrinkled-Fabric-of-the-Outfit," and the "Mist-in-the-Air-Catching-Light."<br><br>
+
+Theme: 🍷 Night-Aftermath / Emotional-Drain / Urban-Isolation / Consequence-of-Excess.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alcohol')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alcohol')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="water-detox">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='drinking.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Water</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony A7R IV with 35mm lens), 4:5 aspect ratio, 16K resolution, natural "Midday-Real-Life-Light" with accurate exposure and soft environmental shadows.<br><br>
+
+The scene: A "Simple-Residential-Courtyard-in-Northern-Nigeria" with "Mud-Brick-Walls," "Clean-Swept-Ground," and a "Clay-Water-Storage-Jar" placed near a shaded corner. The environment feels natural, grounded, and realistic with no stylization distortion.<br><br>
+
+The subject: A young Hausa boy (around 10–12 years old), proportionally accurate in scale, with "Healthy-Natural-Expression-and-Post-Play-Fatigue." He wears a "Light-Cotton-Short-Sleeve-Top" and "Simple-Shorts," slightly dusty from outdoor activity.<br><br>
+
+The activity: He is seated on a low wooden stool, leaning slightly forward as he carefully lifts a "Small-Transparent-Plastic-Cup" filled with clean drinking water from a nearby clay pot, taking a steady sip without spilling. His grip is natural and anatomically correct, with visible wrist alignment and realistic motion.<br><br>
+
+Symbolism: The clay water pot beside him represents "Basic-Life-Sustenance," while a "Pair-of-School-Books" resting nearby suggests "Education-and-Daily-Responsibility." Small water droplets on the cup reflect "Purity-and-Refreshment-in-Ordinary-Life."<br><br>
+
+Lighting: "Natural-Daylight-Balanced-Exposure." Sunlight filters gently from the side, producing realistic shadows under the stool and soft highlights on the water surface without overexposure.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Clear-Transparency-of-Water," the "Rough-Clay-Surface-of-the-Pot," the "Cotton-Fabric-Weave-of-His-Clothes," and the "Dry-Sandy-Texture-of-the-Ground."<br><br>
+
+Theme: 💧 Clean-Refreshment / Everyday-Life / Natural-Hydration / Rural-Realism.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Canon EOS R6 with 50mm prime lens), 4:5 aspect ratio, 16K resolution, soft "Late-Afternoon-Natural-Light" with accurate shadows and realistic color balance.<br><br>
+
+The scene: A "Quiet-Urban-Compound-in-Northern-Nigeria" with "Cement-Floors," "Simple-Block-Walls," and a "Plastic-Water-Container-Station" placed near a shaded doorway. The environment is modest, realistic, and grounded in everyday life with no stylized distortion.<br><br>
+
+The subject: A young Hausa woman (around 19–22 years old) with "Calm-Healthy-Expression-and-Subtle-Fatigue-from-Daily-Routine." She wears a "Simple-Modest-Long-Sleeve-Top" and a "Light-Headscarf," both naturally draped without exaggeration. Her posture is slightly bent forward in a relaxed, natural stance.<br><br>
+
+The activity: She holds a "Clear-Glass-Tumbler" filled with drinking water, lifting it carefully to her lips while standing beside a large water container. The motion is precise and realistic, with visible hand-to-glass contact and natural wrist alignment as she takes a slow sip.<br><br>
+
+Symbolism: The large water container represents "Domestic-Responsibility-and-Daily-Sustenance," while a "Small-Washed-Cloth-Hanging-on-a-Line" in the background suggests "Routine-Life-and-Hygiene." The clarity of the water reflects "Simplicity-and-Purity-of-Daily-Needs."<br><br>
+
+Lighting: "Soft-Environmental-Daylight." The sun is slightly angled, producing gentle shadows under her arms and along the container, with no artificial glow or overexposure.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Transparency-of-the-Water," the "Condensation-on-the-Glass," the "Rough-Cement-Surface-of-the-Floor," and the "Natural-Fabric-Texture-of-the-Clothing."<br><br>
+
+Theme: 💧 Daily-Hydration / Domestic-Realism / Simplicity-of-Life / Natural-Refreshment.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3waterdetox">Style: Cinematic, ultra-hyper-realistic romantic documentary photography (captured on ARRI Alexa Mini LF with 50mm lens), 4:5 aspect ratio, 16K resolution, soft "Golden-Hour-Interior-Luxury-Light" with natural diffusion and realistic skin tone rendering.<br><br>
+
+The scene: A "Luxury-Modern-Living-Room" with "Cream-Color-Interior-Design," "Soft-Designer-Cushions," and "Large-Glass-Windows" showing faint evening light outside. The environment is intimate, quiet, and emotionally warm, with no overcrowding or distortion.<br><br>
+
+The subject: A young Hausa couple in their early 20s with "Soft-Emotional-Connection-and-Calm-Intimacy." The woman wears a "Modest-Elegant-Abaya with Light-Flowing-Hijab," sitting slightly reclined on a luxury cushion. The man wears a "Simple-Refined-Long-Sleeve-Kaftan" with a relaxed posture, leaning slightly toward her.<br><br>
+
+The activity: The man gently offers a "Small-Glass-of-Clean-Drinking-Water" to the woman, holding it steadily at a natural angle as she leans forward slightly to take a sip from the glass. The interaction is careful and realistic, with both maintaining soft eye contact and gentle body language.<br><br>
+
+Symbolism: A "Low-Marble-Coffee-Table" beside them holds a "Pair-of-Simple-Books" and a "Folded-Cloth," symbolizing "Domestic-Calm-and-Shared-Life." The act of offering water represents "Care," "Trust," and "Quiet-Emotional-Intimacy."<br><br>
+
+Lighting: "Warm-Golden-Interior-Soft-Light." Light diffuses through curtains, creating gentle highlights on skin and fabric without harsh contrast, emphasizing emotional warmth and realism.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Clear-Refraction-of-Water-in-Glass," the "Soft-Fabric-of-the-Cushions," the "Natural-Skin-Texture," and the "Smooth-Marble-Surface-of-the-Table."<br><br>
+
+Theme: 💧 Romantic-Care / Domestic-Intimacy / Gentle-Connection / Emotional-Warmth.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Leica SL2 with 50mm Summilux lens), 4:5 aspect ratio, 16K resolution, soft "Early-Morning-Natural-Light" with cool tones and accurate exposure balance.<br><br>
+
+The scene: A "Simple-Rural-Household-Veranda-in-Northern-Nigeria" with "Mud-Rendered-Walls," "Woven-Chairs," and a "Clay-Water-Pot-Station" placed near the entrance. The environment feels calm, realistic, and grounded in everyday domestic life.<br><br>
+
+The subject: An elderly Hausa man (around 60s) with "Calm-Wisdom-and-Quiet-Strength," wearing a "Loose-Traditional-Robe" and a "Simple-Cap." His posture is slightly leaned forward, showing natural aging and lived experience.<br><br>
+
+The activity: He carefully pours clean drinking water from a "Clay-Storage-Pot" into a "Small-Metal-Cup," then pauses briefly before drinking slowly. The motion is steady and realistic, with visible hand control and natural pouring angle, no exaggeration or distortion.<br><br>
+
+Symbolism: A "Pair-of-Rosary-Beads" rests beside the water pot, and a "Folded-Cloth-Mat" lies neatly nearby, symbolizing "Routine," "Reflection," and "Life-Simplicity." The water represents "Sustenance-and-Gratitude-in-Daily-Life."<br><br>
+
+Lighting: "Soft-Diffused-Morning-Light." Gentle sunlight enters from the side of the veranda, creating realistic shadows under the pot and soft highlights on the water surface without harsh contrast.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Earthen-Clay-Texture-of-the-Pot," the "Metallic-Sheen-of-the-Cup," the "Roughness-of-the-Veranda-Floor," and the "Natural-Fabric-of-the-Robe."<br><br>
+
+Theme: 💧 Rural-Realism / Daily-Hydration / Simplicity-and-Gratitude / Quiet-Life-Moment.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Canon EOS R5 with 24-70mm lens), 4:5 aspect ratio, 16K resolution, natural "Midday-Outdoor-Light" with balanced highlights and true-to-life shadows.<br><br>
+
+The scene: A "Small-Urban-Construction-Site-in-Northern-Nigeria" with "Partially-Built-Cement-Blocks," "Stacked-Bricks," and a "Temporary-Shade-Shelter" made of tarpaulin. The environment feels physically demanding, realistic, and grounded in daily labor conditions.<br><br>
+
+The subject: A young Hausa construction worker (early 20s) with "Tired-But-Determined-Expression," wearing a "Dust-Stained-T-Shirt" and "Work-Trousers." His body shows natural fatigue from manual labor, with visible dust on arms and clothing.<br><br>
+
+The activity: He pauses work, kneeling slightly as he lifts a "Clear-Plastic-Sachet-of-Drinking-Water" to his mouth and drinks steadily. The motion is natural and realistic, with visible compression of the sachet as water is consumed, showing authentic physical interaction.<br><br>
+
+Symbolism: A "Stack-of-Cement-Bags" and a "Half-Built-Wall" stand behind him, symbolizing "Effort," "Progress," and "Daily-Struggle." The drinking water represents "Recovery," "Sustenance," and "Momentary-Relief-from-Labor."<br><br>
+
+Lighting: "Harsh-Sunlight-with-Natural-Exposure-Control." The midday sun creates strong but realistic shadows on the ground, with slight glare reflecting off the water sachet.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Dust-on-Skin-and-Clothes," the "Plastic-Refraction-of-Water," the "Rough-Cement-Blocks," and the "Granular-Sand-on-the-Ground."<br><br>
+
+Theme: 💧 Labor-and-Refreshment / Survival-Work-Life / Hydration-in-Heat / Human-Endurance.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony A1 with 70-200mm telephoto lens), 4:5 aspect ratio, 16K resolution, soft "Overcast-Outdoor-Light" with evenly diffused shadows and natural color accuracy.<br><br>
+
+The scene: A "Busy-Northern-Nigeria-Market-Edge" with "Vegetable-Stalls," "Plastic-Water-Drums," and "Foot-Traffic-in-Soft-Motion-Blur." The environment feels realistic, crowded, and grounded in everyday commerce without stylization distortion.<br><br>
+
+The subject: A young Hausa female vendor (around 20–25 years old) with "Calm-Focused-Expression-and-Light-Fatigue-from-Work," wearing a "Simple-Modest-Long-Dress" and a neatly tied "Light-Headscarf." Her posture is upright but relaxed, showing familiarity with her daily routine.<br><br>
+
+The activity: She pauses from selling to pour clean drinking water from a "Large-Plastic-Container" into a "Small-Transparent-Cup," then drinks slowly while standing beside her stall. The motion is natural, controlled, and anatomically correct, with realistic hand positioning and fluid movement.<br><br>
+
+Symbolism: Surrounding her are "Stacks-of-Produce-Baskets" and a "Small-Notebook-for-Sales," symbolizing "Work-and-Responsibility." The act of drinking water represents "Rest-Between-Labor," "Human-Reset," and "Sustained-Endurance-in-Daily-Commerce."<br><br>
+
+Lighting: "Soft-Overcast-Daylight." The cloud cover diffuses sunlight evenly, reducing harsh shadows and maintaining natural skin tones and true environmental color balance.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Moisture-on-Plastic-Container," the "Rough-Texture-of-Fruit-Baskets," the "Fabric-Weave-of-Her-Dress," and the "Dusty-Market-Ground."<br><br>
+
+Theme: 💧 Market-Life / Daily-Work-Reset / Hydration-and-Continuity / Realistic-Urban-Routine.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z7 II with 35mm prime lens), 4:5 aspect ratio, 16K resolution, soft "Late-Afternoon-Golden-Overcast-Light" with natural tonal balance and realistic depth.<br><br>
+
+The scene: A "Quiet-School-Compound-in-Northern-Nigeria" with "Sandy-Courtyard-Ground," "Low-Classroom-Blocks," and a "Shaded-Water-Point" near a wall-mounted tap system. The environment feels calm, structured, and grounded in institutional daily life.<br><br>
+
+The subject: A teenage Hausa student (around 14–16 years old) with "Fresh-Fatigue-after-Physical-Activity-and-Calm-Focus," wearing a "Standard-School-Uniform" slightly dusted from outdoor movement. His posture is slightly leaned forward, relaxed after activity.<br><br>
+
+The activity: He stands at the water point, filling a "Small-Transparent-Plastic-Cup" from a tap and drinking steadily in short sips. The motion is realistic and properly scaled, with water flow clearly visible and natural hand positioning.<br><br>
+
+Symbolism: Nearby are "School-Bags-Arranged-on-a-Bench" and a "Chalkboard-in-the-Background," symbolizing "Education-and-Daily-Structure." The act of drinking water represents "Recovery," "Focus-Reset," and "Replenishment-after-Exertion."<br><br>
+
+Lighting: "Soft-Outdoor-Afternoon-Light." Gentle sunlight filtered through light cloud cover creates balanced illumination with soft shadows under the tap area and students’ feet.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Flowing-Clear-Water-from-Tap," the "Dust-on-School-Ground," the "Cotton-Texture-of-Uniform," and the "Rough-Painted-Walls-of-Classrooms."<br><br>
+
+Theme: 💧 School-Life / Hydration-After-Activity / Learning-and-Reset / Everyday-Realism.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Canon EOS R3 with 85mm portrait lens), 4:5 aspect ratio, 16K resolution, natural "Early-Morning-Soft-Light" with cool balanced tones and realistic skin rendering.<br><br>
+
+The scene: A "Simple-Healthcare-Clinic-Waiting-Area-in-Northern-Nigeria" with "Plastic-Seating-Chairs," "White-Painted-Walls," and a "Water-Dispenser-Station" placed near the corner. The environment feels calm, clinical, and grounded in everyday public health infrastructure.<br><br>
+
+The subject: A young Hausa mother (around 25–30 years old) with "Calm-Worried-but-Patient-Expression," wearing a "Neat-Modest-Long-Dress" and a lightly arranged "Headscarf." She holds her small child nearby, showing gentle attentiveness and care.<br><br>
+
+The activity: She carefully pours drinking water from a "Transparent-Plastic-Cup" at the dispenser and takes a slow sip, then offers a small sip to her child. The movement is natural, precise, and realistically scaled, with proper hand positioning and believable interaction.<br><br>
+
+Symbolism: A "Medical-Record-Card" and "Queue-Number-Paper" rest on her lap, symbolizing "Care-Access-and-Responsibility." The drinking water represents "Health," "Recovery," and "Protection-of-Life."<br><br>
+
+Lighting: "Soft-Diffused-Clinic-Light." Even overhead lighting combines with faint window daylight, producing balanced exposure without harsh shadows or dramatic contrast.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Clear-Water-Refraction-in-Cup," the "Smooth-Plastic-Chairs," the "Cotton-Fabric-of-Clothing," and the "Clean-Matte-Clinic-Walls."<br><br>
+
+Theme: 💧 Healthcare-Refreshment / Care-and-Responsibility / Healing-and-Sustenance / Everyday-Health-Realism.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Leica Q3 with 28mm lens), 4:5 aspect ratio, 16K resolution, natural "Rain-Fresh-Outdoor-Light" with soft reflections and evenly diffused tones.<br><br>
+
+The scene: A "Quiet-Residential-Street-in-Northern-Nigeria-after-Light-Rain" with "Wet-Cement-Ground," "Small-Drainage-Edges," and "Modest-House-Fronts" reflecting faint sky light in puddles. The environment feels calm, refreshed, and grounded in real daily life.<br><br>
+
+The subject: A young Hausa man (around 20–24 years old) with "Relaxed-Tired-Expression-after-Movement," wearing a "Simple-Light-Shirt" and "Casual-Trousers" slightly damp at the hem from the wet ground. His posture is natural and upright, walking at an easy pace.<br><br>
+
+The activity: He pauses mid-walk, lifting a "Clear-Plastic-Bottle-of-Drinking-Water" and taking a steady sip while standing on the wet roadside. The motion is realistic and properly scaled, with visible condensation on the bottle and natural hand grip.<br><br>
+
+Symbolism: Reflections of nearby houses shimmer in puddles, symbolizing "Reset-after-Storm." A "Simple-Backpack" on his shoulder represents "Daily-Responsibility." The drinking water represents "Renewal," "Energy-Reset," and "Continuity-of-Life-after-Work."<br><br>
+
+Lighting: "Post-Rain-Soft-Natural-Light." Overcast brightness with gentle sky diffusion creates balanced exposure and realistic reflections across wet surfaces.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Water-Droplets-on-Asphalt," the "Condensation-on-Bottle," the "Wet-Fabric-of-Clothing," and the "Subtle-Reflection-of-Sky-in-Puddles."<br><br>
+
+Theme: 💧 Post-Rain-Refreshment / Urban-Reset / Natural-Hydration / Calm-Movement-in-Life.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10waterdetox">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony FX6 cinema camera with 50mm lens), 4:5 aspect ratio, 16K resolution, soft "Sunset-Transition-Light" with warm-to-cool gradient sky tones and natural atmospheric depth.<br><br>
+
+The scene: A "Modern-Semi-Urban-Rooftop-in-Northern-Nigeria" overlooking a developing cityscape with "Low-and-Mid-Rise-Buildings," faintly glowing windows, and distant road movement. The air is calm after a long day, with a light breeze moving across the rooftop.<br><br>
+
+The subject: A young Hausa couple (early 20s) with "Relaxed-End-of-Day-Calm-and-Emotional-Comfort." The woman wears a "Simple-Elegant-Modest-Dress-with-Headscarf," and the man wears a "Clean-Casual-Shirt-and-Trousers." Both appear naturally comfortable, sitting close but in a realistic, grounded posture.<br><br>
+
+The activity: They sit on a low rooftop bench, each holding a "Clear-Glass-Cup-of-Drinking-Water." They drink slowly after a long day, occasionally exchanging soft smiles and brief eye contact. The movement is natural and anatomically accurate, with no exaggeration.<br><br>
+
+Symbolism: A "Small-Thermos-Flask" and "Two-Used-Books" rest beside them, symbolizing "Shared-Life-Routine-and-Personal-Growth." The drinking water represents "Restoration," "Emotional-Balance," and "Togetherness-after-Daily-Struggle."<br><br>
+
+Lighting: "Golden-Hour-to-Blue-Hour-Transition-Light." Warm sunlight fades into cool evening tones, creating a balanced cinematic gradient across skin, clothing, and skyline.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Glass-Clarity-of-Water," the "Soft-Wind-Movement-in-Fabric," the "Concrete-Texture-of-Rooftop-Surface," and the "Distant-Urban-Light-Glow."<br><br>
+
+Theme: 💧 Shared-Refreshment / Calm-Connection / End-of-Day-Rest / Realistic-Emotional-Balance.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10waterdetox')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10waterdetox')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="traditional-drinks">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='drinking.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Local drinks</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon Z6 II with 50mm prime lens), 4:5 aspect ratio, 16K resolution, warm "Late-Afternoon-Market-Light" with natural color richness and balanced exposure.<br><br>
+
+The scene: A "Busy-Local-Market-Stall-in-Northern-Nigeria" with "Wooden-Tables," "Plastic-Containers," and "Hanging-Shade-Canopy." The environment is lively but grounded, with real human movement softly blurred in the background and no distortion.<br><br>
+
+The subject: A middle-aged Hausa woman (around 35–45 years old) with "Confident-Entrepreneurial-Presence-and-Focused-Calm," wearing a "Patterned-Traditional-Wrapper-and-Blouse" with a neatly tied "Headscarf." Her posture is upright and natural, showing experience and control.<br><br>
+
+The activity: She pours freshly prepared "Zobo-Drink" from a "Large-Transparent-Plastic-Jar" into a "Standard-Plastic-Bottle" using a small funnel. The deep red liquid flows smoothly, with visible consistency and realistic pouring angle, no spillage or exaggeration.<br><br>
+
+Symbolism: On the table are "Dried-Hibiscus-Leaves," "Fresh-Ginger," and "Cloves," representing "Traditional-Knowledge-and-Natural-Ingredients." The act of bottling reflects "Small-Scale-Business-and-Self-Reliance."<br><br>
+
+Lighting: "Natural-Market-Daylight." Soft sunlight filters through the canopy, creating gentle shadows and highlighting the rich red color of the drink without artificial glow.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Deep-Translucent-Red-of-Zobo," the "Plastic-Gloss-of-Containers," the "Wrinkles-and-Fabric-Texture-of-Clothing," and the "Rough-Wooden-Table-Surface."<br><br>
+
+Theme: 🍹 Traditional-Refreshment / Local-Enterprise / Cultural-Authenticity / Natural-Ingredients.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Canon EOS R5 with 35mm lens), 4:5 aspect ratio, 16K resolution, soft "Morning-Kitchen-Daylight" with natural color accuracy and balanced exposure.<br><br>
+
+The scene: A "Modest-Home-Kitchen-in-Northern-Nigeria" with "Cemented-Floor," "Simple-Cooking-Surfaces," and "Large-Local-Utensils" arranged neatly. The environment is clean, practical, and grounded in everyday domestic life.<br><br>
+
+The subject: A young Hausa woman (around 22–28 years old) with "Focused-Calm-and-Domestic-Skill," wearing a "Simple-Traditional-Wrapper-and-Blouse" with a "Light-Headscarf." Her posture is slightly bent forward, engaged in careful preparation.<br><br>
+
+The activity: She pours freshly made "Kunu-Drink" from a "Large-Metal-Pot" into a "Plastic-Jug" using a sieve, filtering the liquid smoothly. The flow is realistic, with visible thickness and controlled hand movement, no exaggeration.<br><br>
+
+Symbolism: Nearby are "Soaked-Grains," "Ground-Millet-Paste," and "Ginger-Roots," representing "Traditional-Preparation-and-Knowledge." A "Covered-Storage-Container" suggests "Family-Sustenance-and-Planning."<br><br>
+
+Lighting: "Soft-Natural-Window-Light." Light enters from one side, creating gentle highlights on the liquid surface and subtle shadows around utensils without harsh contrast.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Creamy-Consistency-of-Kunu," the "Metallic-Surface-of-the-Pot," the "Fine-Mesh-of-the-Sieve," and the "Cotton-Texture-of-Clothing."<br><br>
+
+Theme: 🍹 Traditional-Preparation / Domestic-Life / Cultural-Knowledge / Nourishment-and-Care.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony A7S III with 50mm lens), 4:5 aspect ratio, 16K resolution, warm "Golden-Hour-Street-Light" with natural highlights and soft shadow falloff.<br><br>
+
+The scene: A "Roadside-Evening-Stall-in-Northern-Nigeria" with "Wooden-Bench-Seating," "Plastic-Coolers," and a "Fabric-Shade-Overhead." The environment feels active yet relaxed, with people passing in soft motion blur as the day winds down.<br><br>
+
+The subject: A young Hausa man (around 23–27 years old) with "Relaxed-Post-Work-Calm-and-Satisfaction," wearing a "Simple-Short-Sleeve-Shirt" and "Casual-Trousers." His posture is slightly leaned back on a bench, body language loose and at ease after a long day.<br><br>
+
+The activity: He holds a "Transparent-Plastic-Cup" filled with chilled "Zobo-Drink," lifting it steadily to take a refreshing sip. The motion is natural and correctly scaled, with visible grip and realistic head tilt.<br><br>
+
+Symbolism: On the small table beside him are "Two-Sealed-Plastic-Bottles-of-Zobo" and a "Folded-Newspaper," symbolizing "Evening-Rest-and-Daily-Routine." The deep red drink reflects "Natural-Refreshment-and-Cultural-Continuity."<br><br>
+
+Lighting: "Golden-Hour-Natural-Light." Low sunlight casts soft warm highlights across his face and the drink, while shadows stretch gently across the ground.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-the-Cup," the "Rich-Color-of-the-Zobo," the "Wood-Grain-of-the-Bench," and the "Light-Dust-on-Ground-Surface."<br><br>
+
+Theme: 🍹 Evening-Refreshment / Post-Work-Relaxation / Street-Life / Cultural-Drink-Connection.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Fujifilm X-T5 with 56mm lens), 4:5 aspect ratio, 16K resolution, soft "Outdoor-Ceremony-Daylight" with balanced exposure and natural skin tones.<br><br>
+
+The scene: A "Traditional-Family-Gathering-Courtyard-in-Northern-Nigeria" with "Decorated-Canopies," "Plastic-Chairs-Arranged-in-Rows," and "Serving-Tables" set along the side. The environment feels festive yet grounded, with real people moving naturally in the background.<br><br>
+
+The subject: A young Hausa woman (around 20–25 years old) with "Warm-Hospitality-and-Graceful-Composure," wearing a "Brightly-Colored-Traditional-Atampa-Outfit" with a neatly styled "Headscarf." Her posture is upright and attentive as she serves guests.<br><br>
+
+The activity: She pours chilled "Kunu-Drink" from a "Large-Insulated-Cooler" into a "Transparent-Plastic-Cup" and hands it to a seated guest. The motion is controlled and realistic, with visible liquid flow and proper hand coordination.<br><br>
+
+Symbolism: On the serving table are "Stacked-Plastic-Cups," "Covered-Food-Trays," and "Wrapped-Gifts," representing "Community," "Celebration," and "Shared-Tradition." The kunu drink symbolizes "Hospitality-and-Cultural-Welcome."<br><br>
+
+Lighting: "Natural-Daylight-with-Canopy-Diffusion." Sunlight filtered through fabric creates soft shadows and even illumination across faces and objects.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Smooth-Consistency-of-Kunu," the "Plastic-Surface-of-Cups," the "Fabric-Patterns-of-Clothing," and the "Dust-Light-on-the-Courtyard-Ground."<br><br>
+
+Theme: 🍹 Cultural-Hospitality / Celebration-Life / Shared-Refreshment / Community-Tradition.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Panasonic Lumix GH6 with 42.5mm lens), 4:5 aspect ratio, 16K resolution, crisp "Mid-Morning-Natural-Light" with neutral tones and accurate color rendering.<br><br>
+
+The scene: A "Roadside-Breakfast-Spot-in-Northern-Nigeria" with "Wooden-Benches," "Aluminum-Pots-on-Charcoal-Stove," and "Early-Morning-Customers-in-Soft-Motion." The environment feels practical, lively, and grounded in daily routine.<br><br>
+
+The subject: A middle-aged Hausa man (around 30–40 years old) with "Focused-Readiness-and-Workday-Preparation," wearing a "Simple-Short-Sleeve-Shirt" and "Loose-Trousers." His posture is upright but relaxed as he prepares to start his day.<br><br>
+
+The activity: He sits on a bench holding a "Standard-Plastic-Cup" filled with freshly served "Kunu-Drink," bringing it steadily to his lips for a slow sip. The motion is natural and controlled, with correct hand grip and realistic head movement.<br><br>
+
+Symbolism: On the small table are "A-Plate-of-Kosai-(Bean-Cakes)" and a "Folded-Nylon-Bag," representing "Daily-Hustle-and-Morning-Fuel." The kunu drink symbolizes "Energy," "Tradition," and "Start-of-the-Day-Nourishment."<br><br>
+
+Lighting: "Clean-Morning-Daylight." Sunlight enters at a low angle, creating soft shadows under the bench and gentle highlights on the drink surface.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Creamy-Opacity-of-Kunu," the "Slight-Foam-on-Top," the "Rough-Wooden-Bench-Surface," and the "Steam-from-Nearby-Food-Pots."<br><br>
+
+Theme: 🍹 Morning-Routine / Traditional-Breakfast / Daily-Energy / Street-Life-Realism.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony A7C II with 40mm lens), 4:5 aspect ratio, 16K resolution, soft "Afternoon-Home-Interior-Light" with natural window diffusion and accurate exposure.<br><br>
+
+The scene: A "Family-Living-Space-in-Northern-Nigeria" with "Mat-on-the-Floor," "Low-Wooden-Table," and "Open-Window-for-Airflow." The environment feels calm, lived-in, and grounded in everyday domestic reality.<br><br>
+
+The subject: A young Hausa mother (around 28–34 years old) with "Gentle-Care-and-Attentive-Calm," wearing a "Simple-Printed-Wrapper-and-Blouse" with a "Neatly-Tied-Headscarf." A small child (around 3–5 years old) sits beside her, relaxed and comfortable.<br><br>
+
+The activity: She pours a small portion of "Kunu-Drink" from a "Plastic-Jug" into a "Child-Sized-Cup" and carefully hands it to the child, guiding the cup slightly as the child drinks. The motion is precise, controlled, and realistically scaled.<br><br>
+
+Symbolism: A "Folded-Cloth," "Children’s-Exercise-Book," and a "Covered-Food-Bowl" nearby represent "Family-Care," "Growth," and "Daily-Nurturing." The kunu drink symbolizes "Nutrition," "Tradition," and "Parental-Responsibility."<br><br>
+
+Lighting: "Soft-Window-Daylight." Light enters gently from the side, creating natural highlights on faces and subtle shadows beneath the table and along the floor.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Smooth-Creamy-Texture-of-Kunu," the "Plastic-Jug-Surface," the "Woven-Mat-Detail," and the "Cotton-Fabric-of-Clothing."<br><br>
+
+Theme: 🍹 Family-Nourishment / Child-Care / Traditional-Nutrition / Everyday-Domestic-Life.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Nikon D780 with 85mm lens), 4:5 aspect ratio, 16K resolution, soft "Evening-Indoor-Ambient-Light" with warm tones and realistic shadow falloff.<br><br>
+
+The scene: A "Small-Local-Eatery-Interior-in-Northern-Nigeria" with "Tiled-Flooring," "Plastic-Tables-and-Chairs," and "Wall-Mounted-Fan." The environment feels practical, slightly busy, and grounded in everyday urban life.<br><br>
+
+The subject: A young Hausa man (around 25–30 years old) with "Relaxed-End-of-Day-Calm-and-Light-Fatigue," wearing a "Simple-Long-Sleeve-Kaftan" slightly loosened at the neck. His posture is natural, seated upright but at ease.<br><br>
+
+The activity: He holds a "Transparent-Plastic-Bottle" of chilled "Zobo-Drink," unscrewing the cap and taking a steady sip. The movement is realistic, with proper grip, bottle tilt, and natural swallowing motion.<br><br>
+
+Symbolism: On the table are "A-Plate-of-Rice-and-Sauce" and a "Folded-Receipt," representing "Workday-Completion-and-Sustenance." The zobo drink symbolizes "Cooling-Relief" and "Cultural-Refreshment."<br><br>
+
+Lighting: "Warm-Interior-Light-with-Low-Intensity." Overhead bulbs cast soft amber tones, while shadows remain natural and consistent with the room layout.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-the-Bottle," the "Deep-Red-Clarity-of-Zobo," the "Plastic-Table-Surface," and the "Subtle-Wear-on-Chair-Edges."<br><br>
+
+Theme: 🍹 Evening-Meal / Daily-Rest / Traditional-Drink-Relief / Urban-Life-Routine.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Canon EOS R8 with 35mm lens), 4:5 aspect ratio, 16K resolution, bright "Open-Daylight-Natural-Light" with accurate exposure and true color rendering.<br><br>
+
+The scene: A "School-Sports-Field-in-Northern-Nigeria" with "Dry-Grass-Patches," "Goal-Post-in-Background," and "Students-in-Soft-Motion-After-Play." The environment feels active yet natural, grounded in real school life.<br><br>
+
+The subject: A teenage Hausa girl (around 13–16 years old) with "Energetic-Fatigue-and-Lively-Spirit," wearing a "School-Sports-Uniform" slightly dusty from activity. Her posture is upright but relaxed after running, breathing lightly.<br><br>
+
+The activity: She stands near the field edge, holding a "Reusable-Plastic-Bottle" filled with chilled "Zobo-Drink," tilting it carefully to drink in steady sips. The motion is realistic, with proper hand grip, bottle angle, and visible swallowing action.<br><br>
+
+Symbolism: A "School-Bag" and "Sports-Cones" nearby represent "Youth-Activity-and-Discipline." The zobo drink symbolizes "Natural-Recovery" and "Cultural-Refreshment-after-Exertion."<br><br>
+
+Lighting: "Bright-Natural-Daylight." The sun is slightly angled, creating clear but realistic shadows beneath her and across the field without overexposure.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Condensation-on-the-Bottle," the "Deep-Red-Color-of-Zobo," the "Dust-on-Uniform-Fabric," and the "Rough-Grass-and-Soil-Texture."<br><br>
+
+Theme: 🍹 Youth-Refreshment / Post-Activity-Recovery / School-Life / Natural-Energy.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Leica SL2 with 75mm lens), 4:5 aspect ratio, 16K resolution, soft "Late-Afternoon-Indoor-Natural-Light" with warm diffusion and realistic depth.<br><br>
+
+The scene: A "Quiet-Home-Veranda-in-Northern-Nigeria" with "Simple-Cement-Floor," "Plastic-Chairs," and a "Small-Wooden-Table" placed near a shaded corner. The environment feels peaceful, domestic, and grounded in everyday life.<br><br>
+
+The subject: A middle-aged Hausa couple (around 35–45 years old) with "Calm-Contentment-and-End-of-Day-Relaxation." The woman wears a "Modest-Patterned-Wrapper-and-Blouse" with a neatly tied headscarf, while the man wears a "Simple-Light-Kaftan" slightly loosened for comfort.<br><br>
+
+The activity: They sit side by side, each holding a "Clear-Plastic-Cup" filled with chilled "Kunu-Drink." The man takes a slow sip while the woman stirs her drink gently before drinking, both movements natural, unforced, and realistically scaled.<br><br>
+
+Symbolism: On the table are "Two-Empty-Plastic-Jugs," a "Plate-with-Leftover-Evening-Snack," and a "Small-Radio-Set," symbolizing "Family-Routine," "Rest-after-Work," and "Shared-Comfort." The kunu drink represents "Cooling-Relief" and "Cultural-Bonding."<br><br>
+
+Lighting: "Soft-Golden-Hour-Transition-Light." Sunlight enters diagonally through the veranda opening, creating gentle highlights on faces and subtle shadow gradients across the floor.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Creamy-Opacity-of-Kunu," the "Condensation-on-Plastic-Cups," the "Rough-Cement-Floor-Texture," and the "Cotton-Weave-of-Clothing."<br><br>
+
+Theme: 🍹 Family-Refreshment / Evening-Rest / Cultural-Connection / Domestic-Calm.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10traditionaldrinks">Style: Cinematic, ultra-hyper-realistic documentary photography (captured on Sony FX30 cinema camera with 24mm lens), 4:5 aspect ratio, 16K resolution, natural "Post-Rain-Golden-Hour-Light" with soft reflections and balanced contrast.<br><br>
+
+The scene: A "Modern-Urban-Street-in-Northern-Nigeria-after-Light-Rain" with "Wet-Asphalt-Reflective-Surface," "Small-Street-Lights-Coming-On," and "Low-Commercial-Buildings" glowing faintly in the distance. The environment feels fresh, calm, and visually reflective after rainfall.<br><br>
+
+The subject: A young Hausa couple (early 20s) with "Relaxed-Happiness-and-Shared-Comfort-after-Long-Day." The woman wears a "Simple-Elegant-Modest-Outfit-with-Light-Headscarf," and the man wears a "Casual-Light-Kaftan" slightly loose for comfort. Both appear naturally composed and emotionally at ease.<br><br>
+
+The activity: They stand side by side under a small shop awning, each holding a "Transparent-Bottle-of-Zobo-Drink." The man takes a slow sip while the woman smiles gently before drinking hers. Their movements are natural and proportionally accurate, with realistic bottle handling and subtle condensation visible.<br><br>
+
+Symbolism: Reflections of nearby streetlights shimmer in puddles at their feet, symbolizing "Renewal-after-Storm." A "Small-Plastic-Bag-with-Snacks" and "Shared-Phone-in-Hand" represent "Togetherness-and-Daily-Life-Connection." The zobo drink symbolizes "Cooling-Relief," "Cultural-Identity," and "Shared-Moments-of-Comfort."<br><br>
+
+Lighting: "Post-Rain-Golden-Hour-Transition-Light." Warm sunset tones blend with cool wet reflections, creating a balanced cinematic urban mood.<br><br>
+
+Texture: Ultra-high-fidelity detail—the "Water-Droplets-on-Asphalt," the "Condensation-on-Zobo-Bottles," the "Wet-Fabric-of-Clothing," and the "Reflective-Puddle-Surfaces."<br><br>
+
+Theme: 🍹 Post-Rain-Refreshment / Shared-Urban-Calm / Cultural-Drink-Connection / Quiet-Happiness.</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10traditionaldrinks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10traditionaldrinks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:|The cup:|The moment:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:|The cup:|The moment:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>

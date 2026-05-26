@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="/auth-guard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling1 – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #0d0; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: capitalize; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="serene">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Serene</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1happy">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft airy color grading, masterpiece quality, 4:5 vertical aspect ratio
+
+The scene: A "Sun-Drenched-Prayer-Room" (Dakin Salla) in a quiet family home in Kaduna. The background features a soft-blur of a "Large-Open-Window" with white lace curtains blowing gently in a morning breeze, and a "Bookshelf-filled-with-Leather-bound-Quranic-Texts." The environment is one of "Pure-Spirituality-and-Stillness."
+
+The subject: A graceful Hausa woman in her late 30s, wearing a "Pure-White-Cotton-Hijab" and a matching "Flowing-Abaya." She is "Sitting-Cross-legged-on-a-Plush-Hand-woven-Prayer-Mat." Her hands are resting in her lap, gently "Counting-Prayer-Beads" (Tasbih) made of polished dark wood. Her eyes are closed, and her face carries a "Radiant-Smile-of-Peace" (Kwanciyar hankali).
+
+Symbolism: The "White-Attire" symbolizes "Purity-and-Clarity." The "Gently-Moving-Curtains" represent "The-Breath-of-Peace." The interaction reflects "Nutsuwa" (Serenity) found in the early hours before the world wakes up.
+
+
+Lighting: "The-Golden-Hour-Morning-Beam." A thick, warm beam of sunlight cuts across the room, illuminating "Motes-of-Dust" dancing in the air and highlighting the "Soft-Contours-of-her-Face," making her skin look ethereal and luminous.
+
+
+Texture: Ultra-detailed realism — the "Fine-Weave-of-the-Cotton-Hijab," the "Glossy-Finish-on-the-Wooden-Beads," the "Intricate-Fibres-of-the-Prayer-Mat," and "Pore-Level-Detail" showing the absolute relaxation of her facial muscles.
+
+
+Theme: Serene / Spiritual Peace / Hausa Morning Ritual / Interior Calm / Human Contentment / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft cool-to-warm natural color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A quiet Northern Nigerian riverside or garden during early morning. Gentle water reflections, soft greenery, and light mist create a peaceful, undisturbed environment.
+
+The subject: A young Nigerian woman in her mid-20s wearing a flowing atamfa with gyale sits calmly near the water or under a tree. Her posture is relaxed, hands resting gently in her lap, eyes closed or softly gazing into the distance, fully at peace.
+
+Symbolism: Still posture, calm surroundings, and natural elements symbolize inner peace, clarity, and emotional balance. The water reflects tranquility and flow of thoughts.
+
+Lighting: Soft morning light filters through trees, creating gentle highlights, diffused shadows, and a calm, serene ambiance.
+
+Texture: Ultra-detailed realism — flowing fabrics, soft water reflections, natural skin tones, and environmental textures captured with DSLR clarity.
+
+Theme: Serene / Peace / Calmness / Nigerian Young Adult Woman / Nature / Inner Balance / Clean & Cinematic<br><br></div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft neutral-to-warm color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A quiet Northern Nigerian rooftop at sunset. The sky is soft with fading light, gentle breeze moving lightly, and distant city sounds barely present, creating a peaceful elevated atmosphere.
+
+The subject: A young Nigerian man in his mid-20s wearing a simple flowing kaftan or light traditional attire sits cross-legged on a mat. His back is straight, shoulders relaxed, hands resting on his knees. His eyes are closed, breathing calmly, fully immersed in stillness.
+
+Symbolism: Cross-legged posture and stillness symbolize inner peace, mindfulness, and emotional clarity. The rooftop setting represents rising above noise and finding calm within.
+
+Lighting: Soft sunset light casts gentle golden and cool tones across his face and surroundings, creating smooth shadows and a deeply calming ambiance.
+
+Texture: Ultra-detailed realism — soft fabric flow, rooftop textures, subtle wind movement, natural skin tones captured with DSLR clarity.
+
+Theme: Serene / Peace / Mindfulness / Nigerian Young Adult Man / Rooftop Calm / Inner Stillness / Clean & Cinematic</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4happy">Style: Cinematic, ultra-hyper-realistic lifestyle photography, professional DSLR, 85mm lens, high dynamic range, soft golden-hour color grading with gentle cool tones, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A luxury rooftop terrace in a modern Northern Nigerian city during sunset. Elegant seating, glass railings, and a wide skyline view create a calm and refined environment.
+
+The subject: A young Nigerian couple in their mid-20s sits close together on a comfortable outdoor sofa. The man wears a crisp Babbar riga with a Zanna Bukar style cap, while the woman wears a flowing atamfa with gyale. They sit quietly side by side, slightly leaning toward each other, sharing a peaceful moment. Their expressions are soft and content, with gentle smiles or relaxed gazes toward the horizon.
+
+Symbolism: Their calm presence and closeness symbolize peace in companionship, emotional balance, and quiet love. The elevated luxury setting represents stability and serenity achieved together.
+
+Lighting: Soft sunset light bathes the scene in warm golden tones, creating gentle shadows and a soothing, serene ambiance.
+
+Texture: Ultra-detailed realism — flowing fabrics, smooth rooftop surfaces, soft reflections on glass, natural skin tones captured with DSLR clarity.
+
+Theme: Serene / Peace / Love & Companionship / Nigerian Young Couple / Luxury Rooftop / Calm & Balance / Clean & Cinematic</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 50mm lens, high dynamic range, soft pastel and golden color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: The quiet shores of "Jabi-Lake" in Abuja or "Tiga-Dam" in Kano during a cool, breezy evening. The background features a soft-blur of "Still-Blue-Water" reflecting the pink sky and a few "Distant-Birds" flying in a V-formation. The environment is one of "Deep-Natural-Quiet.
+
+
+The subject: An elderly Hausa man with a "Kind-and-Weathered-Face," wearing a "Crisp-White-Jalabiya" and a "Simple-Blue-Skull-Cap." He is "Sitting-on-a-Low-Wooden-Stool," holding a "Small-Glass-of-Mint-Tea" (Shayi) in his hand. He is "Quietly-Observing-the-Horizon," a soft, contented smile playing on his lips. Beside him, a "Small-Charcoal-Stove" (Kasko) glows faintly, adding a touch of warmth to the air.
+
+
+Symbolism: The "Still-Water" symbolizes "The-Quiet-Mind." The "Steam-from-the-Tea" represents "The-Slow-Pace-of-Life." The interaction reflects "Zaman-Lafiya" (Peaceful living) where the soul finds rest in nature's simple beauty.
+
+
+Lighting: "The-Soft-Afterglow." The sun has just set, leaving a "Gentle-Lavender-and-Gold-Light" that wraps around everything, erasing harsh shadows and making the scene feel like a "Peaceful-Dream."
+
+
+Texture: Ultra-detailed realism — the "Tiny-Bubbles" on the surface of the tea, the "Fine-Cotton-Texture" of the Jalabiya, the "Rough-Bark" of a nearby tree, and "Pore-Level-Detail" showing the wisdom and calm in the lines of his face.
+
+Theme: Serene / Elder Wisdom / Northern Landscape / Quiet Reflection / Human Peace / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6happy">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft cream and gold color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Sun-Lit-Reading-Nook" (Wurin karatu) inside a modern, tastefully decorated house in Gwarinpa. The background features a soft-blur of a "Large-Bookshelf" and a "Tall-Indoor-Plant" (Fiddle Leaf Fig) whose leaves are glowing in the sun. The environment is one of "Sophisticated-Calm."
+
+The subject: A beautiful young Hausa woman in her early 20s, wearing a "Soft-Silk-Kauban" in a pale lavender color. She is "Curled-up-on-a-Cushioned-Window-Seat," resting her head against a plush velvet pillow. She is "Gently-Closing-her-Eyes" (Lumshe ido), holding a "Small-Leather-Journal" in her lap. Her expression is one of "Pure-Serenity" (Kwanciyar hankali), a faint, relaxed smile on her face as she enjoys the silence.
+
+
+Symbolism: The "Closed-Journal" symbolizes "Reflections-at-Rest." The "Glowing-Green-Plant" represents "Life-and-Growth-in-Peace." The interaction reflects "Nutsuwa" (Internal Stillness) when a person finally finds a moment to step away from the noise of the world.
+
+
+Lighting: "The-Warm-Afternoon-Haze." Soft, diffused sunlight pours through a sheer white curtain, creating a "Dreamy-Glow" around her. The light highlights the "Soft-Silk-Texture" of her clothes and the "Radiance-of-her-Skin."
+
+
+Texture: Ultra-detailed realism — the "Shimmering-Surface-of-the-Silk," the "Soft-Fuzz-of-the-Velvet-Pillow," the "Fine-Grains-of-the-Leather-Journal," and "Pore-Level-Detail" showing her long, relaxed eyelashes and the smooth contour of her cheek.
+
+
+Theme: Serene / Modern Hausa Woman / Home Sanctuary / Quiet Luxury / Personal Peace / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7happy">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm lens, high dynamic range, warm golden and honey color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Spacious-Modern-Kitchen" in a luxury villa in Abuja during the late afternoon. In the background, a soft-blur of "Stainless-Steel-Appliances" and a "Large-Glass-Bowl-of-Fresh-Fruits" on a white marble island. The environment is one of "Domestic-Bliss-and-Order."
+
+
+The subject: A beautiful Hausa woman in her early 30s, wearing a "Soft-Cream-Lace-Kaftan" with a "Matching-Silk-Headwrap" (Dauri). She is "Leaning-Against-the-Countertop," holding a "Glass-of-Cold-Hibiscus-Tea" (Zobo) with fresh mint leaves floating inside. She is "Watching-the-Steam-Rise-from-a-Pot" on the stove with a "Deep-Expression-of-Contentment" (Kwanciyar hankali). Her posture is completely relaxed, one hand resting lightly on her hip.
+
+
+Symbolism: The "Cool-Zobo-in-Hand" symbolizes "Refreshing-the-Soul." The "Slow-Cooking-Pot" represents "Patience-and-Nurturing." The interaction reflects "Nutsuwa" (Serenity) found in the simple, rhythmic acts of caring for a home and oneself.
+
+
+Lighting: "The-Golden-Hour-Kitchen-Glow." Rich, amber sunlight streams through a large window, catching the "Condensation-on-the-Glass" and creating a "Halo-Effect" around her silhouette, making the lace of her Kaftan sparkle.
+
+Texture: Ultra-detailed realism — the "Droplets-of-Water" on the cold glass, the "Intricate-Floral-Patterns" of the cream lace, the "Smooth-Polished-Marble," and "Pore-Level-Detail" showing the soft, dewy glow of her skin in the warm light.
+
+
+Theme: Serene / Modern Hausa Home / Contentment / Culinary Peace / Human Grace / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8happy">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 50mm lens, high dynamic range, soft earthy and golden-hour color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Lush-Backyard-Garden" (Lambun gida) in a quiet suburb of Kano during the late evening. In the background, a soft-blur of "Bougainvillea-Flowers" in vibrant pinks and a "Traditional-Mud-Brick-Wall" with intricate geometric carvings. The environment is one of "Organic-Serenity.
+
+
+The subject: A handsome Hausa man in his early 30s, wearing a "Soft-Sky-Blue-Linen-Kaftan" and no cap, showing his neatly trimmed hair. He is "Sitting-on-a-Low-Woven-Mat" (Tabarma) spread across the green grass. He is "Gently-Feeding-a-Small-Bird" or "Leaning-Back-on-his-Elbows," looking up at the sky. His expression is one of "Deep-Spiritual-and-Mental-Rest" (Hutun zuciya), a small, genuine smile on his face.
+
+
+Symbolism: The "Woven-Mat-on-Grass" symbolizes "Grounding-and-Humility." The "Sky-Blue-Kaftan" against the "Green-Nature" represents "Harmony-with-the-Elements." The interaction reflects "Nutsuwa" (Serenity) found in the connection between a man and the earth after a long day of work.
+
+Lighting: "The-Dusk-Glow." The sun is below the horizon, leaving a "Cool-Indigo-and-Soft-Gold-Gradient" in the sky. A warm outdoor lantern nearby casts a "Soft-Flickering-Light" on his face, highlighting his relaxed features.
+
+
+Texture: Ultra-detailed realism — the "Individual-Blades-of-Grass," the "Criss-Cross-Pattern-of-the-Mat," the "Breathable-Linen-Fabric," and "Pore-Level-Detail" showing the absolute absence of tension in his jaw and forehead.
+
+Theme: Serene / Nature Connection / Hausa Masculinity / Peaceful Evening / Human Calm / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9happy">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft milky-white and gold color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Minimalist-Nursery-Room" in a modern Hausa home in Kaduna or Abuja. In the background, a soft-blur of a "Hand-Carved-Wooden-Crib" and a "Small-White-Bookshelf" with children's books and a plush toy camel. The environment is one of "Infinite-Tenderness-and-Safety."
+
+The subject: A young Hausa mother in her mid-20s, wearing a "Soft-White-Jersey-Wrap" and a "Simple-Chiffon-Headscarf." She is "Sitting-in-a-Rocking-Chair," cradling her sleeping newborn baby against her chest. She is "Gently-Pressing-her-Forehead" against the baby’s head, her eyes closed in a moment of "Pure-Maternal-Serenity" (Nutsuwar zuciya). A faint, tearful smile of joy is on her face.
+
+Symbolism: The "Sleeping-Baby" symbolizes "Absolute-Trust." The "White-Jersey-Wrap" represents "Cleanliness-and-New-Beginnings." The interaction reflects "Kaunar-Uwa" (Mother’s Love), the highest form of serenity where the outside world completely ceases to exist.
+
+
+Lighting: "The-Soft-Morning-Haze." Diffused, milky light filters through a thin white curtain, creating a "Glow-of-Innocence" around the pair. The light is so soft it leaves no harsh shadows, only "Velvety-Transitions" on their skin.
+
+
+Texture: Ultra-detailed realism — the "Translucent-Skin" of the newborn, the "Stretch-and-Softness" of the jersey fabric, the "Fine-Peach-Fuzz" on the baby's head, and "Pore-Level-Detail" showing the moisture of a single tear of happiness on the mother's cheek.
+
+
+Theme: Serene / Motherhood / New Life / Hausa Family Values / Emotional Peace / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10happy">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, moody deep-blue and charcoal color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Rainy-Modern-Living-Room" (Babban fali) in a luxury high-rise apartment in Abuja or Lagos, overlooking a cityscape. In the background, a soft-blur of a "Large-Glass-Window-covered-in-Rain-Streaks" and a "Deep-Blue-Velvet-Sofa." The environment is one of "Sophisticated-Solitude-and-Stillness."
+
+
+The subject: A handsome Hausa man in his late 20s, wearing a "Soft-Charcoal-Greay-Cashmere-Kaftan" and a matching "Woven-Cap" (Fila). He is "Sitting-in-a-Low-Profile-Leather-Armchair," with one hand supporting his chin. He is "Quietly-Observing-the-Rain-Patterns" on the glass window, with a "Deep-Expression-of-Reflection-and-Rest" (Kwanciyar hankali). He is not looking at anything specific, just the "Rhythm-of-the-Raindrops."
+
+
+Symbolism: The "Rain-Streaks" symbolize "The-World-at-a-Distance." The "Charcoal-Grey-Kaftan" against the "Moody-Blue-Interior" represents "Internal-Rest-in-the-Storm." The interaction reflects "Hutun-Zuciya" (Mental Rest) found in the absence of noise and the simple, natural beauty of a rainy day from a place of peace.
+
+
+Lighting: "The-Soft-Diffused-Blue-Haze." Cool, natural light from the storm filters through the window, creating a "Dreamy-Glow" on his face and highlighting the "Soft-Texture" of his cashmere. The light emphasizes the "Stillness-of-the-Moment."
+
+
+Texture: Ultra-detailed realism — the "Fine-Weave-of-Cashmere," the "Glossy-Reflection-on-the-Leather," the "Droplets-on-the-Window-Pane," and "Pore-Level-Detail" showing the absolute absence of tension in his facial muscles.
+
+
+Theme: Serene / Rainy Day / Reflections / Hausa Gentleman / Internal Peace / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10happy')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10happy')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="mindful">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Mindful</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 100mm macro lens, high dynamic range, moody amber and ink-black color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Traditional-Scholar’s-Study" (Dakin Karatu) in Old City Zaria. The background is a soft-blur of "Ancient-Manuscripts" tied with leather strings and a "Small-Clay-Incense-Burner" (Turaren wuta) sending a thin, swirling ribbon of smoke into the air. The environment is one of "Extreme-Intellectual-Presence."
+
+
+The subject: A middle-aged Hausa calligrapher (Malam) with "Intense-Focused-Eyes," wearing a "Simple-Cream-Kaftan" with the sleeves rolled up. He is "Leaning-Close-to-a-Wooden-Tablet" (Allo). He is "Carefully-Guiding-a-Reed-Pen" (Alqalami) dipped in traditional black ink (Tawada). His entire body is still, his breath held in "Total-Concentration" (Zurfafa tunani).
+
+
+Symbolism: The "Reed-Pen-on-Wood" symbolizes "The-Connection-between-Tradition-and-the-Present." The "Swirling-Incense-Smoke" represents "The-Fluidity-of-Thought." The interaction reflects "Mindfulness" (Kasancewa a farkake) where the mind and hand become one in the act of creation.
+
+
+Lighting: "The-Single-Source-Spotlight." A sharp beam of warm light from a high window hits the "Allo" and the man’s "Viny-Focused-Hands," leaving the rest of the room in deep, respectful shadows to emphasize his singular focus.
+
+
+Texture: Ultra-detailed realism — the "Glossy-Wetness-of-the-Ink" before it dries, the "Grain-of-the-Polished-Wood," the "Micro-Fibers" on the tip of the reed pen, and "Pore-Level-Detail" showing the slight furrow of his brow in deep mindfulness.
+
+
+Theme: Mindful / Traditional Craft / Hausa Scholarship / Artistic Focus / Human Intentionality / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, warm golden and charcoal color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Traditional-Goldsmith’s-Workshop" (Makera) in Old City Kano during the late afternoon. In the background, a soft-blur of "Rows-of-Shiny-Traditional-Earrings" and "Gold-and-Silver-Bangles" on display cases. The environment is one of "Craftsmanship-and-Order."
+
+
+The subject: A middle-aged Hausa goldsmith (Makera) with "Kind-and-Focused-Eyes," wearing a "Simple-Charcoal-Greay-Kaftan" with the sleeves rolled up. He is "Sitting-on-a-Low-Wooden-Stool," leaning forward. He is "Holding-a-Small-Golden-Leaf" in his hand, which he is carefully shaping with a "Tiny-Hammer." His expression is one of "Zurfafa-Tunani" (Mindful Reflection), eyes wide and looking at the details of the gold.
+
+
+Symbolism: The "Tiny-Hammer" symbolizes "Precision-and-Care." The "Gold-and-Silver" against the "Rough-Workshop" represents "Tradition-and-Creativity." The interaction reflects "Mindfulness" (Kasancewa a farkake) where the mind and hand become one in the act of creation.
+
+
+Lighting: "The-Soft-Goldsmith’s-Light." A sharp beam of warm light from a high window hits the "Gold-Leaf" and the man’s "Viny-Focused-Hands," leaving the rest of the room in deep, respectful shadows to emphasize his singular focus.
+
+
+Texture: Ultra-detailed realism — the "Glossy-Reflection-on-the-Gold-Leaf," the "Fine-Texture-of-Cashmere," the "Rough-Pattern-of-the-Mat," and "Pore-Level-Detail" showing the absolute absence of tension in his facial muscles.
+
+
+Theme: Mindful / Traditional Craft / Hausa Scholarship / Artistic Focus / Human Intentionality / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft earthy and natural-green color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Minimalist-Sun-Room" or a glass-enclosed balcony in a modern home in Abuja. The background features a soft-blur of a "Lush-Garden" and several "Ceramic-Pots" of different sizes. The environment is one of "Quiet-Intentionality-and-Growth."
+
+
+The subject: A beautiful young Hausa woman in her early 20s, wearing a "Simple-Olive-Green-Jersey-Kaftan" and a "Loosely-Draped-Cream-Shawl." She is "Kneeling-on-the-Floor" beside a large potted Monstera plant. She is not rushing; she is "Gently-Wiping-Dust-off-a-Large-Leaf" with a soft damp cloth. Her gaze is "Completely-Fixed-on-the-Veins-of-the-Leaf," her expression one of "Deep-Presence" (Kasancewa a farkake).
+
+
+Symbolism: The "Act-of-Cleaning-a-Leaf" symbolizes "Nurturing-the-Small-Things." The "Olive-Green-Attire" represents "Connection-to-Earth." The interaction reflects "Mindfulness" (Zurfafa tunani) where she is entirely present in the sensory experience of touch and care, ignoring her nearby silenced phone.
+
+
+Lighting: "The-Soft-Filtered-Daylight." Bright but diffused sun passes through the glass, creating "Luminous-Highlights" on the plant’s waxy surface and a "Gentle-Glow" on her focused face. There are no harsh shadows, only a sense of "Airy-Clarity."
+
+
+Texture: Ultra-detailed realism — the "Waxy-Sheen-of-the-Plant-Leaf," the "Water-Droplets" left behind by the cloth, the "Breathable-Knit-of-the-Jersey-Fabric," and "Pore-Level-Detail" showing her calm, steady breathing and the slight moisture on her fingertips.
+
+
+Theme: Mindful / Modern Hausa Woman / Nature Care / Intentional Living / Human Presence / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 85mm lens, high dynamic range, warm sun-drenched and earthy color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+
+The scene: A "Sun-lit-Living-Room" (Fali) in a quiet family home in Kano. In the background, a soft-blur of a "Wooden-Coffee-Table" and a "Traditional-Woven-Rug." The environment is one of "Pure-Childhood-Wonder."
+
+
+The subject: A beautiful 5-year-old Hausa girl, wearing a "Soft-Cream-Lace-Dress" and a "Tiny-Blue-Hijab" with small floral patterns. She is "Sitting-Cross-legged-on-a-Colorful-Mat" (Tabarma). She is "Deeply-Absorbed-in-Examining-a-Smooth-River-Stone" she found outside. She is "Gently-Running-her-Small-Thumb" over the surface of the stone, her eyes wide with "Intense-Curiosity" (Zurfafa tunani).
+
+
+Symbolism: The "River-Stone" symbolizes "The-Beauty-of-Small-Things." The "Tiny-Blue-Hijab" represents "Innocence-and-Identity." The interaction reflects "Mindfulness" (Kasancewa a farkake) where a child’s mind is completely present, finding a whole world in a single object.
+
+
+Lighting: "The-Warm-Afternoon-Sunbeam." A thick, golden beam of light hits her "Tiny-Hands" and the "Stone," creating "Motes-of-Dust" dancing in the air and highlighting the "Soft-Contours-of-her-Face."
+
+
+Texture: Ultra-detailed realism — the "Fine-Texture-of-the-Lace," the "Smooth-Cool-Surface-of-the-Stone," the "Rough-Pattern-of-the-Mat," and "Pore-Level-Detail" showing the absolute focus in her young, clear eyes.
+
+
+Theme: Mindful / Childhood Innocence / Hausa Family Life / Natural Wonder / Human Presence / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 100mm macro lens, high dynamic range, soft herbal-green and warm-cedar color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Quiet-Kitchen-Corner" in a modern home in Kaduna during a rainy morning. In the background, a soft-blur of a "Steam-Fogged-Window" and a "Small-Potted-Mint-Plant." The environment is one of "Sensory-Presence."
+
+The subject: A young Hausa woman in her early 20s, wearing a "Simple-Grey-Jersey-Kaftan" and her hair neatly tied back with a "Black-Velvet-Scrunchie." She is "Standing-Still-by-the-Counter," holding a "Fresh-Cinnamon-Stick" and a "Zest-of-Orange" between her fingers. She has her "Eyes-Closed," bringing them close to her nose, "Inhaling-the-Deep-Aroma" with total focus. Her expression is one of "Deep-Mindfulness" (Zurfafa tunani), savoring the scent before adding it to a pot of traditional spiced tea.
+
+Symbolism: The "Cinnamon-and-Orange" symbolize "The-Beauty-of-the-Natural-World." The "Closed-Eyes" represent "Shutting-out-the-Digital-Noise" to reconnect with the physical senses. The interaction reflects "Hayyaci" (Mindfulness), where the simple act of smelling becomes a meditative anchor to the present moment.
+
+Lighting: "The-Moody-Rainy-Day-Light." Soft, cool-blue light from the window hits one side of her face, while a "Warm-Under-Cabinet-Light" glows on her hands and the spices, creating a "Beautiful-Contrast-between-Internal-Warmth-and-External-Storm."
+
+Texture: Ultra-detailed realism — the "Rough-Bark-Texture" of the cinnamon, the "Tiny-Oil-Glands" on the orange zest, the "Soft-Cotton-Fibers" of her Kaftan, and "Pore-Level-Detail" showing the tiny shiver of delight on her skin as she breathes in.
+
+Theme: Mindful / Sensory Experience / Modern Hausa Life / Kitchen Rituals / Human Presence / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, moody amber and soft-shadow color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Quiet-Corner-of-a-Modern-Living-Room" in a luxury apartment in Abuja during a late, rainy night. In the background, a soft-blur of a "Large-Glass-Window-with-Rain-Droplets" and the "Faint-Glow-of-a-Single-Floor-Lamp." The environment is one of "Intimate-Presence-and-Stillness."
+
+The subject (The Couple): A young Hausa man in his late 20s and his beautiful wife in her early 20s. He is wearing a "Soft-White-Linen-Kaftan," and she is in a "Flowing-Silk-Abaya" in a deep emerald green. They are "Sitting-on-a-Plush-Rug" (Tabarma ta alfarma) on the floor, leaning against the sofa.
+
+The action: Instead of talking or looking at phones, they are "Engaged-in-a-Slow-Tea-Ritual." The man is "Carefully-Pouring-Mint-Tea" from a traditional silver pot into a small glass held by his wife. Both are "Watching-the-Stream-of-Tea" with absolute, shared focus. Their shoulders are touching, their breathing is synchronized, and their expressions are of "Deep-Mutual-Mindfulness" (Kasancewa a farkake tare).
+
+Symbolism: The "Single-Stream-of-Tea" symbolizes "Shared-Life-and-Flow." The "Touching-Shoulders" represents "Silent-Support." The interaction reflects "Zurfafa-Tunani-na-Masoya" (The Deep Reflection of Lovers), where the mindfulness isn't just about the tea, but about being fully present in each other's company without distractions.
+
+Lighting: "The-Warm-Lantern-Glow." A single warm light source creates "Long-Soft-Shadows," highlighting the "Glisten-of-the-Silver-Pot" and the "Reflective-Pool-of-Tea" in the glass, while keeping their faces in a "Tender-Half-Light."
+
+Texture: Ultra-detailed realism — the "Shimmering-Emerald-Silk," the "Steam-Rising-in-a-Thin-Spiral," the "Woven-Fibres-of-the-Rug," and "Pore-Level-Detail" showing the steady, calm gaze in their eyes as they share the moment.
+
+Theme: Mindful / Romantic Intimacy / Modern Hausa Lovers / Shared Rituals / Human Connection / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7sad">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 35mm wide lens, high dynamic range, gritty earthy and muted amber color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Bustling-Old-Market-Road" in Kurmi Market, Kano, during the intense midday heat. The background is a soft-blur of "Dust-Motes-Dancing-in-Sunlight," "Vibrant-Textiles," and "Crowded-Stalls." The environment is one of "Relentless-Movement-and-Noise."
+
+The subject: A young Hausa man in his early 20s, a "Wheelbarrow-Pusher" (Mai Baro). He is wearing a "Faded-Indigo-Tunic" that is damp with sweat, and a "Dusty-Brown-Cap." He is "Mid-Stride," leaning his entire body weight forward as he pushes a "Heavily-Loaded-Iron-Wheelbarrow" filled with sacks of grain.
+
+The action: Despite the physical strain, his face is not twisted in pain; instead, he has a "Sharp-Laser-Focus" (Zurfafa tunani). He is "Looking-Intently-at-the-Path-Ahead," navigating a narrow gap between people. His jaw is set, his breathing is "Controlled-and-Rhythmic." He is completely "Mindful-of-Every-Step" and every bump in the uneven dirt road.
+
+Symbolism: The "Heavy-Sacks" symbolize "The-Weight-of-Responsibility." The "Dusty-Road" represents "The-Hardship-of-Life." The interaction reflects "Mindfulness-as-Survival" (Hayyacin neman na kansa), where he finds a meditative rhythm within the struggle to keep moving forward.
+
+Lighting: "The-Harsh-Noonday-Sun." High-contrast lighting that creates "Deep-Sharp-Shadows" and highlights the "Sheen-of-Sweat" on his skin and the "Tense-Muscles" in his arms and legs, making the scene feel raw and real.
+
+Texture: Ultra-detailed realism — the "Coarse-Jute-Sacks," the "Rusted-Metal-of-the-Wheelbarrow," the "Salt-Stains-on-his-Tunic," and "Pore-Level-Detail" showing the grit of dust on his forehead and the "Burning-Determination" in his eyes.
+
+Theme: Mindful / Struggle / Dignity of Labor / Hausa Grit / Hardship and Focus / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm wide lens, high dynamic range, warm golden and polished-chrome color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "State-of-the-Art-Luxury-Kitchen" in a mansion in Asokoro, Abuja. The background is a "Treasure-Trove-of-Kitchen-Tools" — shelves lined with "Copper-Pots," "Glass-Spice-Jars" filled with vibrant colors, a "Professional-Espresso-Machine," and "Marble-Countertops" stretching into the distance. The environment is "Rich-and-Organized-Abundance."
+
+The subject: A sophisticated Hausa woman in her early 30s, wearing a "Soft-Silk-Kaftan" in a rich burgundy color, with a "Matching-Silk-Turban." Her sleeves are slightly pushed back, showing "Exquisite-Henna-Patterns" (Lalle) on her hands.
+
+The action: She is "In-the-Heart-of-Creation." She is leaning over a "Large-Stainless-Steel-Pot" on a sleek induction stove. She is "Gently-Stirring-a-Thick-Aromatic-Stew" with a long wooden spoon. Her focus is "Total-and-Immersive" (Zurfafa tunani). She isn't looking at the camera; she is "Watching-the-Steam-Rise," observing the change in texture of the food with a "Knowing-Smile-of-Presence."
+
+Symbolism: The "Luxury-Kitchen-Materials" symbolize "The-Fruit-of-Hard-Work-and-Grace." The "Intricate-Lalle" against the "Steel-Pot" represents "Tradition-meeting-Modernity." The interaction reflects "Mindful-Nurturing" (Hayyacin kula da gida), where cooking is not a chore, but a meditative art form.
+
+Lighting: "The-Layered-Glow." A mix of "Warm-Under-Cabinet-LEDs," "Pendant-Lights-over-the-Island," and a "Splash-of-Late-Evening-Sun" hitting the marble, creating a "Luminous-and-Expensive-Atmosphere."
+
+Texture: Ultra-detailed realism — the "Glossy-Reflection-on-the-Marble," the "Grain-of-the-Wooden-Spoon," the "Metallic-Sheen-of-the-Pots," and "Pore-Level-Detail" showing the moisture on her skin from the warmth of the stove and the "Absolute-Peace" in her expression.
+
+Theme: Mindful / Culinary Art / Luxury Hausa Lifestyle / Domestic Excellence / Presence / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm lens, high dynamic range, cool slate and warm cedar color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Minimalist-Design-Studio" in a creative hub in Abuja or Lagos. The background features a soft-blur of a "Large-Scale-Architectural-Model" of a modern mosque and a "Wall-of-Reference-Sketches." The environment is one of "Structured-Creativity."
+
+The subject: A young Hausa man in his late 20s, wearing a "Crisp-Navy-Blue-Tunic" with a "Silver-Watch" on his wrist. He is "Leaning-Over-a-Backlit-Drafting-Table." He is "Holding-a-Fine-Liner-Pen," his hand hovering just a millimeter above a large sheet of vellum paper. 
+
+The action: He is "Deeply-Immersed" (Zurfafa tunani). His eyes are narrowed in "Total-Spatial-Focus," visualizing the structure before the ink touches the paper. He is "Mindful-of-the-Silence," his phone is turned face down, and his tea sits forgotten and cold beside him.
+
+Symbolism: The "Backlit-Table" symbolizes "Illumination-of-the-Mind." The "Untouched-Paper" represents "Infinite-Possibility." The interaction reflects "Mindful-Precision" (Hayyacin gine-gine), where the architect is fully present in the bridge between a dream and a physical plan.
+
+Lighting: "The-Technical-Glow." The primary light comes from the "Drafting-Table-Underneath," casting an upward glow that highlights the "Sharp-Jawline" and the "Intensity-in-his-Eyes," while the rest of the studio is bathed in a "Soft-Twilight-Blue."
+
+Texture: Ultra-detailed realism — the "Translucency-of-the-Vellum-Paper," the "Brushed-Metal-of-the-Watch," the "Sharp-Point-of-the-Technical-Pen," and "Pore-Level-Detail" showing the absolute stillness of his expression as he calculates the next line.
+
+Theme: Mindful / Modern Professional / Hausa Excellence / Architectural Design / Focused Intent / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10sad">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 100mm macro lens, high dynamic range, soft honey and sage-green color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Quiet-Veranda" (Shirayi) of a traditional yet modern Hausa home in Katsina during the early morning. In the background, a soft-blur of a "Hand-Carved-Wooden-Screen" and the "First-Light-of-Dawn" hitting a "Flowering-Jasmine-Bush." The environment is one of "Waking-Mindfulness."
+
+The subject: An elderly Hausa man in his late 60s, a "Grandfather-Figure" (Kaka), wearing a "Crisp-White-Babban-Rida" and a "Simple-White-Skullcap." He is "Sitting-on-a-Carved-Ebony-Chair," his posture straight but relaxed.
+
+The action: He is "Engaged-in-the-Act-of-Sipping." He is "Holding-a-Small-Translucent-Glass-of-Black-Tea" with both hands. He has just taken a sip and is "Holding-it-in-his-Mouth," eyes half-closed, "Fully-Experiencing-the-Heat-and-Bitterness" before swallowing. His expression is one of "Ultimate-Presence" (Zurfafa tunani), completely detached from the world's noise.
+
+Symbolism: The "Two-Handed-Grip-on-the-Glass" symbolizes "Gratitude-for-Provision." The "Translucent-Glass" represents "Clarity-of-Mind." The interaction reflects "Hayyacin-Rayuwa" (Mindfulness of Life), the wisdom of knowing that a single sip of tea, taken with full awareness, is a complete and holy moment.
+
+Lighting: "The-Dawn-Break." Soft, horizontal golden light catches the "Steam-Rising-from-the-Glass," creating a "Luminous-Halo" around his silver beard and highlighting the "Wisdom-Lines" around his eyes.
+
+Texture: Ultra-detailed realism — the "Fine-Starch-on-the-White-Rida," the "Condensed-Steam-on-the-Glass-Rim," the "Deep-Textures-of-his-Weathered-Hands," and "Pore-Level-Detail" showing the absolute "Stillness-of-Soul."
+
+Theme: Mindful / Wisdom of Age / Hausa Tradition / Morning Ritual / Sensory Awareness / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10sad')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10sad')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="needed">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Needed</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 35mm wide lens, high dynamic range, moody deep-teal and warm-amber color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Rainy-Pavement-in-a-Modern-Part-of-Zaria" during a heavy downpour at dusk. In the background, a soft-blur of "City-Lights-Reflecting-in-Puddles" and the "Faint-Silhouette-of-a-Modern-Mosque-Dome." The environment is one of "Protective-Intimacy."
+
+The subject: A young Hausa couple in their late 20s. The man is wearing a "Dark-Brown-Cashmere-Kaftan" and a "Matching-Fila," and the woman is in a "Flowing-Peach-Chiffon-Abaya" with a matching headscarf. 
+
+The action: They are "Walking-Close-Together" under a single "Large-Black-Umbrella." The man is "Holding-the-Umbrella-Leaned-Toward-his-Wife," making sure she stays completely dry while his own shoulder is getting wet. She has her "Hand-Gently-Resting-on-his-Arm," looking at him with a "Smile-of-Deep-Trust-and-Belonging" (Shakuwa).
+
+Symbolism: The "Single-Umbrella" symbolizes "Protection-and-Sacrifice." The "Wet-Shoulder-of-the-Man" represents "Selfless-Love" (Kauna). The interaction reflects "The-Masterpiece-of-Partnership," where the storm outside only makes the bond inside the circle of the umbrella stronger.
+
+Lighting: "The-Luminous-Rain-Glow." The "Cool-Blue-Light" of the rain is contrasted by the "Warm-Yellow-Glow" of a nearby streetlamp hitting their faces, creating "Sparkling-Highlights" on the raindrops falling around them.
+
+Texture: Ultra-detailed realism — the "Beads-of-Water-on-the-Black-Umbrella-Fabric," the "Damp-Texture-of-the-Cashmere," the "Soft-Fold-of-the-Peach-Chiffon," and "Pore-Level-Detail" showing the warmth in their eyes amidst the cold rain.
+
+Theme: Affection / Romantic Protection / Modern Hausa Love / Sacrifice / Human Connection / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, warm sunset-gold and deep-sienna color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: The "Entrance-Hall" (Zaure) of a traditional yet beautifully renovated home in Old City Kano. In the background, a soft-blur of a "Hand-Woven-Door-Mat" and a "Polished-Wooden-Bench." The environment is one of "Warm-Welcome-and-Relief."
+
+The subject: A young Hausa father in his early 30s, wearing a "Dusty-Beige-Kaftan" and a "Simple-Cap," and his 4-year-old son in a "Small-White-Vest-and-Shorts." 
+
+The action: The father has just stepped through the door, "Dropping-his-Work-Bag" on the floor. He is "Crouching-Low-with-Open-Arms." The little boy is "Mid-Run," throwing himself into his father’s chest with "Pure-Unfiltered-Joy." The father is "Closing-his-Eyes," burying his face in the boy’s neck, exhaling the stress of the day.
+
+Symbolism: The "Dropped-Work-Bag" symbolizes "Leaving-the-World's-Weight-at-the-Door." The "Crouched-Father" represents "Humility-and-Accessibility-in-Love." The interaction reflects "Kauna" (Affection) as the ultimate reward for labor—the moment where "The-Needed-and-the-Provider" become one in a hug.
+
+Lighting: "The-Golden-Hour-Backlight." The sun is setting behind the father through the open door, creating a "Glowing-Rim-Light" around their silhouettes and highlighting the "Dust-Motes-Dancing" in the air of the hallway.
+
+Texture: Ultra-detailed realism — the "Coarse-Fabric-of-the-Beige-Kaftan," the "Soft-Chubby-Arms-of-the-Child," the "Scuffed-Leather-of-the-Work-Bag," and "Pore-Level-Detail" showing the moisture of a happy tear in the father's closed eye.
+
+Theme: Affection / Father-Son Bond / Hausa Family Values / Home-Coming / Emotional Security / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft milky-white and muted-gold color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Softly-Lit-Bedroom" in a modern home in Kaduna during the early hours of the morning. In the background, a soft-blur of a "Translucent-White-Curtain" swaying in the breeze and a "Small-Wooden-Nightstand" with a glass of water and a prayer bead (Tasbiha). The environment is one of "Infinite-Tenderness."
+
+The subject: A young Hausa mother in her mid-20s, wearing a "Soft-Cream-Jersey-Wrap" and no headscarf, showing her neatly braided hair. She is "Sitting-Propped-up-by-Pillows" on a wide bed. Beside her is her "Sleeping-6-Month-Old-Baby" in a simple white onesie.
+
+The action: She is not sleeping. She is "Leaning-Over-on-one-Elbow," her face just inches from the baby’s. She is "Gently-Tracing-the-Baby’s-Eyebrow" with the tip of her pinky finger. Her expression is one of "Awe-and-Unspoken-Need" (Shakuwa), her lips parted in a silent, prayerful breath of gratitude.
+
+Symbolism: The "Tracing-Finger" symbolizes "The-Gentleness-of-Protection." The "White-Jersey-Wrap" represents "Purity-and-Newness." The interaction reflects "The-Masterpiece-of-Need" (Abin bukata), where the mother needs the peace of her child just as much as the child needs her milk and warmth.
+
+Lighting: "The-First-Light-of-Dawn." The very first rays of blue-gold light filter through the curtain, creating a "Glow-of-Innocence" around them and highlighting the "Velvety-Softness" of the baby's skin.
+
+Texture: Ultra-detailed realism — the "Translucent-Skin-of-the-Newborn," the "Stretch-and-Softness-of-the-Fabric," the "Fine-Peach-Fuzz-on-the-Baby's-Cheek," and "Pore-Level-Detail" showing the absolute absence of tension in the mother's face.
+
+Theme: Affection / Motherhood / New Life / Hausa Family Values / Emotional Peace / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 85mm lens, high dynamic range, warm sepia and soft-orange color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Private-Courtyard" (Tsakar gida) of an old family house in Zaria City during the late afternoon. In the background, a soft-blur of an "Ancient-Baobab-Tree" and a "Low-Mud-Wall" with weathered textures. The environment is one of "Timeless-Belonging."
+
+The subject: An elderly Hausa couple in their late 70s. The man is wearing a "Crisp-White-Babban-Rida" and a "Simple-White-Skullcap," and the woman is in a "Faded-Indigo-Atampa-Wrapper" with a matching headscarf. 
+
+The action: They are "Sitting-Side-by-Side-on-a-Wooden-Bench." They aren't looking at each other; instead, they are "Both-Holding-a-Single-Large-Bowl-of-Fura" between them. Their wrinkled hands are "Gently-Overlapping-on-the-Rim-of-the-Bowl." There is no need for words—just a "Quiet-Shared-Gaze-at-the-Horizon," their expressions reflecting a "Lifetime-of-Mutual-Need" (Shakuwar rayuwa).
+
+Symbolism: The "Overlapping-Wrinkled-Hands" symbolize "A-History-of-Shared-Burdens." The "Single-Bowl-of-Fura" represents "Oneness-and-Simplicity." The interaction reflects "Kauna" (Enduring Love) as a quiet, steady flame that no longer needs the heat of youth, only the warmth of presence.
+
+Lighting: "The-Soft-Amber-Glow." The setting sun hits them from the side, highlighting the "Deep-Wisdom-Lines" on their faces and creating a "Golden-Halo" around their silver hair and white clothing.
+
+Texture: Ultra-detailed realism — the "Paper-Thin-Skin" on their hands, the "Coarse-Texture-of-the-Traditional-Pottery," the "Soft-Weathered-Fibers-of-the-Atampa," and "Pore-Level-Detail" showing the absolute peace and "Soul-Deep-Connection" in their tired but happy eyes.
+
+Theme: Affection / Elderly Love / Hausa Heritage / Lifelong Partnership / Human Belonging / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm lens, high dynamic range, soft lavender and warm-beige color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Cozy-Modern-Bedroom" in a family house in Abuja. The background features a soft-blur of a "Large-Mirror-with-Fairy-Lights" and a "Bed-piled-with-Decorative-Pillows." The environment is one of "Confidential-Sisterly-Warmth."
+
+The subject: Two young Hausa sisters (one in her late teens, the other in her early 20s). The older sister is wearing a "Soft-Mauve-Jersey-Abaya," and the younger one is in a "Cream-Colored-Hoodie" and a matching headwrap.
+
+The action: They are "Sitting-Opposite-Each-Other-on-the-Floor" on a plush white rug. The younger sister is "Leaning-Forward," whispering something into the older sister's ear, her hand "Cupped-Around-her-Mouth." The older sister is "Smiling-Widely," her eyes bright with a "Knowing-Glance-of-Support" (Shakuwa). She is "Gently-Holding-the-Younger-Sister's-Other-Hand" between both of hers.
+
+Symbolism: The "Whisper" symbolizes "Absolute-Trust." The "Held-Hand" represents "A-Safe-Harbor-for-Secrets." The interaction reflects "The-Masterpiece-of-Sisterhood" (Kaunar yan uwa), where the need for someone who truly understands you is met in the bond of blood and friendship.
+
+Lighting: "The-Warm-Ambient-Glow." Soft light from a "Bedside-Lamp" and the "Fairy-Lights" creates "Twinkling-Catchlights" in their eyes and a "Gentle-Shadowy-Depth" that makes the room feel like a private sanctuary.
+
+Texture: Ultra-detailed realism — the "Fine-Fibers-of-the-Plush-Rug," the "Soft-Drape-of-the-Jersey-Fabric," the "Individual-Strands-of-the-Headwrap," and "Pore-Level-Detail" showing the genuine, crinkled joy around their eyes as they share the moment.
+
+Theme: Affection / Sisterly Bond / Modern Hausa Youth / Trust and Secrets / Human Connection / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, deep indigo and warm amber color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Private-Roof-Terrace" of a modern villa in Abuja under a clear, starlit night. In the background, a soft-blur of the "City-Lights-of-the-Horizon" and a "Small-Table-with-Two-Empty-Tea-Cups." The environment is one of "Deep-Emotional-Sanctuary."
+
+The subject: A young Hausa couple in their late 20s. The man is wearing a "Jet-Black-Linen-Kaftan" with silver embroidery at the collar, and the woman is in a "Flowing-Silk-Abaya" in a deep midnight-blue.
+
+The action: They are "Standing-Close-at-the-Railing." There is no grand gesture; instead, it is a "Micro-Moment-of-Belonging." The man has his "Forehead-Gently-Resting-against-Hers." Both have their "Eyes-Closed," and his hand is "Softly-Cupping-the-Side-of-her-Face," his thumb resting just below her cheekbone. She has her "Hands-Gently-Grasping-his-Forearms."
+
+Symbolism: The "Touching-Foreheads" symbolizes "The-Meeting-of-Minds-and-Souls." The "Midnight-Blue-and-Black-Pallet" represents "The-Infinite-Nature-of-Love." The interaction reflects "Shakuwar-Zuciya" (The Deepest Bond of the Heart), where the need for the other's presence is so profound that even silence is heavy with affection.
+
+Lighting: "The-Moody-Rim-Light." A "Silver-Moonlight" catches the edges of their silhouettes, while a "Warm-Orange-Glow" from a floor lantern at their feet lights their faces from below, creating "Soft-Intimate-Shadows" and a "Radiant-Skin-Tone."
+
+Texture: Ultra-detailed realism — the "Fine-Sheen-on-the-Midnight-Silk," the "Rough-Textured-Linen-of-the-Kaftan," the "Individual-Eyelashes" resting against their skin, and "Pore-Level-Detail" showing the tiny, peaceful pulse in her neck as she leans into his touch.
+
+Theme: Affection / Romantic Intimacy / Modern Hausa Lovers / Soul Connection / Human Belonging / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 85mm lens, high dynamic range, warm mahogany and soft-sepia color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Traditional-Library-or-Study-Room" in a family estate in Katsina. The background is a soft-blur of "Floor-to-Ceiling-Wooden-Shelves" packed with old leather-bound books and "Modern-Architectural-Blueprints." The environment is one of "Heritage-and-Legacy."
+
+The subject: An elderly Hausa grandfather (Kaka) in his 80s and his adult grandson in his late 20s. The grandfather is wearing a "Heavy-Wool-Cream-Babban-Rida," and the grandson is in a "Sharp-Slate-Grey-Tunic." 
+
+The action: They are "Leaning-over-an-Antique-Desk." The grandfather is "Gently-Placing-his-Weathered-Hand" over the grandson's hand, which is holding an old fountain pen. He isn't just teaching him to write; he is "Guiding-his-Hand-with-Patience." The grandson is "Looking-at-his-Grandfather's-Face" with "Deep-Admiration-and-Need" (Shakuwar girmamawa), absorbing the wisdom.
+
+Symbolism: The "Guided-Hand" symbolizes "The-Transfer-of-Legacy." The "Old-Pen" represents "Timeless-Values." The interaction reflects "Kauna-ta-Girma" (Affection of Respect), where the younger generation's need for direction meets the older generation's need to pass the torch.
+
+Lighting: "The-Warm-Library-Lamp." A single brass desk lamp casts a "Pool-of-Golden-Light" directly onto their overlapping hands and the paper, leaving their faces in a "Soft-Glowing-Half-Shadow" that highlights the grandfather's wrinkles and the grandson's youthful skin.
+
+Texture: Ultra-detailed realism — the "Cracked-Leather-of-the-Old-Books," the "Fine-Grain-of-the-Mahogany-Desk," the "Ink-Stain-on-the-Grandfather's-Thumb," and "Pore-Level-Detail" showing the steady, calm pulse in the grandson's wrist as he learns.
+
+Theme: Affection / Heritage / Grandfather-Grandson Bond / Legacy / Mentorship / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft peach-fuzz and warm-cedar color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Cozy-Modern-Nursery" in a family home in Kaduna. The background features a soft-blur of a "White-Wooden-Crib" and a "Shelving-Unit-with-Soft-Toys" and a children’s book (like *'Abinci ne Wannan?'*). The environment is one of "Infinite-Brotherly-Devotion."
+
+The subject: Two brothers (one aged 7, the other a toddler of 1.5 years). The older brother is wearing a "Simple-Navy-Blue-Kaftan," and the toddler is in a "Cream-and-Brown-Striped-Onesie."
+
+The action: They are "On-the-Floor" on a colorful foam play mat. The older brother is "Gently-Lifting-the-Toddler" into a bear hug, his chin "Resting-on-the-Toddler's-Head." The toddler is "Squeezing-his-Tiny-Fists" around the older brother’s neck, a "Look-of-Absolute-Contentment-and-Need" (Shakuwa) on his face. The older brother’s eyes are "Closed," smiling a "Smile-of-Protective-Belonging" (Kauna).
+
+Symbolism: The "Older-Brother's-Closed-Eyes" symbolizes "Nurturing-Presence-without-Distraction." The "Striped-Onesie" against the "Solid-Kaftan" represents "The-Intertwining-of-Youthful-Vulnerability-and-Strength." The interaction reflects "The-Masterpiece-of-Siblinghood" (Zuciya daya), where the need for protection meets the need for a guardian, even at such a young age.
+
+Lighting: "The-Soft-Afternoon-Window-Glow." A large window casts a "Diffused-Light" over them, creating "Warm-Golden-Highlights" on their skin and a "Gentle-Contrast" with the colorful background, making the moment feel intimate and serene.
+
+Texture: Ultra-detailed realism — the "Fine-Knit-of-the-Onesie," the "Woven-Cotton-of-the-Kaftan," the "Smoothness-of-the-Foam-Mat," and "Pore-Level-Detail" showing the tiny, peaceful pulse in the older brother’s neck as he holds his younger sibling.
+
+Theme: Affection / Sibling Bond / Young Brothers / Protective Love / Emotional Security / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9alone">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 85mm portrait lens, high dynamic range, muted turquoise and soft rose-gold color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Private-Stretch-of-a-Lagos-Beach-at-Golden-Hour." The background is a soft-blur of the "Atlantic-Ocean" with low, rolling waves reflecting the setting sun, and a single palm tree silhouetted against the sky. The environment is one of "Infinite-Romance-and-Presence."
+
+The subject: A young Hausa couple in their late 20s. The man is wearing a "Cream-Linen-Kaftan" and no cap, showing his neatly cut hair. The woman is in a "Flowing-Peach-Chiffon-Abaya" with a matching, lightweight headscarf that billows gently in the sea breeze.
+
+The action: They are "Standing-Barefoot-at-the-Water's-Edge." The man has his arm "Gently-Wrapped-around-her-Waist," pulling her close. Her head is "Resting-on-his-Shoulder." He is "Looking-Intently-at-Her" with "Eyes-Full-of-Need" (Bukatar juna). She is "Smiling-Serenely-at-the-Horizon," her hand "Resting-Over-His-on-Her-Waist."
+
+Symbolism: The "Infinite-Ocean" symbolizes "The-Limitless-Nature-of-their-Affection." The "Billowing-Chiffon" represents "Freedom-within-Union." The interaction reflects "Shakuwar-Murnan-Rayuwa" (The Shared Joy of Belonging), where the sound of the waves becomes a background melody to the silent masterpiece of their love.
+
+Lighting: "The-Soft-Rose-Gold-Backlight." The sun is setting behind them, creating a "Warm-Glowing-Rim-Light" around their bodies and highlighting the texture of the linen and chiffon, while their faces are bathed in a "Soft-Diffuse-Front-Light."
+
+Texture: Ultra-detailed realism — the "Wet-Sand-and-Tiny-Sea-Foam-Grains" sticking to their feet, the "Grit-in-the-Air," the "Fine-Weave-of-the-Linen," and "Pore-Level-Detail" showing the absolute tranquility and deep connection in their eyes as they share the moment.
+
+Theme: Affection / Romantic Intimacy / Modern Hausa Lovers / Nature Connection / Human Belonging / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10alone">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 85mm lens, high dynamic range, soft rose-gold and deep mahogany color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Sun-Drenched-Dressing-Room" in a modern family home in Kano. In the background, a soft-blur of a "Large-Ornate-Gold-Mirror" and a "Vanity-Table" covered in crystal perfume bottles and a jewelry box. The environment is one of "Elegant-Intimacy."
+
+The subject: A graceful Hausa mother in her late 40s and her 18-year-old daughter. The mother is wearing a "Rich-Emerald-Green-Lace-Kaftan," and the daughter is in a "Matching-Soft-Green-Silk-Wrapper."
+
+The action: The daughter is "Sitting-on-a-Low-Ottoman." The mother is "Standing-Behind-Her," leaning down to "Gently-Fasten-a-Gold-Necklace" around the daughter’s neck. Their eyes meet in the "Reflection-of-the-Mirror." The mother has a "Proud-and-Tender-Smile," while the daughter is "Holding-her-Mother's-Wrist" with a look of "Deep-Admiration-and-Belonging" (Shakuwa).
+
+Symbolism: The "Gold-Necklace" symbolizes "The-Passing-of-Values-and-Beauty." The "Mirror-Reflection" represents "The-Daughter-as-a-Continuation-of-the-Mother." The interaction reflects "Kaunar-Uwa" (A Mother's Love), where the masterpiece is found in the quiet pride of seeing oneself in the next generation.
+
+Lighting: "The-Soft-Morning-Window-Light." Golden light filters through sheer curtains, creating a "Luminous-Glow" on their skin and "Sparkling-Reflections" off the gold jewelry and the mother's lace embroidery.
+
+Texture: Ultra-detailed realism — the "Intricate-Patterns-of-the-Emerald-Lace," the "Smooth-Reflective-Surface-of-the-Gold," the "Soft-Fuzz-on-the-Silk-Wrapper," and "Pore-Level-Detail" showing the moisture of a proud tear in the mother's eye and the youthful radiance of the daughter.
+
+Theme: Affection / Mother-Daughter Bond / Hausa Elegance / Heritage / Emotional Connection / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10alone')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10alone')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="open-minded">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Open minded</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 14mm ultra-wide lens, high dynamic range, ethereal teal and burnt-orange color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: The "Edge-of-a-Massive-Sand-Dune" in the Sahel region of Northern Nigeria at twilight. The background is an expansive "Starry-Night-Sky" just beginning to appear over a "Deep-Orange-Horizon." The environment is one of "Infinite-Possibility."
+
+The subject: A young Hausa woman in her early 20s, an "Aspiring-Astronomer." She is wearing a "Modern-Slim-Fit-Tunic" in a deep charcoal color, with a "Lightweight-Silver-Silk-Hijab" that is caught in the wind, fluttering like a wing. 
+
+The action: She is "Standing-Tall," not looking at the ground, but "Peering-through-a-Sleek-High-Tech-Telescope" mounted on a tripod. Her expression is one of "Pure-Awe-and-Discovery" (Budaddiyar zuciya). One hand is adjusting the lens, while the other is "Reaching-Out-toward-the-Sky" as if she could touch the stars.
+
+Symbolism: The "Ultra-Wide-Horizon" symbolizes "The-Limitless-Mind." The "Telescope" represents "The-Bridge-between-Tradition-and-Science." The interaction reflects "The-Masterpiece-of-Curiosity," where a young woman looks beyond her immediate surroundings to find her place in the universe.
+
+Lighting: "The-Cosmic-Glow." The "Cool-Blue-Starlight" from above hits her face, contrasted by the "Last-Warm-Embers-of-the-Sun" hitting her back, creating a "Luminous-and-Adventurous-Aura."
+
+Texture: Ultra-detailed realism — the "Grains-of-Sand-Swirling-at-her-Feet," the "Brushed-Aluminum-of-the-Telescope," the "Iridescent-Sheen-of-the-Silver-Hijab," and "Pore-Level-Detail" showing the reflection of a distant nebula in her wide, excited eyes.
+
+Theme: Open Minded / Science & Wonder / Hausa Woman in STEM / Exploration / Future-Forward / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2lost">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm prime lens, high dynamic range, soft lavender and polished-concrete color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Co-working-Innovation-Hub" in Abuja. In the background, a soft-blur of a "Glass-Wall-Covered-in-Sticky-Notes" and another "Person-Working-on-a-Laptop-in-the-Distance." The environment is one of "Collaborative-Creation."
+
+The subject: Two elderly Hausa men (late 60s), both retired textile weavers, wearing traditional "Brown-Ture-Caps" and "Simple-Grey-Kauni-Kauni" (cotton tunics). One is leaning on a walking stick.
+
+The action: They are "Crowded-around-a-Holographic-Projector-Table" that is displaying a "Spinning-3D-Model" of a new, automated loom. Their expressions are not one of confusion or skepticism; instead, they are one of "Genuinely-Open-Minded-Fascinated-Wonder" (Budaddiyar zuciya). One elder is "Gently-Touching-the-Light-Model" with a hesitant finger, while the other is "Pointing-and-Nodding-Emphatically" with a wide smile of understanding.
+
+Symbolism: The "Hologram-over-the-Walking-Stick" symbolizes "The-Future-Supported-by-the-Past." The "Automated-Loom-Model" represents "Tradition-Evolving-with-Technology." The interaction reflects "The-Masterpiece-of-Adaptability," where the wisdom of age does not close the mind to the innovations of youth.
+
+Lighting: "The-Luminous-Glow-of-Idea." The blue-purple light from the holographic projector is the primary light source on their faces, creating "Sharp-Catchlights-in-their-Eyes" and highlighting the "Contrast" between their wrinkled skin and the clean light lines, while warm ambient light comes from the background.
+
+Texture: Ultra-detailed realism — the "Fine-Weave-of-their-Handwoven-Tunics," the "Reflective-Surface-of-the-Hologram-Table," the "Wear-on-the-Wooden-Walking-Stick," and "Pore-Level-Detail" showing the absolute absence of resistance in their open-mouthed expressions as they absorb the new idea.
+
+Theme: Open Minded / Cross-Generational Tech / Innovation in Tradition / Hausa Elder Excellence / Mindful Evolution / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3lost">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm wide lens, high dynamic range, vibrant neon-indigo and earthy-terracotta color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Sunlit-Industrial-Loft-Studio" in Lagos or Kano. The background is a soft-blur of "Dripping-Paint-Cans," "Traditional-Woven-Mats" (Tabarma), and "Digital-Graphic-Tablets." The environment is one of "Creative-Explosion."
+
+The subject: A young Hausa man in his mid-20s, an "Avant-Garde-Artist." He is wearing "Paint-Splattered-Denim-Overalls" over a "Classic-White-Kaftan," with his sleeves rolled up to reveal "Ink-Stained-Forearms."
+
+The action: He is "In-the-Zone-of-Discovery" (Budaddiyar zuciya). He is standing before a "Massive-Canvas" where he is "Combining-Traditional-Hausa-Calligraphy" (Ajami) with "Bold-Modern-Street-Graffiti-Styles." He is "Mid-Stroke," using a traditional "Calabash-Shard" to scrape neon-orange acrylic paint over a beautifully inked script.
+
+Symbolism: The "Calabash-Shard-on-Modern-Canvas" symbolizes "The-Reclamation-of-Tools." The "Neon-on-Ajami" represents "The-Vibrant-Future-of-Ancient-Voices." The interaction reflects "The-Masterpiece-of-Unfiltered-Expression," where the mind is open enough to let two different worlds bleed into one beautiful image.
+
+Lighting: "The-Artist's-Clarity." Harsh, "Directional-South-Facing-Sunlight" streams through a large window, catching the "Texture-of-the-Thick-Paint" and creating "Deep-Dramatic-Shadows" that emphasize the movement of his body.
+
+Texture: Ultra-detailed realism — the "Cracked-Drying-Acrylic-Paint," the "Fibrous-Grain-of-the-Canvas," the "Splatter-on-the-White-Kaftan-Fabric," and "Pore-Level-Detail" showing the "Intensity-and-Freedom" in his eyes as he breaks the rules of art.
+
+Theme: Open Minded / Artistic Innovation / Hausa Modernity / Cultural Fusion / Creative Freedom / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4lost">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 16mm ultra-wide lens, high dynamic range, muted earth-tones and deep-indigo color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Vast-Arid-Savanna-Landscape" in the Sahel during the late afternoon. The background is an expansive "Rolling-Horizon" of sparse acacia trees and a soft-blur of a "Traditional-Fulani-Nomadic-Camp" (ruggage) in the distance. The environment is one of "Resilient-Curiosity."
+
+The subject: A young Fulani boy (aged 8) from a nomadic herding family, wearing a simple "Indigo-Blue-Tunic" and a small "Woven-Straw-Hat." He is "Sitting-on-the-Earth" on a small, worn prayer mat.
+
+The action: He is not herding. He is "Leaning-Intently-Over-a-Sleek-Solar-Powered-Tablet." His finger is "Gently-Tracing-an-Arabic-Character" displayed on the glowing screen, while his other hand is holding a traditional "Wooden-Slate" (allo) covered in faint ink. He is "Looking-at-the-Digital-Screen" with "Pure-Unfiltered-Awe-and-Focus" (Budaddiyar zuciya), absorbing a lesson from a remote teacher.
+
+Symbolism: The "Solar-Tablet-on-the-Sahel-Earth" symbolizes "The-Future-Reaching-the-Past." The "Allo-beside-the-Digital-Screen" represents "The-Evolving-Mind-Grounded-in-Heritage." The interaction reflects "The-Masterpiece-of-Adaptability," where geographic isolation does not close the mind to global knowledge.
+
+Lighting: "The-Soft-Sahel-Glow." The low, warm afternoon sun casts a "Golden-Hour-Light" that catches the "Texture-of-his-Skin" and the "Dust-Motes-Dancing" in the dry air, while the "Blue-Light-of-the-Tablet" illuminates his face, creating a "Radiant-and-Discovery-Aura."
+
+Texture: Ultra-detailed realism — the "Grained-Texture-of-the-Allo," the "Woven-Fibers-of-the-Straw-Hat," the "Dusty-Skin-of-his-Hands," and "Pore-Level-Detail" showing the absolute absence of resistance in his expression as he embraces the new way of learning.
+
+Theme: Open Minded / Education & Access / Nomadic Innovation / Fulani Youth Excellence / Cultural Adaptation / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5lost">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 100mm macro lens, high dynamic range, ethereal indigo and soft gold color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "High-Tech-Textile-Innovation-Lab" in Kano. In the background, a soft-blur of a "State-of-the-Art-3D-Bio-Printer" and a "Shelving-Unit" with traditional wooden shuttles. The environment is one of "Scientific-Creation-Meets-Tradition."
+
+The subject: A distinguished middle-aged Hausa textile scientist (a woman), Dr. Aisha Ibrahim. She is wearing a "Crisp-White-Lab-Coat" over a "Classic-Blue-Tunic" and a "Simple-Navy-Hijab." She is "Focusing-Intently" with protective goggles on.
+
+The action: She is "In-the-Zone-of-Discovery" (Budaddiyar zuciya). She is standing before a "Digital-Microscope-Station" that is projecting a "Blowing-Vast-Star-Nebula" pattern onto a hanging sheet of "Bio-Engineered-Smart-Silk" (made from spider silk). She is "Gently-Smoothing" the silk fabric, watching the projection align perfectly.
+
+Symbolism: The "Star-Nebula-Projection-on-Silk" symbolizes "The-Infinite-Woven-Into-Cloth." The "Traditional-Textile-Pattern-Superimposed-by-Cosmos" represents "Heritage-Grounded-in-Universal-Vision." The interaction reflects "The-Masterpiece-of-Synthesis," where a seasoned mind is open enough to blend ancient weaving wisdom with cutting-edge galactic concepts.
+
+Lighting: "The-Luminous-Glow-of-Idea." The light source is the indigo and gold "Projector-Image," which is "Illuminating-Her-Face" and the fabric, creating "Catchlights-in-Her-Eyes" and highlighting the "Shimmer-of-the-Smart-Silk," while cool ambient light fills the background.
+
+Texture: Ultra-detailed realism — the "Fine-Microscopic-Thread-Pattern" on the screen, the "Sheen-of-the-Spider-Silk," the "Weave-of-the-Hijab," and "Pore-Level-Detail" showing the absolute "Intensity-and-Freedom" in her eyes as she merges worlds.
+
+Theme: Open Minded / Science & Wonder / Hausa Woman in STEM / Textile Innovation / Cosmic Connection / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6lost">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 50mm macro lens, high dynamic range, warm-saffron and deep-teal color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Modern-Minimalist-Kitchen" in Lagos with a large window overlooking a blurred cityscape. In the background, a "Sleek-Stainless-Steel-Counter" and a "Wooden-Spice-Rack" containing traditional "Yaji-Containers" (calabashes) alongside "Modern-Glass-Jars." The environment is one of "Culinary-Adventure."
+
+The subject: A young Hausa chef in his late 20s, wearing a "Crisp-White-Chef’s-Jacket" with a "Subtle-Northern-Pattern-on-the-Collar." He is "Intensely-Focused," his brow slightly furrowed in "Creative-Concentration."
+
+The action: He is "In-the-Act-of-Fusion" (Budaddiyar zuciya). He is "Gently-Sprinkling-Fine-Pink-Himalayan-Salt" and "Vibrant-Green-Matcha-Powder" over a perfectly seared piece of "Traditional-Suya-Steak." He is "Tasting-a-Small-Fragment," eyes closed, his mind "Connecting-the-Earthy-Hausa-Spice-with-East-Asian-Bitterness."
+
+Symbolism: The "Matcha-on-Suya" symbolizes "The-Daring-Merge-of-Continents." The "Himalayan-Salt-in-a-Calabash" represents "Universal-Flavor-through-Local-Lens." The interaction reflects "The-Masterpiece-of-the-Palate," where the mind is open enough to redefine what "home-cooked" means.
+
+Lighting: "The-Glistening-Steam." Soft sunlight catches the "Steam-Rising-from-the-Meat," creating a "Luminous-Haze" around the spices as they fall, highlighting the "Oily-Sheen-of-the-Suya" and the "Fine-Dust-of-the-Matcha."
+
+Texture: Ultra-detailed realism — the "Coarse-Grains-of-the-Yaji-Spice," the "Velvety-Texture-of-the-Matcha," the "Seared-Char-on-the-Beef," and "Pore-Level-Detail" showing the absolute "Sensory-Awareness" in his expression.
+
+Theme: Open Minded / Culinary Fusion / Hausa Excellence / Global Flavors / Creative Innovation / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7lost">Style: Cinematic, ultra-hyper-realistic architectural photography, professional DSLR, 24mm tilt-shift lens, high dynamic range, terracotta-warm and botanical-green color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Skyscraper-Construction-Site" in the heart of a futuristic Kano city. In the background, a soft-blur of "Traditional-Mud-Houses" juxtaposed against "Sleek-Glass-Towers." The environment is one of "Visionary-Synthesis."
+
+The subject: A young Hausa female architect (early 30s), Amina Sani. She is wearing a "Safety-Orange-Vest" over a "Tailored-Emerald-Green-Kaftan" and a "Simple-Black-Hijab," with a "White-Hard-Hat" resting on her head.
+
+The action: She is "Looking-Upward-at-a-Massive-Vertical-Wall." She is "In-the-Act-of-Designing" (Budaddiyar zuciya). She is "Holding-a-Holographic-Tablet" that projects a "Green-Living-Wall-Integrated-with-Traditional-Hausa-Geometric-Carvings" (Daka). She is "Digitally-Sketching" an irrigation system that uses ancient clay-pipe logic to water modern vertical gardens.
+
+Symbolism: The "Holographic-Daka-on-Modern-Glass" symbolizes "The-Breath-of-Ancestors-in-Modern-Lungs." The "Hard-Hat-over-the-Hijab" represents "The-Structural-Strength-of-Identity." The interaction reflects "The-Masterpiece-of-Sustainability," where the mind is open enough to see that the solutions to tomorrow's climate are hidden in the earth-building techniques of a thousand years ago.
+
+Lighting: "The-Noon-Sun-and-Digital-Glow." Bright, "High-Contrast-Sunlight" catches the "Dust-Motes-on-the-Scaffolding," while the "Green-Light-of-the-Hologram" reflects on her glasses and face, creating a "Scientific-and-Earth-Grounded-Aura."
+
+Texture: Ultra-detailed realism — the "Rough-Concrete-of-the-Pillar," the "Smooth-Glass-of-the-Tablet," the "Intricate-Lace-Detail-on-her-Kaftan-Cuff," and "Pore-Level-Detail" showing the "Visionary-Spark" in her eyes as she redefines the skyline.
+
+Theme: Open Minded / Sustainable Architecture / Hausa Innovation / Future-Cities / Heritage-Integration / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8lost">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm wide lens, high dynamic range, muted mahogany and futuristic magenta color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Cozy-Modern-Living-Room" in a family compound in Zaria. The background is a soft-blur of a "Traditional-Woven-Mat" (Tabarma) and an "Antique-Wooden-Chest," contrasting sharply with "Sleek-Black-VR-Sensor-Towers" in the corners. The environment is one of "Digital-Storytelling."
+
+The subject: An elderly Hausa grandfather (Kaka), Malam Bello, in his late 70s, wearing a "Rich-Brown-Heavy-Cotton-Kaftan" and a "Simple-White-Skullcap." Sitting cross-legged on the floor beside him is his 8-year-old grandson, wearing a "Navy-and-Yellow-Striped-Tunic."
+
+The action: The grandfather is "Wearing-a-Sleek-Black-VR-Headset" (Virtual Reality). He is not confused; his expression is one of "Genuinely-Open-Minded-Childlike-Wonder" (Budaddiyar zuciya). His "Wrinkled-Hands" are "Extended-Forward," "Gently-Grasping-at-Air," but his grandson is watching a linked "Projection-on-the-Wall" showing a "Virtual-Ancient-City-of-Kano" (the 14th century). The grandfather is "Mid-Sentence," recounting an oral history about the city gates as he virtually walks through them.
+
+Symbolism: The "VR-Headset-on-the-Elder" symbolizes "The-Transfer-of-Ancient-Stories-to-Modern-Vessels." The "Projection-of-Kano-beside-the-Wooden-Chest" represents "Digital-Preservation-of-Heritage." The interaction reflects "The-Masterpiece-of-Adaptive-Teaching," where the mind of the elder is open enough to let technology enhance his duty as a guardian of history.
+
+Lighting: "The-Cyber-Glow-and-Cozy-Sun." The "Magenta-and-Blue-Light" from the VR headset's sensor and the projector wall "Illuminates-Their-Faces," creating "Sharp-Twinkling-Catchlights" in the grandfather’s eyes through the lens and in the grandson’s watching face, while warm afternoon light fills the background.
+
+Texture: Ultra-detailed realism — the "Paper-Thin-Wrinkles-on-the-Grandfather’s-Skin," the "Fine-Starch-on-the-White-Kaftan," the "Smoothness-of-the-VR-Plastic," and "Pore-Level-Detail" showing the absolute absence of resistance in his open-mouthed, focused expression.
+
+Theme: Open Minded / Cross-Generational Tech / Oral History & VR / Hausa Elder Adaptability / Future-Storytelling / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9lost">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm wide lens, high dynamic range, deep-indigo and electric-cyan color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Sound-Proofed-Recording-Studio" in the heart of Kano. The background features a soft-blur of "Acoustic-Foam-Panels" and a "Shelf-of-Traditional-Instruments" (Talking-Drums, Goje, and Kalangu), contrasting with "Glowing-Dual-Monitors." The environment is one of "Sonic-Exploration."
+
+The subject: A young Hausa music producer (early 20s), wearing a "Modern-Black-Hoodie" over a "Simple-White-Tunic" and "Professional-Over-Ear-Headphones." His face is bathed in the "Cool-Blue-Light" of his workstation.
+
+The action: He is "In-the-Zone-of-Discovery" (Budaddiyar zuciya). One hand is "Gently-Tapping-a-Traditional-Talking-Drum" (Kalangu) tucked under his arm, while the other hand is "Adjusting-a-Digital-Slider" on a MIDI controller. On his screen, an "AI-Neural-Network-Visualization" is real-time-mapping the drum's vibrations into a "Sleek-Electronic-Synth-Wave." His expression is one of "Deep-Listening-and-Wonder."
+
+Symbolism: The "Talking-Drum-Linked-to-AI" symbolizes "The-Voice-of-Ancestors-Digitized." The "Headphones-over-the-Tunic" represents "The-Modern-Hausa-Identity-Listening-to-Two-Worlds." The interaction reflects "The-Masterpiece-of-Synthesis," where the mind is open enough to let an ancient rhythm dictate the pulse of a futuristic soundscape.
+
+Lighting: "The-Digital-Pulse." The "Electric-Cyan-Glow" from the monitors and the MIDI controller "Illuminates-his-Concentrated-Face," creating "Sharp-Catchlights-in-his-Eyes," while a "Warm-Backlight" from the studio’s hallway adds a "Golden-Rim-Light" to his silhouette.
+
+Texture: Ultra-detailed realism — the "Polished-Wood-and-Tight-Leather-of-the-Drum," the "Braided-Cable-of-the-Headphones," the "Fuzz-of-the-Black-Hoodie-Fabric," and "Pore-Level-Detail" showing the absolute "Sonic-Focus" in his wide, inspired eyes.
+
+Theme: Open Minded / Music & Tech / Hausa Creative Excellence / Future-Sound / Cultural Fusion / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10lost">Style: Cinematic, ultra-hyper-realistic indoor-outdoor photography, professional DSLR, 16mm ultra-wide lens, high dynamic range, soft indigo and warm gold color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Simple-Mud-Brick-Hut" (kandami) in a remote, dust-blown village near Dutse, Jigawa. The doorway is wide open, framing a soft-blur of a "Vast-Star-Filled-Sahel-Night-Sky" and a "Simple-Mud-Wall-Compound." The environment is one of "Resilient-Curiosity."
+
+The subject: A young Hausa girl (aged 7), Amina, wearing a "Simple-Faded-Pink-Tunic" and a matching small headwrap. Beside her is her grandfather, Malam Kabiru, in his late 70s, in a "Cream-Babban-Rida" and a traditional "Ture-Cap."
+
+The action: They are "On-the-Floor" on a colorful woven mat. The girl is "Wearing-a-Sleek-White-VR-Headset" (Virtual Reality). She is not in her hut; her small hand is "Extended-Forward," "Tracing-an-Invisible-Line" in the air as she virtually walks through a "Glistening-Hall-of-the-Louvre-Museum-in-Paris." Her expression is one of "Pure-Awe-and-Wonder" (Budaddiyar zuciya). Her grandfather is "Leaning-Close," "Watching-a-linked-Projection-on-the-Mud-Wall" and "Gently-Guiding-her-Hand," his own face "Smiling-with-Knowing-Pride" as he whispers a question about the 'art' she sees. A small "Starlink-Satellite-Dish" is visible just outside the doorway, its subtle LED blinking blue.
+
+Symbolism: The "VR-Headset-on-the-Rural-Girl" symbolizes "The-Future-Reaching-the-Edge." The "Louvre-on-the-Mud-Wall" represents "The-Global-Village-Becoming-Real." The interaction reflects "The-Masterpiece-of-Access," where geography is no longer a prison for a child's mind.
+
+Lighting: "The-Cyber-Glow-and-Cosmic-Light." The primary light source is the "Cool-Blue-Light" from the VR headset's sensor and the projector wall, creating "Sharp-Catchlights-in-her-Eyes" (visible through the headset gap) and illuminating their faces, while soft ambient light comes from the Star-Filled Sky, creating a "Luminous-and-Discovery-Aura."
+
+Texture: Ultra-detailed realism — the "Coarse-Fibers-of-the-Mud-Wall," the "Faded-Cotton-of-the-Tunic," the "Roughness-of-the-Woven-Mat," and "Pore-Level-Detail" showing the absolute absence of resistance in her open-mouthed, focused expression.
+
+Theme: Open Minded / Rural Access & Tech / Education without Barriers / Hausa Youth Potential / Global Connection / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10lost')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10lost')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resilient">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='page1.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Resilient</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1free">Style: Cinematic, ultra-hyper-realistic indoor photography, professional DSLR, 35mm lens, high dynamic range, deep charcoal and molten-amber color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Traditional-Blacksmith-Workshop" (Makera) in an ancient quarter of Kano. The background is a soft-blur of "Hanging-Iron-Tools," "Stacks-of-Raw-Metal," and "Swirling-Grey-Smoke." The environment is one of "Primal-Strength-and-Endurance."
+
+The subject: A veteran Hausa blacksmith in his late 50s. He is "Bare-Chested" under a "Heavy-Leather-Apron" that is scarred by sparks. His skin is "Glistening-with-Sweat" and dusted with soot, muscles corded and defined by decades of labor.
+
+The action: He is "Mid-Strike." He has a "Heavy-Sledgehammer" raised high, about to descend onto a "Glowing-Orange-Iron-Rod" held on a massive stone anvil. His expression is one of "Unshakable-Grit" (Jajircewa). His teeth are slightly gritted, and his eyes are "Locked-on-the-Metal" with a "Piercing-Focus" that ignores the intense heat.
+
+Symbolism: The "Glowing-Iron" symbolizes "The-Soul-Refined-by-Fire." The "Stone-Anvil" represents "Unchanging-Tradition." The interaction reflects "The-Masterpiece-of-Perseverance," where the man does not break the metal, he negotiates with it through sheer will.
+
+Lighting: "The-Firelight-Glow." The primary light source is the "Molten-Orange-Radiance" from the forge and the iron rod, casting "Deep-Dramatic-Shadows" and creating "Sweat-Bead-Highlights" on his skin, while shafts of "Dusty-Daylight" poke through the thatched roof.
+
+Texture: Ultra-detailed realism — the "Hammered-Texture-of-the-Anvil," the "Coarse-Grain-of-the-Leather-Apron," the "Steam-Rising-from-a-Nearby-Water-Bucket," and "Pore-Level-Detail" showing the soot-filled creases in his weathered hands.
+
+Theme: Resilience / Manual Labor / Blacksmithing Heritage / Physical Strength / Inner Fire / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 24mm wide-angle lens, high dynamic range, parched-terracotta and soft-gold color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Vast-Fallow-Field" in a rural farming community outside Bauchi. The background is an expansive "Rolling-Plains-Horizon" with a few gnarled, leafless acacia trees. The sky is filled with heavy, dust-laden "Waiting-for-Rain-Clouds" (Hadari). The environment is one of "Resilient-Expectation."
+
+The subject: A veteran Hausa farmer, Malam Musa, in his late 60s. He is wearing a simple, faded "Blue-Kaftan" and a traditional "Ture-Cap" that shows wear. His skin is deeply weathered and lined by a life of sun and soil, but his expression is one of "Unyielding-Faith" (Jajircewa). He is standing, leaning on his "Traditional-Wooden-Hoop-Hoe" (Magiya).
+
+The action: He is "Looking-Upward-at-the-Clouds." He is not hopeless; his jaw is set in "Quiet-Determination." In his free hand, he is "Cupping-a-Single-Handful-of-Dry-Earth-and-a-Few-Sorghum-Seeds," ready to plant the moment the first drop falls.
+
+Symbolism: The "Handful-of-Seeds-in-Dry-Earth" symbolizes "Faith-that-Endures-the-Drought." The "Heavy-Clouds" represent "The-Promise-of-Renewal." The interaction reflects "The-Masterpiece-of-Patience," where the farmer does not work the land; he waits for it with unbreakable resilience.
+
+Lighting: "The-Soft-Glow-of-Waiting." The "Diffuse-Dusty-Light" from the impending storm clouds casts a "Warm-Golden-and-Deep-Grey-Aura" on the parched earth and his face, creating "Soft-Highlights" on his sweat-beads and "Deep-Shadows" in the lines of his skin.
+
+Texture: Ultra-detailed realism — the "Coarse-Fibrous-Wood-of-the-Hoe," the "Faded-Knit-of-the-Kaftan," the "Dusty-Texture-of-his-Hands," and "Pore-Level-Detail" showing the absolute absence of despair in his steadfast expression.
+
+Theme: Resilience / Farming Heritage / Traditional Wisdom / Hope in Hardship / Wait for Rain / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 50mm prime lens, high dynamic range, muted amber and soft-grey color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Bustling-Outdoor-Market" (Kasuwa) in Zaria during the peak of the Harmattan dust storm (Hazo). The background is an expansive "Swirling-Beige-Dust-Cloud," obscuring the sun, which is a "Diffuse-Glowing-Orb" in the upper sky. The environment is one of "Resilient-Perseverance."
+
+The subject: A veteran Hausa market woman (Mai Shayi), Mama Fatima, in her early 60s. She is wearing a simple, worn "Indigo-Blue-Wrapper" (Zani) and a thick "Headscarf" (Hijab) wrapped around her face, leaving only her eyes and nose visible. Her skin is weathered and dusted with fine sand, but her expression is one of "Unshakable-Determination" (Jajircewa). She is standing, adjusting the plastic sheeting over her makeshift stall.
+
+The action: She is "Fighting-the-Wind." One hand is "Gently-Securing-the-Blowing-Plastic" of her stall, while the other holds a "Small-Broom" (Tsintsiyar-Hausa), ready to sweep the dust away. In her eyes, there is "Quiet-Focus" and "Resilience-that-Endures-the-Hazo."
+
+Symbolism: The "Worn-Wrapper-against-the-Dust" symbolizes "Heritage-that-Protects." The "Small-Broom-in-a-Large-Storm" represents "The-Daily-Battle-for-Survival." The interaction reflects "The-Masterpiece-of-Continuity," where the woman does not fear the storm; she waits for it with unbreakable resilience.
+
+Lighting: "The-Soft-Hazo-Glow." The diffuse, warm light from the obscured sun casts a "Warm-Amber-and-Grey-Aura" on the dust and her face, creating "Soft-Highlights" on her sweat-beads and "Deep-Shadows" in the creases of her hijab, while a "Dusty-Golden-Hour" glow fills the background.
+
+Texture: Ultra-detailed realism — the "Coarse-Fibrous-Woven-Wrapper," the "Worn-Knit-of-the-Hijab," the "Dusty-Texture-of-her-Hands," and "Pore-Level-Detail" showing the absolute absence of resistance in her steadfast expression.
+
+Theme: Resilience / Market Heritage / Harmattan Season / Female Perseverance / Continuity / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 85mm lens, high dynamic range, deep-cobalt and flickering-amber color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: The "Exterior-Veranda-of-a-Rural-School" in a village outside Katsina after dark. The background is a "Deep-Ink-Black-Night" with the faint silhouette of a "Neem-Tree." There is no electricity; the environment is one of "Solitary-Academic-Hustle."
+
+The subject: A teenage Hausa boy (16 years old), an "Ambitious-Student." He is wearing a "Simple-White-Kaftan" that is slightly oversized and a "Small-Black-Skullcap." 
+
+The action: He is "Hunched-over-a-Wooden-Table," his nose almost touching a "Thick-Advanced-Mathematics-Textbook." In one hand, he holds a "Chewed-Pencil," and the other is "Shielding-the-Flame-of-a-Small-Kerosene-Lantern" from a light breeze. His expression is one of "Defiant-Concentration" (Jajircewa). He is not tired; he is "Consuming-the-Knowledge" by the flickering light.
+
+Symbolism: The "Hand-Shielding-the-Flame" symbolizes "Protecting-one's-Future-from-the-Wind-of-Circumstance." The "White-Kaftan-in-the-Dark" represents "Purity-of-Purpose." The interaction reflects "The-Masterpiece-of-Intellectual-Resilience," where the lack of infrastructure is met with an abundance of will.
+
+Lighting: "The-Flickering-Amber-Core." The primary light source is the "Single-Lantern-Flame," which casts "Warm-Dancing-Light" across his face and the book pages, creating "Harsh-High-Contrast-Shadows" against the surrounding darkness and "Sharp-Glints" in his determined eyes.
+
+Texture: Ultra-detailed realism — the "Rough-Grain-of-the-Wooden-Table," the "Yellowed-Edges-of-the-Textbook-Pages," the "Soot-Smudge-on-the-Lantern-Glass," and "Pore-Level-Detail" showing the slight bead of sweat on his temple despite the cool night air.
+
+Theme: Resilience / Education & Ambition / Rural Life / Academic Grit / Light in Darkness / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 50mm lens, high dynamic range, desaturated-teal and moody-copper color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Roadside-Mechanic-Workshop" (Garaji) in Kano during a torrential rainy season downpour. The background is an open-air shed made of salvaged corrugated metal sheets, a soft-blur of "Splashing-Water" on old tires, "Oil-Stained-Dirt," and "Distant-Blurred-Headlights" fighting through the rain. The environment is one of "Grit-and-Flow."
+
+The subject: A young Hausa mechanic (apprentice), Musa, in his late teens. He is wearing a "Grease-Stained-Overalls" (the original color is indefinable) and no shirt, his muscles defined. His skin is "Glistening-with-a-Mix-of-Rain-and-Sweat." He has "No-Umbrella-or-Protection," but his jaw is set in "Unyielding-Purpose" (Jajircewa).
+
+The action: He is "Crawling-partially-Under-a-Jackson-Car-Frame" (a classic local taxi) that is supported by a simple car jack in the mud. He is "Locked-in-the-Act-of-Repairing." He is "Fumbling-with-Wrenches-on-a-Flooded-Engine-Part," while "Heavy-Rain-Pours-Down" and "Splashes-Directly-onto-his-Face-and-Hands." He doesn't look away from his work; his focus is absolute.
+
+Symbolism: The "Wrenches-in-the-Mud" symbolize "The-Clash-of-Grit-and-Nature." The "Jackson-Taxi" represents "Community-Mobility-Built-on-Perseverance." The interaction reflects "The-Masterpiece-of-Service," where the rain does not stop the flow of labor; it only washes away the grease.
+
+Lighting: "The-Moody-Cyan-Glow." The primary light source is the "Diffuse-Daylight" through the heavy rain, casting "Soft-and-Moody-Highlights" on the water and "Glistening-Beads" on his skin, creating "Harsh-High-Contrast-Shadows" against the surrounding darkness and "Sharp-Glints" in his determined eyes.
+
+Texture: Ultra-detailed realism — the "Rough-Texture-of-Rust-on-the-Car-Frame," the "Mud-on-his-Hands-and-Tools," the "Worn-Metal-of-the-Wrenches," and "Pore-Level-Detail" showing the absolute absence of discomfort in his focused expression.
+
+Theme: Resilience / Manual Labor / Mechanic Heritage / Work in Hardship / Rain’s Rhythm / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 85mm portrait lens, high dynamic range, golden-hour-ochre and deep-teal color grading, masterpiece quality, 4:5 vertical aspect ratio.
+
+The scene: A "Worn-Dirt-Path" winding along the banks of a wide, slow-moving river near a village in rural Jigawa. In the background, there is a soft-blur of a "Traditional-Mud-Settlement" (Gida) and a few ancient, silhouetted "Baobab-Trees" against the fading light. The environment is one of "Resilient-Grace."
+
+The subject: A young Hausa girl (aged 12), Amina, wearing a simple, "Faded-Turquoise-Tunic" and a small, worn "Red-Hijab" draped over her head and shoulders. Her posture is incredibly "Erect-and-Poised," showcasing natural "Dignity-under-Weight." Her skin is lightly dusted with fine silt, and her expression is one of "Quiet-Defiant-Endurance" (Jajircewa). She is standing, looking straight ahead.
+
+The action: She is "Carrying-a-Large-Traditional-Clay-Water-Pot" (Tunku) balanced perfectly on her head. The pot is heavy and "Glistening-with-Recent-Moisture." Her hands are not supporting the pot; they are slightly forward, "Fingertips-Gently-resting-on-a-smaller-plastic-jerrycan" in each hand. The water pot is large, smooth, and slightly wet from the river.
+
+Symbolism: The "Clay-Water-Pot-as-a-Crown" symbolizes "Labor-as-Dignity." The "River-at-her-Back" represents "The-Daily-Battle-for-Access." The interaction reflects "The-Masterpiece-of-Resilience," where the heavy burden does not break her; it forces her to find perfect balance and grace.
+
+Lighting: "The-Soft-Sahel-Sunset-Glow." The low, warm evening sun casts a "Dusty-Golden-Aura" on the silt-laden path and her face, creating "Soft-and-Glistening-Highlights" on her sweat and the moist pot, while cool ambient light from the river creates "Subtle-and-Moody-Rim-Light."
+
+Texture: Ultra-detailed realism — the "Rough-Texture-of-Pore-filled-Clay," the "Coarse-Fibers-of-the-Worn-Hijab," the "Silt-dust-on-her-Skin," and "Pore-Level-Detail" showing the absolute absence of a smile, only steadfast purpose.
+
+Theme: Resilience / Female Heritage / Water Access / Rural Life / Grace under Pressure / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 35mm lens, high dynamic range, deep-indigo and muted-sepia color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Remote-Desert-Outpost" in the far north of Borno during a midnight sandstorm. The background is a "Chaos-of-Swirling-Dust-and-Wind," with the faint, rhythmic "Flapping-of-a-Tattered-Flag" and the silhouette of a "Sand-Covered-Off-Road-Vehicle." The environment is one of "Solitary-Vigilance."
+
+The subject: A veteran Hausa soldier (Sojan-Gona) in his late 30s. He is wearing "Dust-Caked-Camouflage-Fatigues" and a "Tactical-Shemagh-Scarf" wrapped tightly around his face, leaving only a "Narrow-Slit-for-his-Eyes." His eyelashes are heavy with fine silt.
+
+The action: He is "Standing-Motionless-against-the-Gale." He is "Leaning-into-the-Wind," his gloved hands "Firmly-Gripping-his-Rifle-Sling." He isn't seeking shelter; he is "Scanning-the-Haze" with "Unblinking-Vigilant-Eyes." His expression, though mostly covered, is visible in the "Sharp-Hardness-of-his-Brow" and the "Stillness-of-his-Stance" (Jajircewa).
+
+Symbolism: The "Shemagh-filled-with-Sand" symbolizes "The-Physical-Cost-of-Protection." The "Rifle-as-an-Extension-of-the-Arm" represents "The-Weight-of-Duty." The interaction reflects "The-Masterpiece-of-Sacrifice," where resilience is measured by the ability to remain a fixed point in a shifting storm.
+
+Lighting: "The-Grit-and-Moonlight." The "Pale-Cold-Light-of-a-Hidden-Moon" filters through the dust, creating a "Ghostly-Rim-Light" on his silhouette, while the "Low-Internal-Glow-of-a-Dashboard-Light" from the nearby vehicle casts a "Faint-Warm-Amber-Highlight" on one side of his face.
+
+Texture: Ultra-detailed realism — the "Coarse-Grit-of-Sand-on-Fabric," the "Scratched-Metal-of-the-Rifle-Barrel," the "Cracked-Leather-of-his-Gloves," and "Pore-Level-Detail" showing the "Redness-and-Strain" in his eyes from the biting wind.
+
+Theme: Resilience / Military Honor / Desert Survival / Vigilance / Unwavering Duty / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 24mm wide lens, high dynamic range, blinding-white and deep-cerulean color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: The "Salt-Flats-of-Yunari" in the far north during the hottest part of the day. The background is a "Infinite-Flat-Horizon" where the white salt meets a "Cloudless-Bleached-Blue-Sky." The environment is one of "Brutal-Luminosity."
+
+The subject: A veteran Hausa salt-miner (early 50s). He is wearing "Sun-Bleached-Indigo-Work-Clothes" that have turned a pale violet from salt and sun. He has a "Thick-Cotton-Scarf" wrapped around his head and lower face to protect from the "Reflective-Glare."
+
+The action: He is "Mid-Exertion" (Jajircewa). He is "Driving-a-Heavy-Iron-Crowbar" into the "Cracked-Salt-Crust" to pry up a massive slab. His posture is "Low-and-Powerful," his feet planted in "Shallow-Brine-Water" that reflects the sun like a mirror. He isn't squinting; his eyes are "Hardened-and-Adjusted" to the light, fixed on the prize beneath the crust.
+
+Symbolism: The "Mirror-Reflection-of-the-Miner" symbolizes "The-Self-Contained-Strength-of-Labor." The "Blinding-White-Salt" represents "The-Harshness-of-the-Earth-Turned-into-Wealth." The interaction reflects "The-Masterpiece-of-Physical-Endurance," where a man stands in a landscape that should be uninhabitable and harvests its heart.
+
+Lighting: "The-Vertical-Sun." Harsh, "Overhead-Tropical-Sunlight" bounces off the white salt, creating an "All-Encompassing-Glow" that eliminates most shadows, highlighting the "Salt-Crystals-Clinging-to-his-Skin" and the "Deep-Contrast" of his dark indigo clothing.
+
+Texture: Ultra-detailed realism — the "Sharp-Crystalline-Edges-of-the-Salt-Slabs," the "Corroded-Texture-of-the-Iron-Bar," the "White-Salt-Stains-on-Dark-Fabric," and "Pore-Level-Detail" showing the "Salt-Crusted-Eyelashes" and the sweat-streaks on his neck.
+
+Theme: Resilience / Manual Labor / Salt Mining / Desert Endurance / Survival / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 50mm prime lens, high dynamic range, moody-indigo and soft-sepia color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Crowded-Bus-Station" (Tashar Mota) in a rain-slicked city at dusk. In the background, the soft-blur of a "Large-Yellow-Luxurious-Bus," "Splashing-Puddles," and "Harried-Travelers" with plastic-covered suitcases. The environment is one of "Transient-Chaos."
+
+The subject: A young Hausa couple in their mid-20s. He is wearing a "Simple-Dark-Kaftan" with a travel bag over his shoulder; she is in a "Deep-Maroon-Abaya" with a matching headscarf, her hands trembling slightly.
+
+The action: They are "In-a-Silent-Strong-Embrace" (not a full hug, but a deep, forehead-to-forehead connection). He is "Holding-Her-Face" with one hand, his thumb "Wiping-a-Single-Stray-Tear," while she is "Gripping-the-Fabric-of-his-Sleeve" as if to anchor him. Their expressions are not defeated, but one of "Ferociously-Resilient-Devotion" (Jajircewa). They are whispering a promise of return despite the long distance ahead.
+
+Symbolism: The "Firm-Grip-on-the-Sleeve" symbolizes "The-Refusal-to-Let-Go-of-Hope." The "Rain-Slicked-Ground" represents "The-Uncertainty-of-the-Journey." The interaction reflects "The-Masterpiece-of-Emotional-Endurance," where love is the only thing that remains still in a world of constant movement.
+
+Lighting: "The-Glistening-Urban-Twilight." The primary light source is the "Cool-Blue-Headlights" of the bus and the "Warm-Orange-Streetlamp" above, creating a "Dual-Tone-Glow" on their faces and highlighting the "Individual-Raindrops" caught in their clothing.
+
+Texture: Ultra-detailed realism — the "Wet-Sheen-on-the-Abaya-Fabric," the "Grains-of-Road-Dust-on-the-Kaftan-Shoulder," the "Moisture-on-their-Eyelashes," and "Pore-Level-Detail" showing the "Vulnerability-and-Iron-Will" in their locked gaze.
+
+Theme: Resilience / Love & Distance / Modern Hausa Romance / Emotional Strength / The Long Goodbye / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10free">Style: Cinematic, ultra-hyper-realistic outdoor photography, professional DSLR, 35mm lens, high dynamic range, moody-sunset-gold and deep-shadow-brown color grading, masterpiece quality, 16:9 cinematic aspect ratio.
+
+The scene: A "Quiet-Narrow-Alleyway" in an old neighborhood of Kano at dusk. The background is a soft-blur of "Textured-Mud-Walls," a "Flickering-Lantern" hanging by a wooden door, and a "Distant-Motorcycle-Silhouette." The environment is one of "Heavy-Silence-and-Vulnerability."
+
+The subject: A young Hausa man (mid-20s), his face showing the "Weight-of-Past-Regret-and-New-Resolve." He is wearing a "Crisp-Navy-Blue-Kaftan" and a matching "Skullcap," but his clothes are slightly dusted from a long journey.
+
+The action: He is "Standing-Still-Before-a-Closed-Wooden-Door." He is "Firmly-Grasping-a-Bouquet-of-Deep-Red-Roses-and-White-Baby’s-Breath" (the red symbolizing love, the white symbolizing a fresh start). His knuckles are slightly white from the grip, and his "Jaw-is-Tight-with-Nerves-and-Iron-Will" (Jajircewa). He has "Cooked-his-Mind" (Ya kullu a zuciyarsa) to knock, to face the potential of being turned away, and to offer his heart once more.
+
+Symbolism: The "Bouquet-against-the-Mud-Wall" symbolizes "Beauty-Refusing-to-Die-in-Hard-Soil." The "Closed-Door" represents "The-Final-Barrier-of-the-Soul." The interaction reflects "The-Masterpiece-of-Emotional-Fortitude," where the ultimate act of resilience is not fighting a war, but being brave enough to be vulnerable after being hurt.
+
+Lighting: "The-Glint-of-the-Last-Sun." The fading orange sunlight catches the "Edges-of-the-Rose-Petals" and "Illuminates-One-Side-of-his-Face," creating a "Highlight-on-his-Determined-Eye" while the rest of the alley falls into a protective, moody shadow.
+
+Texture: Ultra-detailed realism — the "Velvety-Texture-of-the-Roses," the "Rough-Grain-of-the-Old-Door," the "Starch-in-his-Kaftan-Collar," and "Pore-Level-Detail" showing the "Glint-of-Sweat-on-his-Brow" as he prepares to knock.
+
+Theme: Resilience in Love / Courageous Vulnerability / Hausa Devotion / Emotional Grit / Second Chances / Clean & Cinematic
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10free')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10free')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+function fixAllPrompts() {
+  document.querySelectorAll('[id^="prompt"], .prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+
+    // Strip any existing <br><br> and <strong> around section labels first
+    html = html.replace(/<br><br>\s*<strong>(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)<\/strong>/g, '$1');
+    html = html.replace(/<br><br>\s*(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)/g, '$1');
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)<\/strong>/g, '$1');
+
+    // Convert real line breaks (\n) before section labels to <br><br>
+    html = html.replace(/\n\s*(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)/g, '<br><br>$1');
+
+    // Now bold all section labels
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbiotic:|Symbolism:|Lighting:|Texture:|Them:|Theme:|Places:)/g, '<br><br><strong>$1</strong>');
+
+    // Remove leading <br><br> from very first label
+    html = html.replace(/^(\s*<br><br>)+/, '');
+
+    el.innerHTML = html;
+  });
+}
+document.addEventListener('DOMContentLoaded', fixAllPrompts);
+</script>
+</body>
+</html>

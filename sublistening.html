@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sublistening – Prompt Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+  * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1A1A1A; overflow-x: hidden; }
+    section { display: none; }
+    section:target { display: block; min-height: 100vh; padding-bottom: 40px; }
+    .page-header { background: #ffffff; padding: 16px 20px; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 10px; }
+    .back-arrow-btn { background: none; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; flex-shrink: 0; }
+    .back-arrow-btn svg { width: 22px; height: 22px; stroke: #1A1A1A; stroke-width: 2.5; fill: none; }
+    .header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; font-family: 'Inter', sans-serif; text-transform: none; }
+    .cards-body { padding: 16px; }
+    .prompt-card { background: #ffffff; border-radius: 24px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.05); }
+    .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .card-label { font-size: 14px; font-weight: 700; color: #7C3AED; font-family: 'Inter', sans-serif; }
+    .card-menu { background: none; border: none; cursor: pointer; color: #aaa; font-size: 20px; padding: 4px; }
+    .prompt-body { background: #f8f9fa; padding: 16px; border-radius: 16px; font-size: 14px; line-height: 1.7; margin-bottom: 16px; color: #333; font-family: 'Inter', sans-serif; }
+    .prompt-collapsed { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+    .see-more-link { display: inline-block; color: #7C3AED; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; font-family: 'Inter', sans-serif; }
+    .copy-button { background: #7C3AED; color: #fff; width: 100%; padding: 14px; border-radius: 14px; border: none; font-family: 'Inter', sans-serif; font-weight: 700; font-size: 15px; cursor: pointer; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s; }
+    .copy-button:active { background: #5b21b6; }
+    .card-footer { display: flex; justify-content: space-around; border-top: 1px solid #f0f0f0; padding-top: 14px; }
+    .footer-btn { background: none; border: none; display: flex; align-items: center; gap: 6px; color: #888; font-size: 13px; font-family: 'Inter', sans-serif; font-weight: 500; cursor: pointer; padding: 4px 8px; border-radius: 8px; }
+    .footer-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; }
+    .footer-btn.liked { color: #ed4956; }
+    .footer-btn.liked svg { stroke: #ed4956; fill: #ed4956; }
+    #comingSoonOverlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9999; align-items: flex-end; }
+    .modal-box { background: white; width: 100%; padding: 40px 20px; border-radius: 30px 30px 0 0; text-align: center; }
+    .modal-handle { width: 40px; height: 4px; background: #e2e8f0; border-radius: 10px; margin: 0 auto 20px; }
+    .modal-emoji { font-size: 60px; display: block; margin-bottom: 10px; }
+    .modal-title { font-size: 1rem; font-weight: 800; margin-bottom: 10px; font-family: 'Inter', sans-serif; color: #f97316; }
+    .modal-msg { color: #70777e; margin-bottom: 30px; font-family: 'Inter', sans-serif; }
+    .modal-btn { background: #7C3AED; color: white; border: none; padding: 15px 60px; border-radius: 12px; font-weight: 700; width: 80%; font-family: 'Inter', sans-serif; font-size: 15px; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+<section id="music">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='listening-to.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Music</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in a luxury interior setting in Northern Nigeria.<br><br>
+
+The scene: A minimalist luxury bedroom in an upscale Abuja estate, featuring custom dark walnut acoustic wall paneling, subtle ambient LED accent strips, and sleek modern decor.<br><br>
+
+The subject: A handsome 24-year-old Northern Nigerian youth with impeccable grooming, a sharp jawline, and effortless high steez. He is wearing a pristine, heavily starched white Shadda (yadi) with sharp shoulder lines and an intricately detailed black and silver Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Reclining deeply in a plush accent chair, wearing premium matte-black over-ear headphones. His eyes are softly closed, his head tilted back slightly with a look of absolute peace and soulful immersion as he listens to a beautiful, melodic sound, completely lost in the music.<br><br>
+
+Lighting: Moody, cinematic low-key indoor lighting, with a warm golden accent light catching the side of his face and highlighting the sharp geometric patterns of his Zanna Bukar cap.<br><br>
+
+Texture: Stiff, crisp folds of the premium Shadda fabric, smooth matte texture of the high-end headphones, fine grain of the walnut wall panels, and deep velvet shadows.<br><br>
+
+Theme: 🌿 Northern Nigerian youth luxury leisure / soulful musical immersion / high-steez traditional fashion / cinematic graphic novel realism inside affluent modern interior.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A stunning private home music studio and lounge with high-end floor-standing speakers, polished marble flooring, and a large panoramic window showing a peaceful garden view.<br><br>
+
+The subject: A breathtakingly beautiful 22-year-old Northern Nigerian young lady with radiant skin and graceful features. She is dressed in a luxurious, flowing silk Abaya with intricate embroidery along the sleeves, complemented by a perfectly styled chiffon hijab draped elegantly over her shoulders. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a designer chaise lounge, wearing sleek metallic-rimmed wireless earbuds. She has a gentle, blissful smile on her face, her fingers softly tapping the armrest to the rhythm of a serene, uplifting melody.<br><br>
+
+Lighting: Warm, soft afternoon daylight streaming through the panoramic window, illuminating her face and casting an ethereal glow over the delicate fabric of her flowing hijab.<br><br>
+
+Texture: Smooth silk textures of the premium Abaya, lightweight transparency of the chiffon hijab, glossy reflections on the marble floor, and the metallic sheen of the modern earbuds.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female leisure / luxury home sanctuary / beautiful young lady listening to music / cinematic graphic novel realism with high cultural decency.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: An affluent residential rooftop garden lounge during a crisp, clear evening, featuring luxury outdoor couches, a modern fire pit table, and a view of a peaceful estate skyline.<br><br>
+
+The subject: A highly fashionable 25-year-old Northern Nigerian man projecting immense steez and cultural pride. He is wearing a rich, heavy cream-colored Shadda with a perfectly matching, masterfully folded "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame, tightly composed.<br><br>
+
+The activity: Leaning confidently back on the outdoor couch, a premium smartphone in his hand, wearing minimalist white wireless earbuds. He is looking ahead with a sharp, cool, and highly composed gaze, fully vibe-checking a smooth, premium acoustic track.<br><br>
+
+Lighting: Beautiful twilight blue hour atmosphere mixed with the warm, dancing golden glow from the fire pit table, creating rich cinematic contrast on his face and traditional cap.<br><br>
+
+Texture: Crisp, heavy weave of the premium Shadda fabric, precise structural lines of the "Tashi Ka Fiya Naci" cap, soft texture of the outdoor cushions, and clean metallic highlights on the phone.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / high-steez musical relaxation / young Northern man listening to audio trends / moody cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious modern sunroom filled with natural light, featuring high ceilings, elegant indoor palm plants, marble flooring, and premium designer lounge furniture.<br><br>
+
+The subject: A stunning 23-year-old Northern Nigerian lady with sophisticated, striking features. She is wearing an exquisitely tailored Atampa dress with high-end, rich cultural patterns and a beautifully styled, modest flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Reclined on a plush cream sofa, holding a premium tablet device while wearing high-fidelity over-ear headphones. Her eyes are closed, a serene and beautiful expression on her face as she absorbs a deep, relaxing instrumental playlist.<br><br>
+
+Lighting: Bright, glorious mid-afternoon sunlight filtering through the sunroom windows, wrapping perfectly around her silhouette and emphasizing the vibrant colors of her Atampa outfit.<br><br>
+
+Texture: Rich cotton weave of the premium Atampa dress, smooth leather headband of the headphones, glossy marble floor reflections, and the crisp green texture of the indoor plants.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury sunroom lifestyle / elegant young lady enjoying high-fidelity music / cinematic contemporary realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A beautifully manicured private courtyard garden of a luxury villa during golden hour, featuring premium outdoor stone tiling and elegant white rose bushes.<br><br>
+
+The subject: Two affluent Northern Nigerian teenagers, a brother (17) and sister (15). The boy wears a well-tailored sky-blue Shadda with a matching Zanna Bukar cap. The girl wears a vibrant, high-end Atampa dress with a neat, modest hijab. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sharing a single pair of premium wireless earbuds; each has one earbud in. They are sitting on a stone garden bench, smiling brightly and nodding along as they listen to a newly released track together, full of youthful joy.<br><br>
+
+Lighting: Breathtaking golden hour sunlight backlighting the scene, casting long, soft shadows and creating a beautiful warm halo effect around their traditional caps and modest attire.<br><br>
+
+Texture: Intricate patterns of the Atampa fabric, crisp starched texture of the Shadda, smooth polished stone of the bench, and the soft golden glow on their skin tones.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian youth bonding / luxury villa garden relaxation / teenagers sharing a music playlist / cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive, high-end VIP airport lounge featuring premium leather armchairs, gold-accented dividers, and a sophisticated, calm executive atmosphere.<br><br>
+
+The subject: A distinguished, handsome 27-year-old Northern Nigerian man radiating elite steez and corporate success. He is wearing a premium, rich navy blue Shadda and a flawless, intricately embroidered Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting back with effortless confidence in a leather armchair, wearing premium noise-canceling headphones. He is holding a hot espresso cup, looking directly at the camera with a calm, focused, and powerful gaze, completely in his element while listening to an audio track.<br><br>
+
+Lighting: Professional indoor architectural lighting, with soft, directional spotlights highlighting the sharp silhouette of his face and the premium texture of his attire.<br><br>
+
+Texture: High-grade leather of the armchair, rich starched folds of the navy Shadda, sharp geometric lines of the cap embroidery, and the glossy porcelain texture of the espresso cup.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian executive steez / luxury travel lifestyle / young man listening to music in transit / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, dim-lit library study room inside an elite estate at night, boasting heavy mahogany bookshelves and a large executive desk.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian young man with modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at the desk with high-end, sleek studio monitor headphones over his ears. He is working on his laptop, his expression intensely focused yet relaxed, nodding his head slightly to a deep, rhythmic lo-fi beat.<br><br>
+
+Lighting: Moody, low-key cinematic lighting, with a single warm desk lamp casting sharp highlights across his sharp jawline, his traditional cap, and the keys of his laptop.<br><br>
+
+Texture: Premium fabric sheen of the green Shadda, detailed weave of the cap, polished dark wood grain of the desk, and the metallic chassis of the laptop.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / nocturnal library study / young man listening to music while working / moody cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, dim-lit library study room inside an elite estate at night, boasting heavy mahogany bookshelves and a large executive desk.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian young man with modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at the desk with high-end, sleek studio monitor headphones over his ears. He is working on his laptop, his expression intensely focused yet relaxed, nodding his head slightly to a deep, rhythmic lo-fi beat.<br><br>
+
+Lighting: Moody, low-key cinematic lighting, with a single warm desk lamp casting sharp highlights across his sharp jawline, his traditional cap, and the keys of his laptop.<br><br>
+
+Texture: Premium fabric sheen of the green Shadda, detailed weave of the cap, polished dark wood grain of the desk, and the metallic chassis of the laptop.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / nocturnal library study / young man listening to music while working / moody cinematic graphic novel realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university student lounge featuring modern architecture, glass study pods, and a highly sophisticated educational environment.<br><br>
+
+The subject: A beautiful 20-year-old Northern Nigerian female student, looking exceptionally intelligent, decent, and stylish. She is wearing a custom-tailored Atampa dress with elegant patterns and a modest, flowing chiffon hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Walking gracefully through the lounge with a tablet held under her arm, wearing stylish white wireless headphones. She has a peaceful, confident expression, entirely inside her own world listening to a motivational audio track between classes.<br><br>
+
+Lighting: Clean, bright high-key interior lighting from massive glass panel windows, beautifully illuminating her face, her vibrant Atampa outfit, and the modern lounge space.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the chiffon hijab, matte finish of the headphones, and the clean architectural glass reflections in the background.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady listening to educational audio / decent and stylish contemporary representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10music">Style: Cinematic ultra-realistic graphic novel / comic-style photography (Nikon Z8, 85mm lens), 4:5 aspect ratio, 16K RAW realism with subtle comic grading, natural film grain, shallow depth of field, physically accurate lighting, strong heroic composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite estate during a peaceful afternoon, with large windows showing a beautifully manicured background garden.<br><br>
+
+The subject: Two adorable Northern Nigerian children, a boy (8) and a girl (6) from an affluent home. The boy wears a mini pastel-maroon Shadda with a neat Zanna Bukar cap. The girl wears a beautiful lace Abaya with a small, flowing matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together on a large luxury sofa, sharing a tablet device. They are both wearing matching colorful kids' headphones, their faces lit up with pure excitement and innocent laughter as they listen and watch a high-quality musical animation.<br><br>
+
+Lighting: Magnificent, warm afternoon daylight filtering through the massive windows, creating a rich depth of color and casting soft, cinematic light across their joyful faces.<br><br>
+
+Texture: Premium heavy fabric folds of the children's traditional attire, detailed embroidery on the small Zanna Bukar cap, plush velvet sofa cushions, and the glossy tablet screen.<br><br>
+
+Theme: 🌿 Northern Nigerian elite childhood innocence / luxury parlor entertainment / children listening to music together / cinematic ultra-realistic graphic novel style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10music')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10music')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="podcasts">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='listening-to.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Podcasts</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a luxury Northern Nigerian interior.<br><br>
+
+The scene: A high-end minimalist home office in a wealthy Abuja estate, featuring a custom dark walnut wood desk, ambient LED backdrop strips, and polished corporate decor.<br><br>
+
+The subject: A handsome 25-year-old Northern Nigerian man with a sharp, well-groomed beard and undeniable steez. He is wearing a pristine, heavily starched white Shadda (yadi) with sharp shoulder lines and an intricately detailed black and silver Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting back in a premium leather executive chair, wearing sleek matte-black over-ear headphones. He has an expression of deep, intellectual focus, his brows slightly furrowed as he listens intently to an educational business podcast, holding a pen over a notebook.<br><br>
+
+Lighting: Moody, cinematic key lighting from the side, casting soft shadow gradients across his face and emphasizing the crisp texture of his Shadda and the details of his Zanna Bukar cap.<br><br>
+
+Texture: Stiff, fabric folds of the premium starched Shadda, fine leather grain of the chair, smooth matte texture of the headphones, and flawless, realistic skin texture under professional lighting.<br><br>
+
+Theme: 🌿 Professional Northern Nigerian youth steez / intellectual podcast streaming / luxury office environment / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite Kaduna residence, featuring a plush velvet headboard, elegant warm ambient bedside lamps, and a clean, high-end aesthetic.<br><br>
+
+The subject: A breathtakingly beautiful 22-year-old Northern Nigerian lady with flawless skin and elegant features. She is dressed in a premium, finely detailed nude-toned Abaya with a perfectly draped, flowing chiffon hijab that radiates modern decency and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully against silk pillows on her bed, wearing sleek white wireless earbuds. Her eyes are bright and focused, a gentle, inspired smile on her face as she absorbs a motivational lifestyle podcast from her smartphone.<br><br>
+
+Lighting: Warm, soft ambient lighting from the bedside lamp, creating smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Soft silk texture of the bedding, premium smooth fabric of the Abaya, delicate chiffon transparency, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / beautiful young lady listening to a podcast / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, affluent residential rooftop terrace during a crisp, clear evening, featuring high-end outdoor lounge chairs, minimalist glass railings, and a view of a peaceful, wealthy estate sky.<br><br>
+
+The subject: A stylish 23-year-old Northern Nigerian man with immense steez, wearing a rich cream-colored Shadda and a perfectly matching "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone in his hand with premium wireless earbuds in his ears. He is looking ahead with a serious, highly composed gaze, deeply analytical while listening to a global economic podcast thread.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the phone screen illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Crisp, heavy weave of the premium Shadda fabric, precise structural lines of the "Tashi Ka Fiya Naci" cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man tuning into digital podcasts / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A premium, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, wearing high-fidelity over-ear headphones connected to her tablet. She has a peaceful, focused expression, listening to a high-quality historical audio documentary podcast.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the tablet, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / elegant young lady enjoying audio podcasts / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive, VIP airport lounge with plush leather armchairs, elegant gold-trimmed decor, and a calm, high-status atmosphere.<br><br>
+
+The subject: Two handsome Northern Nigerian brothers in their early 20s, both projecting elite steez. One wears a crisp white Shadda with a Zanna Bukar cap, the other a pastel blue Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting side-by-side in the luxury armchairs. They are sharing a podcast on a tablet, using wireless earbuds, nodding their heads in unison with expressions of deep interest and understanding, engaged in a shared learning moment.<br><br>
+
+Lighting: Premium indoor architectural lighting with soft, warm spotlights highlighting their traditional attire and creating clean, cinematic shadow lines.<br><br>
+
+Texture: Heavily starched fabric lines of both Shaddas, geometric embroidery details on the caps, rich grain of the leather armchairs, and the clear skin texture of their faces.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian brotherhood / luxury travel lifestyle / young men listening to an interview podcast / photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A beautifully manicured private courtyard garden of a luxury villa during golden hour, with stone paths and elegant outdoor seating.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian teenage girl from a wealthy family. She is wearing a gorgeous, modest pastel-pink Abaya with delicate lacework on the sleeves and a flowing, matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a modern garden bench, holding a sleek phone, wearing elegant wireless earbuds. She is listening to a podcast on personal growth, looking forward into the garden with a thoughtful, inspired gaze.<br><br>
+
+Lighting: Breathtaking golden hour lifestyle lighting backlighting her flowing hijab with a warm halo, while a gentle, warm light illuminates her expressive face and the detailed lacework of her outfit.<br><br>
+
+Texture: Fine, lightweight Abaya fabric, soft chiffon hijab folds, intricate lace detailing, smooth matte texture of the garden bench, and crisp digital clarity on her phone screen.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian youth / luxury villa garden relaxation / teenage girl listening to educational audio / ultra-realistic photorealism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated high-end café in Abuja, featuring dark marble tabletops, warm industrial hanging lights, and an elite, quiet ambiance.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian man embodying modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a corner table with a luxury watch visible on his wrist, wearing minimalist wireless earbuds. He is deeply engaged in listening to a tech podcast on his smartphone, his expression serious and intellectual.<br><br>
+
+Lighting: Low-key cinematic café lighting, with a dramatic hanging light bulb casting sharp highlights across his shoulders, his Zanna Bukar cap, and the clean lines of his jaw.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, polished dark marble table surface, and the realistic matte finish of his earbuds.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite café lifestyle / young man streaming digital tech podcast / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university student lounge featuring modern architecture, glass study pods, and a highly sophisticated educational environment.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent and decent. She is wearing a stylishly tailored Atampa dress with an elegant, modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a study lounge desk with notebooks open beside her, wearing sleek over-ear wireless headphones. She is listening to an academic podcast lecture, jotting down notes with a focused, motivated smile.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting from large glass panels, beautifully illuminating her face, her vibrant Atampa dress, and her study space.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, clean paper texture of the open notebooks, and the ultra-realistic pore textures on her face under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady listening to educational podcast / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite estate during a peaceful afternoon, with large windows showing a beautifully manicured background garden.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man in a rich maroon Shadda and a premium Zanna Bukar cap, sitting with his younger teenage brother (15) who wears a neat white Shadda. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a massive luxury sofa. They are listening to an informative podcast broadcasted through a premium tabletop speaker, both looking forward, engaged in an intellectual discussion about the topic they are hearing.<br><br>
+
+Lighting: Magnificent, warm afternoon daylight filtering through the massive windows, creating a rich depth of color and casting soft, realistic shadows across their expressive faces.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed embroidery on both caps, plush velvet sofa cushions, and sharp, high-definition digital rendering of the audio equipment.<br><br>
+
+Theme: 🌿 Northern Nigerian elite family mentorship / luxury parlor lifestyle / brothers listening to informative audio / ultra-realistic lifestyle photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10podcasts">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 23-year-old Northern Nigerian lady with captivating eyes and graceful posture. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab blowing gently. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the balcony railing, wearing elegant, minimalist wireless earbuds. She has a thoughtful, serene expression as she listens to a poetic and reflective cultural podcast while watching the sunset.<br><br>
+
+Lighting: Exquisite golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour podcast reflection / luxury penthouse balcony / beautiful young lady with audio tech / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10podcasts')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10podcasts')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="audiobooks">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='listening-to.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Audiobooks</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, sunlit private family parlor (gidan mata) in a grand Kano estate, featuring opulent plush carpets, silk curtains, and a pristine, elegant interior design layout.<br><br>
+
+The subject: A breathtakingly beautiful 23-year-old Northern Nigerian lady with sharp features and a graceful posture. She is dressed in an exquisite, high-end patterned Atampa dress with sophisticated tailoring, paired with a perfectly matching flowing hijab that radiates modern decency and elite class. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing gracefully on a premium velvet chaise lounge, wearing sleek metallic wireless earbuds. She is completely captivated by an intense audio novel playing from her phone, a genuine look of suspense and fascination on her face as she listens.<br><br>
+
+Lighting: Bright, gorgeous afternoon daylight pouring through large windows, beautifully illuminating her face, highlighting the rich colors of her Atampa, and casting soft, smooth shadow gradients.<br><br>
+
+Texture: Crisp high-end cotton weave of the Atampa fabric, smooth velvet of the chaise lounge, lightweight chiffon texture of the hijab, and flawless, realistic skin details with natural micro-pores.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female leisure / luxury parlor sanctuary / beautiful young lady listening to audiobooks / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An elegant private courtyard garden of a wealthy estate during the peaceful evening, featuring beautifully manicured white rose bushes, stone paths, and high-end outdoor furniture.<br><br>
+
+The subject: Two beautiful Northern Nigerian young ladies (ages 20 and 22), looking highly sophisticated and decent. They are wearing stunning, richly embroidered Abayas with long, flowing chiffon hijabs blowing gently. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting closely on a premium garden bench, sharing a single pair of high-fidelity wireless earbuds. They are listening to an engaging audio story together, one reacting with a wide, joyful smile while the other gasps in pleasant surprise, captured in a dynamic moment of bonding.<br><br>
+
+Lighting: Exquisite twilight blue hour ambiance mixed perfectly with warm, soft landscape lighting that highlights their expressive faces and the intricate embroidery on their outfits.<br><br>
+
+Texture: Fine, lightweight silk texture of the premium Abayas, delicate transparency of the flowing hijabs, smooth stone of the bench, and ultra-realistic skin textures under ambient light.<br><br>
+
+Theme: 🌿 Northern Nigerian female bonding / luxury estate garden relaxation / beautiful ladies sharing an audiobook / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A majestic, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 24-year-old Northern Nigerian lady with captivating, intelligent eyes. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab draped perfectly. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the polished balcony railing, wearing elegant, minimalist white wireless earbuds. She has a serene, deeply thoughtful expression, looking out toward the horizon as she completely absorbs a moving, philosophical audiobook narrative.<br><br>
+
+Lighting: Breathtaking golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour digital reflection / luxury penthouse balcony / beautiful young lady streaming audiobook / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a luxury Northern Nigerian interior.<br><br>
+
+The scene: A grand, opulent living room parlor in an elite estate, boasting high ceilings, golden chandeliers, premium marble tiling, and massive glass windows.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man with immense steez and presence. He is wearing a rich maroon Shadda (yadi) and a premium, flawlessly folded Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back confidently on a massive luxury sofa, wearing premium over-ear noise-canceling headphones. He is holding a sleek smartphone in his hand, looking slightly thoughtful as he listens to an epic historical biography audiobook.<br><br>
+
+Lighting: Magnificent, warm indoor lighting from the grand chandeliers mixed with soft evening light from the large windows, creating rich color depth and beautiful shadow gradients across his face.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed geometric patterns on the Zanna Bukar cap, plush velvet sofa cushions, and sharp, ultra-realistic pore textures on his jawline.<br><br>
+
+Theme: 🌿 Northern Nigerian elite lifestyle / luxury parlor relaxation / young man immersed in an audiobook / cinematic ultra-realistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university student lounge featuring modern architecture, glass study pods, and a highly sophisticated educational environment.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent, focused, and decent. She is wearing a stylishly tailored Atampa dress with a modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a sleek study lounge desk with high-end, minimalist white wireless headphones over her ears. She is listening to a complex educational textbook audiobook, a pen in hand as she follows along, her face projecting motivation and clarity.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting from large glass panels, beautifully illuminating her face, her vibrant Atampa dress, and her study space.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, clean paper texture of the open notebooks, and the ultra-realistic micro-textures of her skin under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady studying with audiobooks / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A high-end minimalist home library in a wealthy Abuja penthouse, featuring sleek dark wood paneling, floor-to-ceiling bookshelves, and a plush accent chair.<br><br>
+
+The subject: A handsome 24-year-old Northern Nigerian youth with sharp features, impeccable grooming, and high steez. He is wearing a pristine, heavily starched white Shadda (yadi) and a sharply folded "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting deeply in the accent chair, lean body language, wearing high-fidelity matte-black over-ear headphones. His eyes are softly closed, a calm and knowing smirk on his face as he enjoys a clever plot twist in a literary audiobook.<br><br>
+
+Lighting: Moody, cinematic indoor lighting with a strong key light from the side, casting sharp contrast across his face and creating dramatic highlights on his traditional cap.<br><br>
+
+Texture: Stiff, premium folds of the starched Shadda fabric, fine leather grain of the headphones, smooth polished wood surfaces, and incredibly detailed skin textures.<br><br>
+
+Theme: 🌿 Northern Nigerian youth luxury leisure / sophisticated audiobook streaming / high-steez traditional fashion / ultra-realistic contemporary portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, softly lit bedroom sanctuary in an elite residence, featuring a plush velvet headboard, elegant ambient bedside lamps, and a clean, high-end organized aesthetic.<br><br>
+
+The subject: A breathtakingly beautiful 19-year-old Northern Nigerian young lady with flawless skin and graceful features. She is dressed in a premium, finely detailed Abaya with a perfectly styled chiffon hijab that radiates decency and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Propped up gracefully against silk pillows on her bed, wearing sleek wireless earbuds. She has a serene, blissful expression on her face, completely lost in a beautifully narrated epic poem audiobook before sleeping.<br><br>
+
+Lighting: Warm, soft ambient light from the bedside lamp casting smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Soft silk texture of the bedding, premium smooth fabric of the Abaya, delicate chiffon transparency, and a gentle light reflection on her clear skin tone.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury sanctuary / beautiful young lady enjoying an audiobook / ultra-realistic photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated, high-end café in Abuja, featuring dark marble tabletops, warm industrial hanging lights, and an elite, quiet ambiance.<br><br>
+
+The subject: A sharp-featured, handsome 23-year-old Northern Nigerian man embodying modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting at a corner table with a luxury watch visible on his wrist, wearing minimalist wireless earbuds. He is deeply engaged in listening to a financial market analysis audiobook on his smartphone, his brow slightly furrowed in concentration.<br><br>
+
+Lighting: Low-key cinematic café lighting, with a dramatic hanging light bulb casting sharp highlights across his shoulders, his Zanna Bukar cap, and the clean lines of his jaw.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, polished dark marble table surface, and the realistic matte finish of his earbuds.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite café lifestyle / young man streaming educational audiobook / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A stunning, affluent residential rooftop terrace during a crisp, clear evening, featuring high-end outdoor lounge chairs, minimalist glass railings, and a view of a peaceful estate skyline.<br><br>
+
+The subject: A stylish 22-year-old Northern Nigerian man with immense steez, wearing a rich cream-colored Shadda and a perfectly matching "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning elegantly against the glass rooftop railing, holding his smartphone in his hand with premium wireless earbuds in his ears. He is looking ahead into the evening horizon, deep in reflection while listening to a self-development audiobook.<br><br>
+
+Lighting: Mood-evoking twilight blue hour ambiance mixed beautifully with a soft golden glow from the phone screen illuminating his sharp facial features and the front of his traditional cap.<br><br>
+
+Texture: Crisp, heavy weave of the premium Shadda fabric, precise structural lines of the "Tashi Ka Fiya Naci" cap, smooth cold glass of the railing, and polished phone screen reflections.<br><br>
+
+Theme: 🌿 Nocturnal luxury lifestyle / analytical youth steez / young Northern man tuning into digital audiobooks / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10audiobooks">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A premium, sunlit conservatory lounge inside a wealthy mansion, surrounded by exotic indoor plants, marble floors, and large floor-to-ceiling glass windows.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Relaxing on a designer chaise lounge, wearing high-fidelity over-ear headphones connected to her tablet. She has a peaceful, focused expression, listening to a high-quality historical audio documentary audiobook.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the conservatory glass, wrapping around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, smooth metallic finish of the tablet, and fresh, crisp textures of the surrounding indoor greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / elegant young lady enjoying audiobooks / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10audiobooks')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10audiobooks')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="radio-news">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='listening-to.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Radio</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible wrinkles and expressive character lines, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a rural Northern Nigerian setting.<br><br>
+
+The scene: A traditional, upscale courtyard of a large family home in a peaceful Northern Nigerian village at night, with mud-brick architectural textures visible in the soft background shadows and a woven thatch mat on the ground.<br><br>
+
+The subject: A distinguished, wise-looking 65-year-old Northern Nigerian elder (Dattijo) with a graying beard and deeply expressive eyes. He is wearing a classic, high-quality white Shadda (yadi) and a traditional, neatly placed Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting comfortably on a low wooden stool, leaning forward slightly with his hand cupped near his ear. He is listening with intense, absolute concentration to a small, vintage battery-powered shortwave radio resting on a small table beside him, tuning into the late-night Hausa radio news broadcast.<br><br>
+
+Lighting: Moody and realistic nocturnal lighting, dominated by the warm, flickering orange glow of a nearby lantern or small open fire, casting deep shadows and dramatic highlights across his weathered face and the fabric of his Shadda.<br><br>
+
+Texture: Deeply detailed skin texture with realistic age lines, coarse fiber texture of the old radio strap, rough mud-wall background finish, and the stiff woven fabric lines of his traditional cap.<br><br>
+
+Theme: 🌿 Authentic Northern Nigerian village night / elderly wisdom and tradition / listening to shortwave radio news / pure photorealistic rural realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with natural age details, visible pores, film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A spacious, open-air veranda of a respected family house in a Northern village at night, featuring traditional pillars, a beautifully woven plastic mat on the floor, and a dark, starry sky visible in the background.<br><br>
+
+The subject: Two elderly Northern Nigerian men (Dattijai, ages 60 and 68) with serene, dignified faces. They are dressed in premium, matching heavily starched sky-blue Shadda attire with flawlessly styled Zanna Bukar caps, representing village elders of high status. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting side-by-side on the veranda floor mat, crowded around a single portable transistor radio with a long metallic antenna extended. Their expressions are highly serious and analytical, nodding in unison as they digest a major global news broadcast in Hausa.<br><br>
+
+Lighting: Minimalist and cinematic night lighting, with a single overhead warm incandescent bulb casting a localized golden glow, creating deep, rich shadow gradients over their traditional outfits.<br><br>
+
+Texture: Crisp, stiff folds of the starched Shadda fabric, metallic reflection on the radio antenna, rough texture of the floor mat, and highly detailed, realistic skin textures under the warm light bulb.<br><br>
+
+Theme: 🌿 Northern village elders nocturnal assembly / traditional political awareness / listening to radio news / ultra-realistic cultural documentary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with rich character details, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A peaceful village home entryway (Zaure) at night, showing the rustic beauty of traditional Northern mud-plaster architecture and a clean, historic ambiance.<br><br>
+
+The subject: A handsome, respectful 24-year-old Northern Nigerian youth with sharp features, sitting alongside his respected 70-year-old grandfather. The youth wears a simple, decent cream Shadda, while the grandfather wears a rich, heavy white Shadda and a classic "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: The grandfather is holding an old-fashioned silver radio close to his lap, listening to the BBC Hausa night service, while the young grandson sits quietly beside him, listening with deep respect and learning from the elder's facial expressions.<br><br>
+
+Lighting: Low-key, dramatic night lighting with a single warm key light from the side, illuminating the grandfather's profile and casting soft, realistic shadows across the youth's face.<br><br>
+
+Texture: Aged, wrinkled skin texture of the grandfather contrasting with the smooth skin of the youth, intricate embroidery on the traditional cap, and the cold metallic chassis of the old radio.<br><br>
+
+Theme: 🌿 Northern Nigerian intergenerational bonding / village night tradition / listening to radio news with elders / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A cozy, traditional indoor room inside a prominent village home at night, featuring simple clay-toned walls, decorative local pottery in the background, and a warm, inviting atmosphere.<br><br>
+
+The subject: A dignified 55-year-old Northern Nigerian woman (Basamiya) radiating matronly grace and decency. She is wearing a high-quality, beautifully patterned Atampa dress and a large, modest flowing hijab wrapped securely around her head and shoulders. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a low cushion, a small vintage portable radio resting on her lap. She is adjusting the tuning dial with a focused, intelligent expression, listening intently to the local nighttime community radio news updates.<br><br>
+
+Lighting: Soft, warm ambient indoor light coming from a single lantern off-camera, creating smooth shadow gradients across her face and highlighting the intricate patterns of her Atampa.<br><br>
+
+Texture: Rich, textured cotton weave of the premium Atampa, soft folds of the flowing hijab, matte plastic casing of the vintage radio, and ultra-realistic mature skin details.<br><br>
+
+Theme: 🌿 Dignified Northern female village life / nocturnal radio updates / mature lady listening to news / pure photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a rural setting.<br><br>
+
+The scene: A quiet, dark orchard garden on the outskirts of a Northern Nigerian village at night, with faint silhouettes of neem trees under a clear, starry night sky.<br><br>
+
+The subject: A ruggedly handsome 35-year-old Northern Nigerian farmer/gardener resting after a long day. He is wearing a durable yet decent, dark-colored Shadda and a simple, tightly wrapped matching headtie cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting on a wooden bench under a tree, a classic portable pocket radio with an earphone cord running to one ear. His expression is calm, relaxed, and deeply focused as he catches up on the daily national news stream.<br><br>
+
+Lighting: Moody, low-key nocturnal lighting, with the cool blue ambiance of the night air balanced by a faint, warm flashlight beam illuminating his side profile and the radio device.<br><br>
+
+Texture: Coarse wood grain of the bench, rugged fabric texture of the dark Shadda, smooth plastic earphone wire, and realistic skin texture with subtle sweat drops reflecting light.<br><br>
+
+Theme: 🌿 Rural Northern night relaxation / nighttime worker catching up on news / pocket radio listening / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with natural wrinkles, film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: The outside steps of a traditional village mosque compound at night, featuring smooth mud-plaster steps and clean, peaceful architectural lines.<br><br>
+
+The subject: A group of three elderly Northern Nigerian men (ages 60–75) radiating immense dignity. They are all dressed in pristine, heavy white Shadda gowns and sharply detailed Zanna Bukar caps, representing the village leadership. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting closely together on the steps after night prayers, completely silent and focused. One elder holds a vintage black radio close to the center of the group, broadcasting the nightly news line, while the others listen with deep, thoughtful expressions.<br><br>
+
+Lighting: Atmospheric night lighting, with the soft, cool silver light of the moon mixing with a nearby warm street lamp, creating an elegant contrast on their white garments and faces.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed geometric embroidery on multiple Zanna Bukar caps, smooth mud-stone texture of the steps, and highly defined elderly skin features.<br><br>
+
+Theme: 🌿 Village elders nighttime assembly / spiritual and community awareness / classic radio news tradition / ultra-realistic editorial photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible lines, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A traditional family courtyard in a wealthy village estate at night, featuring a small central open fire pit with crackling wood embers.<br><br>
+
+The subject: A wise, elegant 62-year-old Northern Nigerian grandfather with a neatly trimmed white beard, wearing a rich maroon Shadda and a perfectly folded "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a woven leather chair near the fire, holding a vintage leather-cased shortwave radio right next to his cheek. He has a sharp, knowing look on his face, deeply engaged in an international political news segment.<br><br>
+
+Lighting: High-contrast, dramatic firelight illumination casting a deep, warm orange glow on one side of his face and attire, while the other side fades into the rich blackness of the village night.<br><br>
+
+Texture: Weathered leather casing of the radio, crackling wood embers, premium weave of the maroon Shadda, and highly realistic facial hair and skin textures under the firelight.<br><br>
+
+Theme: 🌿 Northern elder campfire reflection / traditional nocturnal news streaming / shortwave radio mastery / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A modest yet clean village storefront or veranda kiosk at night, with shuttered wooden doors and a rustic, peaceful local street environment.<br><br>
+
+The subject: A handsome, hardworking 28-year-old Northern Nigerian young man with sharp steez, wearing a well-tailored dark green Shadda and a neat Zanna Bukar cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Leaning against the wooden storefront counter, holding a classic portable radio with a small speaker grid. He is listening intensely to the sports and current affairs news segment, a look of focused engagement on his face.<br><br>
+
+Lighting: Authentic, low-key night lighting from a single compact fluorescent bulb hanging above the kiosk, casting crisp, realistic highlights on his cap, shoulders, and the radio casing.<br><br>
+
+Texture: Weathered wood grain of the store shutters, starched cotton fabric lines of the green Shadda, matte plastic radio grid, and crisp, lifelike skin pores under direct light.<br><br>
+
+Theme: 🌿 Nighttime village commerce / youthful steez checking news / traditional radio listening / ultra-realistic contemporary portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with expressive lines, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A quiet, traditional interior parlor of an elite village elder's house at night, featuring vintage framed Arabic calligraphy on the wall and a soft plush rug.<br><br>
+
+The subject: A stunningly beautiful 58-year-old Northern Nigerian grandmother with elegant, graceful features, alongside her young teenage granddaughter (14). The grandmother is in a premium Atampa dress with a flowing headscarf; the girl wears a modest, neat hijab. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting together on the rug, a classic analogue radio set between them on a low table. The grandmother is gesturing with her hand as she explains the ongoing radio news report to her granddaughter, who listens with wide, curious eyes.<br><br>
+
+Lighting: Soft, warm ambient light from a shaded floor lamp casting smooth shadow gradients, creating a gentle and intimate mood on their faces and cultural attire.<br><br>
+
+Texture: Detailed cotton prints of the Atampa, soft chiffon fabric folds of the hijab, matte wood finish of the low table, and ultra-realistic skin texture showing generations of beauty.<br><br>
+
+Theme: 🌿 Northern female village heritage / nighttime family education / sharing the radio news broadcast / ultra-realistic lifestyle photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10radionews">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with deep character lines, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a rural setting.<br><br>
+
+The scene: The open-air courtyard of a rural village chief's house during a quiet, dark night, with traditional architecture silhouettes against a deep indigo sky.<br><br>
+
+The subject: A highly respected 72-year-old Northern Nigerian village patriarch with a long white beard and immense presence. He is dressed in an opulent, heavy white Shadda paired with an intricately detailed, masterfully folded Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Seated on a large, traditional woven armchair, a classic heavy-duty shortwave radio receiver resting beside him. He is looking directly forward with a profound, serious, and deeply analytical expression as the loud voice of the radio announcer fills the quiet night.<br><br>
+
+Lighting: Masterful cinematic night lighting, with a single warm key light accentuating the sharp lines of his face, the snowy white texture of his beard, and the majestic silhouette of his traditional cap.<br><br>
+
+Texture: Premium heavy fabric folds of the white Shadda, detailed geometric lines of the Zanna Bukar cap, rugged texture of the woven chair, and ultra-realistic skin details with natural micro-pores.<br><br>
+
+Theme: 🌿 Grand village patriarch / nocturnal shortwave radio news mastery / ultimate cultural dignity / pure photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10radionews')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10radionews')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="street-sounds">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='listening-to.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">City sounds</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in a vibrant Northern Nigerian urban environment.<br><br>
+
+The scene: A luxurious, high-end rooftop lounge overlooking a bustling commercial avenue in Kano city center at dusk, with the blurred neon lights, modern glass storefronts, and moving traffic headlights creating a beautiful urban bokeh in the background.<br><br>
+
+The subject: A handsome 24-year-old Northern Nigerian youth with sharp features, a perfectly lined beard, and effortless high steez. He is wearing a pristine, heavily starched white Shadda (yadi) with crisp neck embroidery and a sharply folded black and white Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Leaning confidently over the sleek glass balcony railing, with his hands gently resting on the edge. He has an expression of calm reflection, his eyes scanning the city below as he listens with genuine fascination to the distant, rhythmic hum of the street, the cheerful chatter, and the vibrant evening energy of the city.<br><br>
+
+Lighting: Dynamic twilight hour lighting, with the cool blue ambiance of the evening sky mixing with the warm golden reflection of the streetlights on his face and the crisp folds of his Shadda attire.<br><br>
+
+Texture: Stiff, fabric folds of the premium starched Shadda, precise structural lines of the Zanna Bukar cap, smooth cold glass of the railing, and ultra-realistic skin details with natural micro-pores under changing light.<br><br>
+
+Theme: 🌿 Modern Northern Nigerian youth steez / urban city sound immersion / luxury rooftop lifestyle / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An elegant, wide open-air penthouse balcony in an elite neighborhood in Abuja at twilight, featuring high-end minimalist furniture and a blurred view of a quiet, wealthy avenue below.<br><br>
+
+The subject: A breathtakingly beautiful 22-year-old Northern Nigerian lady with flawless skin and elegant features. She is dressed in a premium, finely detailed nude-toned Abaya with a perfectly draped, flowing chiffon hijab that radiates modern decency and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing gracefully near the edge of the balcony, a serene and blissful smile on her face. Her head is slightly tilted, closing her eyes for a brief moment as she deeply absorbs the soothing evening breeze and the distant, peaceful ambient sounds of the city wind and rustling trees.<br><br>
+
+Lighting: Soft, ethereal twilight lighting with warm, low-key background spotlights from the penthouse, creating smooth shadow gradients across her face and highlighting the graceful drapes of her flowing hijab.<br><br>
+
+Texture: Fine, lightweight silk texture of the premium Abaya, delicate transparency of the flowing chiffon hijab, smooth polished steel balcony railing, and flawless skin tone under golden-blue light.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury terrace / beautiful young lady listening to the evening breeze / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated high-end café veranda in an affluent part of Kaduna, featuring dark marble tabletops, large transparent glass panels, and a view of a clean, tree-lined modern street.<br><br>
+
+The subject: A stylish 23-year-old Northern Nigerian man with immense steez, wearing a rich cream-colored Shadda and a perfectly matching "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting at an outdoor corner table, holding a premium ceramic coffee cup mid-air. He is pausing his conversation, looking outward toward the sidewalk with a highly composed, thoughtful look as he listens to the crisp, modern street soundscapes and background movement.<br><br>
+
+Lighting: Low-key cinematic daylight mixed with soft ambient café reflections, casting sharp highlights across his shoulders, his traditional cap, and the clean lines of his jaw.<br><br>
+
+Texture: Crisp, heavy weave of the premium Shadda fabric, precise structural lines of the "Tashi Ka Fiya Naci" cap, polished dark marble table surface, and realistic skin texture with high-definition clarity.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite café lifestyle / young man tuning into urban sounds / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious modern conservatory lounge with large floor-to-ceiling glass windows that open up completely to an upscale residential avenue during a bright, sunny afternoon.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Perched elegantly on a designer chaise lounge close to the open window. She is looking outside with a focused, intelligent expression, a slight smile on her lips as she enjoys the lively yet orderly afternoon sounds of her vibrant neighborhood environment.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the open window, wrapping perfectly around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, sleek glass panel texture, and fresh, crisp textures of the surrounding indoor luxury greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / elegant young lady observing city sounds / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive, VIP lounge terrace of a luxury high-rise hotel, featuring elegant gold-trimmed decor, plush armchairs, and a vast backdrop of a developed metropolitan cityscape during golden hour.<br><br>
+
+The subject: Two handsome Northern Nigerian brothers in their early 20s, both projecting elite steez. One wears a crisp white Shadda with a Zanna Bukar cap, the other a pastel blue Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Standing side-by-side at the terrace edge, looking down into the grand city layout. One brother points toward a far-off landmark, while the other leans in, both smiling proudly as they discuss and listen to the massive, roaring energy of the developing city below.<br><br>
+
+Lighting: Breathtaking golden hour lifestyle lighting, with the warm orange light of the setting sun casting long, clean cinematic shadow lines across their traditional attire.<br><br>
+
+Texture: Heavily starched fabric lines of both Shaddas, geometric embroidery details on the caps, smooth glass railing texture, and clear, realistic skin pores under direct warm light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian brotherhood / luxury travel lifestyle / young men experiencing city energy / photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A beautifully manicured private courtyard garden of a luxury villa located inside a high-end estate, with stone paths and a minimalist metal gate showing a glimpse of a clean neighborhood road outside.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian teenage girl from a wealthy family. She is wearing a gorgeous, modest pastel-pink Abaya with delicate lacework on the sleeves and a flowing, matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a modern garden bench near the estate gate. She has her phone in her lap but has paused, turning her face toward the outside street with wide, curious eyes, listening with pure innocence to the cheerful neighborhood afternoon sounds.<br><br>
+
+Lighting: Crisply focused mid-afternoon daylight filtering through garden trees, casting beautiful dapples of light and soft shadow patterns over her expressive face and the detailed lacework of her outfit.<br><br>
+
+Texture: Fine, lightweight Abaya fabric, soft chiffon hijab folds, intricate lace detailing, smooth matte texture of the garden bench, and crisp skin textures under natural daylight.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian youth / luxury villa garden relaxation / teenage girl listening to neighborhood vibes / ultra-realistic photorealism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A premium rooftop observation deck in an affluent part of Abuja at late night, featuring subtle embedded warm LED floor lighting, minimalist steel accents, and a pitch-black sky with city high-rise towers glowing in the background.<br><br>
+
+The subject: A sharp-featured, handsome 26-year-old Northern Nigerian man embodying modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing alone at the deck railing, adjusting his luxury watch. He is looking directly at the city horizon with a serious, deep, and intellectual expression, completely taking in the serene and quiet nighttime hum of the city streetscapes below.<br><br>
+
+Lighting: Low-key cinematic night lighting, with the glowing city background creating a beautiful contrast against a dramatic warm key light that defines his sharp jawline and the patterns of his cap.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, cold steel railing reflections, and realistic matte finish of his skin under the night sky.<br><br>
+
+Theme: Sharp Northern Nigerian youth steez / elite nocturnal lifestyle / young man contemplating city sounds / ultra-realistic editorial style.</b></br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring modern architecture, glass walkways, and an elite, highly sophisticated educational environment overlooking a lively university avenue.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent and decent. She is wearing a stylishly tailored Atampa dress with an elegant, modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing near a grand archway on campus, clutching her textbooks to her chest. She is looking slightly off-camera with a proud, motivated smile, pausing to listen to the vibrant and energetic sounds of student life and movement echoing through the campus streets.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting mixed with soft external daylight, beautifully illuminating her face, her vibrant Atampa dress, and her clean study accessories.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, matte paper texture of the textbooks, and the ultra-realistic pore textures on her face under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady listening to campus sounds / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, open-air veranda of an elite family estate during a peaceful afternoon, with large security pillars and a clear view of a highly secure, wealthy residential avenue outside.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man in a rich maroon Shadda and a premium Zanna Bukar cap, sitting with his younger teenage brother (15) who wears a neat white Shadda. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a luxury outdoor sofa on the veranda. The older brother is pointing outward toward the estate gates, explaining something with a serious and protective expression, while both brothers listen intently to the approaching sounds of escort vehicles or arrival cars on the street.<br><br>
+
+Lighting: Magnificent, warm afternoon daylight filtering through the estate trees, creating a rich depth of color and casting soft, realistic shadows across their expressive faces.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed embroidery on both caps, plush outdoor sofa cushions, and sharp, ultra-realistic micro-textures of their skin under soft light.<br><br>
+
+Theme: 🌿 Northern Nigerian elite family lifestyle / luxury veranda observation / brothers listening to neighborhood sounds / ultra-realistic lifestyle photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10streetsounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, wide open-air penthouse balcony at sunset, overlooking an affluent metropolitan neighborhood with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 23-year-old Northern Nigerian lady with captivating eyes and graceful posture. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab blowing gently. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the balcony railing, looking down toward the active urban lanes below. She has a thoughtful, serene expression as she takes in the bustling, beautiful sounds of a transitioning city street during the sunset rush hour.<br><br>
+
+Lighting: Exquisite golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour urban reflection / luxury penthouse balcony / beautiful young lady listening to city movement / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10streetsounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10streetsounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="nature-sounds">
+  <div class="page-header">
+    <button class="back-arrow-btn" onclick="window.location.href='listening-to.html'"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+    <span class="header-title">Nature</span>
+  </div>
+  <div class="cards-body">
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#1</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="1naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A private, beautifully landscaped orchard within a luxury estate in Birnin Kudu, featuring dense green foliage, neatly manicured lawns, and ancient, towering neem trees that catch a gentle breeze.<br><br>
+
+The subject: A handsome 24-year-old Northern Nigerian youth with sharp features, a perfectly lined beard, and effortless high steez. He is wearing a pristine, heavily starched white Shadda (yadi) with crisp neck embroidery and a sharply folded black and white Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing peacefully beneath a large tree branch, his hands loosely clasped behind his back. His eyes are softly closed and his chin is slightly tilted upward, a serene and calm expression on his face as he completely immerses himself in listening to the rustling of leaves and the melodious chirping of local birds.<br><br>
+
+Lighting: Beautiful late-afternoon daylight filtering through the thick canopy of leaves, casting dappled, organic patterns of warm light and soft shadow gradients across his face and the clean lines of his white Shadda.<br><br>
+
+Texture: Stiff, crisp fabric folds of the premium starched Shadda, detailed geometric weave of the Zanna Bukar cap, rough texture of the tree bark in the soft background, and ultra-realistic skin details with natural micro-pores.<br><br>
+
+Theme: 🌿 Modern Northern Nigerian youth steez / serene nature sound immersion / luxury orchard retreat / ultra-realistic contemporary photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'1naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('1naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#2</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="2naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An elegant, wide open-air terrace of a luxury villa overlooking a massive, private botanical garden in Jigawa State during a quiet afternoon, with lush exotic plants creating a vibrant green background.<br><br>
+
+The subject: A breathtakingly beautiful 22-year-old Northern Nigerian lady with flawless skin and elegant features. She is dressed in a premium, finely detailed nude-toned Abaya with a perfectly draped, flowing chiffon hijab that radiates modern decency and class. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully resting her hand on a polished stone terrace balustrade, her head slightly tilted to the side. A soft, blissful smile plays on her lips as she closes her eyes to listen to the gentle, rhythmic sound of a central marble water fountain spraying in the courtyard garden below.<br><br>
+
+Lighting: Soft, even, and natural afternoon daylight wrapping perfectly around her silhouette, illuminating her face and highlighting the graceful, lightweight drapes of her flowing chiffon hijab.<br><br>
+
+Texture: Fine, silk texture of the premium Abaya, delicate transparency of the flowing hijab, smooth cold marble of the balustrade, and flawless skin tone with micro-pores visible under natural light.<br><br>
+
+Theme: 🌿 Elegant Northern Nigerian female lifestyle / private luxury garden veranda / beautiful young lady listening to flowing water / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'2naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('2naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#3</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="3naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A highly sophisticated private garden pavilion inside a wealthy estate, featuring dark polished wood pillars, premium outdoor woven seating, and a background filled with white rose bushes and rich green lawns.<br><br>
+
+The subject: A stylish 23-year-old Northern Nigerian man with immense steez, wearing a rich cream-colored Shadda and a perfectly matching, masterfully folded "Tashi Ka Fiya Naci" cap. Occupying ~80% of the frame, tight focus.<br><br>
+
+The activity: Sitting back comfortably on an outdoor lounge chair, holding a luxury smartphone loosely in his hand. He has paused completely, looking out toward the garden beds with a highly composed, thoughtful gaze as he listens to the crisp, peaceful wind rustling through the flowers.<br><br>
+
+Lighting: Low-key cinematic daylight mixed with soft ambient garden reflections, casting sharp highlights across his shoulders, his traditional cap, and the clean lines of his jaw.<br><br>
+
+Texture: Crisp, heavy weave of the premium Shadda fabric, precise structural lines of the "Tashi Ka Fiya Naci" cap, smooth weave of the outdoor chair, and realistic skin texture with high-definition clarity.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite garden lifestyle / young man tuning into nature soundscapes / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'3naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('3naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#4</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="4naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious modern sunroom with large floor-to-ceiling glass windows that open up completely to a private, rolling green landscape during a bright, sunny afternoon.<br><br>
+
+The subject: A beautiful 24-year-old Northern Nigerian young lady with striking, sophisticated features. She is wearing an exquisitely tailored Atampa dress with high-end cultural patterns and a beautifully styled, modest flowing hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Perched elegantly on a designer chaise lounge close to the open window. She is looking outside toward a distant grove of palm trees with a focused, intelligent expression, a slight smile on her lips as she enjoys the peaceful, lively afternoon sounds of a sudden, gentle rain shower hitting the leaves.<br><br>
+
+Lighting: Bright, natural afternoon daylight streaming through the open window, wrapping perfectly around her silhouette and bringing out the rich, vibrant colors of her Atampa dress.<br><br>
+
+Texture: Detailed cotton weave of the premium Atampa, glossy marble floor reflections, clean glass panel texture, and fresh, crisp textures of rain-dusted indoor luxury greenery.<br><br>
+
+Theme: 🌿 High-steez Northern Nigerian female fashion / luxury estate lifestyle / elegant young lady listening to rain / ultra-realistic photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'4naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('4naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#5</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="5naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: An exclusive, beautifully manicured courtyard meadow inside a grand family estate during golden hour, with stone paths and a vast backdrop of old trees catching the sunset breeze.<br><br>
+
+The subject: Two handsome Northern Nigerian brothers in their early 20s, both projecting elite steez. One wears a crisp white Shadda with a Zanna Bukar cap, the other a pastel blue Shadda with a "Tashi Ka Fiya Naci" cap. Together occupying ~80% of the frame.<br><br>
+
+The activity: Standing side-by-side on the green grass near a small stream pathway. They are both silent, looking into the distance with proud and peaceful expressions, sharing a quiet moment of bonding while listening to the deep, relaxing hum of the evening crickets and nature settling down.<br><br>
+
+Lighting: Breathtaking golden hour lifestyle lighting, with the warm orange light of the setting sun casting long, clean cinematic shadow lines across their traditional attire.<br><br>
+
+Texture: Heavily starched fabric lines of both Shaddas, geometric embroidery details on the caps, crisp blades of green grass underfoot, and clear, realistic skin pores under direct warm light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian brotherhood / luxury nature lifestyle / young men listening to evening wilderness / photorealistic portraiture.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'5naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('5naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#6</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="6naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A beautifully manicured private courtyard garden of a luxury villa located inside a high-end estate, with stone paths and high walls covered in creeping green ivy vines.<br><br>
+
+The subject: A beautiful 19-year-old Northern Nigerian teenage girl from a wealthy family. She is wearing a gorgeous, modest pastel-pink Abaya with delicate lacework on the sleeves and a flowing, matching hijab. Occupying ~80% of the frame.<br><br>
+
+The activity: Sitting gracefully on a modern garden bench. She has her hands folded on her lap, turning her face slightly upward toward the sky with wide, curious eyes, listening with pure innocence to the cheerful, sweet songs of birds nesting in the overhanging branches.<br><br>
+
+Lighting: Crisply focused mid-afternoon daylight filtering through garden trees, casting beautiful dapples of light and soft shadow patterns over her expressive face and the detailed lacework of her outfit.<br><br>
+
+Texture: Fine, lightweight Abaya fabric, soft chiffon hijab folds, intricate lace detailing, smooth matte texture of the garden bench, and crisp skin textures under natural daylight.<br><br>
+
+Theme: 🌿 Affluent Northern Nigerian youth / luxury villa garden relaxation / teenage girl listening to birdsong / ultra-realistic photorealism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'6naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('6naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#7</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="7naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A premium rooftop observation deck in an affluent estate at late night, featuring subtle embedded warm LED floor lighting, minimalist steel accents, and a pitch-black sky with the dark silhouettes of palm trees rustling in the background.<br><br>
+
+The subject: A sharp-featured, handsome 26-year-old Northern Nigerian man embodying modern decency and high steez. He is wearing a flawless, dark emerald-green Shadda paired with a masterfully crafted Zanna Bukar cap. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing alone at the deck railing, adjusting his luxury watch. He is looking directly up toward the starry sky with a serious, deep, and intellectual expression, completely taking in the serene and quiet nighttime wind sweeping across the plains.<br><br>
+
+Lighting: Low-key cinematic night lighting, with a dramatic warm key light that defines his sharp jawline and the patterns of his cap, while the dark sky creates a rich, atmospheric contrast.<br><br>
+
+Texture: Premium metallic sheen of the green Shadda fabric, sharp geometric lines of the cap embroidery, cold steel railing reflections, and realistic matte finish of his skin under the night sky.<br><br>
+
+Theme: 🌿 Sharp Northern Nigerian youth steez / elite nocturnal lifestyle / young man contemplating nighttime nature sounds / ultra-realistic editorial style.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'7naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('7naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#8</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="8naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A bright, premium university campus courtyard featuring modern green architecture, open-air study gazebos, and a highly sophisticated educational environment surrounded by vast lawns.<br><br>
+
+The subject: A beautiful 21-year-old Northern Nigerian female student, looking highly intelligent and decent. She is wearing a stylishly tailored Atampa dress with an elegant, modest flowing hijab draped perfectly around her. Occupying ~80% of the frame.<br><br>
+
+The activity: Standing near a stone fountain on campus, clutching her textbooks to her chest. She is looking slightly off-camera with a proud, motivated smile, pausing between classes to listen to the soothing, cool sound of the wind blowing through the courtyard garden trees.<br><br>
+
+Lighting: Bright, clean, and optimistic high-key interior lighting mixed with soft external daylight, beautifully illuminating her face, her vibrant Atampa dress, and her clean study accessories.<br><br>
+
+Texture: Crisp cotton Atampa fabric texture, soft smooth folds of the hijab, matte paper texture of the textbooks, and the ultra-realistic pore textures on her face under soft light.<br><br>
+
+Theme: 🌿 Elite Northern Nigerian student life / premium university campus / beautiful young lady listening to nature breeze / photorealistic representation.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'8naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('8naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#9</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="9naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A grand, open-air veranda of an elite family estate during a peaceful afternoon, with large security pillars and a clear view of a highly secure private park filled with fruit trees.<br><br>
+
+The subject: A distinguished, handsome 28-year-old Northern Nigerian man in a rich maroon Shadda and a premium Zanna Bukar cap, sitting with his younger teenage brother (15) who wears a neat white Shadda. Together occupying ~80% of the frame.<br><br>
+
+The activity: Sitting on a luxury outdoor sofa on the veranda. The older brother has his arm resting on the sofa back, looking outward toward the private park with a serious and protective expression, while both brothers listen intently to the beautiful chatter of birds and running water in the background.<br><br>
+
+Lighting: Magnificent, warm afternoon daylight filtering through the estate trees, creating a rich depth of color and casting soft, realistic shadows across their expressive faces.<br><br>
+
+Texture: Premium heavy Shadda fabric folds, detailed embroidery on both caps, plush outdoor sofa cushions, and sharp, ultra-realistic micro-textures of their skin under soft light.<br><br>
+
+Theme: 🌿 Northern Nigerian elite family lifestyle / luxury veranda observation / brothers listening to natural garden sounds / ultra-realistic lifestyle photography.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'9naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('9naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+    <div class="prompt-card">
+      <div class="card-top"><span class="card-label">#10</span><button class="card-menu" onclick="showComingSoon('menu')">&#8942;</button></div>
+      <div class="prompt-body"><div class="prompt-collapsed" id="10naturesounds">Style: Editorial photorealistic portraiture, captured on Nikon Z8 with an 85mm f/1.4 lens, 4:5 vertical aspect ratio, 16K resolution, ultra-realistic skin textures with visible pores, natural film grain, shallow depth of field, physically accurate lighting, authentic candid composition in Northern Nigeria.<br><br>
+
+The scene: A luxurious, wide open-air penthouse balcony at sunset, overlooking a high-end estate with palm trees and modern architecture.<br><br>
+
+The subject: A stunningly beautiful 23-year-old Northern Nigerian lady with captivating eyes and graceful posture. She is wearing a magnificent royal blue Abaya adorned with intricate silver embroidery at the borders, and a long, flowing matching hijab blowing gently. Occupying ~80% of the frame.<br><br>
+
+The activity: Gracefully leaning against the balcony railing, looking out toward the evening horizon. She has a thoughtful, serene expression as she takes in the beautiful, comforting sounds of the evening wind rustling through the distant tree lines during a golden sunset.<br><br>
+
+Lighting: Exquisite golden hour lighting, with the warm orange and crimson hues of the sunset illuminating her face and highlighting the silver embroidery of her Abaya, creating an ethereal glow.<br><br>
+
+Texture: Flowing, lightweight texture of the chiffon hijab, intricate silver thread embroidery details, cold smooth glass and steel balcony railing, and flawless skin texture under golden light.<br><br>
+
+Theme: 🌿 Serene golden hour nature reflection / luxury penthouse balcony / beautiful young lady listening to the wind / pure photorealistic realism.<br><br>
+</div><span class="see-more-link" onclick="toggleSeeMore(this)">See more</span></div>
+      <button class="copy-button" onclick="copyPrompt(this,'10naturesounds')">&#128203; Copy Prompt</button>
+      <div class="card-footer">
+        <button class="footer-btn" onclick="toggleLike(this)"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l8.78-8.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>Like</button>
+        <button class="footer-btn" onclick="showComingSoon('comment')"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Comment</button>
+        <button class="footer-btn" onclick="sharePrompt('10naturesounds')"><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>Share</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="comingSoonOverlay" onclick="closeComingSoon()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9999;align-items:flex-end;">
+  <div onclick="event.stopPropagation()" class="modal-box">
+    <div class="modal-handle"></div>
+    <span class="modal-emoji" id="modalEmoji">⚙️</span>
+    <h2 class="modal-title" style="font-size:1rem;color:#F59E0B;" id="modalTitle">Coming Soon!</h2>
+    <p class="modal-msg" id="modalMsg">Save and Report features are Coming Soon!</p>
+    <button class="modal-btn" onclick="closeComingSoon()">Got it!</button>
+  </div>
+</div>
+<script>
+function toggleSeeMore(el) {
+  const box = el.previousElementSibling;
+  box.classList.toggle('prompt-collapsed');
+  el.innerText = box.classList.contains('prompt-collapsed') ? 'See more' : 'See less';
+}
+
+function copyPrompt(btn, id) {
+  const text = document.getElementById(id).innerText;
+  const area = document.createElement('textarea');
+  area.value = text; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  btn.innerHTML = '&#10003; Copied!'; btn.style.background = '#5b21b6';
+  setTimeout(() => { btn.innerHTML = '&#128203; Copy Prompt'; btn.style.background = '#7C3AED'; }, 1500);
+}
+
+function toggleLike(btn) { btn.classList.toggle('liked'); }
+
+function sharePrompt(id) {
+  const text = document.getElementById(id).innerText;
+  if (navigator.share) { navigator.share({ text }); } else { showComingSoon('share'); }
+}
+
+function showComingSoon(type) {
+  const emoji = type === 'comment' ? '💬' : '⚙️';
+  const title = type === 'comment' ? 'Coming Soon!' : 'Coming Soon!';
+  const msg = type === 'comment' ? 'Discussion features are Coming Soon!' : 'Save and Report features are Coming Soon!';
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalMsg').innerText = msg;
+  document.getElementById('comingSoonOverlay').style.display = 'flex';
+}
+
+function closeComingSoon() {
+  document.getElementById('comingSoonOverlay').style.display = 'none';
+}
+
+window.addEventListener('hashchange', () => { window.scrollTo(0, 0); });
+
+function boldSections() {
+  document.querySelectorAll('.prompt-collapsed').forEach(el => {
+    let html = el.innerHTML;
+    html = html.replace(/<strong>(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:)<\/strong>/g, '$1');
+    html = html.replace(/(Style:|The scene:|The subject[^:]*:|Symbolism:|Lighting:|Texture:|Theme:|Places:|The activity:)/g, '<strong>$1</strong>');
+    el.innerHTML = html;
+  });
+}
+
+document.addEventListener('DOMContentLoaded', boldSections);
+
+</script>
+</body>
+</html>
