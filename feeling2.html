@@ -1064,11 +1064,11 @@ function boldSections() {
 }
 document.addEventListener('DOMContentLoaded', boldSections);
 function goBack() {
-  const came = document.referrer;
-  if (came.includes('index.html') || came === '' || came.includes('localhost:7700/')) {
-    window.location.href = '/index.html';
+  const user = localStorage.getItem('prompthub_user');
+  if (user) {
+    window.location.href = 'page1.html';
   } else {
-    window.location.href = '/page1.html';
+    window.location.href = 'index.html';
   }
 }
 </script>
