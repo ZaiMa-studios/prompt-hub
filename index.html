@@ -746,6 +746,18 @@ window.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll('.mood-card, .view-all-btn, .hero-cta, .gallery-copy-btn').forEach(el => {
   el.addEventListener('click', () => navigator.vibrate(10));
 });
+
+// Automatically refresh the page once the user securely logs in
+const originalSignInCallback = handleGoogleSignIn;
+handleGoogleSignIn = function(response) {
+    if (typeof originalSignInCallback === 'function') {
+        originalSignInCallback(response);
+    }
+    setTimeout(() => {
+        window.location.reload();
+    }, 300);
+};
+
 </script>
 </body>
 </html>
