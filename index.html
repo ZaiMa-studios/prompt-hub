@@ -669,8 +669,7 @@ body {
     localStorage.setItem('prompthub_user', JSON.stringify(user));
     closeSignIn();
     updateAuthUI(user);
-    window.location.href = '/page1.html';
-  }
+    window.location.reload();}
 
   function getUser() {
     const u = localStorage.getItem('prompthub_user');
