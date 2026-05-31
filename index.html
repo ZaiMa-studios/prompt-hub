@@ -668,8 +668,7 @@ body {
     const user = { name: payload.name, email: payload.email, picture: payload.picture };
     localStorage.setItem('prompthub_user', JSON.stringify(user));
     closeSignIn();
-    updateAuthUI(user);
-    window.location.reload();}
+    updateAuthUI(user);}
 
   function getUser() {
     const u = localStorage.getItem('prompthub_user');
